@@ -1,11 +1,16 @@
 import os
 import sys
+import re
 from pathlib import Path
 
 BASE_DIR = Path(__file__).parent.parent
 CONTENT_DIR = BASE_DIR / "content"
 
-REQUIRED_FIELDS = ["title", "source_url", "captured_date", "status", "type", "tags"]
+REQUIRED_FIELDS = [
+    "title", "title_zh", "source_url", "source_site", "author",
+    "published_date", "captured_date", "language", "translation_language",
+    "status", "type", "topics", "tags", "word_count"
+]
 
 ARTICLE_REQUIRED_FILES = [
     "source.md",
@@ -43,6 +48,29 @@ def check_kb():
         if missing:
             issues.append(f"MISSING fields {missing} in {meta_file.relative_to(BASE_DIR)}")
 
+        # Check title_zh not empty
+        title_zh = data.get("title_zh", "")
+        if not title_zh or title_zh == "PLACEHOLDER":
+            issues.append(f"EMPTY title_zh in {meta_file.relative_to(BASE_DIR)}")
+
+        # Check word_count
+        word_count = data.get("word_count", {})
+        if not isinstance(word_count, dict):
+            issues.append(f"INVALID word_count type in {meta_file.relative_to(BASE_DIR)}")
+        else:
+            for key in ["source", "translation"]:
+                val = word_count.get(key, 0)
+                if not isinstance(val, int) or val <= 0:
+                    issues.append(f"INVALID word_count.{key}={val} in {meta_file.relative_to(BASE_DIR)}")
+
+        # Check topics and tags not empty
+        topics = data.get("topics", [])
+        if not topics or len(topics) == 0:
+            issues.append(f"EMPTY topics in {meta_file.relative_to(BASE_DIR)}")
+        tags = data.get("tags", [])
+        if not tags or len(tags) == 0:
+            issues.append(f"EMPTY tags in {meta_file.relative_to(BASE_DIR)}")
+
         # Check type-specific required files
         item_type = data.get("type", "")
         if item_type == "article":
@@ -56,7 +84,7 @@ def check_kb():
         if not trans_file.exists():
             issues.append(f"MISSING translation.zh-CN.md: {item_dir.relative_to(BASE_DIR)}")
 
-        if not missing and trans_file.exists():
+        if not missing and trans_file.exists() and not [i for i in issues if meta_file.name in i]:
             ok += 1
 
     print(f"\n{'='*50}")

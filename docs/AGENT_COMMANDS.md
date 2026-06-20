@@ -1,133 +1,73 @@
-# Hermes Knowledge Base 短命令约定
+# Agent Commands
 
-本文档定义了用户与 Hermes agent 交互时的短命令规则。当用户以特定格式发出指令时，Hermes 默认执行预设的完整工作流，无需追问。
+## 短命令：导入文章到知识库
 
----
-
-## 触发短命令的句式
-
-以下任意句式均触发文章导入流程：
+当用户说以下任意一种表达时，Hermes 默认执行完整导入流程：
 
 - "把这篇文章完整翻译并加入知识库：【URL】"
 - "入库并完整翻译：【URL】"
 - "加入知识库：【URL】"
 - "翻译后入库：【URL】"
+- "把这篇文章完整翻译并加入知识库：URL"
 
-其中 【URL】可以是：
-- 单个 URL
-- 多个 URL（以空格或换行分隔）
+### 默认行为
 
----
+| 参数 | 默认值 |
+|------|--------|
+| content_type | article |
+| 翻译语言 | zh-CN |
+| 目录名格式 | YYYY-MM-DD-来源-slug |
+| tags/topics | 由 Hermes 根据内容自动判断 |
+| commit & push | 自动执行 |
 
-## 默认执行流程
+### 执行流程
 
-触发后，Hermes 默认执行 `templates/prompts/import_article_prompt.md` 中定义的完整流程：
+1. 抓取正文（web_extract → browser 降级）
+2. 创建目录结构
+3. 保存 source.md
+4. 完整翻译为 translation.zh-CN.md
+5. 生成 metadata.yaml（含 title_zh, source_site, word_count 等完整字段）
+6. 生成 summary.md
+7. 生成 notes.md（使用统一模板）
+8. 处理 assets/
+9. 更新索引（build_index.py）
+10. 运行质量检查（check_kb.py + check_translation_residue.py）
+11. Commit & Push
+12. 生成导入报告
 
-1. 抓取正文（web_extract → browser fallback）
-2. 保存 `source.md`
-3. 完整准确翻译为 `translation.zh-CN.md`
-4. 生成 `summary.md`
-5. 生成 `metadata.yaml`
-6. 生成 `notes.md`
-7. 处理必要 `assets/`（图片等）
-8. 更新索引（`scripts/build_index.py`）
-9. 运行检查（`scripts/check_kb.py`）
-10. `git add -A && git commit -m "Add [文章标题] article"`
-11. `git push origin main`
-12. 输出导入报告
+### 质量门禁
 
----
+导入完成后必须满足：
 
-## 默认参数
+- check_kb.py PASS（0 issues）
+- check_translation_residue.py 无严重残留（suspicious_count < 20）
+- metadata.yaml 字段完整（含 title_zh, source_site, language, translation_language, word_count）
+- word_count.source > 0 且 word_count.translation > 0
+- notes.md 使用统一模板
 
-| 参数 | 默认值 | 说明 |
-|------|--------|------|
-| `content_type` | `article` | 内容类型 |
-| `翻译语言` | `zh-CN` | 简体中文 |
-| `commit message` | 自动生成 | `Add [文章标题] article` |
-| `目录名` | 自动 | `YYYY-MM-DD-来源-slug` |
-| `tags` | 自动 | Hermes 根据内容判断 |
-| `topics` | 自动 | Hermes 根据内容判断 |
-| `status` | `imported` | 导入状态 |
+### 强制停止条件
 
----
+以下情况 Hermes 必须停止导入，向用户报告，不要强行入库：
 
-## 不追问的情况（直接执行）
+- URL 无法访问或返回 404/403/500
+- 正文抓取不完整（明显截断、缺少关键章节）
+- 文章需要登录或付费才能阅读完整内容
+- 内容类型不明确（无法判断是文章、论文、评论等）
+- 翻译后英文残留严重（suspicious_count ≥ 20）
+- metadata 关键字段无法确定（如作者、标题缺失）
 
-以下情况 Hermes **不需要追问**，直接执行：
+### 追问场景
 
-- URL 可正常访问
-- 页面是标准文章（blog post、news article、essay）
-- 内容可完整抓取
-- 用户给了单个 URL
-- 用户没有写"先不要 push"或"先不要 commit"
+如果用户只说"把这篇文章加入知识库"但没有提供 URL，Hermes 应该追问：
+"请提供文章 URL。"
 
----
+如果用户提供多个 URL 且没有明确说明，Hermes 应该追问：
+"您想导入哪一篇文章？请提供具体 URL。"
 
-## 必须追问的情况
+### 模板位置
 
-以下情况 Hermes **必须追问** 用户，确认后再执行：
+完整导入流程模板：`templates/prompts/import_article_prompt.md`
 
-| 情况 | 追问内容 |
-|------|----------|
-| URL 无法访问 | "该 URL 无法访问，请确认链接是否正确" |
-| 无法判断内容类型 | "该页面看起来是视频/论文/书籍/GitHub 项目，是否仍按文章导入？" |
-| 需要登录或付费墙 | "该页面需要登录或付费，是否继续？" |
-| 正文明显不完整 | "抓取到的内容似乎不完整（仅 X 字），是否继续？" |
-| 多个 URL 未说明 | "您提供了 X 个 URL，是否全部导入？" |
-| 用户明确阻止 | "您写了'先不要 push/commit'，是否暂存本地？" |
+metadata 模板：`templates/metadata.yaml`
 
----
-
-## 覆盖默认行为
-
-用户可以通过以下方式覆盖默认参数：
-
-| 指令 | 效果 |
-|------|------|
-| "content_type: paper" | 按论文导入（检查 abstract、references 等） |
-| "content_type: book" | 按书籍导入（检查 chapters 等） |
-| "tags: AI, 机器学习" | 指定标签 |
-| "topics: 技术, 研究" | 指定主题 |
-| "先不要 push" | 执行到 commit 为止，不 push |
-| "先不要 commit" | 执行到生成文件为止，不 commit |
-| "翻译为英文" | 输出 `translation.en.md` 而非 `translation.zh-CN.md` |
-
----
-
-## 示例
-
-### 示例 1：标准导入
-
-用户：把这篇文章完整翻译并加入知识库：https://arun.is/blog/jr-logo/
-
-Hermes：直接执行完整导入流程，无需追问。
-
-### 示例 2：多个 URL
-
-用户：加入知识库：
-https://example.com/article1
-https://example.com/article2
-
-Hermes：追问 "您提供了 2 个 URL，是否全部导入？"
-
-### 示例 3：付费墙
-
-用户：翻译后入库：https://example.com/paywalled-article
-
-Hermes：追问 "该页面需要付费访问，是否继续？"
-
-### 示例 4：覆盖参数
-
-用户：把这篇文章加入知识库：https://example.com/ai-paper，content_type: paper，tags: 深度学习
-
-Hermes：按论文导入流程执行，使用指定标签。
-
----
-
-## 相关文件
-
-- `templates/prompts/import_article_prompt.md` — 完整导入流程模板
-- `scripts/check_kb.py` — 知识库完整性检查
-- `scripts/build_index.py` — 索引构建
-- `README.md` — 项目说明
+notes 模板：`templates/notes.md`

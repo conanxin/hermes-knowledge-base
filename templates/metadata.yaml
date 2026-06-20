@@ -1,11 +1,18 @@
 title: ""
+title_zh: "PLACEHOLDER"  # 必填，不得为空
 source_url: ""
-captured_date: ""
-status: captured
-type: article
-tags: []
+source_site: "PLACEHOLDER"  # 必填，如 Vulture、The Convivial Society
 author: ""
-language: en
-summary: ""
-translation_progress: 0
-reviewed: false
+published_date: "YYYY-MM-DD"
+captured_date: "YYYY-MM-DD"
+language: "en"
+translation_language: "zh-CN"
+status: "translated"
+type: "article"
+topics:
+  - "PLACEHOLDER"  # 建议 3-8 个
+tags:
+  - "PLACEHOLDER"  # 建议 6-12 个
+word_count:
+  source: PLACEHOLDER  # 必须根据 source.md 实际计算，不得为 0
+  translation: PLACEHOLDER  # 必须根据 translation.zh-CN.md 实际计算，不得为 0

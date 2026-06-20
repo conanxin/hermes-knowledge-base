@@ -38,29 +38,9 @@
 
 ## 导入文章
 
-使用模板化 Prompt 导入任意网页文章：
+### 短命令（推荐）
 
-```bash
-# 1. 复制模板
-cp templates/prompts/import_article_prompt.md /tmp/my_import.md
-
-# 2. 替换占位符
-# {{URL}}              → 目标文章 URL
-# {{CONTENT_TYPE}}     → article / book / paper / video
-# {{TOPICS}}           → 主题领域，如 "AI, 电影史"
-# {{TAGS}}             → 标签列表
-# {{SPECIAL_REQUIREMENTS}} → 特殊要求，如 "保留所有引用"、"重点翻译第3章"
-
-# 3. 将填充后的 Prompt 发送给 Hermes agent
-```
-
-模板覆盖完整流程：抓取 → 翻译 → 摘要 → 索引 → 检查 → 提交 → 推送 → 报告。
-
-详见 `templates/prompts/import_article_prompt.md`。
-
-## 短命令用法
-
-更快捷的方式——直接对 Hermes 说：
+直接对 Hermes 说：
 
 - "把这篇文章完整翻译并加入知识库：https://example.com/article"
 - "入库并完整翻译：https://example.com/article"
@@ -76,4 +56,49 @@ Hermes 会自动执行完整导入流程，无需追问（除非遇到付费墙�
 - tags/topics 由 Hermes 根据内容自动判断
 - 自动 commit 并 push
 
-详见 `docs/AGENT_COMMANDS.md`。
+### 导入后自动执行的质量检查
+
+每篇文章导入完成后，Hermes 会自动运行：
+
+```bash
+python3 scripts/check_kb.py
+python3 scripts/check_translation_residue.py
+python3 scripts/build_index.py
+```
+
+**check_kb.py** 必须 PASS，否则修复问题后再继续。  
+**check_translation_residue.py** 可以有 warning，但严重残留必须修复。
+
+### 质量门禁规则
+
+| 检查项 | 要求 | 失败处理 |
+|--------|------|----------|
+| metadata.yaml 字段完整 | 必须包含 title, title_zh, source_url, source_site, author, published_date, captured_date, language, translation_language, status, type, topics, tags, word_count | 修复后重新检查 |
+| title_zh | 非空，不得为 PLACEHOLDER | 补充中文标题 |
+| word_count | source > 0, translation > 0 | 重新计算并写入 |
+| tags | 6-12 个 | 调整数量 |
+| topics | 3-8 个 | 调整数量 |
+| 翻译完整性 | 无大段英文残留、无漏译、无乱码 | 修复翻译 |
+| notes.md | 使用统一模板 | 替换为 templates/notes.md |
+
+### 强制停止条件
+
+以下情况 Hermes 必须停止导入，向用户报告，不要强行入库：
+
+- URL 无法访问或返回 404/403/500
+- 正文抓取不完整（明显截断、缺少关键章节）
+- 文章需要登录或付费才能阅读完整内容
+- 内容类型不明确
+- 翻译后英文残留严重（suspicious_count ≥ 20）
+- metadata 关键字段无法确定
+
+### 模板化 Prompt（高级）
+
+如需自定义导入流程，使用模板：
+
+```bash
+cp templates/prompts/import_article_prompt.md /tmp/my_import.md
+# 替换占位符后发送给 Hermes
+```
+
+详见 `templates/prompts/import_article_prompt.md` 和 `docs/AGENT_COMMANDS.md`。
