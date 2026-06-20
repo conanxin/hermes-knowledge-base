@@ -35,3 +35,25 @@
 - `summarized` — 已摘要
 - `reviewed` — 已审阅
 - `archived` — 已归档
+
+## 导入文章
+
+使用模板化 Prompt 导入任意网页文章：
+
+```bash
+# 1. 复制模板
+cp templates/prompts/import_article_prompt.md /tmp/my_import.md
+
+# 2. 替换占位符
+# {{URL}}              → 目标文章 URL
+# {{CONTENT_TYPE}}     → article / book / paper / video
+# {{TOPICS}}           → 主题领域，如 "AI, 电影史"
+# {{TAGS}}             → 标签列表
+# {{SPECIAL_REQUIREMENTS}} → 特殊要求，如 "保留所有引用"、"重点翻译第3章"
+
+# 3. 将填充后的 Prompt 发送给 Hermes agent
+```
+
+模板覆盖完整流程：抓取 → 翻译 → 摘要 → 索引 → 检查 → 提交 → 推送 → 报告。
+
+详见 `templates/prompts/import_article_prompt.md`。
