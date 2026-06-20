@@ -100,11 +100,12 @@ Hermes 会自动执行完整导入流程，无需追问（除非遇到付费墙�
 
 ```bash
 python3 scripts/check_kb.py
+python3 scripts/update_site.py
 python3 scripts/check_translation_residue.py
-python3 scripts/build_index.py
 ```
 
 **check_kb.py** 必须 PASS，否则修复问题后再继续。  
+**update_site.py** 必须 PASS，确保 site/ 和 docs/ 同步完成。  
 **check_translation_residue.py** 可以有 warning，但严重残留必须修复。
 
 ### 质量门禁规则
@@ -118,6 +119,7 @@ python3 scripts/build_index.py
 | topics | 3-8 个 | 调整数量 |
 | 翻译完整性 | 无大段英文残留、无漏译、无乱码 | 修复翻译 |
 | notes.md | 使用统一模板 | 替换为 templates/notes.md |
+| 在线浏览页同步 | update_site.py PASS | 修复同步问题 |
 
 ### 强制停止条件
 

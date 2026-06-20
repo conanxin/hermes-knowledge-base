@@ -31,19 +31,35 @@
 7. 生成 notes.md（使用统一模板）
 8. 处理 assets/
 9. 更新索引（build_index.py）
-10. 运行质量检查（check_kb.py + check_translation_residue.py）
-11. Commit & Push
-12. 生成导入报告
+10. 更新在线浏览页（update_site.py）
+11. 运行质量检查（check_kb.py + check_translation_residue.py）
+12. Commit & Push
+13. 生成导入报告
 
 ### 质量门禁
 
 导入完成后必须满足：
 
 - check_kb.py PASS（0 issues）
+- update_site.py PASS（site/ 和 docs/ 同步完成）
 - check_translation_residue.py 无严重残留（suspicious_count < 20）
 - metadata.yaml 字段完整（含 title_zh, source_site, language, translation_language, word_count）
 - word_count.source > 0 且 word_count.translation > 0
 - notes.md 使用统一模板
+
+### 导入后自动执行的质量检查
+
+每篇文章导入完成后，Hermes 会自动运行：
+
+```bash
+python3 scripts/check_kb.py
+python3 scripts/update_site.py
+python3 scripts/check_translation_residue.py
+```
+
+**check_kb.py** 必须 PASS，否则修复问题后再继续。  
+**update_site.py** 必须 PASS，确保 site/ 和 docs/ 同步完成。  
+**check_translation_residue.py** 可以有 warning，但严重残留必须修复。
 
 ### 强制停止条件
 

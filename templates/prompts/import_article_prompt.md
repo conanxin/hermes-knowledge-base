@@ -177,7 +177,23 @@ cd ~/projects/hermes-knowledge-base
 python3 scripts/build_index.py
 ```
 
-### 10. 运行质量检查
+### 10. 更新在线浏览页
+
+运行：
+
+```bash
+cd ~/projects/hermes-knowledge-base
+python3 scripts/update_site.py
+```
+
+`update_site.py` 会依次执行：
+1. `build_index.py` — 重建索引
+2. `export_site_data.py` — 导出 site/data/catalog.json
+3. `sync_pages_docs.py` — 将 site/ 同步到 docs/（GitHub Pages 发布目录）
+
+**注意**：`docs/data/catalog.json` 必须包含在 commit 中，否则 GitHub Pages 不会更新。
+
+### 11. 运行质量检查
 
 ```bash
 cd ~/projects/hermes-knowledge-base
@@ -191,12 +207,13 @@ python3 scripts/check_translation_residue.py
 **质量门禁清单：**
 - [ ] check_kb.py: PASS — N items, 0 issues
 - [ ] build_index.py: PASS — N records
+- [ ] update_site.py: PASS — site/ 和 docs/ 同步完成
 - [ ] check_translation_residue.py: 无严重残留（suspicious_count < 10）
 - [ ] metadata.yaml 字段完整（含 title_zh, source_site, language, translation_language, word_count）
 - [ ] word_count.source > 0 且 word_count.translation > 0
 - [ ] notes.md 使用统一模板
 
-### 11. Commit
+### 12. Commit
 
 ```bash
 cd ~/projects/hermes-knowledge-base
