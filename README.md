@@ -147,6 +147,23 @@ cp templates/prompts/import_article_prompt.md /tmp/my_import.md
 
 GitHub Pages: https://conanxin.github.io/hermes-knowledge-base/
 
+### 更新在线浏览页
+
+新增知识库内容后，同步更新线上浏览页：
+
+```bash
+python3 scripts/build_index.py
+python3 scripts/export_site_data.py
+python3 scripts/sync_pages_docs.py
+git status
+```
+
+或一键运行：
+
+```bash
+python3 scripts/update_site.py
+```
+
 ### 本地运行
 
 ```bash
