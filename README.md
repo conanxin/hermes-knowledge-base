@@ -140,3 +140,20 @@ cp templates/prompts/import_article_prompt.md /tmp/my_import.md
 ```
 
 详见 `templates/prompts/import_article_prompt.md` 和 `docs/AGENT_COMMANDS.md`。
+
+## 本地浏览知识库
+
+生成静态浏览页数据并启动本地服务器：
+
+```bash
+python3 scripts/export_site_data.py
+python3 -m http.server 8000 -d site
+```
+
+浏览器打开 http://localhost:8000
+
+功能：
+- 按类型筛选（article / note / project / resource_collection）
+- 关键词搜索（标题、标签、主题）
+- 按日期倒序排列
+- 一键复制 path、跳转 GitHub 查看

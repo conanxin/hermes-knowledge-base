@@ -16,8 +16,17 @@ FIELDS = [
     "author",
     "captured_date",
     "migrated_date",
+    "published_date",
     "item_count",
 ]
+
+
+def get_updated_date(data):
+    """Return the most relevant date for display, or None."""
+    for key in ("captured_date", "migrated_date", "published_date"):
+        if data.get(key):
+            return data[key]
+    return None
 
 
 def export_site_data():
@@ -29,6 +38,7 @@ def export_site_data():
                 continue
             data = json.loads(line)
             filtered = {k: v for k, v in data.items() if k in FIELDS}
+            filtered["updated_date"] = get_updated_date(data)
             records.append(filtered)
 
     OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
