@@ -59,6 +59,34 @@ content/collections/
 3. **质量门槛**：来源要求、最低信息量
 4. **使用建议**：读者如何使用这个列表
 
+## source_url 和 source_site 规则
+
+- resource_collection 可以没有单一 source_url
+- 如果没有明确外部来源 URL，使用：
+  - `source_url: null`
+  - `source_url_missing: true`
+- resource_collection 可以没有单一 source_site
+- 如果资源集合来自本地旧库或多来源整理，允许：
+  - `source_site: null`
+
+## item_count 规则
+
+- `item_count` 必须大于 0
+- `item_count` 必须与 `collection.md` 中表格条目数量一致
+- 脚本会自动检查一致性
+
+## 必需文件
+
+- `metadata.yaml`
+- `collection.md`
+- `source.md`（保存原始内容或清理后的完整原始内容）
+- `summary.md`
+- `notes.md`
+
+## 不创建的文件
+
+- `translation.zh-CN.md`（resource_collection 不需要翻译）
+
 ## 检查规则
 
 - `check_kb.py`：不强制 translation.zh-CN.md，但必须检查 item_count

@@ -17,11 +17,34 @@
 | `content/videos/` | 视频 |
 | `content/projects/` | 项目文档（有 source_url，无翻译） |
 | `content/legacy-knowledge/` | 旧知识库迁移内容（中文笔记，无翻译） |
-| `content/collections/` | 资源集合（结构化列表，无翻译） |
 | `index/` | 索引和目录 |
 | `scripts/` | 自动化脚本 |
 | `templates/` | 模板 |
 | `reports/` | 运行报告 |
+
+## 当前内容类型
+
+| 类型 | 数量 | 说明 | 目录 |
+|------|------|------|------|
+| article | 4 | 外部文章，有 source_url，需翻译 | `content/articles/` |
+| note | 5 | 中文笔记，无翻译，有 legacy_source_path | `content/legacy-knowledge/` |
+| project | 2 | 项目文档，有 source_url，无翻译 | `content/projects/` |
+| resource_collection | 4 | 资源集合，结构化列表，无翻译 | `content/collections/` |
+| **总计** | **15** | — | — |
+
+## 质量检查命令
+
+```bash
+python3 scripts/check_kb.py
+python3 scripts/check_translation_residue.py
+python3 scripts/build_index.py
+```
+
+| 脚本 | 用途 | 预期结果 |
+|------|------|----------|
+| `check_kb.py` | 检查 metadata 完整性 | PASS (15/15) |
+| `check_translation_residue.py` | 检查翻译残留 | WARNING 可接受 |
+| `build_index.py` | 重建索引 | 15 records |
 
 ## 维护方式
 
