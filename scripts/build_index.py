@@ -26,7 +26,7 @@ def scan_metadata():
                     if ":" in line and not line.strip().startswith("#"):
                         key, val = line.split(":", 1)
                         data[key.strip()] = val.strip().strip('"').strip("'")
-        data["_path"] = str(rel_path.parent)
+        data["path"] = str(rel_path.parent)
         records.append(data)
     return records
 

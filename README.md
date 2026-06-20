@@ -28,9 +28,9 @@
 |------|------|------|------|
 | article | 4 | 外部文章，有 source_url，需翻译 | `content/articles/` |
 | note | 5 | 中文笔记，无翻译，有 legacy_source_path | `content/legacy-knowledge/` |
-| project | 2 | 项目文档，有 source_url，无翻译 | `content/projects/` |
+| project | 4 | 项目文档，有 source_url，无翻译 | `content/projects/` |
 | resource_collection | 4 | 资源集合，结构化列表，无翻译 | `content/collections/` |
-| **总计** | **15** | — | — |
+| **总计** | **17** | — | — |
 
 ## 质量检查命令
 
@@ -42,9 +42,9 @@ python3 scripts/build_index.py
 
 | 脚本 | 用途 | 预期结果 |
 |------|------|----------|
-| `check_kb.py` | 检查 metadata 完整性 | PASS (15/15) |
+| `check_kb.py` | 检查 metadata 完整性 | PASS (17/17) |
 | `check_translation_residue.py` | 检查翻译残留 | WARNING 可接受 |
-| `build_index.py` | 重建索引 | 15 records |
+| `build_index.py` | 重建索引 | 17 records |
 
 ## 维护方式
 
