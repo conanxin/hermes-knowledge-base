@@ -1,17 +1,20 @@
 title: "AI 没有意识，但它正在成为我们的无意识"
+title_zh: "AI 没有意识，但它正在成为我们的无意识"
 source_url: "https://theconvivialsociety.substack.com/p/ai-is-not-conscious-but-it-is-becoming"
+source_site: "The Convivial Society"
 author: "L. M. Sacasas (Michael)"
 published_date: "2026-06-16"
 captured_date: "2026-06-20"
-status: "imported"
+language: "en"
+translation_language: "zh-CN"
+status: "translated"
 type: "article"
 topics:
   - "人工智能"
   - "哲学"
   - "技术伦理"
   - "无意识"
-  - "汉娜·阿伦特"
-  - "麦克卢汉"
+  - "技术哲学"
 tags:
   - "AI"
   - "无意识"
@@ -26,5 +29,5 @@ tags:
   - "精神分析"
   - "The Convivial Society"
 word_count:
-  source: 0
-  translation: 0
+  source: 3842
+  translation: 6133
