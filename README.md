@@ -11,12 +11,12 @@
 | 目录 | 说明 |
 |------|------|
 | `inbox/raw/` | 原始素材（未处理的网页、PDF、截图等） |
-| `content/articles/` | 文章 |
+| `content/articles/` | 外部文章（有 source_url，需翻译） |
 | `content/books/` | 书籍 |
 | `content/papers/` | 论文 |
 | `content/videos/` | 视频 |
-| `content/projects/` | 项目 |
-| `content/legacy-knowledge/` | 旧知识库迁移内容 |
+| `content/projects/` | 项目文档（有 source_url，无翻译） |
+| `content/legacy-knowledge/` | 旧知识库迁移内容（中文笔记，无翻译） |
 | `index/` | 索引和目录 |
 | `scripts/` | 自动化脚本 |
 | `templates/` | 模板 |
