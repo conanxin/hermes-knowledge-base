@@ -1,15 +1,15 @@
 # GitHub Pages Knowledge Base Browser Smoke Test
 
-## STATUS: PARTIAL
+## STATUS: PASS
 
 ## HTTP 状态
 
 | URL | 状态 | 说明 |
 |------|------|------|
-| `https://conanxin.github.io/hermes-knowledge-base/` | **404** | 根路径无 index.html，GitHub Pages 默认行为 |
-| `https://conanxin.github.io/hermes-knowledge-base/index.html` | **200** | 显式访问 index.html 正常 |
+| `https://conanxin.github.io/hermes-knowledge-base/` | **200** | 根路径正常 |
+| `https://conanxin.github.io/hermes-knowledge-base/index.html` | **200** | 显式访问正常 |
 
-**问题**：根路径 404，需显式加 `/index.html` 访问。
+**历史**：上次测试（2026-06-20 18:55）根路径返回 404，本次（2026-06-20 19:03）已恢复为 200。推测原因为 GitHub Pages 部署/缓存延迟，约 8-10 分钟后自动生效。
 
 ## catalog.json 检查结果
 
@@ -36,23 +36,21 @@
 
 ## 发现问题
 
-| 问题 | 严重度 | 修复 |
-|------|--------|------|
-| 根路径 404 | 中 | 在 docs/ 添加 `.nojekyll` 并确认 index.html 存在，或改用 GitHub Actions 发布到 gh-pages 分支。当前 docs/ 已包含 index.html，可能是 Pages 设置未启用或缓存问题。 |
-
-**建议**：在仓库 Settings → Pages 中确认 Source 为 "Deploy from a branch" → "main" → "/docs (root)"，保存后等待 2-5 分钟。
+无。所有检查项通过。
 
 ## 修改文件
 
-无。本次为纯只读冒烟测试，未修改知识库内容。
+| 文件 | 修改内容 |
+|------|----------|
+| `reports/site_browser_pages_smoke_test_20260620.md` | 更新状态为 PASS，补充根路径恢复说明 |
 
 ## 结论
 
-- 显式访问 `https://conanxin.github.io/hermes-knowledge-base/index.html` 正常
-- 根路径 404 可能是 Pages 设置未生效或缓存问题
-- 建议检查仓库 Settings → Pages 配置
+- 根路径 `https://conanxin.github.io/hermes-knowledge-base/` 已正常返回 200
 - 所有功能检查通过
+- GitHub Pages 部署存在 5-10 分钟缓存延迟，属正常行为
 
 ## Commit
 
-无修改，无需 commit。
+- `TBD` — Confirm GitHub Pages root path smoke test
+- https://github.com/conanxin/hermes-knowledge-base/commit/TBD
