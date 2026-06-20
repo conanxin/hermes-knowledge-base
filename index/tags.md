@@ -183,13 +183,27 @@
 
 - Wiki 代替 RAG 的可行性评估
 
+## agent-training
+
+- ArXiv AI Agents 论文列表
+
+## ai-agents
+
+- ArXiv AI Agents 论文列表
+
 ## ai-safety
 
 - ArXiv LLM Systems 论文列表
 
 ## arxiv
 
+- ArXiv AI Agents 论文列表
 - ArXiv LLM Systems 论文列表
+- Awesome LLM Long Context 资源列表
+
+## awesome-list
+
+- Awesome LLM Long Context 资源列表
 
 ## benchmark
 
@@ -199,9 +213,63 @@
 
 - ArXiv LLM Systems 论文列表
 
+## community
+
+- Hacker News ML 热门链接
+
+## federated-learning
+
+- ArXiv AI Agents 论文列表
+
+## github
+
+- Awesome LLM Long Context 资源列表
+
+## hacker-news
+
+- Hacker News ML 热门链接
+
+## links
+
+- Hacker News ML 热门链接
+
 ## llm
 
 - ArXiv LLM Systems 论文列表
+- Awesome LLM Long Context 资源列表
+
+## long-context
+
+- Awesome LLM Long Context 资源列表
+
+## machine-learning
+
+- Hacker News ML 热门链接
+
+## ml
+
+- Hacker News ML 热门链接
+
+## news
+
+- Hacker News ML 热门链接
+
+## papers
+
+- ArXiv AI Agents 论文列表
+
+## reinforcement-learning
+
+- ArXiv AI Agents 论文列表
+
+## research
+
+- ArXiv AI Agents 论文列表
+- Awesome LLM Long Context 资源列表
+
+## resources
+
+- Awesome LLM Long Context 资源列表
 
 ## speech-generation
 

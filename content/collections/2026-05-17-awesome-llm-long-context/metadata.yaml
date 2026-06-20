@@ -1,0 +1,31 @@
+title: "Awesome LLM Long Context 资源列表"
+title_zh: "长上下文大语言模型精选资源"
+source_url: null
+source_url_missing: true
+legacy_source_path: "~/.hermes/wiki/research/awesome-llm-long-context.md"
+source_site: null
+author: "社区整理"
+published_date: ""
+captured_date: "2026-05-17"
+migrated_date: "2026-06-20"
+language: "zh"
+translation_language: null
+status: "migrated"
+type: "resource_collection"
+topics:
+  - "LLM"
+  - "Long-Context"
+  - "Awesome-List"
+tags:
+  - "github"
+  - "resources"
+  - "llm"
+  - "long-context"
+  - "awesome-list"
+  - "arxiv"
+  - "research"
+item_count: 2
+word_count:
+  source: 113
+path: "content/collections/2026-05-17-awesome-llm-long-context/"
+migration_note: "从旧知识库迁移的长上下文 LLM 资源列表，包含文档工具与学术文献两类资源。原始提取中存在重复链接，已做去重合并。"

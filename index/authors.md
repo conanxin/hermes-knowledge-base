@@ -16,6 +16,10 @@
 
 - Transformer 解码机制解析
 
+## ArXiv 作者
+
+- ArXiv AI Agents 论文列表
+
 ## Arun Venkatesan
 
 - 日本铁路如何在分裂中保持统一
@@ -27,6 +31,10 @@
 ## Erik Hoel
 
 - Don't dethrone consciousness!
+
+## Hacker News 社区
+
+- Hacker News ML 热门链接
 
 ## Hermes Agent
 
@@ -41,4 +49,8 @@
 ## NousResearch
 
 - Hermes Agent Self-Evolution
+
+## 社区整理
+
+- Awesome LLM Long Context 资源列表
 

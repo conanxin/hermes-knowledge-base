@@ -1,0 +1,30 @@
+title: "Hacker News ML 热门链接"
+title_zh: "Hacker News 机器学习热门内容"
+source_url: null
+source_url_missing: true
+legacy_source_path: "~/.hermes/wiki/research/hacker-news-ml.md"
+source_site: null
+author: "Hacker News 社区"
+published_date: ""
+captured_date: "2026-05-14"
+migrated_date: "2026-06-20"
+language: "zh"
+translation_language: null
+status: "migrated"
+type: "resource_collection"
+topics:
+  - "Machine Learning"
+  - "Hacker News"
+  - "News"
+tags:
+  - "hacker-news"
+  - "news"
+  - "ml"
+  - "machine-learning"
+  - "community"
+  - "links"
+item_count: 10
+word_count:
+  source: 500
+path: "content/collections/2026-05-14-hacker-news-ml/"
+migration_note: "从旧知识库迁移的 Hacker News ML 板块热门内容快照，包含 10 条机器学习相关热门链接。原始数据为 HN RSS 抓取结果。"
