@@ -46,6 +46,19 @@ python3 scripts/build_index.py
 | `check_translation_residue.py` | 检查翻译残留 | WARNING 可接受 |
 | `build_index.py` | 重建索引 | 17 records |
 
+## 本地浏览知识库
+
+```bash
+# 1. 导出站点数据
+python3 scripts/export_site_data.py
+
+# 2. 启动本地服务器
+python3 -m http.server 8000 -d site
+
+# 3. 浏览器打开
+# http://localhost:8000
+```
+
 ## 维护方式
 
 - Hermes agent 自动抓取、翻译、归档

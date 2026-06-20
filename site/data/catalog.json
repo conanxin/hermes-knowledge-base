@@ -1,0 +1,438 @@
+[
+  {
+    "title": "Transformer 解码机制解析",
+    "title_zh": "Transformer 解码机制解析",
+    "author": "Amit Shekhar",
+    "captured_date": "2026-04-07",
+    "migrated_date": "2026-06-20",
+    "type": "note",
+    "topics": [
+      "Transformer",
+      "深度学习",
+      "注意力机制",
+      "LLM",
+      "架构"
+    ],
+    "tags": [
+      "Transformer",
+      "Attention",
+      "Deep Learning",
+      "LLM",
+      "Architecture",
+      "Tutorial",
+      "Amit Shekhar"
+    ],
+    "path": "content/legacy-knowledge/2026-04-07-transformer-decoding"
+  },
+  {
+    "title": "Karpathy Second Brain 实现指南",
+    "title_zh": "Karpathy Second Brain 实现指南",
+    "author": "@godofprompt",
+    "captured_date": "2026-04-07",
+    "migrated_date": "2026-06-20",
+    "type": "note",
+    "topics": [
+      "知识管理",
+      "LLM",
+      "Wiki",
+      "Second Brain",
+      "Prompt 工程"
+    ],
+    "tags": [
+      "Karpathy",
+      "Second Brain",
+      "知识管理",
+      "LLM Wiki",
+      "Prompt",
+      "知识积累",
+      "个人知识库",
+      "自动化"
+    ],
+    "path": "content/legacy-knowledge/2026-04-07-karpathy-second-brain-guide"
+  },
+  {
+    "title": "Wiki 代替 RAG 的可行性评估",
+    "title_zh": "Wiki 代替 RAG 的可行性评估",
+    "author": "Hermes Agent",
+    "captured_date": "2026-04-07",
+    "migrated_date": "2026-06-20",
+    "type": "note",
+    "topics": [
+      "知识架构",
+      "Wiki",
+      "RAG",
+      "LLM",
+      "知识管理"
+    ],
+    "tags": [
+      "Wiki",
+      "RAG",
+      "知识架构",
+      "Karpathy",
+      "知识管理",
+      "技术评估",
+      "架构对比"
+    ],
+    "path": "content/legacy-knowledge/2026-04-07-wiki-vs-rag-analysis"
+  },
+  {
+    "title": "灵感资源库",
+    "title_zh": "灵感资源库",
+    "author": "Hermes Agent",
+    "captured_date": "2026-03-19",
+    "migrated_date": "2026-06-20",
+    "type": "note",
+    "topics": [
+      "设计资源",
+      "AI 资源",
+      "灵感",
+      "资源库",
+      "工具推荐"
+    ],
+    "tags": [
+      "设计",
+      "AI",
+      "资源库",
+      "灵感",
+      "工具",
+      "Archive",
+      "精选"
+    ],
+    "path": "content/legacy-knowledge/2026-03-19-inspiration-archive"
+  },
+  {
+    "title": "Karpathy 的 LLM Wiki：AI 知识管理新范式",
+    "title_zh": "Karpathy 的 LLM Wiki：AI 知识管理新范式",
+    "author": "@elliotchen100 (艾略特)",
+    "captured_date": "2026-04-07",
+    "migrated_date": "2026-06-20",
+    "type": "note",
+    "topics": [
+      "AI 知识管理",
+      "LLM",
+      "知识库",
+      "RAG"
+    ],
+    "tags": [
+      "Karpathy",
+      "LLM Wiki",
+      "知识管理",
+      "RAG",
+      "持久化知识",
+      "笔记系统",
+      "AI 产品"
+    ],
+    "path": "content/legacy-knowledge/2026-04-07-karpathy-llm-wiki"
+  },
+  {
+    "title": "ArXiv AI Agents 论文列表",
+    "title_zh": "ArXiv AI Agents 相关论文",
+    "author": "ArXiv 作者",
+    "captured_date": "2026-05-06",
+    "migrated_date": "2026-06-20",
+    "type": "resource_collection",
+    "topics": [
+      "AI Agents",
+      "ArXiv",
+      "Research Papers"
+    ],
+    "tags": [
+      "arxiv",
+      "research",
+      "ai-agents",
+      "papers",
+      "federated-learning",
+      "reinforcement-learning",
+      "agent-training"
+    ],
+    "item_count": 3,
+    "path": "content/collections/2026-05-06-arxiv-ai-agents"
+  },
+  {
+    "title": "ArXiv LLM Systems 论文列表",
+    "title_zh": "ArXiv LLM Systems 论文列表",
+    "author": "Hermes Agent",
+    "captured_date": "2026-05-06",
+    "migrated_date": "2026-06-20",
+    "type": "resource_collection",
+    "topics": [
+      "LLM",
+      "AI Systems",
+      "Benchmark"
+    ],
+    "tags": [
+      "arxiv",
+      "llm",
+      "speech-generation",
+      "code-intelligence",
+      "ai-safety",
+      "benchmark"
+    ],
+    "item_count": 3,
+    "path": "content/collections/2026-05-06-arxiv-llm-systems"
+  },
+  {
+    "title": "Awesome LLM Long Context 资源列表",
+    "title_zh": "长上下文大语言模型精选资源",
+    "author": "社区整理",
+    "captured_date": "2026-05-17",
+    "migrated_date": "2026-06-20",
+    "type": "resource_collection",
+    "topics": [
+      "LLM",
+      "Long-Context",
+      "Awesome-List"
+    ],
+    "tags": [
+      "github",
+      "resources",
+      "llm",
+      "long-context",
+      "awesome-list",
+      "arxiv",
+      "research"
+    ],
+    "item_count": 2,
+    "path": "content/collections/2026-05-17-awesome-llm-long-context"
+  },
+  {
+    "title": "Hacker News ML 热门链接",
+    "title_zh": "Hacker News 机器学习热门内容",
+    "author": "Hacker News 社区",
+    "captured_date": "2026-05-14",
+    "migrated_date": "2026-06-20",
+    "type": "resource_collection",
+    "topics": [
+      "Machine Learning",
+      "Hacker News",
+      "News"
+    ],
+    "tags": [
+      "hacker-news",
+      "news",
+      "ml",
+      "machine-learning",
+      "community",
+      "links"
+    ],
+    "item_count": 10,
+    "path": "content/collections/2026-05-14-hacker-news-ml"
+  },
+  {
+    "title": "Hermes Agent Self-Evolution",
+    "title_zh": "Hermes Agent 自我进化系统",
+    "author": "NousResearch",
+    "captured_date": "2026-04-07",
+    "migrated_date": "2026-06-20",
+    "type": "project",
+    "topics": [
+      "AI Agent",
+      "自我进化",
+      "DSPy",
+      "GEPA",
+      "Prompt 优化"
+    ],
+    "tags": [
+      "Hermes Agent",
+      "Self-Evolution",
+      "DSPy",
+      "GEPA",
+      "Prompt Optimization",
+      "Runtime Optimization",
+      "NousResearch"
+    ],
+    "path": "content/projects/2026-04-13-hermes-agent-self-evolution"
+  },
+  {
+    "title": "Nia Docs — 把整个 Web 变成文件系统",
+    "title_zh": "Nia Docs — 把整个 Web 变成文件系统",
+    "author": "@arlanr (Nozomio Labs CEO)",
+    "captured_date": "2026-04-07",
+    "migrated_date": "2026-06-20",
+    "type": "project",
+    "topics": [
+      "AI Agent",
+      "文档系统",
+      "文件系统",
+      "RAG",
+      "MCP"
+    ],
+    "tags": [
+      "Nia Docs",
+      "Agent",
+      "Documentation",
+      "Filesystem",
+      "RAG",
+      "MCP",
+      "Nozomio Labs"
+    ],
+    "path": "content/projects/2026-04-07-nia-docs-filesystem"
+  },
+  {
+    "title": "Session Guard Phase 1: Pre-Request Sanitizer",
+    "title_zh": "Session Guard 第一阶段：预请求审查器设计",
+    "author": "Hermes Agent",
+    "captured_date": "2026-05-14",
+    "migrated_date": "2026-06-20",
+    "type": "project",
+    "topics": [
+      "Security",
+      "Session Guard",
+      "Tool Calls",
+      "OpenAI API",
+      "Python"
+    ],
+    "tags": [
+      "security",
+      "session-guard",
+      "tool-calls",
+      "openai-api",
+      "python",
+      "sanitizer",
+      "hermes-agent",
+      "auxiliary-client",
+      "error-handling",
+      "defensive-programming"
+    ],
+    "path": "content/projects/2026-05-14-session-guard-sanitizer"
+  },
+  {
+    "title": "Hydro0x01 Local Hermes Security Audit",
+    "title_zh": "Hydro0x01 本地 Hermes 安全审计报告",
+    "author": "Hermes Agent",
+    "captured_date": "2026-05-18",
+    "migrated_date": "2026-06-20",
+    "type": "project",
+    "topics": [
+      "Security Audit",
+      "IoT",
+      "Hermes",
+      "Architecture"
+    ],
+    "tags": [
+      "security",
+      "audit",
+      "iot",
+      "hydro0x01",
+      "hermes",
+      "architecture",
+      "fastify",
+      "prisma",
+      "mqtt",
+      "esp32"
+    ],
+    "path": "content/projects/2026-05-18-hydro0x01-security-audit"
+  },
+  {
+    "title": "AI 没有意识，但它正在成为我们的无意识",
+    "title_zh": "AI 没有意识，但它正在成为我们的无意识",
+    "author": "L. M. Sacasas (Michael)",
+    "captured_date": "2026-06-20",
+    "type": "article",
+    "topics": [
+      "人工智能",
+      "哲学",
+      "技术伦理",
+      "无意识",
+      "技术哲学"
+    ],
+    "tags": [
+      "AI",
+      "无意识",
+      "汉娜·阿伦特",
+      "怀特海",
+      "麦克卢汉",
+      "技术哲学",
+      "Erik Hoel",
+      "Gregory Ulmer",
+      "集体无意识",
+      "数字技术",
+      "精神分析",
+      "The Convivial Society"
+    ],
+    "path": "content/articles/2026/2026-06-20-ai-unconscious-convivial-society"
+  },
+  {
+    "title": "Don't dethrone consciousness!",
+    "title_zh": "不要废黜意识！",
+    "author": "Erik Hoel",
+    "captured_date": "2026-06-20",
+    "type": "article",
+    "topics": [
+      "人工智能",
+      "意识",
+      "哲学",
+      "技术伦理",
+      "神经科学"
+    ],
+    "tags": [
+      "Erik Hoel",
+      "AI意识",
+      "大型语言模型",
+      "整合信息理论",
+      "教皇通谕",
+      "Ted Chiang",
+      "Richard Dawkins",
+      "裂脑患者",
+      "虚构",
+      "思维链",
+      "元认知",
+      "The Intrinsic Perspective"
+    ],
+    "path": "content/articles/2026/2026-06-20-dont-dethrone-consciousness-erik-hoel"
+  },
+  {
+    "title": "An Oral History of Steven Spielberg, a Raider of a Lost Art",
+    "title_zh": "史蒂文·斯皮尔伯格口述史：失落艺术的夺宝者",
+    "author": "Bilge Ebiri",
+    "captured_date": "2026-06-20",
+    "type": "article",
+    "topics": [
+      "电影",
+      "好莱坞",
+      "口述史",
+      "导演",
+      "电影史"
+    ],
+    "tags": [
+      "Steven Spielberg",
+      "斯皮尔伯格",
+      "电影",
+      "好莱坞",
+      "口述史",
+      "导演",
+      "Jaws",
+      "E.T.",
+      "Indiana Jones",
+      "Schindler's List",
+      "Movie Brats"
+    ],
+    "path": "content/articles/2026/2026-06-20-vulture-spielberg-oral-history"
+  },
+  {
+    "title": "日本铁路如何在分裂中保持统一",
+    "title_zh": "日本铁路如何在分裂中保持统一",
+    "author": "Arun Venkatesan",
+    "captured_date": "2026-06-20",
+    "type": "article",
+    "topics": [
+      "日本铁路",
+      "品牌设计",
+      "企业形象",
+      "私有化",
+      "设计史"
+    ],
+    "tags": [
+      "JR",
+      "日本铁路",
+      "品牌设计",
+      "企业形象",
+      "私有化",
+      "设计史",
+      "NDC",
+      "标志设计",
+      "日本文化"
+    ],
+    "path": "content/articles/2026/2026-06-20-jr-logo-japan-railways"
+  }
+]
