@@ -141,9 +141,13 @@ cp templates/prompts/import_article_prompt.md /tmp/my_import.md
 
 详见 `templates/prompts/import_article_prompt.md` 和 `docs/AGENT_COMMANDS.md`。
 
-## 本地浏览知识库
+## 浏览知识库
 
-生成静态浏览页数据并启动本地服务器：
+### 在线访问
+
+GitHub Pages: https://conanxin.github.io/hermes-knowledge-base/
+
+### 本地运行
 
 ```bash
 python3 scripts/export_site_data.py
