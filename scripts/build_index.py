@@ -36,6 +36,7 @@ def build_catalog(records):
     catalog_path = INDEX_DIR / "catalog.jsonl"
     with open(catalog_path, "w", encoding="utf-8") as f:
         for r in records:
+            # Ensure item_count is preserved for resource_collection
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
     print(f"catalog.jsonl: {len(records)} records")
 

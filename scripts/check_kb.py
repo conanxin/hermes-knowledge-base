@@ -105,7 +105,7 @@ def check_kb():
             if not trans_file.exists():
                 issues.append(f"MISSING translation.zh-CN.md: {rel_dir}")
         else:
-            # note/project/resource/report/prompt: translation_language can be null/empty
+            # note/project/resource/report/prompt/resource_collection: translation_language can be null/empty
             pass
 
         # --- 6. word_count rules ---
@@ -122,7 +122,13 @@ def check_kb():
                 if not isinstance(wc_trans, int) or wc_trans < 0:
                     issues.append(f"INVALID word_count.translation={wc_trans} in {rel_meta}")
 
-        # --- 7. topics and tags ---
+        # --- 7. item_count rules (for resource_collection) ---
+        if item_type == "resource_collection":
+            item_count = data.get("item_count", 0)
+            if not isinstance(item_count, int) or item_count <= 0:
+                issues.append(f"INVALID item_count={item_count} for resource_collection in {rel_meta}")
+
+        # --- 8. topics and tags ---
         topics = data.get("topics", [])
         if not isinstance(topics, list) or len(topics) == 0:
             issues.append(f"EMPTY topics in {rel_meta}")
@@ -130,13 +136,18 @@ def check_kb():
         if not isinstance(tags, list) or len(tags) == 0:
             issues.append(f"EMPTY tags in {rel_meta}")
 
-        # --- 8. Check base required files for ALL types ---
-        for req_file in BASE_REQUIRED_FILES:
+        # --- 9. Check base required files for ALL types ---
+        # resource_collection uses collection.md instead of source.md
+        if item_type == "resource_collection":
+            req_files = ["metadata.yaml", "collection.md", "summary.md", "notes.md"]
+        else:
+            req_files = BASE_REQUIRED_FILES
+        for req_file in req_files:
             req_path = item_dir / req_file
             if not req_path.exists():
                 issues.append(f"MISSING {req_file}: {rel_dir}")
 
-        # --- 9. Count OK if no issues for this item ---
+        # --- 10. Count OK if no issues for this item ---
         item_issues = [i for i in issues if str(rel_meta) in i or str(rel_dir) in i]
         if not missing_keys and not item_issues:
             ok += 1

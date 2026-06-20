@@ -1,0 +1,21 @@
+title: "PLACEHOLDER"
+title_zh: "PLACEHOLDER"
+source_url: ""
+source_url_missing: true
+legacy_source_path: ""
+source_site: ""
+author: ""
+published_date: ""
+captured_date: ""
+migrated_date: ""
+language: "zh"
+translation_language: null
+status: "migrated"
+type: "resource_collection"
+topics: []
+tags: []
+item_count: 0
+word_count:
+  source: 0
+path: "content/collections/YYYY-MM-DD-slug/"
+migration_note: ""
