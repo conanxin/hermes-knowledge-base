@@ -13,6 +13,8 @@
 - ArXiv LLM Systems 论文列表
 - Awesome LLM Long Context 资源列表
 - Hacker News ML 热门链接
+- Session Guard Phase 1: Pre-Request Sanitizer
+- Hydro0x01 Local Hermes Security Audit
 
 ## 2026-04
 

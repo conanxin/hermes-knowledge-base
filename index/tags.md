@@ -195,11 +195,23 @@
 
 - ArXiv LLM Systems 论文列表
 
+## architecture
+
+- Hydro0x01 Local Hermes Security Audit
+
 ## arxiv
 
 - ArXiv AI Agents 论文列表
 - ArXiv LLM Systems 论文列表
 - Awesome LLM Long Context 资源列表
+
+## audit
+
+- Hydro0x01 Local Hermes Security Audit
+
+## auxiliary-client
+
+- Session Guard Phase 1: Pre-Request Sanitizer
 
 ## awesome-list
 
@@ -217,6 +229,22 @@
 
 - Hacker News ML 热门链接
 
+## defensive-programming
+
+- Session Guard Phase 1: Pre-Request Sanitizer
+
+## error-handling
+
+- Session Guard Phase 1: Pre-Request Sanitizer
+
+## esp32
+
+- Hydro0x01 Local Hermes Security Audit
+
+## fastify
+
+- Hydro0x01 Local Hermes Security Audit
+
 ## federated-learning
 
 - ArXiv AI Agents 论文列表
@@ -228,6 +256,22 @@
 ## hacker-news
 
 - Hacker News ML 热门链接
+
+## hermes
+
+- Hydro0x01 Local Hermes Security Audit
+
+## hermes-agent
+
+- Session Guard Phase 1: Pre-Request Sanitizer
+
+## hydro0x01
+
+- Hydro0x01 Local Hermes Security Audit
+
+## iot
+
+- Hydro0x01 Local Hermes Security Audit
 
 ## links
 
@@ -250,13 +294,29 @@
 
 - Hacker News ML 热门链接
 
+## mqtt
+
+- Hydro0x01 Local Hermes Security Audit
+
 ## news
 
 - Hacker News ML 热门链接
 
+## openai-api
+
+- Session Guard Phase 1: Pre-Request Sanitizer
+
 ## papers
 
 - ArXiv AI Agents 论文列表
+
+## prisma
+
+- Hydro0x01 Local Hermes Security Audit
+
+## python
+
+- Session Guard Phase 1: Pre-Request Sanitizer
 
 ## reinforcement-learning
 
@@ -271,9 +331,26 @@
 
 - Awesome LLM Long Context 资源列表
 
+## sanitizer
+
+- Session Guard Phase 1: Pre-Request Sanitizer
+
+## security
+
+- Session Guard Phase 1: Pre-Request Sanitizer
+- Hydro0x01 Local Hermes Security Audit
+
+## session-guard
+
+- Session Guard Phase 1: Pre-Request Sanitizer
+
 ## speech-generation
 
 - ArXiv LLM Systems 论文列表
+
+## tool-calls
+
+- Session Guard Phase 1: Pre-Request Sanitizer
 
 ## 个人知识库
 

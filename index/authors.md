@@ -41,6 +41,8 @@
 - Wiki 代替 RAG 的可行性评估
 - 灵感资源库
 - ArXiv LLM Systems 论文列表
+- Session Guard Phase 1: Pre-Request Sanitizer
+- Hydro0x01 Local Hermes Security Audit
 
 ## L. M. Sacasas (Michael)
 

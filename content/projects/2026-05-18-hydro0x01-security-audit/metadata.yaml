@@ -1,0 +1,34 @@
+title: "Hydro0x01 Local Hermes Security Audit"
+title_zh: "Hydro0x01 本地 Hermes 安全审计报告"
+source_url: null
+source_url_missing: true
+legacy_source_path: "~/.hermes/reports/hydro0x01_audit/HYDRO0X01_LOCAL_HERMES_AUDIT.md"
+source_site: null
+author: "Hermes Agent"
+published_date: "2026-05-18"
+captured_date: "2026-05-18"
+migrated_date: "2026-06-20"
+language: "zh"
+translation_language: null
+status: "migrated"
+type: "project"
+topics:
+  - "Security Audit"
+  - "IoT"
+  - "Hermes"
+  - "Architecture"
+tags:
+  - "security"
+  - "audit"
+  - "iot"
+  - "hydro0x01"
+  - "hermes"
+  - "architecture"
+  - "fastify"
+  - "prisma"
+  - "mqtt"
+  - "esp32"
+word_count:
+  source: 450
+path: "content/projects/2026-05-18-hydro0x01-security-audit/"
+migration_note: "从旧知识库迁移的 Hydro0x01 安全审计项目报告。包含架构审计、REST API 路由、MQTT 主题、数据库模型、构建验证和风险评估。"
