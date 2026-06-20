@@ -183,6 +183,30 @@
 
 - Wiki 代替 RAG 的可行性评估
 
+## ai-safety
+
+- ArXiv LLM Systems 论文列表
+
+## arxiv
+
+- ArXiv LLM Systems 论文列表
+
+## benchmark
+
+- ArXiv LLM Systems 论文列表
+
+## code-intelligence
+
+- ArXiv LLM Systems 论文列表
+
+## llm
+
+- ArXiv LLM Systems 论文列表
+
+## speech-generation
+
+- ArXiv LLM Systems 论文列表
+
 ## 个人知识库
 
 - Karpathy Second Brain 实现指南

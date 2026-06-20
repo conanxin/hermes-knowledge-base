@@ -1,0 +1,30 @@
+title: "ArXiv LLM Systems 论文列表"
+title_zh: "ArXiv LLM Systems 论文列表"
+source_url: null
+source_url_missing: true
+legacy_source_path: "~/.hermes/wiki/research/arxiv-llm-systems.md"
+source_site: ""
+author: "Hermes Agent"
+published_date: "2026-05-06"
+captured_date: "2026-05-06"
+migrated_date: "2026-06-20"
+language: "zh"
+translation_language: null
+status: "migrated"
+type: "resource_collection"
+topics:
+  - "LLM"
+  - "AI Systems"
+  - "Benchmark"
+tags:
+  - "arxiv"
+  - "llm"
+  - "speech-generation"
+  - "code-intelligence"
+  - "ai-safety"
+  - "benchmark"
+item_count: 3
+word_count:
+  source: 59
+path: "content/collections/2026-05-06-arxiv-llm-systems/"
+migration_note: "从旧 Wiki 迁移。原文为中文整理的 ArXiv 论文列表，无单一来源 URL，无翻译。"

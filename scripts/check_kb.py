@@ -90,10 +90,10 @@ def check_kb():
                 issues.append(f"MISSING source_url (source_url_missing=false) in {rel_meta}")
 
         # --- 4. source_site rules ---
-        # source_site can be empty for legacy notes, but key must exist
+        # source_site can be empty for legacy notes/projects/collections, but key must exist
         if "source_site" in data and is_empty(data["source_site"]):
-            # Legacy note/project: allow empty source_site
-            if item_type not in ("note", "project", "resource", "report", "prompt"):
+            # Legacy note/project/resource/report/prompt/resource_collection: allow empty source_site
+            if item_type not in ("note", "project", "resource", "report", "prompt", "resource_collection"):
                 issues.append(f"EMPTY source_site in {rel_meta}")
 
         # --- 5. translation_language rules ---
