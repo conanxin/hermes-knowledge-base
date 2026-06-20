@@ -57,3 +57,23 @@ cp templates/prompts/import_article_prompt.md /tmp/my_import.md
 模板覆盖完整流程：抓取 → 翻译 → 摘要 → 索引 → 检查 → 提交 → 推送 → 报告。
 
 详见 `templates/prompts/import_article_prompt.md`。
+
+## 短命令用法
+
+更快捷的方式——直接对 Hermes 说：
+
+- "把这篇文章完整翻译并加入知识库：https://example.com/article"
+- "入库并完整翻译：https://example.com/article"
+- "加入知识库：https://example.com/article"
+- "翻译后入库：https://example.com/article"
+
+Hermes 会自动执行完整导入流程，无需追问（除非遇到付费墙、无法访问、多个 URL 等特殊情况）。
+
+默认行为：
+- `content_type` = `article`
+- 翻译语言 = `zh-CN`
+- 目录名自动使用 `YYYY-MM-DD-来源-slug`
+- tags/topics 由 Hermes 根据内容自动判断
+- 自动 commit 并 push
+
+详见 `docs/AGENT_COMMANDS.md`。
