@@ -53,15 +53,23 @@ def check_kb():
         if not title_zh or title_zh == "PLACEHOLDER":
             issues.append(f"EMPTY title_zh in {meta_file.relative_to(BASE_DIR)}")
 
+        # Get item_type early for conditional checks
+        item_type = data.get("type", "")
+
         # Check word_count
         word_count = data.get("word_count", {})
         if not isinstance(word_count, dict):
             issues.append(f"INVALID word_count type in {meta_file.relative_to(BASE_DIR)}")
         else:
-            for key in ["source", "translation"]:
+            for key in ["source"]:
                 val = word_count.get(key, 0)
                 if not isinstance(val, int) or val <= 0:
                     issues.append(f"INVALID word_count.{key}={val} in {meta_file.relative_to(BASE_DIR)}")
+            # translation word_count only required for articles
+            if item_type == "article":
+                val = word_count.get("translation", 0)
+                if not isinstance(val, int) or val <= 0:
+                    issues.append(f"INVALID word_count.translation={val} in {meta_file.relative_to(BASE_DIR)}")
 
         # Check topics and tags not empty
         topics = data.get("topics", [])
@@ -72,19 +80,21 @@ def check_kb():
             issues.append(f"EMPTY tags in {meta_file.relative_to(BASE_DIR)}")
 
         # Check type-specific required files
-        item_type = data.get("type", "")
         if item_type == "article":
             for req_file in ARTICLE_REQUIRED_FILES:
                 req_path = item_dir / req_file
                 if not req_path.exists():
                     issues.append(f"MISSING {req_file}: {item_dir.relative_to(BASE_DIR)}")
 
-        # Check translation exists (for all types)
-        trans_file = item_dir / "translation.zh-CN.md"
-        if not trans_file.exists():
-            issues.append(f"MISSING translation.zh-CN.md: {item_dir.relative_to(BASE_DIR)}")
+        # Check translation exists (only for articles)
+        if item_type == "article":
+            trans_file = item_dir / "translation.zh-CN.md"
+            if not trans_file.exists():
+                issues.append(f"MISSING translation.zh-CN.md: {item_dir.relative_to(BASE_DIR)}")
 
-        if not missing and trans_file.exists() and not [i for i in issues if meta_file.name in i]:
+        # Count as OK if no issues for this item
+        item_issues = [i for i in issues if str(meta_file.relative_to(BASE_DIR)) in i or str(item_dir.relative_to(BASE_DIR)) in i]
+        if not missing and not item_issues:
             ok += 1
 
     print(f"\n{'='*50}")

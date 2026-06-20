@@ -4,9 +4,17 @@
 
 - AI 没有意识，但它正在成为我们的无意识
 
+## AI 产品
+
+- Karpathy 的 LLM Wiki：AI 知识管理新范式
+
 ## AI意识
 
 - Don't dethrone consciousness!
+
+## DSPy
+
+- Hermes Agent Self-Evolution
 
 ## E.T.
 
@@ -17,9 +25,17 @@
 - AI 没有意识，但它正在成为我们的无意识
 - Don't dethrone consciousness!
 
+## GEPA
+
+- Hermes Agent Self-Evolution
+
 ## Gregory Ulmer
 
 - AI 没有意识，但它正在成为我们的无意识
+
+## Hermes Agent
+
+- Hermes Agent Self-Evolution
 
 ## Indiana Jones
 
@@ -33,6 +49,14 @@
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
+## Karpathy
+
+- Karpathy 的 LLM Wiki：AI 知识管理新范式
+
+## LLM Wiki
+
+- Karpathy 的 LLM Wiki：AI 知识管理新范式
+
 ## Movie Brats
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
@@ -41,13 +65,33 @@
 
 - 日本铁路如何在分裂中保持统一
 
+## NousResearch
+
+- Hermes Agent Self-Evolution
+
+## Prompt Optimization
+
+- Hermes Agent Self-Evolution
+
+## RAG
+
+- Karpathy 的 LLM Wiki：AI 知识管理新范式
+
 ## Richard Dawkins
 
 - Don't dethrone consciousness!
 
+## Runtime Optimization
+
+- Hermes Agent Self-Evolution
+
 ## Schindler's List
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
+
+## Self-Evolution
+
+- Hermes Agent Self-Evolution
 
 ## Steven Spielberg
 
@@ -105,6 +149,10 @@
 
 - AI 没有意识，但它正在成为我们的无意识
 
+## 持久化知识
+
+- Karpathy 的 LLM Wiki：AI 知识管理新范式
+
 ## 教皇通谕
 
 - Don't dethrone consciousness!
@@ -145,9 +193,17 @@
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
+## 知识管理
+
+- Karpathy 的 LLM Wiki：AI 知识管理新范式
+
 ## 私有化
 
 - 日本铁路如何在分裂中保持统一
+
+## 笔记系统
+
+- Karpathy 的 LLM Wiki：AI 知识管理新范式
 
 ## 精神分析
 

@@ -1,0 +1,30 @@
+title: "Karpathy 的 LLM Wiki：AI 知识管理新范式"
+title_zh: "Karpathy 的 LLM Wiki：AI 知识管理新范式"
+source_url: "https://x.com/elliotchen100/status/2040981753490477403"
+source_url_missing: false
+legacy_source_path: "~/.hermes/wiki/research/karpathy-llm-wiki.md"
+source_site: "Twitter / X"
+author: "@elliotchen100 (艾略特)"
+published_date: "2026-04-03"
+captured_date: "2026-04-07"
+migrated_date: "2026-06-20"
+language: "zh"
+translation_language: "null"
+status: "migrated"
+type: "note"
+topics:
+  - "AI 知识管理"
+  - "LLM"
+  - "知识库"
+  - "RAG"
+tags:
+  - "Karpathy"
+  - "LLM Wiki"
+  - "知识管理"
+  - "RAG"
+  - "持久化知识"
+  - "笔记系统"
+  - "AI 产品"
+word_count:
+  source: 2062
+migration_note: "从旧 Wiki 迁移。原文为中文笔记，无翻译。来源 URL 为 Twitter 推文。"

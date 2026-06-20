@@ -1,0 +1,31 @@
+title: "Hermes Agent Self-Evolution"
+title_zh: "Hermes Agent 自我进化系统"
+source_url: "https://github.com/NousResearch/hermes-agent-self-evolution"
+source_url_missing: false
+legacy_source_path: "~/.hermes/wiki/research/hermes-agent-self-evolution.md"
+source_site: "GitHub / NousResearch"
+author: "NousResearch"
+published_date: "2026-04-13"
+captured_date: "2026-04-07"
+migrated_date: "2026-06-20"
+language: "zh"
+translation_language: "null"
+status: "migrated"
+type: "project"
+topics:
+  - "AI Agent"
+  - "自我进化"
+  - "DSPy"
+  - "GEPA"
+  - "Prompt 优化"
+tags:
+  - "Hermes Agent"
+  - "Self-Evolution"
+  - "DSPy"
+  - "GEPA"
+  - "Prompt Optimization"
+  - "Runtime Optimization"
+  - "NousResearch"
+word_count:
+  source: 1773
+migration_note: "从旧 Wiki 迁移。原文为中文笔记，无翻译。来源 URL 为 GitHub 仓库。"
