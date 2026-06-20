@@ -16,6 +16,7 @@
 | `content/papers/` | 论文 |
 | `content/videos/` | 视频 |
 | `content/projects/` | 项目 |
+| `content/legacy-knowledge/` | 旧知识库迁移内容 |
 | `index/` | 索引和目录 |
 | `scripts/` | 自动化脚本 |
 | `templates/` | 模板 |
