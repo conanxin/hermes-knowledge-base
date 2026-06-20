@@ -1,0 +1,34 @@
+# Hermes Knowledge Base
+
+# Ignore runtime outputs
+reports/runtime/
+*.log
+
+# Ignore temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore node_modules (if any frontend)
+node_modules/
+
+# Ignore large binaries
+*.pdf
+*.zip
+*.tar.gz
+*.mp4
+*.mp3
+
+# But keep template examples
+!templates/*.md
+!templates/*.yaml
