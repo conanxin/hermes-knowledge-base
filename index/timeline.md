@@ -9,6 +9,14 @@
 
 ## 2026-04
 
+- Transformer 解码机制解析
+- Karpathy Second Brain 实现指南
+- Wiki 代替 RAG 的可行性评估
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
 - Hermes Agent Self-Evolution
+- Nia Docs — 把整个 Web 变成文件系统
+
+## 2026-03
+
+- 灵感资源库
 

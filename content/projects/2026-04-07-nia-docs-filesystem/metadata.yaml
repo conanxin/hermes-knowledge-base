@@ -1,0 +1,31 @@
+title: "Nia Docs — 把整个 Web 变成文件系统"
+title_zh: "Nia Docs — 把整个 Web 变成文件系统"
+source_url: "https://x.com/arlanr/status/2041215978957389908"
+source_url_missing: false
+legacy_source_path: "~/.hermes/wiki/research/nia-docs-filesystem.md"
+source_site: "Twitter / X"
+author: "@arlanr (Nozomio Labs CEO)"
+published_date: "2026-04-07"
+captured_date: "2026-04-07"
+migrated_date: "2026-06-20"
+language: "zh"
+translation_language: "null"
+status: "migrated"
+type: "project"
+topics:
+  - "AI Agent"
+  - "文档系统"
+  - "文件系统"
+  - "RAG"
+  - "MCP"
+tags:
+  - "Nia Docs"
+  - "Agent"
+  - "Documentation"
+  - "Filesystem"
+  - "RAG"
+  - "MCP"
+  - "Nozomio Labs"
+word_count:
+  source: 4070
+migration_note: "从旧 Wiki 迁移。原文为中文项目笔记，无翻译。来源 URL 为 Twitter 推文。"

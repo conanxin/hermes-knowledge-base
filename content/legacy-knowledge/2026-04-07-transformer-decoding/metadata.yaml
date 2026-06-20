@@ -1,0 +1,31 @@
+title: "Transformer 解码机制解析"
+title_zh: "Transformer 解码机制解析"
+source_url: "https://x.com/amitiitbhu/status/2041479290580287543"
+source_url_missing: false
+legacy_source_path: "~/.hermes/wiki/research/transformer-decoding.md"
+source_site: "Twitter / X"
+author: "Amit Shekhar"
+published_date: "2026-04-07"
+captured_date: "2026-04-07"
+migrated_date: "2026-06-20"
+language: "zh"
+translation_language: "null"
+status: "migrated"
+type: "note"
+topics:
+  - "Transformer"
+  - "深度学习"
+  - "注意力机制"
+  - "LLM"
+  - "架构"
+tags:
+  - "Transformer"
+  - "Attention"
+  - "Deep Learning"
+  - "LLM"
+  - "Architecture"
+  - "Tutorial"
+  - "Amit Shekhar"
+word_count:
+  source: 1758
+migration_note: "从旧 Wiki 迁移。原文为中文技术笔记，无翻译。来源 URL 为 Twitter 推文。"

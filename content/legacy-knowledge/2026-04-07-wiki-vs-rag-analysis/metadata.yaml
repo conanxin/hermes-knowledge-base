@@ -1,0 +1,31 @@
+title: "Wiki 代替 RAG 的可行性评估"
+title_zh: "Wiki 代替 RAG 的可行性评估"
+source_url: ""
+source_url_missing: true
+legacy_source_path: "~/.hermes/wiki/research/wiki-vs-rag-analysis.md"
+source_site: ""
+author: "Hermes Agent"
+published_date: "2026-04-07"
+captured_date: "2026-04-07"
+migrated_date: "2026-06-20"
+language: "zh"
+translation_language: "null"
+status: "migrated"
+type: "note"
+topics:
+  - "知识架构"
+  - "Wiki"
+  - "RAG"
+  - "LLM"
+  - "知识管理"
+tags:
+  - "Wiki"
+  - "RAG"
+  - "知识架构"
+  - "Karpathy"
+  - "知识管理"
+  - "技术评估"
+  - "架构对比"
+word_count:
+  source: 5667
+migration_note: "从旧 Wiki 迁移。原文为中文分析笔记，无翻译。无单一来源 URL，为 Hermes Agent 原创分析。"

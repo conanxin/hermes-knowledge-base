@@ -1,0 +1,31 @@
+title: "灵感资源库"
+title_zh: "灵感资源库"
+source_url: ""
+source_url_missing: true
+legacy_source_path: "~/.hermes/workspace/inspiration-archive/resources.jsonl"
+source_site: ""
+author: "Hermes Agent"
+published_date: "2026-03-19"
+captured_date: "2026-03-19"
+migrated_date: "2026-06-20"
+language: "zh"
+translation_language: "null"
+status: "migrated"
+type: "note"
+topics:
+  - "设计资源"
+  - "AI 资源"
+  - "灵感"
+  - "资源库"
+  - "工具推荐"
+tags:
+  - "设计"
+  - "AI"
+  - "资源库"
+  - "灵感"
+  - "工具"
+  - "Archive"
+  - "精选"
+word_count:
+  source: 6937
+migration_note: "从旧 Wiki 迁移。原文为 JSONL 结构化资源列表，无翻译。无单一来源 URL，为 Hermes Agent  curated 资源。"

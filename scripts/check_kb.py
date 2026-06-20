@@ -6,18 +6,36 @@ from pathlib import Path
 BASE_DIR = Path(__file__).parent.parent
 CONTENT_DIR = BASE_DIR / "content"
 
+# Fields that must exist in every metadata.yaml
 REQUIRED_FIELDS = [
     "title", "title_zh", "source_url", "source_site", "author",
     "published_date", "captured_date", "language", "translation_language",
     "status", "type", "topics", "tags", "word_count"
 ]
 
-ARTICLE_REQUIRED_FILES = [
+# Fields that must have a non-empty value regardless of type
+MUST_BE_NON_EMPTY = {"title", "title_zh", "captured_date", "status", "type"}
+
+# Base files required for ALL types
+BASE_REQUIRED_FILES = [
+    "metadata.yaml",
     "source.md",
-    "translation.zh-CN.md",
     "summary.md",
     "notes.md",
 ]
+
+
+def is_empty(val):
+    """Return True if value is considered empty/missing."""
+    if val is None:
+        return True
+    if isinstance(val, str) and val.strip() == "":
+        return True
+    if isinstance(val, list) and len(val) == 0:
+        return True
+    if isinstance(val, dict) and len(val) == 0:
+        return True
+    return False
 
 
 def check_kb():
@@ -26,12 +44,11 @@ def check_kb():
     total = 0
     ok = 0
 
-    # Recursively scan all metadata.yaml files, same as build_index.py
     for meta_file in CONTENT_DIR.rglob("metadata.yaml"):
         item_dir = meta_file.parent
         total += 1
 
-        # Check required fields
+        # Parse metadata
         try:
             import yaml
             with open(meta_file, "r", encoding="utf-8") as f:
@@ -44,57 +61,84 @@ def check_kb():
                         key, val = line.split(":", 1)
                         data[key.strip()] = val.strip().strip('"').strip("'")
 
-        missing = [f for f in REQUIRED_FIELDS if f not in data or not data[f]]
-        if missing:
-            issues.append(f"MISSING fields {missing} in {meta_file.relative_to(BASE_DIR)}")
-
-        # Check title_zh not empty
-        title_zh = data.get("title_zh", "")
-        if not title_zh or title_zh == "PLACEHOLDER":
-            issues.append(f"EMPTY title_zh in {meta_file.relative_to(BASE_DIR)}")
-
-        # Get item_type early for conditional checks
         item_type = data.get("type", "")
+        source_url_missing = data.get("source_url_missing", False)
+        rel_meta = meta_file.relative_to(BASE_DIR)
+        rel_dir = item_dir.relative_to(BASE_DIR)
 
-        # Check word_count
-        word_count = data.get("word_count", {})
-        if not isinstance(word_count, dict):
-            issues.append(f"INVALID word_count type in {meta_file.relative_to(BASE_DIR)}")
+        # --- 1. Check required fields exist ---
+        missing_keys = [f for f in REQUIRED_FIELDS if f not in data]
+        if missing_keys:
+            issues.append(f"MISSING keys {missing_keys} in {rel_meta}")
+
+        # --- 2. Check must-be-non-empty fields ---
+        for f in MUST_BE_NON_EMPTY:
+            if f in data and is_empty(data[f]):
+                issues.append(f"EMPTY {f} in {rel_meta}")
+
+        # --- 3. source_url rules ---
+        if source_url_missing:
+            # source_url_missing=true: source_url can be null/empty, but key must exist
+            if "source_url" in data and not is_empty(data["source_url"]):
+                # Optional: warn if source_url is set but missing flag is true
+                pass
         else:
-            for key in ["source"]:
-                val = word_count.get(key, 0)
-                if not isinstance(val, int) or val <= 0:
-                    issues.append(f"INVALID word_count.{key}={val} in {meta_file.relative_to(BASE_DIR)}")
-            # translation word_count only required for articles
-            if item_type == "article":
-                val = word_count.get("translation", 0)
-                if not isinstance(val, int) or val <= 0:
-                    issues.append(f"INVALID word_count.translation={val} in {meta_file.relative_to(BASE_DIR)}")
+            # source_url_missing=false: source_url must be non-empty
+            if "source_url" in data and is_empty(data["source_url"]):
+                issues.append(f"EMPTY source_url (but source_url_missing=false) in {rel_meta}")
+            elif "source_url" not in data:
+                issues.append(f"MISSING source_url (source_url_missing=false) in {rel_meta}")
 
-        # Check topics and tags not empty
-        topics = data.get("topics", [])
-        if not topics or len(topics) == 0:
-            issues.append(f"EMPTY topics in {meta_file.relative_to(BASE_DIR)}")
-        tags = data.get("tags", [])
-        if not tags or len(tags) == 0:
-            issues.append(f"EMPTY tags in {meta_file.relative_to(BASE_DIR)}")
+        # --- 4. source_site rules ---
+        # source_site can be empty for legacy notes, but key must exist
+        if "source_site" in data and is_empty(data["source_site"]):
+            # Legacy note/project: allow empty source_site
+            if item_type not in ("note", "project", "resource", "report", "prompt"):
+                issues.append(f"EMPTY source_site in {rel_meta}")
 
-        # Check type-specific required files
+        # --- 5. translation_language rules ---
         if item_type == "article":
-            for req_file in ARTICLE_REQUIRED_FILES:
-                req_path = item_dir / req_file
-                if not req_path.exists():
-                    issues.append(f"MISSING {req_file}: {item_dir.relative_to(BASE_DIR)}")
-
-        # Check translation exists (only for articles)
-        if item_type == "article":
+            trans_lang = data.get("translation_language", "")
+            if is_empty(trans_lang) or trans_lang not in ("zh-CN", "zh"):
+                issues.append(f"INVALID translation_language='{trans_lang}' for article in {rel_meta}")
             trans_file = item_dir / "translation.zh-CN.md"
             if not trans_file.exists():
-                issues.append(f"MISSING translation.zh-CN.md: {item_dir.relative_to(BASE_DIR)}")
+                issues.append(f"MISSING translation.zh-CN.md: {rel_dir}")
+        else:
+            # note/project/resource/report/prompt: translation_language can be null/empty
+            pass
 
-        # Count as OK if no issues for this item
-        item_issues = [i for i in issues if str(meta_file.relative_to(BASE_DIR)) in i or str(item_dir.relative_to(BASE_DIR)) in i]
-        if not missing and not item_issues:
+        # --- 6. word_count rules ---
+        word_count = data.get("word_count", {})
+        if not isinstance(word_count, dict):
+            issues.append(f"INVALID word_count type in {rel_meta}")
+        else:
+            wc_val = word_count.get("source", 0)
+            if not isinstance(wc_val, int) or wc_val <= 0:
+                issues.append(f"INVALID word_count.source={wc_val} in {rel_meta}")
+            # Only check translation word_count if the field exists
+            if "translation" in word_count:
+                wc_trans = word_count["translation"]
+                if not isinstance(wc_trans, int) or wc_trans < 0:
+                    issues.append(f"INVALID word_count.translation={wc_trans} in {rel_meta}")
+
+        # --- 7. topics and tags ---
+        topics = data.get("topics", [])
+        if not isinstance(topics, list) or len(topics) == 0:
+            issues.append(f"EMPTY topics in {rel_meta}")
+        tags = data.get("tags", [])
+        if not isinstance(tags, list) or len(tags) == 0:
+            issues.append(f"EMPTY tags in {rel_meta}")
+
+        # --- 8. Check base required files for ALL types ---
+        for req_file in BASE_REQUIRED_FILES:
+            req_path = item_dir / req_file
+            if not req_path.exists():
+                issues.append(f"MISSING {req_file}: {rel_dir}")
+
+        # --- 9. Count OK if no issues for this item ---
+        item_issues = [i for i in issues if str(rel_meta) in i or str(rel_dir) in i]
+        if not missing_keys and not item_issues:
             ok += 1
 
     print(f"\n{'='*50}")

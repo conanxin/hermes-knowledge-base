@@ -1,0 +1,32 @@
+title: "Karpathy Second Brain 实现指南"
+title_zh: "Karpathy Second Brain 实现指南"
+source_url: "https://x.com/godofprompt/status/2041265656893489419"
+source_url_missing: false
+legacy_source_path: "~/.hermes/wiki/research/karpathy-second-brain-guide.md"
+source_site: "Twitter / X"
+author: "@godofprompt"
+published_date: "2026-04-07"
+captured_date: "2026-04-07"
+migrated_date: "2026-06-20"
+language: "zh"
+translation_language: "null"
+status: "migrated"
+type: "note"
+topics:
+  - "知识管理"
+  - "LLM"
+  - "Wiki"
+  - "Second Brain"
+  - "Prompt 工程"
+tags:
+  - "Karpathy"
+  - "Second Brain"
+  - "知识管理"
+  - "LLM Wiki"
+  - "Prompt"
+  - "知识积累"
+  - "个人知识库"
+  - "自动化"
+word_count:
+  source: 8456
+migration_note: "从旧 Wiki 迁移。原文为中文笔记，无翻译。来源 URL 为 Twitter 推文。包含完整的 7 步构建流程和 Prompt 库。"
