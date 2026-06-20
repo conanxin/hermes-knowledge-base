@@ -41,5 +41,5 @@ python3 -m http.server 8000 -d site
 
 ## Commit
 
-- `TBD` — Polish static knowledge base browser
-- https://github.com/conanxin/hermes-knowledge-base/commit/TBD
+- `762fd38` — Polish static knowledge base browser
+- https://github.com/conanxin/hermes-knowledge-base/commit/762fd38
