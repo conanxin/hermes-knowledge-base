@@ -7,6 +7,13 @@ CONTENT_DIR = BASE_DIR / "content"
 
 REQUIRED_FIELDS = ["title", "source_url", "captured_date", "status", "type", "tags"]
 
+ARTICLE_REQUIRED_FILES = [
+    "source.md",
+    "translation.zh-CN.md",
+    "summary.md",
+    "notes.md",
+]
+
 
 def check_kb():
     """Check knowledge base integrity"""
@@ -14,22 +21,10 @@ def check_kb():
     total = 0
     ok = 0
 
-    for item_dir in CONTENT_DIR.rglob("*"):
-        if not item_dir.is_dir():
-            continue
-        # Skip non-leaf directories and non-content directories
-        has_subdirs = any(d.is_dir() for d in item_dir.iterdir())
-        if has_subdirs:
-            continue
-        # Skip empty directories and directories without markdown files
-        md_files = list(item_dir.glob("*.md"))
-        if not md_files:
-            continue
+    # Recursively scan all metadata.yaml files, same as build_index.py
+    for meta_file in CONTENT_DIR.rglob("metadata.yaml"):
+        item_dir = meta_file.parent
         total += 1
-        meta_file = item_dir / "metadata.yaml"
-        if not meta_file.exists():
-            issues.append(f"MISSING metadata.yaml: {item_dir.relative_to(BASE_DIR)}")
-            continue
 
         # Check required fields
         try:
@@ -48,7 +43,15 @@ def check_kb():
         if missing:
             issues.append(f"MISSING fields {missing} in {meta_file.relative_to(BASE_DIR)}")
 
-        # Check translation
+        # Check type-specific required files
+        item_type = data.get("type", "")
+        if item_type == "article":
+            for req_file in ARTICLE_REQUIRED_FILES:
+                req_path = item_dir / req_file
+                if not req_path.exists():
+                    issues.append(f"MISSING {req_file}: {item_dir.relative_to(BASE_DIR)}")
+
+        # Check translation exists (for all types)
         trans_file = item_dir / "translation.zh-CN.md"
         if not trans_file.exists():
             issues.append(f"MISSING translation.zh-CN.md: {item_dir.relative_to(BASE_DIR)}")
