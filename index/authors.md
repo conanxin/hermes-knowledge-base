@@ -36,6 +36,10 @@
 
 - Hacker News ML 热门链接
 
+## HennyGe Wichers
+
+- 合作的基础设施：逆向博弈论如何破解住房短缺
+
 ## Hermes Agent
 
 - Wiki 代替 RAG 的可行性评估
