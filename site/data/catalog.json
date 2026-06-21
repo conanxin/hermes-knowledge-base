@@ -399,6 +399,30 @@
     "updated_date": "2026-03-25"
   },
   {
+    "title": "How Reverse Game Theory Could Solve The Housing Shortage",
+    "title_zh": "逆向博弈论如何解决住房短缺问题",
+    "author": "HennyGe Wichers",
+    "published_date": "2026-03-25",
+    "captured_date": "2026-06-21",
+    "type": "article",
+    "topics": [
+      "mechanism-design",
+      "game-theory",
+      "housing-policy",
+      "urban-planning",
+      "democratic-innovation"
+    ],
+    "tags": [
+      "TDR",
+      "incentives",
+      "cooperation",
+      "quadratic-voting",
+      "land-readjustment"
+    ],
+    "path": "content/articles/2026/2026-03-25-reverse-game-theory-housing-shortage",
+    "updated_date": "2026-06-21"
+  },
+  {
     "title": "Don't dethrone consciousness!",
     "title_zh": "不要废黜意识！",
     "author": "Erik Hoel",

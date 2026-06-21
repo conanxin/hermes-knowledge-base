@@ -87,3 +87,11 @@ python3 scripts/check_translation_residue.py
 metadata 模板：`templates/metadata.yaml`
 
 notes 模板：`templates/notes.md`
+
+## 质量门禁（硬性规则）
+
+1. 如果 `check_kb.py` 返回 FAIL，**严禁**执行 commit/push。
+2. 如果 `check_kb.py` 返回 FAIL，**严禁**将失败条目同步到 `docs/data/catalog.json`。
+3. `article` 的 `word_count` 必须是纯数字（例如 4500），**严禁**使用 "~4500"、"约4500"、"4.5k" 等字符串形式。
+4. 发现 `content/` 下存在半成品条目时，必须先修复或隔离到 `inbox/quarantine/`，再继续执行 `update_site.py`。
+5. 除非用户明确说“先不要 commit/push”，否则完整导入流程应自动运行到 check → update_site → commit → push；但当 check 失败时必须立即停止并报告。

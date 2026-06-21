@@ -162,6 +162,7 @@
 ## TDR
 
 - 合作的基础设施：逆向博弈论如何破解住房短缺
+- How Reverse Game Theory Could Solve The Housing Shortage
 
 ## Ted Chiang
 
@@ -233,6 +234,10 @@
 
 - Hacker News ML 热门链接
 
+## cooperation
+
+- How Reverse Game Theory Could Solve The Housing Shortage
+
 ## defensive-programming
 
 - Session Guard Phase 1: Pre-Request Sanitizer
@@ -273,9 +278,17 @@
 
 - Hydro0x01 Local Hermes Security Audit
 
+## incentives
+
+- How Reverse Game Theory Could Solve The Housing Shortage
+
 ## iot
 
 - Hydro0x01 Local Hermes Security Audit
+
+## land-readjustment
+
+- How Reverse Game Theory Could Solve The Housing Shortage
 
 ## links
 
@@ -321,6 +334,10 @@
 ## python
 
 - Session Guard Phase 1: Pre-Request Sanitizer
+
+## quadratic-voting
+
+- How Reverse Game Theory Could Solve The Housing Shortage
 
 ## reinforcement-learning
 
