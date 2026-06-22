@@ -5,6 +5,7 @@
 - 灵感资源库
 - AI 没有意识，但它正在成为我们的无意识
 - Your AI Is Not a Tool
+- Ken Liu on AI and Freedom
 
 ## AI 产品
 
@@ -21,6 +22,10 @@
 ## Airbnb
 
 - How to Earn a Billion Dollars
+
+## All That We See or Seem
+
+- Ken Liu on AI and Freedom
 
 ## Amit Shekhar
 
@@ -42,9 +47,21 @@
 
 - Transformer 解码机制解析
 
+## Barthes
+
+- Ken Liu on AI and Freedom
+
+## ChinaTalk
+
+- Ken Liu on AI and Freedom
+
 ## DSPy
 
 - Hermes Agent Self-Evolution
+
+## Dandelion Dynasty
+
+- Ken Liu on AI and Freedom
 
 ## Deep Learning
 
@@ -66,6 +83,10 @@
 ## Filesystem
 
 - Nia Docs — 把整个 Web 变成文件系统
+
+## Frankenstein
+
+- Ken Liu on AI and Freedom
 
 ## GEPA
 
@@ -101,14 +122,23 @@
 - Wiki 代替 RAG 的可行性评估
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
 
+## Ken Liu
+
+- Ken Liu on AI and Freedom
+
 ## LLM
 
 - Transformer 解码机制解析
+- Ken Liu on AI and Freedom
 
 ## LLM Wiki
 
 - Karpathy Second Brain 实现指南
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
+
+## Le Guin
+
+- Ken Liu on AI and Freedom
 
 ## MCP
 
@@ -138,6 +168,10 @@
 
 - Nia Docs — 把整个 Web 变成文件系统
 
+## Orwell
+
+- Ken Liu on AI and Freedom
+
 ## Oxford Union
 
 - How to Earn a Billion Dollars
@@ -146,6 +180,10 @@
 
 - Superlinear Returns
 - How to Earn a Billion Dollars
+
+## Pluribus
+
+- Ken Liu on AI and Freedom
 
 ## Prompt
 
@@ -201,6 +239,10 @@
 ## The Intrinsic Perspective
 
 - Don't dethrone consciousness!
+
+## Tolkien
+
+- Ken Liu on AI and Freedom
 
 ## Transformer
 
@@ -411,6 +453,10 @@
 
 - Session Guard Phase 1: Pre-Request Sanitizer
 
+## 三体
+
+- Ken Liu on AI and Freedom
+
 ## 个人知识库
 
 - Karpathy Second Brain 实现指南
@@ -484,6 +530,10 @@
 
 - How to Earn a Billion Dollars
 
+## 庄子
+
+- Ken Liu on AI and Freedom
+
 ## 怀特海
 
 - AI 没有意识，但它正在成为我们的无意识
@@ -503,6 +553,7 @@
 ## 技术哲学
 
 - AI 没有意识，但它正在成为我们的无意识
+- Ken Liu on AI and Freedom
 
 ## 技术评估
 
@@ -548,6 +599,10 @@
 ## 日本铁路
 
 - 日本铁路如何在分裂中保持统一
+
+## 智能与意识
+
+- Ken Liu on AI and Freedom
 
 ## 架构对比
 
@@ -623,6 +678,10 @@
 
 - Superlinear Returns
 
+## 老子
+
+- Ken Liu on AI and Freedom
+
 ## 自动化
 
 - Karpathy Second Brain 实现指南
@@ -659,6 +718,14 @@
 
 - Superlinear Returns
 
+## 道家
+
+- Ken Liu on AI and Freedom
+
+## 道德经
+
+- Ken Liu on AI and Freedom
+
 ## 野心
 
 - Superlinear Returns
@@ -670,6 +737,7 @@
 ## 集体无意识
 
 - AI 没有意识，但它正在成为我们的无意识
+- Ken Liu on AI and Freedom
 
 ## 麦克卢汉
 

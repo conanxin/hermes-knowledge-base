@@ -48,6 +48,10 @@
 - Session Guard Phase 1: Pre-Request Sanitizer
 - Hydro0x01 Local Hermes Security Audit
 
+## Ken Liu (guest), Jordan Schneider, Irene Zhang, Phoebe Chow
+
+- Ken Liu on AI and Freedom
+
 ## L. M. Sacasas
 
 - Your AI Is Not a Tool
