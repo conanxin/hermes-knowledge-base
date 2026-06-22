@@ -38,7 +38,6 @@
 
 ## HennyGe Wichers
 
-- 合作的基础设施：逆向博弈论如何破解住房短缺
 - How Reverse Game Theory Could Solve The Housing Shortage
 
 ## Hermes Agent
@@ -48,6 +47,10 @@
 - ArXiv LLM Systems 论文列表
 - Session Guard Phase 1: Pre-Request Sanitizer
 - Hydro0x01 Local Hermes Security Audit
+
+## L. M. Sacasas
+
+- Your AI Is Not a Tool
 
 ## L. M. Sacasas (Michael)
 

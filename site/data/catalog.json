@@ -381,22 +381,38 @@
     "updated_date": "2026-06-20"
   },
   {
-    "title": "合作的基础设施：逆向博弈论如何破解住房短缺",
-    "author": "HennyGe Wichers",
-    "published_date": "2026-03-25",
-    "tags": [
-      "机制设计",
-      "博弈论",
-      "城市规划",
-      "住房政策",
-      "激励设计",
-      "制度经济学",
-      "TDR",
-      "二次方投票",
-      "民主创新"
+    "title": "Your AI Is Not a Tool",
+    "title_zh": "你的 AI 不是一个工具",
+    "author": "L. M. Sacasas",
+    "published_date": "2026-06-22",
+    "captured_date": "2026-06-22",
+    "type": "article",
+    "topics": [
+      "人工智能",
+      "技术哲学",
+      "媒介理论",
+      "伦理",
+      "麦克卢汉",
+      "伊凡·伊利奇"
     ],
-    "path": "content/articles/2026/2026-06-21-architecture-of-cooperation",
-    "updated_date": "2026-03-25"
+    "tags": [
+      "AI",
+      "工具",
+      "环境",
+      "系统",
+      "技术中立性",
+      "麦克卢汉",
+      "伊利奇",
+      "感知训练",
+      "苦行",
+      "认知投降",
+      "The Convivial Society",
+      "Antón Barba-Kay",
+      "教皇利奥",
+      "Magnifica humanitas"
+    ],
+    "path": "content/articles/2026/2026-06-22-your-ai-is-not-a-tool",
+    "updated_date": "2026-06-22"
   },
   {
     "title": "How Reverse Game Theory Could Solve The Housing Shortage",

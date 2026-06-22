@@ -4,6 +4,7 @@
 
 - 灵感资源库
 - AI 没有意识，但它正在成为我们的无意识
+- Your AI Is Not a Tool
 
 ## AI 产品
 
@@ -20,6 +21,10 @@
 ## Amit Shekhar
 
 - Transformer 解码机制解析
+
+## Antón Barba-Kay
+
+- Your AI Is Not a Tool
 
 ## Architecture
 
@@ -101,6 +106,10 @@
 
 - Nia Docs — 把整个 Web 变成文件系统
 
+## Magnifica humanitas
+
+- Your AI Is Not a Tool
+
 ## Movie Brats
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
@@ -161,7 +170,6 @@
 
 ## TDR
 
-- 合作的基础设施：逆向博弈论如何破解住房短缺
 - How Reverse Game Theory Could Solve The Housing Shortage
 
 ## Ted Chiang
@@ -171,6 +179,7 @@
 ## The Convivial Society
 
 - AI 没有意识，但它正在成为我们的无意识
+- Your AI Is Not a Tool
 
 ## The Intrinsic Perspective
 
@@ -377,29 +386,17 @@
 
 - Karpathy Second Brain 实现指南
 
-## 二次方投票
-
-- 合作的基础设施：逆向博弈论如何破解住房短缺
-
 ## 企业形象
 
 - 日本铁路如何在分裂中保持统一
 
-## 住房政策
+## 伊利奇
 
-- 合作的基础设施：逆向博弈论如何破解住房短缺
+- Your AI Is Not a Tool
 
 ## 元认知
 
 - Don't dethrone consciousness!
-
-## 制度经济学
-
-- 合作的基础设施：逆向博弈论如何破解住房短缺
-
-## 博弈论
-
-- 合作的基础设施：逆向博弈论如何破解住房短缺
 
 ## 口述史
 
@@ -408,10 +405,6 @@
 ## 品牌设计
 
 - 日本铁路如何在分裂中保持统一
-
-## 城市规划
-
-- 合作的基础设施：逆向博弈论如何破解住房短缺
 
 ## 大型语言模型
 
@@ -428,6 +421,7 @@
 ## 工具
 
 - 灵感资源库
+- Your AI Is Not a Tool
 
 ## 怀特海
 
@@ -436,6 +430,14 @@
 ## 思维链
 
 - Don't dethrone consciousness!
+
+## 感知训练
+
+- Your AI Is Not a Tool
+
+## 技术中立性
+
+- Your AI Is Not a Tool
 
 ## 技术哲学
 
@@ -448,6 +450,10 @@
 ## 持久化知识
 
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
+
+## 教皇利奥
+
+- Your AI Is Not a Tool
 
 ## 教皇通谕
 
@@ -477,10 +483,6 @@
 
 - 日本铁路如何在分裂中保持统一
 
-## 机制设计
-
-- 合作的基础设施：逆向博弈论如何破解住房短缺
-
 ## 架构对比
 
 - Wiki 代替 RAG 的可行性评估
@@ -489,21 +491,17 @@
 
 - 日本铁路如何在分裂中保持统一
 
-## 民主创新
-
-- 合作的基础设施：逆向博弈论如何破解住房短缺
-
 ## 汉娜·阿伦特
 
 - AI 没有意识，但它正在成为我们的无意识
 
-## 激励设计
-
-- 合作的基础设施：逆向博弈论如何破解住房短缺
-
 ## 灵感
 
 - 灵感资源库
+
+## 环境
+
+- Your AI Is Not a Tool
 
 ## 电影
 
@@ -539,9 +537,17 @@
 
 - 灵感资源库
 
+## 系统
+
+- Your AI Is Not a Tool
+
 ## 自动化
 
 - Karpathy Second Brain 实现指南
+
+## 苦行
+
+- Your AI Is Not a Tool
 
 ## 虚构
 
@@ -550,6 +556,10 @@
 ## 裂脑患者
 
 - Don't dethrone consciousness!
+
+## 认知投降
+
+- Your AI Is Not a Tool
 
 ## 设计
 
@@ -570,4 +580,5 @@
 ## 麦克卢汉
 
 - AI 没有意识，但它正在成为我们的无意识
+- Your AI Is Not a Tool
 
