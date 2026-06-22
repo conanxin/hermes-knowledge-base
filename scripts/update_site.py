@@ -1,4 +1,4 @@
-"""Build the static site (with hard-stop on quality gate).
+"""Build the static site (with hard-stop on quality gate + post-sync check).
 
 Pipeline order (HARD-STOP at the first step):
 
@@ -7,11 +7,17 @@ Pipeline order (HARD-STOP at the first step):
   3. scripts/export_site_data.py
   4. scripts/generate_item_pages.py
   5. scripts/sync_pages_docs.py
+  6. scripts/check_pages_sync.py    ← post-sync integrity check
 
 If `check_kb.py` exits non-zero, `update_site.py` MUST return non-zero
 without running any of the build/export/generate/sync steps. This is the
 quality gate enforcement: a broken catalog must never be published to
 `site/data/catalog.json` or `docs/`.
+
+If `check_pages_sync.py` exits non-zero (after sync_pages_docs.py ran
+successfully), that means `site/` and `docs/` are out of sync — typically
+because `git add` skipped a synced docs/ file. `update_site.py` MUST return
+non-zero so the operator catches the drift before committing.
 """
 
 import subprocess
@@ -31,6 +37,12 @@ BUILD_CHAIN = [
     "scripts/sync_pages_docs.py",
 ]
 
+# Post-sync integrity check. Runs AFTER sync_pages_docs.py so the check
+# sees the freshly synced files. If check_pages_sync.py fails, the publish
+# surface (docs/) and the dev surface (site/) are inconsistent — refuse
+# to declare success.
+POST_SYNC_CHECK = "scripts/check_pages_sync.py"
+
 
 def run_script(path: str) -> bool:
     print(f"\n{'=' * 50}")
@@ -46,7 +58,7 @@ def update_site() -> int:
     # If it fails, no build/export/generate/sync runs and we exit 1.
     # ---------------------------------------------------------------
     print(f"\n{'#' * 50}")
-    print("# STEP 0/4: Quality gate (check_kb.py)")
+    print("# STEP 0/5: Quality gate (check_kb.py)")
     print(f"{'#' * 50}")
     gate_ok = run_script(QUALITY_GATE)
     if not gate_ok:
@@ -65,6 +77,7 @@ def update_site() -> int:
     # ---------------------------------------------------------------
     # Build chain (only reachable if the quality gate passed).
     # ---------------------------------------------------------------
+    total = len(BUILD_CHAIN) + 1  # +1 for the post-sync check
     for i, script in enumerate(BUILD_CHAIN, start=1):
         if not run_script(script):
             print(f"\nFAILED: {script}")
@@ -72,7 +85,24 @@ def update_site() -> int:
             print("Some steps failed. Review output above.")
             print(f"{'=' * 50}")
             return 1
-        print(f"[{i}/{len(BUILD_CHAIN)}] {script} OK")
+        print(f"[{i}/{total}] {script} OK")
+
+    # ---------------------------------------------------------------
+    # Post-sync integrity check. Detects site/ ↔ docs/ drift that would
+    # leave GitHub Pages serving stale files.
+    # ---------------------------------------------------------------
+    print(f"\n{'#' * 50}")
+    print(f"# STEP {total}/{total}: Post-sync integrity (check_pages_sync.py)")
+    print(f"{'#' * 50}")
+    if not run_script(POST_SYNC_CHECK):
+        print(f"\n{'!' * 50}")
+        print(f"! HARD-STOP: {POST_SYNC_CHECK} FAILED.")
+        print("! site/ and docs/ are out of sync after sync_pages_docs.py.")
+        print("! This usually means a synced docs/ file was not `git add`ed,")
+        print("! OR sync_pages_docs.py has a bug. Investigate before committing.")
+        print(f"{'!' * 50}")
+        return 1
+    print(f"[{total}/{total}] {POST_SYNC_CHECK} OK")
 
     print(f"\n{'=' * 50}")
     print("All steps completed successfully.")

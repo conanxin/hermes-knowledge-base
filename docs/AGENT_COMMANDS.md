@@ -54,11 +54,13 @@
 ```bash
 python3 scripts/check_kb.py
 python3 scripts/update_site.py
+python3 scripts/check_pages_sync.py
 python3 scripts/check_translation_residue.py
 ```
 
 **check_kb.py** 必须 PASS，否则修复问题后再继续。  
 **update_site.py** 必须 PASS，确保 site/ 和 docs/ 同步完成。  
+**check_pages_sync.py** 必须 PASS（`update_site.py` 内置在 sync 后会自动运行此检查），确保所有发布文件 site/ 与 docs/ 内容一致。  
 **check_translation_residue.py** 可以有 warning，但严重残留必须修复。
 
 ### 强制停止条件

@@ -38,6 +38,7 @@
 python3 scripts/check_kb.py
 python3 scripts/check_translation_residue.py
 python3 scripts/build_index.py
+python3 scripts/check_pages_sync.py
 ```
 
 | 脚本 | 用途 | 预期结果 |
@@ -45,6 +46,7 @@ python3 scripts/build_index.py
 | `check_kb.py` | 检查 metadata 完整性 | PASS (19/19) |
 | `check_translation_residue.py` | 检查翻译残留 | WARNING 可接受 |
 | `build_index.py` | 重建索引 | 19 records |
+| `check_pages_sync.py` | 检查 site/ 与 docs/ 发布文件一致 | PASS |
 
 ## 本地浏览知识库
 
