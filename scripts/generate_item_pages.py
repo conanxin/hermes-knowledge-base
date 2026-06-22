@@ -1,0 +1,698 @@
+"""Generate static item detail pages for the knowledge base browser.
+
+Reads `site/data/catalog.json` (produced by export_site_data.py) and writes
+one `site/items/<slug>/index.html` per record. Each page renders the
+record's metadata, summary, source/translation/notes/collection body
+based on the record type, and links back to the homepage and the GitHub
+folder.
+
+Markdown rendering is implemented with stdlib only (re + html.escape) —
+no external dependencies. Supported elements:
+
+  - ATX headings  (# / ## / ### / ####)
+  - Paragraphs
+  - Unordered lists  (- / *)
+  - Ordered lists    (1. 2. ...)
+  - Blockquotes      (>)
+  - Fenced code      (```)
+  - Inline code      (`code`)
+  - Bold / italic    (** / *)
+  - Links            ([text](url))
+  - Horizontal rule  (---)
+  - GFM-style tables (| col | col |)
+  - Footnote refs    ([^1])  — kept as superscript text
+  - HTML entity escape for safety
+
+The intent is "good enough" rendering for translated Chinese articles and
+English notes, not a fully spec-compliant Markdown parser.
+"""
+
+from __future__ import annotations
+
+import html
+import json
+import re
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+
+# ---------------------------------------------------------------------------
+# Paths & constants
+# ---------------------------------------------------------------------------
+REPO_ROOT = Path(__file__).resolve().parent.parent
+CATALOG_JSON = REPO_ROOT / "site" / "data" / "catalog.json"
+ITEMS_DIR = REPO_ROOT / "site" / "items"
+
+GITHUB_REPO_BASE = "https://github.com/conanxin/hermes-knowledge-base/tree/main/"
+SITE_BASE = "https://conanxin.github.io/hermes-knowledge-base/"
+
+# Type-specific body files (relative to the record directory)
+BODY_FILES_BY_TYPE: Dict[str, List[Tuple[str, str]]] = {
+    "article": [
+        ("translation", "translation.zh-CN.md"),
+        ("source", "source.md"),
+    ],
+    "resource_collection": [
+        ("collection", "collection.md"),
+        ("summary", "summary.md"),
+    ],
+    "note": [
+        ("source", "source.md"),
+        ("summary", "summary.md"),
+    ],
+    "project": [
+        ("source", "source.md"),
+        ("summary", "summary.md"),
+    ],
+}
+
+# Human-readable labels for body sections
+SECTION_LABELS: Dict[str, str] = {
+    "translation": "中文翻译",
+    "source": "原文 / 源文本",
+    "summary": "摘要",
+    "notes": "笔记",
+    "collection": "资源集合",
+}
+
+SECTION_ORDER: List[str] = ["summary", "translation", "collection", "source", "notes"]
+
+
+# ---------------------------------------------------------------------------
+# Slug & URL helpers
+# ---------------------------------------------------------------------------
+def slug_from_path(path: str) -> str:
+    """Return the final path segment as the slug."""
+    return path.rstrip("/").split("/")[-1] if path else ""
+
+
+# ---------------------------------------------------------------------------
+# Markdown rendering (stdlib only)
+# ---------------------------------------------------------------------------
+_INLINE_CODE_RE = re.compile(r"`([^`]+)`")
+_BOLD_RE = re.compile(r"\*\*([^*]+)\*\*")
+_ITALIC_RE = re.compile(r"(?<!\*)\*([^*\n]+)\*(?!\*)")
+_LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)\s]+)\)")
+_FOOTNOTE_RE = re.compile(r"\[\^([^\]]+)\]")
+
+
+def _apply_inline(text: str) -> str:
+    """Apply inline transforms. Caller must pass a single text line."""
+    if not text:
+        return ""
+
+    # Escape HTML first so user content is safe, then re-introduce our tags.
+    s = html.escape(text, quote=False)
+
+    # Footnote refs: [^1] → <sup>[1]</sup>
+    s = _FOOTNOTE_RE.sub(r"<sup>[\1]</sup>", s)
+
+    # Inline code: `code` → <code>code</code>
+    s = _INLINE_CODE_RE.sub(r"<code>\1</code>", s)
+
+    # Links: [text](url) → <a> (do after escaping, since URL may contain
+    # legitimate & that html.escape turned into &amp;)
+    def _link_sub(m: re.Match) -> str:
+        label, url = m.group(1), m.group(2)
+        url = url.replace("&amp;", "&")
+        return f'<a href="{html.escape(url, quote=True)}" target="_blank" rel="noopener">{label}</a>'
+
+    s = _LINK_RE.sub(_link_sub, s)
+
+    # Bold then italic.
+    s = _BOLD_RE.sub(r"<strong>\1</strong>", s)
+    s = _ITALIC_RE.sub(r"<em>\1</em>", s)
+
+    return s
+
+
+_TABLE_SEP_RE = re.compile(r"^\s*\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)+\|?\s*$")
+
+
+def _render_table(lines: List[str], start: int) -> Tuple[str, int]:
+    """Render a GFM-style table starting at line index `start`.
+
+    Returns (html, next_index). The header row is the first `lines[start]`
+    and the separator is `lines[start+1]`.
+    """
+    header_cells = [c.strip() for c in lines[start].strip().strip("|").split("|")]
+    body_rows: List[List[str]] = []
+    i = start + 2
+    while i < len(lines) and lines[i].strip().startswith("|"):
+        row_cells = [c.strip() for c in lines[i].strip().strip("|").split("|")]
+        # Pad / trim to header length.
+        if len(row_cells) < len(header_cells):
+            row_cells += [""] * (len(header_cells) - len(row_cells))
+        elif len(row_cells) > len(header_cells):
+            row_cells = row_cells[: len(header_cells)]
+        body_rows.append(row_cells)
+        i += 1
+
+    out = ['<table class="md-table">']
+    out.append("<thead><tr>")
+    for cell in header_cells:
+        out.append(f"<th>{_apply_inline(cell)}</th>")
+    out.append("</tr></thead>")
+    if body_rows:
+        out.append("<tbody>")
+        for row in body_rows:
+            out.append("<tr>")
+            for cell in row:
+                out.append(f"<td>{_apply_inline(cell)}</td>")
+            out.append("</tr>")
+        out.append("</tbody>")
+    out.append("</table>")
+    return "".join(out), i
+
+
+def _render_list(items: List[Tuple[str, bool]], ordered: bool) -> str:
+    """Render a list. `items` is a list of (text, is_ordered_index)."""
+    tag = "ol" if ordered else "ul"
+    out = [f"<{tag}>"]
+    for text, _ in items:
+        out.append(f"<li>{_apply_inline(text)}</li>")
+    out.append(f"</{tag}>")
+    return "".join(out)
+
+
+def render_markdown(md: str) -> str:
+    """Convert a Markdown string to HTML."""
+    if not md:
+        return ""
+
+    # Normalize line endings, split lines.
+    lines = md.replace("\r\n", "\n").replace("\r", "\n").split("\n")
+
+    out: List[str] = []
+    i = 0
+    n = len(lines)
+
+    while i < n:
+        line = lines[i]
+        stripped = line.strip()
+
+        # Blank line — paragraph break.
+        if not stripped:
+            i += 1
+            continue
+
+        # Horizontal rule.
+        if re.match(r"^-{3,}$|^\*{3,}$", stripped):
+            out.append("<hr>")
+            i += 1
+            continue
+
+        # Fenced code block.
+        if stripped.startswith("```"):
+            lang = stripped[3:].strip()
+            i += 1
+            code_lines: List[str] = []
+            while i < n and not lines[i].strip().startswith("```"):
+                code_lines.append(lines[i])
+                i += 1
+            i += 1  # skip closing fence
+            lang_attr = f' data-lang="{html.escape(lang)}"' if lang else ""
+            out.append(
+                f"<pre{lang_attr}><code>{html.escape(chr(10).join(code_lines))}</code></pre>"
+            )
+            continue
+
+        # Headings.
+        m = re.match(r"^(#{1,4})\s+(.*)$", stripped)
+        if m:
+            level = len(m.group(1))
+            out.append(f"<h{level}>{_apply_inline(m.group(2))}</h{level}>")
+            i += 1
+            continue
+
+        # Tables: header row, then separator, then body rows.
+        if "|" in stripped and i + 1 < n and _TABLE_SEP_RE.match(lines[i + 1].strip()):
+            html_table, next_i = _render_table(lines, i)
+            out.append(html_table)
+            i = next_i
+            continue
+
+        # Blockquote (collect contiguous > lines).
+        if stripped.startswith(">"):
+            quote_lines: List[str] = []
+            while i < n and lines[i].strip().startswith(">"):
+                # Strip leading '>' and optional space.
+                quote_lines.append(re.sub(r"^>\s?", "", lines[i].lstrip()))
+                i += 1
+            inner_md = "\n".join(quote_lines)
+            out.append(f"<blockquote>{render_markdown(inner_md)}</blockquote>")
+            continue
+
+        # Unordered list.
+        if re.match(r"^[-*+]\s+", stripped):
+            items: List[Tuple[str, bool]] = []
+            while i < n:
+                m_li = re.match(r"^(\s*)[-*+]\s+(.*)$", lines[i])
+                if not m_li:
+                    break
+                items.append((m_li.group(2), False))
+                i += 1
+            out.append(_render_list(items, ordered=False))
+            continue
+
+        # Ordered list.
+        if re.match(r"^\d+\.\s+", stripped):
+            items = []
+            while i < n:
+                m_li = re.match(r"^\s*\d+\.\s+(.*)$", lines[i])
+                if not m_li:
+                    break
+                items.append((m_li.group(1), True))
+                i += 1
+            out.append(_render_list(items, ordered=True))
+            continue
+
+        # Paragraph: collect contiguous non-blank, non-block lines.
+        para_lines: List[str] = []
+        while i < n:
+            cur = lines[i]
+            cur_stripped = cur.strip()
+            if not cur_stripped:
+                break
+            if cur_stripped.startswith(("#", ">", "```", "-", "*", "+")) and re.match(
+                r"^(#{1,4}\s|>\s|```|[-*+]\s)", cur_stripped
+            ):
+                break
+            if re.match(r"^\d+\.\s", cur_stripped):
+                break
+            if "|" in cur_stripped and i + 1 < n and _TABLE_SEP_RE.match(
+                lines[i + 1].strip()
+            ):
+                break
+            if re.match(r"^-{3,}$|^\*{3,}$", cur_stripped):
+                break
+            para_lines.append(cur_stripped)
+            i += 1
+        if para_lines:
+            out.append(f"<p>{_apply_inline(' '.join(para_lines))}</p>")
+
+    return "\n".join(out)
+
+
+# ---------------------------------------------------------------------------
+# Record loading
+# ---------------------------------------------------------------------------
+def _read_text(path: Path) -> str:
+    if not path.exists():
+        return ""
+    return path.read_text(encoding="utf-8")
+
+
+def _safe_load_yaml(path: Path) -> Dict[str, Any]:
+    """Minimal YAML loader covering the 15-field metadata schema.
+
+    Avoids depending on PyYAML. Handles:
+      - key: value
+      - key: null
+      - list values prefixed with "  - item"
+      - inline list: ["a", "b"]
+      - block scalars (|2 etc) — not needed for current metadata
+    """
+    if not path.exists():
+        return {}
+
+    text = path.read_text(encoding="utf-8")
+    result: Dict[str, Any] = {}
+    current_key: Optional[str] = None
+    current_list: List[str] = []
+
+    def _flush_list() -> None:
+        nonlocal current_key, current_list
+        if current_key is not None and current_list:
+            result[current_key] = current_list
+        current_key = None
+        current_list = []
+
+    for raw in text.splitlines():
+        line = raw.rstrip()
+        if not line:
+            continue
+        if line.startswith("  - "):
+            # List item — value is line[4:].strip(); strip surrounding quotes.
+            val = line[4:].strip()
+            if (val.startswith('"') and val.endswith('"')) or (
+                val.startswith("'") and val.endswith("'")
+            ):
+                val = val[1:-1]
+            current_list.append(val)
+            continue
+        # New key.
+        _flush_list()
+        m = re.match(r"^([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(.*)$", line)
+        if not m:
+            continue
+        key, value = m.group(1), m.group(2).strip()
+        if value == "" or value == "~" or value.lower() == "null":
+            current_key = key
+            current_list = []
+            continue
+        # Inline list?  [a, b, c]
+        if value.startswith("[") and value.endswith("]"):
+            inner = value[1:-1]
+            parts: List[str] = []
+            buf = ""
+            in_str = False
+            quote = ""
+            for ch in inner:
+                if in_str:
+                    if ch == quote:
+                        in_str = False
+                    buf += ch
+                elif ch in ('"', "'"):
+                    in_str = True
+                    quote = ch
+                    buf += ch
+                elif ch == ",":
+                    parts.append(buf.strip().strip('"').strip("'"))
+                    buf = ""
+                else:
+                    buf += ch
+            if buf.strip():
+                parts.append(buf.strip().strip('"').strip("'"))
+            result[key] = [p for p in parts if p]
+            current_key = None
+            current_list = []
+            continue
+        # Scalar: strip surrounding quotes, treat unquoted "null"/"true"/"false".
+        if (value.startswith('"') and value.endswith('"')) or (
+            value.startswith("'") and value.endswith("'")
+        ):
+            value = value[1:-1]
+        elif value.lower() == "true":
+            value = True
+        elif value.lower() == "false":
+            value = False
+        # Numeric scalars.
+        elif re.match(r"^-?\d+$", value):
+            value = int(value)
+        # word_count: { ... }  (block-style mapping on one line) — parse
+        # simple key/value pairs.
+        elif value.startswith("{") and value.endswith("}"):
+            inner = value[1:-1]
+            sub: Dict[str, Any] = {}
+            for piece in inner.split(","):
+                if ":" not in piece:
+                    continue
+                k, v = piece.split(":", 1)
+                v = v.strip()
+                if re.match(r"^-?\d+$", v):
+                    sub[k.strip()] = int(v)
+                else:
+                    sub[k.strip()] = v.strip().strip('"').strip("'")
+            value = sub
+        result[key] = value
+        current_key = None
+        current_list = []
+
+    _flush_list()
+    return result
+
+
+def load_record_body(record: Dict[str, Any], content_root: Path) -> Dict[str, Any]:
+    """Load metadata + type-specific body files for a record.
+
+    Returns dict with keys: metadata, sections, missing_sections
+    """
+    record_path = content_root / record["path"]
+    meta: Dict[str, Any] = {}
+    meta_path = record_path / "metadata.yaml"
+    if meta_path.exists():
+        meta = _safe_load_yaml(meta_path)
+
+    # Resolve type & body files.
+    record_type = meta.get("type") or record.get("type", "article")
+    body_specs = BODY_FILES_BY_TYPE.get(record_type, BODY_FILES_BY_TYPE["article"])
+
+    sections: Dict[str, str] = {}
+    missing: List[str] = []
+    for key, fname in body_specs:
+        body = _read_text(record_path / fname)
+        if body:
+            sections[key] = body
+        else:
+            missing.append(key)
+
+    # notes.md is shared across all types.
+    notes_body = _read_text(record_path / "notes.md")
+    if notes_body:
+        sections["notes"] = notes_body
+    else:
+        missing.append("notes")
+
+    return {
+        "metadata": meta,
+        "sections": sections,
+        "missing": missing,
+        "type": record_type,
+    }
+
+
+# ---------------------------------------------------------------------------
+# HTML page template
+# ---------------------------------------------------------------------------
+TEMPLATE_HEAD = """<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title_zh} · hermes-knowledge-base</title>
+<meta name="description" content="{desc_escaped}">
+<link rel="stylesheet" href="{up}styles.css">
+</head>
+<body class="detail-page">
+<header class="detail-header">
+<a class="back-link" href="{up}">← 返回首页</a>
+</header>
+<main class="detail-main">
+<article class="detail-article">
+<div class="detail-title-block">
+<span class="type-badge {type_class}">{type_label}</span>
+<h1 class="detail-title">{title_zh}</h1>
+<p class="detail-title-en">{title}</p>
+</div>
+"""
+
+TEMPLATE_METADATA_GRID = """
+<section class="detail-meta">
+{rows}
+</section>
+"""
+
+TEMPLATE_SECTION = """
+<section class="detail-section" id="section-{key}">
+<header class="section-header">
+<h2>{label}</h2>
+{tag}
+</header>
+<div class="markdown-body">
+{body}
+</div>
+</section>
+"""
+
+TEMPLATE_ACTIONS = """
+<nav class="detail-actions">
+<a class="action-link primary" href="{github_url}" target="_blank" rel="noopener">GitHub 文件夹 →</a>
+<button class="action-btn" id="copy-path-btn" data-path="{path}">复制 path</button>
+<span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
+</nav>
+"""
+
+TEMPLATE_FOOTER = """
+</article>
+</main>
+<footer>
+<p><a href="{up}">hermes-knowledge-base</a> · 站内详情页</p>
+</footer>
+<script>
+(function() {{
+  const btn = document.getElementById('copy-path-btn');
+  const fb = document.getElementById('copy-feedback');
+  if (btn) {{
+    btn.addEventListener('click', function() {{
+      const path = btn.getAttribute('data-path') || '';
+      const done = function() {{
+        if (fb) {{
+          fb.textContent = '已复制: ' + path;
+          setTimeout(function() {{ fb.textContent = ''; }}, 2500);
+        }}
+      }};
+      if (navigator.clipboard && navigator.clipboard.writeText) {{
+        navigator.clipboard.writeText(path).then(done, function() {{
+          // Fallback for non-secure contexts.
+          const ta = document.createElement('textarea');
+          ta.value = path;
+          document.body.appendChild(ta);
+          ta.select();
+          try {{ document.execCommand('copy'); done(); }} catch (e) {{}}
+          document.body.removeChild(ta);
+        }});
+      }}
+    }});
+  }}
+}})();
+</script>
+</body>
+</html>
+"""
+
+
+def _type_label(type_str: str) -> str:
+    return {
+        "article": "article",
+        "note": "note",
+        "project": "project",
+        "resource_collection": "collection",
+    }.get(type_str, type_str)
+
+
+def _build_metadata_rows(meta: Dict[str, Any]) -> str:
+    """Return HTML rows for the metadata grid."""
+    rows: List[str] = []
+
+    def _row(label: str, value: Any) -> str:
+        if value is None or value == "" or value == []:
+            return ""
+        if isinstance(value, list):
+            chips = "".join(f'<span class="chip">{html.escape(str(v))}</span>' for v in value)
+            return f'<div class="meta-row"><div class="meta-label">{html.escape(label)}</div><div class="meta-value meta-tags">{chips}</div></div>'
+        return f'<div class="meta-row"><div class="meta-label">{html.escape(label)}</div><div class="meta-value">{html.escape(str(value))}</div></div>'
+
+    rows.append(_row("类型", meta.get("type")))
+    rows.append(_row("作者", meta.get("author")))
+    rows.append(_row("来源", meta.get("source_site")))
+    rows.append(_row("发布日期", meta.get("published_date")))
+    rows.append(_row("采集日期", meta.get("captured_date")))
+    rows.append(_row("迁移日期", meta.get("migrated_date")))
+    rows.append(_row("标签", meta.get("tags")))
+    rows.append(_row("主题", meta.get("topics")))
+    return "\n".join(r for r in rows if r)
+
+
+def _build_description(meta: Dict[str, Any], record: Dict[str, Any]) -> str:
+    title_zh = meta.get("title_zh") or record.get("title_zh") or meta.get("title") or record.get("title") or ""
+    author = meta.get("author") or record.get("author") or ""
+    return f"{title_zh} — {author}".strip(" —")
+
+
+def _build_sections_html(sections: Dict[str, str], missing: List[str]) -> str:
+    out: List[str] = []
+    rendered_keys = set()
+    for key in SECTION_ORDER:
+        if key in sections:
+            body_md = sections[key]
+            body_html = render_markdown(body_md)
+            tag = ""
+            if not body_md.strip():
+                tag = '<span class="section-tag">空</span>'
+            out.append(
+                TEMPLATE_SECTION.format(
+                    key=key,
+                    label=SECTION_LABELS.get(key, key),
+                    body=body_html or "<p class='placeholder'>暂无该部分</p>",
+                    tag=tag,
+                )
+            )
+            rendered_keys.add(key)
+    for key in missing:
+        label = SECTION_LABELS.get(key, key)
+        out.append(
+            TEMPLATE_SECTION.format(
+                key=key,
+                label=label,
+                body="<p class='placeholder'>暂无该部分</p>",
+                tag='<span class="section-tag">未提供</span>',
+            )
+        )
+    return "\n".join(out)
+
+
+# ---------------------------------------------------------------------------
+# Main generation loop
+# ---------------------------------------------------------------------------
+def render_record_page(record: Dict[str, Any], body: Dict[str, Any]) -> str:
+    meta = body["metadata"]
+    record_type = body["type"]
+
+    title_zh = meta.get("title_zh") or record.get("title_zh") or meta.get("title") or record.get("title") or "无标题"
+    title = meta.get("title") or record.get("title") or ""
+    desc = _build_description(meta, record)
+
+    head = TEMPLATE_HEAD.format(
+        title_zh=html.escape(title_zh),
+        title=html.escape(title) if title else "",
+        desc_escaped=html.escape(desc, quote=True),
+        up="../../",
+        type_class=record_type,
+        type_label=html.escape(_type_label(record_type)),
+    )
+
+    meta_rows = _build_metadata_rows(meta)
+    meta_section = TEMPLATE_METADATA_GRID.format(rows=meta_rows) if meta_rows else ""
+
+    sections_html = _build_sections_html(body["sections"], body["missing"])
+
+    actions = TEMPLATE_ACTIONS.format(
+        github_url=GITHUB_REPO_BASE + record["path"],
+        path=record["path"],
+    )
+
+    footer = TEMPLATE_FOOTER.format(up="../../")
+    return head + meta_section + sections_html + actions + footer
+
+
+def generate_item_pages() -> int:
+    if not CATALOG_JSON.exists():
+        print(f"Missing catalog: {CATALOG_JSON}")
+        print("Run scripts/export_site_data.py first.")
+        return 1
+
+    records: List[Dict[str, Any]] = json.loads(CATALOG_JSON.read_text(encoding="utf-8"))
+    content_root = REPO_ROOT
+
+    if ITEMS_DIR.exists():
+        # Don't wipe unrelated subdirs — only remove old item directories
+        # that no longer correspond to a current record. This keeps the
+        # site/items/ tree idempotent across re-runs without nuking any
+        # future non-record subdirs.
+        active_slugs = {slug_from_path(r["path"]) for r in records if r.get("path")}
+        for existing in list(ITEMS_DIR.iterdir()):
+            if not existing.is_dir():
+                continue
+            if existing.name not in active_slugs:
+                # Only remove if it looks like a generated item page
+                # (contains index.html). Manual subdirs are preserved.
+                if (existing / "index.html").exists():
+                    import shutil
+                    shutil.rmtree(existing)
+                    print(f"  Pruned stale item dir: {existing.name}")
+
+    generated = 0
+    skipped = 0
+    for record in records:
+        path_str = record.get("path", "")
+        slug = slug_from_path(path_str)
+        if not slug:
+            print(f"  Skipping record without path: {record.get('title_zh') or record.get('title')}")
+            skipped += 1
+            continue
+        if not path_str.startswith("content/"):
+            print(f"  Skipping record with non-content path: {path_str}")
+            skipped += 1
+            continue
+        body = load_record_body(record, content_root)
+        html_doc = render_record_page(record, body)
+        out_dir = ITEMS_DIR / slug
+        out_dir.mkdir(parents=True, exist_ok=True)
+        (out_dir / "index.html").write_text(html_doc, encoding="utf-8")
+        generated += 1
+    print(f"Generated {generated} item pages under {ITEMS_DIR} (skipped: {skipped}).")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(generate_item_pages())

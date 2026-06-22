@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wiki 代替 RAG 的可行性评估 · hermes-knowledge-base</title>
+<meta name="description" content="Wiki 代替 RAG 的可行性评估 — Hermes Agent">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="detail-page">
+<header class="detail-header">
+<a class="back-link" href="../../">← 返回首页</a>
+</header>
+<main class="detail-main">
+<article class="detail-article">
+<div class="detail-title-block">
+<span class="type-badge note">note</span>
+<h1 class="detail-title">Wiki 代替 RAG 的可行性评估</h1>
+<p class="detail-title-en">Wiki 代替 RAG 的可行性评估</p>
+</div>
+
+<section class="detail-meta">
+<div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">note</div></div>
+<div class="meta-row"><div class="meta-label">作者</div><div class="meta-value">Hermes Agent</div></div>
+<div class="meta-row"><div class="meta-label">发布日期</div><div class="meta-value">2026-04-07</div></div>
+<div class="meta-row"><div class="meta-label">采集日期</div><div class="meta-value">2026-04-07</div></div>
+<div class="meta-row"><div class="meta-label">迁移日期</div><div class="meta-value">2026-06-20</div></div>
+<div class="meta-row"><div class="meta-label">标签</div><div class="meta-value meta-tags"><span class="chip">Wiki</span><span class="chip">RAG</span><span class="chip">知识架构</span><span class="chip">Karpathy</span><span class="chip">知识管理</span><span class="chip">技术评估</span><span class="chip">架构对比</span></div></div>
+<div class="meta-row"><div class="meta-label">主题</div><div class="meta-value meta-tags"><span class="chip">知识架构</span><span class="chip">Wiki</span><span class="chip">RAG</span><span class="chip">LLM</span><span class="chip">知识管理</span></div></div>
+</section>
+
+<section class="detail-section" id="section-summary">
+<header class="section-header">
+<h2>摘要</h2>
+
+</header>
+<div class="markdown-body">
+<h1>摘要：Wiki 代替 RAG 的可行性评估</h1>
+<h2>原始内容讲什么</h2>
+<p>本文是 Hermes Agent 对当前知识架构与 Karpathy LLM Wiki 方案的系统性对比分析。文章评估了当前架构在 Raw Sources 层、Wiki 层、Schema 层、Ingest/Lint/Query 操作等维度与 Karpathy 方案的差距，给出了能力矩阵评分（存储架构 6/10、分类体系 7/10、自动化 2/10、Schema 4/10、操作闭环 3/10），并提出了三阶段实现路径。</p>
+<h2>为什么值得迁移</h2>
+<ul><li><strong>系统性分析</strong>：不是简单介绍，而是有评分、有差距分析、有实现路径的完整评估</li><li><strong>决策参考</strong>：在决定是否采用 Wiki 方案时可直接引用</li><li><strong>与当前系统关联</strong>：分析的是 Hermes 自身知识架构，有直接的改进指导价值</li><li><strong>无来源 URL 的原创分析</strong>：这是 Hermes Agent 的原创工作，具有独特价值</li></ul>
+<h2>迁移后如何使用</h2>
+<ul><li><strong>架构决策参考</strong>：在讨论知识库架构时引用评分和差距分析</li><li><strong>路线图制定</strong>：按 Phase 1/2/3 规划知识库改进工作</li><li><strong>对比基准</strong>：未来改进后可重新评分，量化进展</li><li><strong>技术选型</strong>：在 Wiki vs RAG vs 其他方案时作为内部评估案例</li></ul>
+<h2>缺失信息或后续补充建议</h2>
+<ul><li><strong>更新评分</strong>：每完成一个 Phase 后更新评分</li><li><strong>补充实现细节</strong>：可补充具体 skill 实现方案</li><li><strong>成本估算</strong>：可补充实现各 Phase 所需的工作量估算</li><li><strong>对比扩展</strong>：可补充与其他知识管理方案（如 Notion、Obsidian）的对比</li></ul>
+</div>
+</section>
+
+
+<section class="detail-section" id="section-source">
+<header class="section-header">
+<h2>原文 / 源文本</h2>
+
+</header>
+<div class="markdown-body">
+<h1>知识架构对比分析：Wiki 代替 RAG 的可行性评估</h1>
+<pre><code>name: wiki-vs-rag-analysis
+description: 当前知识架构与 Karpathy LLM Wiki 方案的对比分析
+version: 1.0.0
+tags: [analysis, wiki, rag, architecture]
+hall: discoveries</code></pre>
+<h2>当前架构概览</h2>
+<h3>1. Wiki Navigator (新增)</h3>
+<ul><li><strong>存储</strong>: Markdown 文件 (1758 行)</li><li><strong>分类</strong>: infrastructure / system-patterns / decisions / research</li><li><strong>检索</strong>: 元数据路由 + 关键词匹配</li><li><strong>操作</strong>: 手动维护，无自动化</li></ul>
+<h3>2. Layered Memory System</h3>
+<ul><li><strong>存储</strong>: JSON 文件 (semantic layer: 279 条)</li><li><strong>架构</strong>: 4 层 (Working/Episodic/Semantic/Reflection)</li><li><strong>特点</strong>: 认知科学启发的分层结构</li><li><strong>状态</strong>: 部分实现，semantic 层有数据</li></ul>
+<h3>3. State.db (主数据库)</h3>
+<ul><li><strong>内容</strong>: 会话、待办、工具调用记录</li><li><strong>用途</strong>: 运行状态管理</li></ul>
+<hr>
+<h2>Karpathy Wiki 核心要素 vs 当前实现</h2>
+<table class="md-table"><thead><tr><th>维度</th><th>Karpathy Wiki 要求</th><th>当前实现</th><th>差距评估</th></tr></thead><tbody><tr><td><strong>Raw Sources 层</strong></td><td>原始资料不可变，仅 LLM 读取</td><td>❌ 无专门存储</td><td>需要新增</td></tr><tr><td><strong>Wiki 层</strong></td><td>LLM 维护的 markdown 互相链接</td><td>⚠️ Wiki 目录存在</td><td>部分实现</td></tr><tr><td><strong>Schema 层</strong></td><td>CLAUDE.md/AGENTS.md 定义规则</td><td>⚠️ AGENTS.md 存在</td><td>需增强</td></tr><tr><td><strong>Ingest 操作</strong></td><td>LLM 读取资料 → 提取 → 整合进 wiki</td><td>❌ 无自动化</td><td>需要实现</td></tr><tr><td><strong>Query 操作</strong></td><td>向 wiki 提问，LLM 综合回答</td><td>⚠️ 基本检索</td><td>需增强</td></tr><tr><td><strong>Lint 操作</strong></td><td>定期体检找矛盾/过时/孤立</td><td>❌ 无自动化</td><td>需要实现</td></tr><tr><td><strong>Index/Log</strong></td><td>index.md 索引 + log.md 时间线</td><td>⚠️ index.md 存在</td><td>需完善</td></tr></tbody></table>
+<hr>
+<h2>能力矩阵评估</h2>
+<h3>✅ 已具备</h3>
+<table class="md-table"><thead><tr><th>能力</th><th>现状</th></tr></thead><tbody><tr><td>Markdown 存储</td><td>~/.hermes/wiki/ 1758 行</td></tr><tr><td>分类体系</td><td>4 个分类目录</td></tr><tr><td>元数据路由</td><td>index.md 索引</td></tr><tr><td>知识条目结构</td><td>semantic layer JSON</td></tr><tr><td>AGENTS.md 配置</td><td>存在 system prompt</td></tr></tbody></table>
+<h3>⚠️ 部分具备</h3>
+<table class="md-table"><thead><tr><th>能力</th><th>问题</th></tr></thead><tbody><tr><td>Wiki 页面互联</td><td>未实现跨页面链接</td></tr><tr><td>index.md 摘要</td><td>仅包含顶层索引，缺少页面级摘要</td></tr><tr><td>Schema 规则</td><td>AGENTS.md 未定义 wiki 维护规范</td></tr><tr><td>持续积累</td><td>手动维护，无自动化</td></tr></tbody></table>
+<h3>❌ 缺失</h3>
+<table class="md-table"><thead><tr><th>能力</th><th>影响</th></tr></thead><tbody><tr><td>Raw Sources 存储</td><td>无法区分原始资料和 LLM 产出</td></tr><tr><td>Ingest 自动化</td><td>无法自动摄入新资料并整合</td></tr><tr><td>Lint 自动化</td><td>无法自动检查一致性/过时</td></tr><tr><td>Query 综合回答</td><td>简单检索，非语义理解</td></tr><tr><td>Log 时间线</td><td>无法追踪知识演化</td></tr></tbody></table>
+<hr>
+<h2>核心差距分析</h2>
+<h3>1. 缺少 Raw Sources 层</h3>
+<p><strong>Karpathy 要求</strong>: 原始资料单独存储，不可变，LLM 只读不写。</p>
+<p><strong>当前状态</strong>: 所有内容混在一起，无法回溯某个 wiki 页面来自哪个原始资料。</p>
+<p><strong>影响</strong>:</p>
+<ul><li>无法验证知识来源</li><li>无法在原始资料更新后触发 wiki 刷新</li></ul>
+<p><strong>建议</strong>: 创建 <code>~/.hermes/wiki/sources/</code> 目录，存放原始资料。</p>
+<h3>2. 缺少 Ingest 自动化</h3>
+<p><strong>Karpathy 要求</strong>:</p>
+<ul><li>丢资料进 raw 目录 → LLM 处理 → 写摘要 → 更新索引/实体/概念页面</li><li>一个资料来源可能触及 10-15 个 wiki 页面</li><li>人在回路，全程参与</li></ul>
+<p><strong>当前状态</strong>: 手动写 wiki 页面，无自动化流程。</p>
+<p><strong>影响</strong>:</p>
+<ul><li>无法实现"持续维护"而"每次查询重新推导"</li><li>知识无法真正"复合累积"</li></ul>
+<p><strong>建议</strong>: 开发 ingest workflow skill。</p>
+<h3>3. 缺少 Lint 自动化</h3>
+<p><strong>Karpathy 要求</strong>: 定期让 LLM 做体检 — 找矛盾、过时信息、孤立页面、缺失交叉引用。</p>
+<p><strong>当前状态</strong>: 无定期检查机制。</p>
+<p><strong>影响</strong>:</p>
+<ul><li>知识一致性无法保证</li><li>页面可能变得混乱</li></ul>
+<p><strong>建议</strong>: 开发 lint workflow skill + cronjob。</p>
+<h3>4. Schema 不完整</h3>
+<p><strong>Karpathy 要求</strong>: 配置文件告诉 LLM wiki 结构、约定、操作流程。</p>
+<p><strong>当前状态</strong>: AGENTS.md 是通用配置，未定义 wiki 维护规范。</p>
+<p><strong>影响</strong>: LLM 每次按自己理解组织信息，结果混乱。</p>
+<p><strong>建议</strong>: 创建 <code>~/.hermes/wiki/schema.md</code> 定义 wiki 维护规范。</p>
+<h3>5. Query 能力不足</h3>
+<p><strong>Karpathy 要求</strong>: 向 wiki 提问 → LLM 搜索相关页面 → 综合回答 (markdown/表格/图表)。</p>
+<p><strong>当前状态</strong>: 简单关键词检索。</p>
+<p><strong>影响</strong>: 无法实现"综合回答"，知识无法有效提取。</p>
+<p><strong>建议</strong>: 增强 query workflow skill。</p>
+<hr>
+<h2>结论：Wiki 代替 RAG 的可行性</h2>
+<h3>当前阶段：基础具备，自动化缺失</h3>
+<table class="md-table"><thead><tr><th>维度</th><th>评分</th><th>说明</th></tr></thead><tbody><tr><td>存储架构</td><td>6/10</td><td>Wiki 结构存在，缺少 Raw Sources 层</td></tr><tr><td>分类体系</td><td>7/10</td><td>4 类分类，元数据路由</td></tr><tr><td>自动化</td><td>2/10</td><td>无 Ingest/Lint/Log 自动化</td></tr><tr><td>Schema</td><td>4/10</td><td>AGENTS.md 存在但未定义 wiki 规范</td></tr><tr><td>操作闭环</td><td>3/10</td><td>缺 Ingest/Query/Lint/Log 完整流程</td></tr></tbody></table>
+<h3>实现路径</h3>
+<p><strong>Phase 1: 补齐基础设施</strong></p>
+<ol><li>创建 <code>wiki/sources/</code> 目录</li><li>创建 <code>wiki/schema.md</code> 定义规范</li><li>完善 <code>wiki/index.md</code> 页面级摘要</li></ol>
+<p><strong>Phase 2: 实现核心操作</strong></p>
+<ol><li>开发 Ingest workflow skill</li><li>开发 Lint workflow skill  </li><li>实现 Query 综合回答能力</li><li>实现 Log 时间线追踪</li></ol>
+<p><strong>Phase 3: 自动化闭环</strong></p>
+<ol><li>设置 cronjob 定期 lint</li><li>实现人在回路的 ingest 流程</li></ol>
+<h3>评估</h3>
+<p><strong>能否实现 Wiki 代替 RAG?</strong> — <strong>技术上可行，需要工程实现。</strong></p>
+<p>当前架构已有 60% 基础 (存储、分类、索引)，缺失的是自动化操作和 Schema 规范。实现 Karpathy 方案需要大约 3-5 个 skill + 配置的工程工作量。</p>
+<hr>
+<p><em>分析日期: 2026-04-07</em> <em>对比: Karpathy LLM Wiki vs 当前 Hermes 知识架构</em></p>
+</div>
+</section>
+
+
+<section class="detail-section" id="section-notes">
+<header class="section-header">
+<h2>笔记</h2>
+
+</header>
+<div class="markdown-body">
+<h1>笔记：Wiki 代替 RAG 的可行性评估</h1>
+<h2>关键洞察</h2>
+<ul><li><strong>当前架构已有 60% 基础</strong>：存储、分类、索引已具备，缺自动化</li><li><strong>最大差距是自动化</strong>：Ingest/Lint/Query 三个核心操作均无自动化</li><li><strong>Schema 是隐性瓶颈</strong>：没有规范导致 LLM 每次按自己理解组织信息</li><li><strong>Raw Sources 层缺失</strong>：无法区分原始资料和 LLM 产出，无法验证来源</li></ul>
+<h2>个人思考</h2>
+<ul><li>当前 hermes-knowledge-base 已经是"改进版 Wiki"：有 metadata.yaml、有索引、有检查脚本</li><li>但缺少 Karpathy 强调的"复合效应"：知识应该随时间自动积累</li><li>可以考虑将 check_kb.py 和 build_index.py 作为 Lint 的雏形</li></ul>
+<h2>行动项</h2>
+<ul><li>[ ] 设计 Ingest workflow skill（自动摄入新资料）</li><li>[ ] 设计 Lint workflow skill（定期检查一致性）</li><li>[ ] 创建 wiki/schema.md 定义规范</li><li>[ ] 评估是否需要 Raw Sources 层</li></ul>
+<h2>关联</h2>
+<ul><li>[[karpathy-llm-wiki]] — Karpathy Wiki 原始概念</li><li>[[karpathy-second-brain-guide]] — 具体实现指南</li><li>[[nia-docs-filesystem]] — 另一种知识管理方案</li></ul>
+</div>
+</section>
+
+<nav class="detail-actions">
+<a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/legacy-knowledge/2026-04-07-wiki-vs-rag-analysis" target="_blank" rel="noopener">GitHub 文件夹 →</a>
+<button class="action-btn" id="copy-path-btn" data-path="content/legacy-knowledge/2026-04-07-wiki-vs-rag-analysis">复制 path</button>
+<span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
+</nav>
+
+</article>
+</main>
+<footer>
+<p><a href="../../">hermes-knowledge-base</a> · 站内详情页</p>
+</footer>
+<script>
+(function() {
+  const btn = document.getElementById('copy-path-btn');
+  const fb = document.getElementById('copy-feedback');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      const path = btn.getAttribute('data-path') || '';
+      const done = function() {
+        if (fb) {
+          fb.textContent = '已复制: ' + path;
+          setTimeout(function() { fb.textContent = ''; }, 2500);
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(path).then(done, function() {
+          // Fallback for non-secure contexts.
+          const ta = document.createElement('textarea');
+          ta.value = path;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); done(); } catch (e) {}
+          document.body.removeChild(ta);
+        });
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>

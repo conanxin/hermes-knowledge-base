@@ -26,11 +26,11 @@
 
 | 类型 | 数量 | 说明 | 目录 |
 |------|------|------|------|
-| article | 4 | 外部文章，有 source_url，需翻译 | `content/articles/` |
+| article | 6 | 外部文章，有 source_url，需翻译 | `content/articles/` |
 | note | 5 | 中文笔记，无翻译，有 legacy_source_path | `content/legacy-knowledge/` |
 | project | 4 | 项目文档，有 source_url，无翻译 | `content/projects/` |
 | resource_collection | 4 | 资源集合，结构化列表，无翻译 | `content/collections/` |
-| **总计** | **17** | — | — |
+| **总计** | **19** | — | — |
 
 ## 质量检查命令
 
@@ -42,9 +42,9 @@ python3 scripts/build_index.py
 
 | 脚本 | 用途 | 预期结果 |
 |------|------|----------|
-| `check_kb.py` | 检查 metadata 完整性 | PASS (17/17) |
+| `check_kb.py` | 检查 metadata 完整性 | PASS (19/19) |
 | `check_translation_residue.py` | 检查翻译残留 | WARNING 可接受 |
-| `build_index.py` | 重建索引 | 17 records |
+| `build_index.py` | 重建索引 | 19 records |
 
 ## 本地浏览知识库
 
@@ -170,6 +170,7 @@ python3 scripts/update_site.py
 
 ```bash
 python3 scripts/export_site_data.py
+python3 scripts/generate_item_pages.py
 python3 -m http.server 8000 -d site
 ```
 
@@ -179,4 +180,36 @@ python3 -m http.server 8000 -d site
 - 按类型筛选（article / note / project / resource_collection）
 - 关键词搜索（标题、标签、主题）
 - 按日期倒序排列
-- 一键复制 path、跳转 GitHub 查看
+- **每张卡片标题和"阅读 →"按钮进入站内详情页**（`/items/<slug>/`）
+- 卡片右侧 **GitHub 文件夹** 按钮仍可打开 GitHub 原始目录
+- 一键复制 path
+
+### 站内详情页（v0.3.8+）
+
+每条记录除了 GitHub 原始目录外，还在 GitHub Pages 内部生成独立阅读页：
+
+```
+https://conanxin.github.io/hermes-knowledge-base/items/<slug>/
+```
+
+例如：<https://conanxin.github.io/hermes-knowledge-base/items/2026-06-22-your-ai-is-not-a-tool/>
+
+详情页结构：
+
+| 区域 | 内容 |
+|------|------|
+| 顶部 | 返回首页链接 |
+| 标题 | `title_zh` + 英文副标题 `title` |
+| 元数据 | 类型、作者、来源、发布日期、采集日期、迁移日期、标签、主题 |
+| 正文 | 按类型加载：<br>· `article` → `translation.zh-CN.md` + `source.md`<br>· `resource_collection` → `collection.md` + `summary.md`<br>· `note` / `project` → `source.md` + `summary.md` |
+| 笔记 | 全部类型均加载 `notes.md`（如有） |
+| 底部 | GitHub 文件夹跳转 + 复制 path 按钮 |
+
+可选文件缺失时，详情页显示"暂无该部分"，不会崩溃。
+
+`update_site.py` 一键重建并同步：
+
+```bash
+python3 scripts/update_site.py
+# → build_index.py → export_site_data.py → generate_item_pages.py → sync_pages_docs.py
+```

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Agent 自我进化系统 · hermes-knowledge-base</title>
+<meta name="description" content="Hermes Agent 自我进化系统 — NousResearch">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="detail-page">
+<header class="detail-header">
+<a class="back-link" href="../../">← 返回首页</a>
+</header>
+<main class="detail-main">
+<article class="detail-article">
+<div class="detail-title-block">
+<span class="type-badge project">project</span>
+<h1 class="detail-title">Hermes Agent 自我进化系统</h1>
+<p class="detail-title-en">Hermes Agent Self-Evolution</p>
+</div>
+
+<section class="detail-meta">
+<div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">project</div></div>
+<div class="meta-row"><div class="meta-label">作者</div><div class="meta-value">NousResearch</div></div>
+<div class="meta-row"><div class="meta-label">来源</div><div class="meta-value">GitHub / NousResearch</div></div>
+<div class="meta-row"><div class="meta-label">发布日期</div><div class="meta-value">2026-04-13</div></div>
+<div class="meta-row"><div class="meta-label">采集日期</div><div class="meta-value">2026-04-07</div></div>
+<div class="meta-row"><div class="meta-label">迁移日期</div><div class="meta-value">2026-06-20</div></div>
+<div class="meta-row"><div class="meta-label">标签</div><div class="meta-value meta-tags"><span class="chip">Hermes Agent</span><span class="chip">Self-Evolution</span><span class="chip">DSPy</span><span class="chip">GEPA</span><span class="chip">Prompt Optimization</span><span class="chip">Runtime Optimization</span><span class="chip">NousResearch</span></div></div>
+<div class="meta-row"><div class="meta-label">主题</div><div class="meta-value meta-tags"><span class="chip">AI Agent</span><span class="chip">自我进化</span><span class="chip">DSPy</span><span class="chip">GEPA</span><span class="chip">Prompt 优化</span></div></div>
+</section>
+
+<section class="detail-section" id="section-summary">
+<header class="section-header">
+<h2>摘要</h2>
+
+</header>
+<div class="markdown-body">
+<h1>摘要：Hermes Agent Self-Evolution</h1>
+<h2>旧内容主要讲什么</h2>
+<p>本文记录了 NousResearch 的 Hermes Agent Self-Evolution 项目，一个使用 DSPy + GEPA 实现 Agent 自我进化优化的研究平台。项目核心定位是验证 pipeline 连通性、研究 demonstration injection 的 variance，而非生产可用的 skill 文本优化器。</p>
+<p>文章详细描述了项目的五个阶段（从 Skill 文件进化到 Continuous improvement loop）、优化目标分层（Tier 1-4）、核心引擎（DSPy + GEPA / Darwinian Evolver / MIPROv2）、约束与护栏、基准门控、优化循环、成本估算，以及与 Hermes Agent 的关系。</p>
+<p>关键结论：当前项目已冻结基线 v1，metrics 变化来自 demonstration injection 效应而非 SKILL.md 文本的实际改写。三技能验证结果显示 variance 从 -9.6% 到 +18.1%，不稳定。</p>
+<h2>为什么值得迁移</h2>
+<ol><li><strong>项目历史记录</strong>：这是 Hermes Agent 生态的重要组成部分，记录了关键的技术决策和实验结果</li><li><strong>技术参考价值</strong>：DSPy + GEPA 的优化思路对 prompt engineering 和 skill 优化有参考价值</li><li><strong>决策记录</strong>：明确记录了"能做什么"和"不能做什么"的边界，避免未来重复踩坑</li><li><strong>成本估算</strong>：提供了详细的成本数据（$2-10/次运行），对未来项目规划有帮助</li></ol>
+<h2>迁移后如何使用</h2>
+<ul><li><strong>技术参考</strong>：理解 DSPy + GEPA 的优化思路和局限性</li><li><strong>项目复盘</strong>：作为 Hermes Agent 自我进化项目的存档，供未来复盘参考</li><li><strong>成本规划</strong>：参考成本估算，规划类似项目的预算</li><li><strong>边界意识</strong>：理解当前技术边界，避免过度承诺</li></ul>
+<h2>是否缺少来源 URL</h2>
+<p>否。来源 URL 为 GitHub 仓库：https://github.com/NousResearch/hermes-agent-self-evolution</p>
+<h2>后续是否需要补充或重写</h2>
+<ul><li><strong>短期</strong>：无需补充，内容完整</li><li><strong>中期</strong>：如果项目重启或发布新版本，可更新状态</li><li><strong>长期</strong>：作为项目历史存档，长期保留</li></ul>
+<h2>关键概念</h2>
+<table class="md-table"><thead><tr><th>概念</th><th>说明</th></tr></thead><tbody><tr><td>DSPy</td><td>声明式编程框架，用于优化 LLM 调用</td></tr><tr><td>GEPA</td><td>反射式 prompt 进化引擎</td></tr><tr><td>BootstrapFewShot</td><td>Few-shot 示例优化方法</td></tr><tr><td>Darwinian Evolver</td><td>代码进化引擎</td></tr><tr><td>TBLite</td><td>编码/sysadmin 基准测试</td></tr><tr><td>TerminalBench2</td><td>较难的编码/sysadmin 基准</td></tr><tr><td>YC-Bench</td><td>长视野战略一致性测试</td></tr><tr><td>Demonstration injection</td><td>演示注入效应</td></tr></tbody></table>
+<h2>关联内容</h2>
+<ul><li>与 Hermes Agent 项目直接相关</li><li>与 DSPy 框架相关</li><li>与 Skill 优化和进化相关</li></ul>
+</div>
+</section>
+
+
+<section class="detail-section" id="section-source">
+<header class="section-header">
+<h2>原文 / 源文本</h2>
+
+</header>
+<div class="markdown-body">
+<p>&lt;!-- 来源: https://github.com/NousResearch/hermes-agent-self-evolution --&gt; &lt;!-- 摄入日期: 2026-04-07 --&gt; &lt;!-- 状态更新: 2026-04-13 --&gt; &lt;!-- 迁移日期: 2026-06-20 --&gt;</p>
+<h1>Hermes Agent Self-Evolution</h1>
+<h2>概述</h2>
+<p><strong>当前定位</strong>：Runtime Optimization 研究平台（冻结基线 v1）</p>
+<p>项目已从"文本进化探索"降级为"runtime optimization 研究平台"。核心定位是验证 pipeline 连通性、研究 demonstration injection 的 variance，<strong>而非生产可用的 skill 文本优化器</strong>。</p>
+<p>使用 DSPy + BootstrapFewShot（GEPA 自动 fallback）进行 runtime optimization。每次运行约 $2-10，但当前 metrics 变化来自 demonstration injection 效应，而非 SKILL.md 文本的实际改写。</p>
+<hr>
+<h2>状态摘要（2026-04-13）</h2>
+<table class="md-table"><thead><tr><th>维度</th><th>状态</th></tr></thead><tbody><tr><td>跨类型可运行性</td><td>已验证（3 skills）</td></tr><tr><td>稳定正向优化</td><td>未验证（variance -9.6% ~ +18.1%）</td></tr><tr><td>文本进化</td><td>未发生（artifact 与 baseline 相同）</td></tr><tr><td>live 迁移就绪</td><td>不适合</td></tr></tbody></table>
+<p><strong>三技能验证结果</strong>：</p>
+<table class="md-table"><thead><tr><th>Skill</th><th>类型</th><th>Metrics</th><th>Artifact 变化</th></tr></thead><tbody><tr><td>github-code-review</td><td>代码审查</td><td>+18.1%</td><td>未变化</td></tr><tr><td>plan</td><td>规划约束</td><td>+4.1%</td><td>未变化</td></tr><tr><td>polymarket</td><td>数据查询</td><td>-9.6%</td><td>未变化</td></tr></tbody></table>
+<hr>
+<h2>核心架构</h2>
+<pre><code>当前 skill/prompt/tool ──► 生成 eval dataset
+                                    │
+                                    ▼
+                              GEPA 优化器 ◄── 执行轨迹
+                                    │              ▲
+                                    ▼              │
+                              候选变体 ──► 评估
+                                    │
+                              约束门控 (tests, size limits, benchmarks)
+                                    │
+                              最佳变体 ──► PR 到 hermes-agent</code></pre>
+<p>GEPA 读取执行轨迹来理解 <strong>为什么</strong> 失败 (不仅仅是失败了)，然后提出针对性改进。</p>
+<hr>
+<h2>五个阶段</h2>
+<table class="md-table"><thead><tr><th>阶段</th><th>目标</th><th>引擎</th><th>状态</th></tr></thead><tbody><tr><td><strong>Phase 1</strong></td><td>Skill files (SKILL.md)</td><td>DSPy + GEPA</td><td>已实现</td></tr><tr><td><strong>Phase 2</strong></td><td>Tool descriptions</td><td>DSPy + GEPA</td><td>计划中</td></tr><tr><td><strong>Phase 3</strong></td><td>System prompt sections</td><td>DSPy + GEPA</td><td>计划中</td></tr><tr><td><strong>Phase 4</strong></td><td>Tool implementation code</td><td>Darwinian Evolver</td><td>计划中</td></tr><tr><td><strong>Phase 5</strong></td><td>Continuous improvement loop</td><td>Automated pipeline</td><td>计划中</td></tr></tbody></table>
+<hr>
+<h2>优化目标分层</h2>
+<h3>Tier 1: Skill 文件 (最高价值，最低风险)</h3>
+<ul><li><strong>目标</strong>: SKILL.md 文件 — agent 遵循的程序指令</li><li><strong>方式</strong>: 将 skill 文本包装为 DSPy 模块，通过 batch_runner 在测试任务上评估，用 GEPA 进化</li><li><strong>为什么有效</strong>: Skills 是纯文本，容易突变，直接可测量</li><li><strong>例子</strong>: 进化 <code>github-code-review</code> skill，通过已知良好 code reviews 的数据集测试</li></ul>
+<h3>Tier 2: Tool 描述 (中等价值，低风险)</h3>
+<ul><li><strong>目标</strong>: tool schemas 中的 <code>description</code> 字段</li><li><strong>方式</strong>: GEPA 进化描述，评估 agent 是否为给定任务选择正确的工具</li><li><strong>为什么有效</strong>: 工具选择是分类问题 — DSPy 优化的完美用例</li></ul>
+<h3>Tier 3: System Prompt 组件 (高价值，更高风险)</h3>
+<ul><li><strong>目标</strong>: system prompt 的各部分 (persona, policies, formatting instructions)</li><li><strong>方式</strong>: 将 prompt_builder.py 各部分参数化为 DSPy Signatures，用 GEPA 优化</li><li><strong>风险</strong>: 必须小心不破坏 prompt caching</li></ul>
+<h3>Tier 4: 代码进化 (最高价值，最高风险)</h3>
+<ul><li><strong>目标</strong>: 工具实现代码、辅助函数</li><li><strong>方式</strong>: Darwinian Evolver 与 GitBasedOrganism，通过 pytest + batch_runner 测试</li></ul>
+<hr>
+<h2>引擎</h2>
+<table class="md-table"><thead><tr><th>引擎</th><th>功能</th><th>许可证</th></tr></thead><tbody><tr><td><strong>DSPy + GEPA</strong></td><td>反射式 prompt 进化 — 读取执行轨迹，提出针对性突变</td><td>MIT</td></tr><tr><td><strong>Darwinian Evolver</strong></td><td>代码进化，基于 Git 的 organisms</td><td>AGPL v3 (仅外部 CLI)</td></tr><tr><td><strong>DSPy MIPROv2</strong></td><td>Few-shot 示例、指令文本的优化</td><td>MIT</td></tr></tbody></table>
+<hr>
+<h2>约束与护栏</h2>
+<p>每个进化变体必须通过：</p>
+<ol><li><strong>完整测试套件</strong> — <code>pytest tests/ -q</code> 必须 100% 通过</li><li><strong>大小限制</strong> — Skills ≤15KB, tool descriptions ≤500 chars</li><li><strong>缓存兼容性</strong> — 无会话中更改</li><li><strong>语义保持</strong> — 不能偏离原始目的</li><li><strong>PR 审查</strong> — 所有更改通过人类审查，永远不直接 commit</li></ol>
+<hr>
+<h2>基准作为 fitness 信号</h2>
+<table class="md-table"><thead><tr><th>基准</th><th>测试内容</th><th>速度</th><th>成本</th><th>角色</th></tr></thead><tbody><tr><td><strong>TBLite</strong></td><td>编码/sysadmin (100 任务)</td><td>~1-2h</td><td>~$20-50</td><td><strong>主要回归检查</strong></td></tr><tr><td><strong>TerminalBench2</strong></td><td>编码/sysadmin (89 较难任务)</td><td>~2-4h</td><td>~$50-200</td><td><strong>彻底验证</strong></td></tr><tr><td><strong>YC-Bench</strong></td><td>长视野战略一致性 (100-500 turns)</td><td>~3-6h</td><td>~$50-200</td><td><strong>一致性检查</strong></td></tr></tbody></table>
+<p><strong>关键原则</strong>: 基准是 <strong>门控</strong>，不是 fitness 函数。Fitness 函数是任务特定的。</p>
+<hr>
+<h2>优化循环</h2>
+<pre><code>候选变体
+    │
+    ├──► pytest (必须 100% 通过) ────────── 门控 1: 功能正确性
+    │
+    ├──► TBLite 快速子集 (20 任务) ───────── 门控 2: 快速能力检查
+    │
+    ├──► 任务特定 eval 数据集 ─────────────── Fitness: 质量分数
+    │
+    ▼
+仅最佳候选 (top 3)
+    │
+    ├──► 完整 TBLite (100 任务) ───────────── 门控 3: 彻底回归检查
+    │
+    ├──► YC-Bench fast_test ───────────────── 门控 4: 一致性检查
+    │
+    ▼
+最佳候选 → 带有完整指标的 PR</code></pre>
+<hr>
+<h2>成本</h2>
+<ul><li>GEPA 优化: ~$2-10 每次运行</li><li>Darwinian Evolver: ~$2-9 每个任务</li><li>批量评估: 取决于测试用例数量和模型成本</li></ul>
+<p><strong>建议</strong>: 从小 eval 集开始 (10-20 个例子)，为重要技能扩展规模。</p>
+<hr>
+<h2>与 Hermes 的关系</h2>
+<p><strong>hermes-agent-self-evolution 操作 ON hermes-agent，不是 inside 它。</strong> 无需更改 agent repo。它从 hermes-agent 代码库读取，将进化版本写入 git 分支，为人类审查创建 PR。</p>
+<table class="md-table"><thead><tr><th>hermes-agent 组件</th><th>自我进化如何使用它</th></tr></thead><tbody><tr><td><code>batch_runner.py</code></td><td>并行运行 agent 在测试任务上</td></tr><tr><td><code>environments/benchmarks/tblite/</code></td><td>基准门控</td></tr><tr><td><code>hermes_state.py</code> (SessionDB)</td><td>挖掘真实使用作为 eval 数据</td></tr><tr><td><code>agent/prompt_builder.py</code></td><td>读取当前 prompt 部分 (只读)</td></tr><tr><td><code>tools/registry.py</code></td><td>读取当前 tool 描述 (只读)</td></tr><tr><td><code>skills/</code> 目录</td><td>读取当前 skills，将进化版本写入分支</td></tr></tbody></table>
+<hr>
+<h2>快速开始</h2>
+<pre data-lang="bash"><code># 安装
+git clone https://github.com/NousResearch/hermes-agent-self-evolution.git
+cd hermes-agent-self-evolution
+pip install -e &quot;.[dev]&quot;
+
+# 指向你的 hermes-agent repo
+export HERMES_AGENT_REPO=~/.hermes/hermes-agent
+
+# 进化一个 skill (合成 eval 数据)
+python -m evolution.skills.evolve_skill \
+    --skill github-code-review \
+    --iterations 10 \
+    --eval-source synthetic
+
+# 或使用 Claude Code, Copilot, Hermes 的真实会话历史
+python -m evolution.skills.evolve_skill \
+    --skill github-code-review \
+    --iterations 10 \
+    --eval-source sessiondb</code></pre>
+<hr>
+<h2>当前边界（关键）</h2>
+<h3>能做什么</h3>
+<ul><li>新 skill 的 pipeline 连通性验证</li><li>runtime sensitivity / variance 研究</li><li>demonstration injection 效应量化</li></ul>
+<h3>不能做什么</h3>
+<ul><li>自动迁入 live Hermes（优化效果不稳定）</li><li>声称"skill 已被优化"（metrics 来自 demonstration bias）</li><li>在当前基线上追求 stable positive gain</li></ul>
+<h3>重启 text-mutation 的前提</h3>
+<ul><li>更强模型（GPT-4 / Claude）可用，或</li><li>新的架构方案（非 GEPA/BootstrapFewShot）</li></ul>
+<hr>
+<h2>关联文档</h2>
+<ul><li>实验仓库：<code>/home/conanxin/project/experiments/hermes-agent-self-evolution/</code></li><li>基线规格：<code>SELF_EVOLUTION_STATUS.md</code></li><li>验证报告：<code>TRI_SKILL_VALIDATION_V2.md</code></li></ul>
+<hr>
+<p><em>摄入日期: 2026-04-07</em> <em>状态更新: 2026-04-13</em> <em>迁移日期: 2026-06-20</em></p>
+</div>
+</section>
+
+
+<section class="detail-section" id="section-notes">
+<header class="section-header">
+<h2>笔记</h2>
+
+</header>
+<div class="markdown-body">
+<h1>我的笔记</h1>
+<h2>关键摘记</h2>
+<p>*</p>
+<h2>我的想法</h2>
+<p>*</p>
+<h2>可延伸研究</h2>
+<p>*</p>
+<h2>待确认问题</h2>
+<p>*</p>
+</div>
+</section>
+
+<nav class="detail-actions">
+<a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/projects/2026-04-13-hermes-agent-self-evolution" target="_blank" rel="noopener">GitHub 文件夹 →</a>
+<button class="action-btn" id="copy-path-btn" data-path="content/projects/2026-04-13-hermes-agent-self-evolution">复制 path</button>
+<span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
+</nav>
+
+</article>
+</main>
+<footer>
+<p><a href="../../">hermes-knowledge-base</a> · 站内详情页</p>
+</footer>
+<script>
+(function() {
+  const btn = document.getElementById('copy-path-btn');
+  const fb = document.getElementById('copy-feedback');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      const path = btn.getAttribute('data-path') || '';
+      const done = function() {
+        if (fb) {
+          fb.textContent = '已复制: ' + path;
+          setTimeout(function() { fb.textContent = ''; }, 2500);
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(path).then(done, function() {
+          // Fallback for non-secure contexts.
+          const ta = document.createElement('textarea');
+          ta.value = path;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); done(); } catch (e) {}
+          document.body.removeChild(ta);
+        });
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>

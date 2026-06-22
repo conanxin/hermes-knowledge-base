@@ -5,6 +5,7 @@ from pathlib import Path
 SCRIPTS = [
     "scripts/build_index.py",
     "scripts/export_site_data.py",
+    "scripts/generate_item_pages.py",
     "scripts/sync_pages_docs.py",
 ]
 
