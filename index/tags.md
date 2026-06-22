@@ -130,6 +130,10 @@
 
 - Nia Docs — 把整个 Web 变成文件系统
 
+## Paul Graham
+
+- Superlinear Returns
+
 ## Prompt
 
 - Karpathy Second Brain 实现指南
@@ -250,6 +254,10 @@
 ## defensive-programming
 
 - Session Guard Phase 1: Pre-Request Sanitizer
+
+## do things that don't scale
+
+- Superlinear Returns
 
 ## error-handling
 
@@ -398,6 +406,10 @@
 
 - Don't dethrone consciousness!
 
+## 创业
+
+- Superlinear Returns
+
 ## 口述史
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
@@ -406,13 +418,25 @@
 
 - 日本铁路如何在分裂中保持统一
 
+## 复利
+
+- Superlinear Returns
+
 ## 大型语言模型
 
 - Don't dethrone consciousness!
 
+## 好奇心
+
+- Superlinear Returns
+
 ## 好莱坞
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
+
+## 学习
+
+- Superlinear Returns
 
 ## 导演
 
@@ -450,6 +474,10 @@
 ## 持久化知识
 
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
+
+## 指数增长
+
+- Superlinear Returns
 
 ## 教皇利奥
 
@@ -525,6 +553,10 @@
 
 - 日本铁路如何在分裂中保持统一
 
+## 科学
+
+- Superlinear Returns
+
 ## 笔记系统
 
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
@@ -540,6 +572,10 @@
 ## 系统
 
 - Your AI Is Not a Tool
+
+## 绩效
+
+- Superlinear Returns
 
 ## 自动化
 
@@ -572,6 +608,18 @@
 ## 资源库
 
 - 灵感资源库
+
+## 超线性回报
+
+- Superlinear Returns
+
+## 野心
+
+- Superlinear Returns
+
+## 门槛效应
+
+- Superlinear Returns
 
 ## 集体无意识
 

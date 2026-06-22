@@ -389,6 +389,42 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/projects/2026-05-18-hydro0x01-security-audit"
   },
   {
+    "title": "Superlinear Returns",
+    "title_zh": "超线性回报",
+    "author": "Paul Graham",
+    "published_date": "2023-10-01",
+    "captured_date": "2026-06-22",
+    "type": "article",
+    "topics": [
+      "绩效回报",
+      "超线性",
+      "指数增长",
+      "门槛",
+      "复利",
+      "科学发现",
+      "组织与个人"
+    ],
+    "tags": [
+      "Paul Graham",
+      "绩效",
+      "超线性回报",
+      "指数增长",
+      "门槛效应",
+      "复利",
+      "学习",
+      "科学",
+      "创业",
+      "好奇心",
+      "野心",
+      "do things that don't scale"
+    ],
+    "path": "content/articles/2026/2026-06-22-paulgraham-superlinear-returns",
+    "updated_date": "2026-06-22",
+    "slug": "2026-06-22-paulgraham-superlinear-returns",
+    "detail_url": "items/2026-06-22-paulgraham-superlinear-returns/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-22-paulgraham-superlinear-returns"
+  },
+  {
     "title": "AI 没有意识，但它正在成为我们的无意识",
     "title_zh": "AI 没有意识，但它正在成为我们的无意识",
     "author": "L. M. Sacasas (Michael)",

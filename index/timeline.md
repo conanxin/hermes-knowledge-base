@@ -2,6 +2,7 @@
 
 ## 2026-06
 
+- Superlinear Returns
 - AI 没有意识，但它正在成为我们的无意识
 - Your AI Is Not a Tool
 - How Reverse Game Theory Could Solve The Housing Shortage

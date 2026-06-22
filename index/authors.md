@@ -60,6 +60,10 @@
 
 - Hermes Agent Self-Evolution
 
+## Paul Graham
+
+- Superlinear Returns
+
 ## 社区整理
 
 - Awesome LLM Long Context 资源列表
