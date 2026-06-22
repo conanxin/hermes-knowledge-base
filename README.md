@@ -211,5 +211,28 @@ https://conanxin.github.io/hermes-knowledge-base/items/<slug>/
 
 ```bash
 python3 scripts/update_site.py
-# → build_index.py → export_site_data.py → generate_item_pages.py → sync_pages_docs.py
+# 硬性执行顺序：
+#   0. check_kb.py            ← 质量门禁，FAIL 立即停止
+#   1. build_index.py
+#   2. export_site_data.py
+#   3. generate_item_pages.py
+#   4. sync_pages_docs.py
 ```
+
+## 质量门禁（硬性规则）
+
+`update_site.py` 已在最前面内置 `check_kb.py` 硬停止：
+
+1. `check_kb.py` 失败 → `update_site.py` 立即返回非 0，**不会**运行 build / export / generate / sync，**不会**触碰 `site/data/catalog.json` 或 `docs/`。
+2. `check_kb.py` 失败时**严禁** commit / push。
+3. `word_count` 字段必须是 YAML 对象，**不允许**用带引号的字符串或裸数字。规范格式：
+
+   ```yaml
+   word_count:
+     source: 4434        # 整数（source.md 实际词数）
+     translation: 7079   # 整数（translation.zh-CN.md 实际 CJK 字数）
+   ```
+
+   不允许：`word_count: 4500`、`word_count: "4500"`、`word_count: "~4500"`、`word_count: 约4500`。
+4. 半成品条目（缺文件、字段为 0、翻译不完整）必须先修复或隔离到 `inbox/quarantine/`，再继续执行 `update_site.py`。
+5. 除非用户明确说"先不要 commit/push"，否则完整导入流程应自动运行到 check → update_site → commit → push；但当 check 失败时必须立即停止并报告。
