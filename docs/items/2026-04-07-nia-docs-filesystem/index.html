@@ -7,7 +7,7 @@
 <meta name="description" content="Nia Docs — 把整个 Web 变成文件系统 — @arlanr (Nozomio Labs CEO)">
 <link rel="stylesheet" href="../../styles.css">
 </head>
-<body class="detail-page">
+<body class="detail-page" id="top">
 <header class="detail-header">
 <a class="back-link" href="../../">← 返回首页</a>
 </header>
@@ -18,6 +18,24 @@
 <h1 class="detail-title">Nia Docs — 把整个 Web 变成文件系统</h1>
 <p class="detail-title-en">Nia Docs — 把整个 Web 变成文件系统</p>
 </div>
+
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#核心观点">核心观点</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#现有方案局限">现有方案局限</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#rag-检索增强-标准解法">RAG (检索增强) — 标准解法</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#mcp-的问题">MCP 的问题</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#nia-docs-方案">Nia Docs 方案</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#核心洞察">核心洞察</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#技术实现">技术实现</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#为什么不用真实沙箱">为什么不用真实沙箱？</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#观测数据">观测数据</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#更大愿景">更大愿景</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#关键洞察">关键洞察</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#关联">关联</a></li>
+</ol>
+</nav>
 
 <section class="detail-meta">
 <div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">project</div></div>
@@ -31,31 +49,36 @@
 </section>
 
 <section class="detail-section" id="section-summary">
-<header class="section-header">
-<h2>摘要</h2>
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">摘要</span>
 
-</header>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h1>摘要：Nia Docs — 把整个 Web 变成文件系统</h1>
-<h2>原始内容讲什么</h2>
+<h1 id="摘要nia-docs-把整个-web-变成文件系统">摘要：Nia Docs — 把整个 Web 变成文件系统</h1>
+<h2 id="原始内容讲什么">原始内容讲什么</h2>
 <p>Nia Docs 是 Nozomio Labs 提出的解决 AI Agent 代码幻觉问题的方案。核心洞察是：代码幻觉是数据问题（API 每天都在变，模型训练数据滞后），而非模型问题。Nia Docs 通过将文档网站转换为文件系统抽象（URL → 文件路径），让 Agent 用天生的文件系统操作（tree/grep/cat）来浏览文档，而不是依赖复杂的 MCP 工具或碎片化的 RAG 检索。</p>
-<h2>为什么值得迁移</h2>
+<h2 id="为什么值得迁移">为什么值得迁移</h2>
 <ul><li><strong>解决真实问题</strong>：Agent 代码幻觉是普遍痛点，Nia Docs 提供了优雅的解决方案</li><li><strong>架构创新</strong>：文件系统抽象 vs MCP/RAG 的对比有深刻洞察</li><li><strong>技术实现完整</strong>：包含 Index/Serve/Shell 三层架构和 API 设计</li><li><strong>与当前知识库关联</strong>：与 Wiki vs RAG 分析、Karpathy Second Brain 等形成知识网络</li></ul>
-<h2>迁移后如何使用</h2>
+<h2 id="迁移后如何使用">迁移后如何使用</h2>
 <ul><li><strong>技术参考</strong>：设计 Agent 文档系统时引用</li><li><strong>架构对比</strong>：在评估 RAG/MCP/文件系统方案时作为案例</li><li><strong>产品灵感</strong>：如果开发类似工具，可直接参考实现</li><li><strong>概念教学</strong>：向他人解释"为什么文件系统抽象优于 MCP"</li></ul>
-<h2>缺失信息或后续补充建议</h2>
+<h2 id="缺失信息或后续补充建议">缺失信息或后续补充建议</h2>
 <ul><li><strong>性能基准</strong>：可补充与真实沙箱的性能对比数据</li><li><strong>开源实现</strong>：可补充是否有开源实现或类似项目</li><li><strong>成本分析</strong>：可补充实际运行成本估算</li><li><strong>局限性</strong>：可补充文件系统抽象不适用场景</li></ul>
 </div>
+</details>
 </section>
 
 
 <section class="detail-section" id="section-source">
-<header class="section-header">
-<h2>原文 / 源文本</h2>
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">原文 / 源文本</span>
 
-</header>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h1>Nia Docs — 把整个 Web 变成文件系统</h1>
+<h1 id="nia-docs-把整个-web-变成文件系统">Nia Docs — 把整个 Web 变成文件系统</h1>
 <pre><code>name: nia-docs-filesystem
 description: 用文件系统抽象解决 AI Agent 代码幻觉问题
 version: 1.0.0
@@ -64,45 +87,45 @@ date: 2026-04-07
 source: @arlanr (Nozomio Labs CEO)
 source_url: https://x.com/arlanr/status/2041215978957389908
 hall: discoveries</code></pre>
-<h2>核心观点</h2>
+<h2 id="核心观点">核心观点</h2>
 <p><strong>代码幻觉是数据问题，不是模型问题。</strong></p>
 <ul><li>每天 API 都在发布破坏性变更、弃用端点、重命名参数</li><li>模型训练数据是几个月甚至几年后的</li><li>Agent 写出的代码看起来完美、编译通过，但运行时失败</li></ul>
-<h2>现有方案局限</h2>
-<h3>RAG (检索增强) — 标准解法</h3>
+<h2 id="现有方案局限">现有方案局限</h2>
+<h3 id="rag-检索增强-标准解法">RAG (检索增强) — 标准解法</h3>
 <ul><li>分块文档 → 向量化 → 检索 top-K 片段</li><li>能解决 80% 问题</li><li><strong>失效场景</strong>：</li><li>答案跨三页</li><li>需要精确的函数签名（chunking 过程中丢失）</li><li>检索给的是碎片，但 agent 需要完整图景</li></ul>
-<h3>MCP 的问题</h3>
+<h3 id="mcp-的问题">MCP 的问题</h3>
 <ul><li>每个工具需要 JSON schema、描述、参数构建</li><li>吃上下文空间</li><li>引入滥用风险</li></ul>
-<h2>Nia Docs 方案</h2>
+<h2 id="nia-docs-方案">Nia Docs 方案</h2>
 <blockquote><p>"What if every documentation site on the web was a directory you could <code>cd</code> into?"</p></blockquote>
-<h3>核心洞察</h3>
+<h3 id="核心洞察">核心洞察</h3>
 <ol><li><strong>Agent 天生懂文件系统</strong> — 数十亿 token 已嵌入模型权重</li></ol>
 <ul><li><code>tree</code>, <code>grep</code>, <code>find</code>, <code>cat README.md</code>, <code>grep -r "auth" .</code></li></ul>
 <ol><li><strong>文件系统 vs MCP</strong>:</li></ol>
 <ul><li>130+ MCP 工具 → 每个都要配置、学习</li><li>文件系统工具 → agent 先天就会</li></ul>
 <blockquote><p>@jerryjliu0: "an agent with filesystem tools and a code interpreter is just as general, if not more general, than an agent with 100+ MCP tools."</p></blockquote>
-<h3>技术实现</h3>
-<h4>1. Index (索引)</h4>
+<h3 id="技术实现">技术实现</h3>
+<h4 id="1-index-索引">1. Index (索引)</h4>
 <ul><li>首次访问 URL 时爬取站点</li><li>尊重 <code>llms.txt</code>，检测 OpenAPI specs，处理重定向</li><li>URL → 文件路径 (例如 <code>docs.stripe.com/api/charges/create</code> → <code>/api/charges/create.md</code>)</li><li>自动检测共同路径前缀，解决 URL 结构不一致问题</li></ul>
-<h4>2. Serve (服务)</h4>
+<h4 id="2-serve-服务">2. Serve (服务)</h4>
 <pre><code>GET  /shell-docs/load?url=...       # 状态 + 完整 dump
 GET  /shell-docs/{namespace}/read?path=...  # 单文件
 POST /shell-docs/{namespace}/grep  # 正则搜索
 GET  /shell-docs/{namespace}/ls?path=...   # 目录
 GET  /shell-docs/{namespace}/tree  # 完整树</code></pre>
 <ul><li>gzip 压缩，一次请求获取所有文件</li><li>缓存 (Cache-Control: max-age=300) + 磁盘缓存 <code>~/.cache/nia-docs/</code></li><li>Namespace 共享 — 一人索引，大家受益</li></ul>
-<h4>3. Shell (客户端)</h4>
+<h4 id="3-shell-客户端">3. Shell (客户端)</h4>
 <ul><li>使用 <strong>just-bash</strong> — TypeScript 实现的 bash</li><li>整个文件系统是 in-memory JavaScript object</li><li>500 页文档的 <code>grep -r "webhook" .</code> 毫秒级完成</li></ul>
-<h3>为什么不用真实沙箱？</h3>
+<h3 id="为什么不用真实沙箱">为什么不用真实沙箱？</h3>
 <table class="md-table"><thead><tr><th>指标</th><th>Nia Docs</th><th>真实沙箱</th></tr></thead><tbody><tr><td>启动时间</td><td>~100ms (缓存) / ~2s (已索引)</td><td>更慢</td></tr><tr><td>每会话计算</td><td>零 (客户端执行)</td><td>需要资源</td></tr><tr><td>成本</td><td>低 (只读静态文本)</td><td>高</td></tr></tbody></table>
 <blockquote><p>"A documentation shell doesn't need process isolation, writable storage, or a kernel. It needs string matching over a known set of files."</p></blockquote>
-<h2>观测数据</h2>
+<h2 id="观测数据">观测数据</h2>
 <p>Agent 收敛到一致工作流：</p>
 <ol><li><code>tree</code> — 定向</li><li><code>grep -rl</code> — 找相关文件</li><li><code>cat</code> — 阅读</li></ol>
 <p>这正是人类开发者的操作方式。文件系统抽象是 agent 自然默认的行为。</p>
-<h2>更大愿景</h2>
+<h2 id="更大愿景">更大愿景</h2>
 <blockquote><p>"The entire web should be navigable the same way a codebase is."</p></blockquote>
 <ul><li>API reference → 目录</li><li>Changelog → 文件</li><li>OpenAPI spec → JSON (直接 cat)</li></ul>
-<h2>关键洞察</h2>
+<h2 id="关键洞察">关键洞察</h2>
 <ol><li><strong>抽象层级演进</strong>:</li></ol>
 <ul><li>Unix (1970s): 设备/进程/套接字 → 文件</li><li>DevOps (2010s): 代码制品 → 文件</li><li>Agentic AI (2020s): 上下文/记忆 → 文件</li></ul>
 <ol><li><strong>知识 vs 工具</strong>: </li></ol>
@@ -111,37 +134,43 @@ GET  /shell-docs/{namespace}/tree  # 完整树</code></pre>
 <ul><li>RAG 是"搜到什么返回什么"</li><li>文件系统是"让 agent 自己逛"</li></ul>
 <ol><li><strong>共享经济</strong>: </li></ol>
 <ul><li>Namespace 共享 — 类似 CDN 的知识分发模型</li></ul>
-<h2>关联</h2>
+<h2 id="关联">关联</h2>
 <ul><li>[[arxiv-llm-systems]] — LLM 推理优化相关</li><li>[[wiki-vs-rag-analysis]] — Wiki vs RAG 对比</li><li>[[karpathy-llm-wiki]] — Karpathy Wiki 模式</li></ul>
 <hr>
 <p><em>摄入日期: 2026-04-07</em></p>
 </div>
+</details>
 </section>
 
 
 <section class="detail-section" id="section-notes">
-<header class="section-header">
-<h2>笔记</h2>
-
-</header>
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">笔记</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h1>笔记：Nia Docs — 把整个 Web 变成文件系统</h1>
-<h2>关键洞察</h2>
+<h1 id="笔记nia-docs-把整个-web-变成文件系统">笔记：Nia Docs — 把整个 Web 变成文件系统</h1>
+<h2 id="关键洞察">关键洞察</h2>
 <ul><li><strong>核心问题</strong>：代码幻觉是数据问题，不是模型问题</li><li><strong>核心方案</strong>：文件系统抽象 — Agent 天生懂 tree/grep/cat</li><li><strong>vs MCP</strong>：文件系统更通用，不需要学习 130+ 个工具</li><li><strong>vs RAG</strong>：文件系统让 Agent 自己逛，而不是给碎片</li></ul>
-<h2>个人思考</h2>
+<h2 id="个人思考">个人思考</h2>
 <ul><li>这个方案与 Karpathy 的 Wiki 理念一致：给 Agent 一个它本来就理解的界面</li><li>Namespace 共享是聪明的 CDN 知识分发模型</li><li>可以借鉴到 hermes-knowledge-base 的文档系统设计</li></ul>
-<h2>行动项</h2>
+<h2 id="行动项">行动项</h2>
 <ul><li>[ ] 评估 hermes-knowledge-base 是否可以采用文件系统抽象</li><li>[ ] 研究 just-bash 的实现细节</li><li>[ ] 对比 Nia Docs 与当前知识库文档系统的优劣</li></ul>
-<h2>关联</h2>
+<h2 id="关联">关联</h2>
 <ul><li>[[karpathy-llm-wiki]] — 知识管理哲学</li><li>[[wiki-vs-rag-analysis]] — RAG 对比分析</li><li>[[karpathy-second-brain-guide]] — 知识积累方法</li></ul>
 </div>
+</details>
 </section>
 
 <nav class="detail-actions">
+<a class="action-link source-link" href="https://x.com/arlanr/status/2041215978957389908" target="_blank" rel="noopener">原文链接 ↗</a>
 <a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/projects/2026-04-07-nia-docs-filesystem" target="_blank" rel="noopener">GitHub 文件夹 →</a>
 <button class="action-btn" id="copy-path-btn" data-path="content/projects/2026-04-07-nia-docs-filesystem">复制 path</button>
 <span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
 </nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
 
 </article>
 </main>
@@ -173,6 +202,20 @@ GET  /shell-docs/{namespace}/tree  # 完整树</code></pre>
         });
       }
     });
+  }
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {
+    const onScroll = function() {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
 })();
 </script>

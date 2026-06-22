@@ -7,7 +7,7 @@
 <meta name="description" content="Karpathy Second Brain 实现指南 — @godofprompt">
 <link rel="stylesheet" href="../../styles.css">
 </head>
-<body class="detail-page">
+<body class="detail-page" id="top">
 <header class="detail-header">
 <a class="back-link" href="../../">← 返回首页</a>
 </header>
@@ -18,6 +18,41 @@
 <h1 class="detail-title">Karpathy Second Brain 实现指南</h1>
 <p class="detail-title-en">Karpathy Second Brain 实现指南</p>
 </div>
+
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#核心理念">核心理念</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#vs-传统方式">vs 传统方式</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#结果">结果</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#七步构建">七步构建</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#step-1-创建文件夹结构-2-分钟">Step 1: 创建文件夹结构 (2 分钟)</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#step-2-写-schema-文件-关键步骤">Step 2: 写 Schema 文件 (关键步骤)</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#step-3-填充-raw-文件夹-10-分钟">Step 3: 填充 Raw 文件夹 (10 分钟)</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#step-4-首次-ingest">Step 4: 首次 Ingest</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#step-5-开始查询">Step 5: 开始查询</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#step-6-月度健康检查">Step 6: 月度健康检查</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#step-7-让它复合">Step 7: 让它复合</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#系统会在哪里失效">系统会在哪里失效</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#1-context-window-天花板">1. Context Window 天花板</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#2-error-compounding-最大风险">2. Error Compounding (最大风险)</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#3-hallucination-不会消失">3. Hallucination 不会消失</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#4-cost-不是零">4. Cost 不是零</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#5-不适用于-enterprise">5. 不适用于 Enterprise</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#6-单模型盲点">6. 单模型盲点</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#应对措施">应对措施</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#为什么这仍然重要">为什么这仍然重要</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#完整-prompt-库">完整 Prompt 库</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#schema">Schema</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#ingest-单个源">Ingest (单个源)</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#ingest-批量少监督">Ingest (批量，少监督)</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#query">Query</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#lint">Lint</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#explore">Explore</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#brief">Brief</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#关联">关联</a></li>
+</ol>
+</nav>
 
 <section class="detail-meta">
 <div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">note</div></div>
@@ -31,31 +66,36 @@
 </section>
 
 <section class="detail-section" id="section-summary">
-<header class="section-header">
-<h2>摘要</h2>
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">摘要</span>
 
-</header>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h1>摘要：Karpathy Second Brain 实现指南</h1>
-<h2>原始内容讲什么</h2>
+<h1 id="摘要karpathy-second-brain-实现指南">摘要：Karpathy Second Brain 实现指南</h1>
+<h2 id="原始内容讲什么">原始内容讲什么</h2>
 <p>本文是 Andrej Karpathy 提出的 "Second Brain" 知识管理系统的完整实现指南。核心理念是：人类负责筛选来源、提出好问题、思考意义；LLM 负责其他一切。文章包含 7 步构建流程（创建文件夹、写 Schema、填充 Raw、首次 Ingest、开始查询、月度检查、让它复合），以及系统失效场景（Context Window 天花板、Error Compounding、Hallucination、Cost、Enterprise 不适用、单模型盲点）和应对措施。</p>
-<h2>为什么值得迁移</h2>
+<h2 id="为什么值得迁移">为什么值得迁移</h2>
 <ul><li><strong>高价值方法论</strong>：Karpathy 是 AI 领域最具影响力的教育者之一，他的知识管理方法论具有广泛参考价值</li><li><strong>完整 Prompt 库</strong>：包含 Ingest、Query、Lint、Explore、Brief 等完整 Prompt 模板，可直接复用</li><li><strong>实践验证</strong>：Lex Fridman 等人在实际使用类似方案，多个开源实现 48 小时内出现</li><li><strong>与当前知识库关联</strong>：与 Karpathy LLM Wiki、Wiki vs RAG 分析、Nia Docs 等条目形成知识网络</li></ul>
-<h2>迁移后如何使用</h2>
+<h2 id="迁移后如何使用">迁移后如何使用</h2>
 <ul><li><strong>作为知识管理参考</strong>：当需要设计个人知识库时查阅</li><li><strong>Prompt 模板复用</strong>：直接复制 Ingest/Query/Lint Prompt 用于新项目</li><li><strong>风险评估</strong>：在决定是否采用 Wiki 方案时参考失效场景分析</li><li><strong>对比分析</strong>：与 RAG、MCP 等其他知识管理方案对比使用</li></ul>
-<h2>缺失信息或后续补充建议</h2>
+<h2 id="缺失信息或后续补充建议">缺失信息或后续补充建议</h2>
 <ul><li><strong>成本估算</strong>：文章提到 $2-5/源，但实际成本随模型变化，建议补充当前模型成本</li><li><strong>工具推荐</strong>：可补充具体工具（如 Obsidian、Notion、Git）与 Karpathy 方案的对比</li><li><strong>中文社区实践</strong>：可补充中文社区的 Second Brain 实践案例</li></ul>
 </div>
+</details>
 </section>
 
 
 <section class="detail-section" id="section-source">
-<header class="section-header">
-<h2>原文 / 源文本</h2>
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">原文 / 源文本</span>
 
-</header>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h1>Karpathy Second Brain — 完整实现指南</h1>
+<h1 id="karpathy-second-brain-完整实现指南">Karpathy Second Brain — 完整实现指南</h1>
 <pre><code>name: karpathy-second-brain-guide
 description: 100K+ 收藏的 Karpathy Second Brain 实现指南，含 7 步流程和完整 prompts
 version: 1.0.0
@@ -64,22 +104,22 @@ date: 2026-04-07
 source: @godofprompt
 source_url: https://x.com/godofprompt/status/2041265656893489419
 hall: discoveries</code></pre>
-<h2>核心理念</h2>
+<h2 id="核心理念">核心理念</h2>
 <blockquote><p>"The human's job is to curate sources, direct the analysis, ask good questions, and think about what it all means. The LLM's job is everything else." — Andrej Karpathy</p></blockquote>
-<h3>vs 传统方式</h3>
+<h3 id="vs-传统方式">vs 传统方式</h3>
 <table class="md-table"><thead><tr><th>传统方式</th><th>Karpathy 方式</th></tr></thead><tbody><tr><td>AI 每次从零搜索 raw 文件</td><td>AI 读一次源，编译结构化 wiki</td></tr><tr><td>每次上传文档、提问、获得答案</td><td>AI 维护 wiki，每次直接读 wiki</td></tr><tr><td>下一个 session 全部忘记</td><td>知识积累而非重置</td></tr></tbody></table>
-<h3>结果</h3>
+<h3 id="结果">结果</h3>
 <ul><li>~100 篇文章，~400,000 字</li><li>无数据库、无 embedding、无向量存储</li><li>只有文件夹和文本文件</li></ul>
 <hr>
-<h2>七步构建</h2>
-<h3>Step 1: 创建文件夹结构 (2 分钟)</h3>
+<h2 id="七步构建">七步构建</h2>
+<h3 id="step-1-创建文件夹结构-2-分钟">Step 1: 创建文件夹结构 (2 分钟)</h3>
 <pre><code>my-knowledge-base/
 ├── raw/           # 源材料，AI 只读不修改
 │   └── assets/    # 图片、截图、图表
 ├── wiki/          # AI 维护的 wiki
 ├── outputs/       # 报告、分析、查询答案
 └── CLAUDE.md      # schema 文件</code></pre>
-<h3>Step 2: 写 Schema 文件 (关键步骤)</h3>
+<h3 id="step-2-写-schema-文件-关键步骤">Step 2: 写 Schema 文件 (关键步骤)</h3>
 <pre data-lang="markdown"><code># Knowledge Base Schema
 
 ## Identity
@@ -118,97 +158,103 @@ Maintained by an LLM agent.
 
 ## Lint Workflow (Monthly)
 Check for contradictions, stale claims, orphan pages, missing cross-references.</code></pre>
-<h3>Step 3: 填充 Raw 文件夹 (10 分钟)</h3>
+<h3 id="step-3-填充-raw-文件夹-10-分钟">Step 3: 填充 Raw 文件夹 (10 分钟)</h3>
 <ul><li>复制粘贴文章 → .md 或 .txt</li><li>导出其他应用的笔记</li><li>保存截图到 raw/assets/</li><li>粘贴研究报告、PDF、竞品分析</li><li><strong>不要组织，不要重命名，不要清理</strong> — 这是 AI 的工作</li></ul>
-<h3>Step 4: 首次 Ingest</h3>
+<h3 id="step-4-首次-ingest">Step 4: 首次 Ingest</h3>
 <p><strong>单个源 Ingest Prompt:</strong></p>
 <pre><code>&quot;Read the schema in CLAUDE.md. Process [FILENAME] from raw/. Read it fully, discuss key takeaways with me, then: create summary page, update index, update all relevant pages, add backlinks, flag contradictions, log the ingest.&quot;</code></pre>
 <ul><li>一次一个源，Karpathy 也是这样做的</li><li>5-10 个源后，wiki/ 有 index、log、15-30 个互联页面</li></ul>
-<h3>Step 5: 开始查询</h3>
+<h3 id="step-5-开始查询">Step 5: 开始查询</h3>
 <p><strong>Query Prompt:</strong></p>
 <pre><code>&quot;Read wiki/index.md. Answer: [QUESTION]. Cite wiki pages. If this answer is worth preserving, offer to file it as a new wiki page.&quot;</code></pre>
 <p>高价值问题：</p>
 <ul><li>"这个知识库最大的三个缺口是什么？"</li><li>"哪些来源互相不同意？为什么？"</li><li>"基于现有内容，我下一步应该研究什么？"</li><li>"写一个 500 字的 [主题] 简报"</li><li>"[概念 A] 和 [概念 B] 之间有什么联系？"</li></ul>
 <p><strong>关键循环</strong>: 好的答案应该存回 wiki</p>
-<h3>Step 6: 月度健康检查</h3>
+<h3 id="step-6-月度健康检查">Step 6: 月度健康检查</h3>
 <p><strong>Lint Prompt:</strong></p>
 <pre><code>&quot;Run a full health check on wiki/ per the lint workflow in CLAUDE.md. Output to wiki/lint-report-[date].md with severity levels (🔴 errors, 🟡 warnings, 🔵 info). Suggest 3 articles to fill the biggest knowledge gaps.&quot;</code></pre>
 <ul><li>防止系统慢慢腐烂</li><li>AI 写的东西稍微错误，你保存后，下一个答案基于错误建造</li><li>两个月后，5 页强化同一个错误</li></ul>
-<h3>Step 7: 让它复合</h3>
+<h3 id="step-7-让它复合">Step 7: 让它复合</h3>
 <p>4-6 周后，你不是在搜索笔记，而是在查询一个理解来源之间联系的结构化知识系统。</p>
 <p>加速复合的方式：</p>
 <ul><li>文件探索输出存回 wiki/</li><li>添加可视化输出 (markdown tables, charts, Marp slides)</li><li>版本控制一切 (git repo)</li></ul>
 <hr>
-<h2>系统会在哪里失效</h2>
-<h3>1. Context Window 天花板</h3>
+<h2 id="系统会在哪里失效">系统会在哪里失效</h2>
+<h3 id="1-context-window-天花板">1. Context Window 天花板</h3>
 <ul><li>~100 篇文章和 ~400K 字可以工作</li><li>128K token 上下文只容纳 ~96K 字</li><li>AI 通过 index 选择性读取，会遗漏东西</li><li>"lost in the middle" 效应 — 长输入中间的信息被降低优先级</li></ul>
-<h3>2. Error Compounding (最大风险)</h3>
+<h3 id="2-error-compounding-最大风险">2. Error Compounding (最大风险)</h3>
 <ul><li>AI 写了一个微妙错误的 wiki 页面</li><li>你查询，错误进入你的答案</li><li>你把答案存回去</li><li>现在两页强化同一个错误</li><li>Monthly linting 有帮助，但 linting 的 AI 和犯错的 AI 有同样的盲点</li></ul>
-<h3>3. Hallucination 不会消失</h3>
+<h3 id="3-hallucination-不会消失">3. Hallucination 不会消失</h3>
 <ul><li>Wiki 方式减少 hallucination，因为 AI 基于你的来源 grounding 答案</li><li>但不消除它</li><li>AI 仍然可能合成不存在的连接</li><li>而且 wiki 看起来权威 (干净的 markdown、交叉引用、引用)，你更容易信任错误信息</li></ul>
-<h3>4. Cost 不是零</h3>
+<h3 id="4-cost-不是零">4. Cost 不是零</h3>
 <ul><li>每个 ingest、query、lint 都消耗 token</li><li>一个源触及 10-15 页，用前沿模型可能花 $2-5</li><li>50 个源只是 ingestion 就要 $100-250</li></ul>
-<h3>5. 不适用于 Enterprise</h3>
+<h3 id="5-不适用于-enterprise">5. 不适用于 Enterprise</h3>
 <ul><li>Karpathy 说 index-file 方式在 ~100 篇文章可以无 RAG 工作</li><li>10,000+ 来源时这个模式失效</li><li>index 太大，一致性不可能</li></ul>
-<h3>6. 单模型盲点</h3>
+<h3 id="6-单模型盲点">6. 单模型盲点</h3>
 <ul><li>整个 wiki 是一个模型对你来源的解释</li><li>模型有偏差和倾向</li><li>高风险决策，一个 gist 评论者建议独立跑 4+ 模型查询，然后比较一致性</li></ul>
 <hr>
-<h2>应对措施</h2>
+<h2 id="应对措施">应对措施</h2>
 <table class="md-table"><thead><tr><th>问题</th><th>解决方案</th></tr></thead><tbody><tr><td>Error compounding</td><td>Monthly lint + 手动交叉检查关键 claims</td></tr><tr><td>Context limits</td><td>每个 wiki 专注一个领域，多领域用多个知识库</td></tr><tr><td>Cost</td><td>前沿模型用于 ingest 和复杂查询，便宜模型用于简单更新</td></tr><tr><td>Hallucination</td><td>Schema 要求每个 claim 有 source citation，没有则 lint flag</td></tr><tr><td>Scale</td><td>接受这是个人工具，不是企业基础设施</td></tr></tbody></table>
 <hr>
-<h2>为什么这仍然重要</h2>
+<h2 id="为什么这仍然重要">为什么这仍然重要</h2>
 <blockquote><p>"Humans abandon wikis because maintenance grows faster than value."</p></blockquote>
 <ul><li>你开始组织，感觉很棒两周，然后维护杀死动力</li><li>LLM 不会无聊</li><li>LLM 不会忘记更新交叉引用</li><li>LLM 可以一次触碰 15 个文件而不抱怨</li></ul>
 <p>Lex Fridman 运行类似设置，生成交互式 HTML 可视化，创建"mini-knowledge-bases"加载到语音模式跑步时使用。</p>
 <p>多个开源实现 48 小时内出现。这不再是实验，正在成为认真做研究的人的标准实践。</p>
 <hr>
-<h2>完整 Prompt 库</h2>
-<h3>Schema</h3>
+<h2 id="完整-prompt-库">完整 Prompt 库</h2>
+<h3 id="schema">Schema</h3>
 <p>复制 Step 2 的完整 CLAUDE.md 模板</p>
-<h3>Ingest (单个源)</h3>
+<h3 id="ingest-单个源">Ingest (单个源)</h3>
 <pre><code>&quot;Read the schema in CLAUDE.md. Process [FILENAME] from raw/. Read it fully, discuss key takeaways with me, then: create summary page, update index, update relevant pages, add backlinks, flag contradictions, log the ingest.&quot;</code></pre>
-<h3>Ingest (批量，少监督)</h3>
+<h3 id="ingest-批量少监督">Ingest (批量，少监督)</h3>
 <pre><code>&quot;Read CLAUDE.md. Process all unprocessed files in raw/ sequentially. For each: create summary, update index, update relevant pages, log the ingest. Proceed automatically.&quot;</code></pre>
-<h3>Query</h3>
+<h3 id="query">Query</h3>
 <pre><code>&quot;Read wiki/index.md. Answer: [QUESTION]. Cite wiki pages. If this answer is worth preserving, offer to file it as a new wiki page.&quot;</code></pre>
-<h3>Lint</h3>
+<h3 id="lint">Lint</h3>
 <pre><code>&quot;Run a full health check on wiki/ per the lint workflow in CLAUDE.md. Output to wiki/lint-report-[date].md with severity levels. Suggest 3 articles to fill gaps.&quot;</code></pre>
-<h3>Explore</h3>
+<h3 id="explore">Explore</h3>
 <pre><code>&quot;Read wiki/index.md and identify the 5 most interesting unexplored connections between existing topics. For each, explain what insight it might reveal and what source would help confirm it.&quot;</code></pre>
-<h3>Brief</h3>
+<h3 id="brief">Brief</h3>
 <pre><code>&quot;Based on everything in wiki/, write a 500-word executive briefing on [TOPIC]. Cite sources. Structure it as: current state, key tensions, open questions, recommended next steps.&quot;</code></pre>
 <hr>
-<h2>关联</h2>
+<h2 id="关联">关联</h2>
 <ul><li>[[karpathy-llm-wiki]] — Karpathy Wiki 原始概念</li><li>[[wiki-vs-rag-analysis]] — Wiki vs RAG 对比</li><li>[[wiki-navigator]] — Hermes Wiki 实现</li><li>[[nia-docs-filesystem]] — Nia Docs 文件系统方案</li></ul>
 <hr>
 <p><em>摄入日期: 2026-04-07</em></p>
 </div>
+</details>
 </section>
 
 
 <section class="detail-section" id="section-notes">
-<header class="section-header">
-<h2>笔记</h2>
-
-</header>
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">笔记</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h1>笔记：Karpathy Second Brain 实现指南</h1>
-<h2>关键洞察</h2>
+<h1 id="笔记karpathy-second-brain-实现指南">笔记：Karpathy Second Brain 实现指南</h1>
+<h2 id="关键洞察">关键洞察</h2>
 <ul><li><strong>分工理念</strong>：人类策展 + LLM 执行，这是知识管理的新范式</li><li><strong>无数据库方案</strong>：纯文本 + 文件夹，降低技术门槛</li><li><strong>复合效应</strong>：4-6 周后从"搜索笔记"变成"查询知识系统"</li><li><strong>Error Compounding 是最大的隐性风险</strong>：AI 错误会自我强化</li></ul>
-<h2>个人思考</h2>
+<h2 id="个人思考">个人思考</h2>
 <ul><li>当前 hermes-knowledge-base 已经是类似结构，但缺少自动化 Ingest/Lint</li><li>可以考虑将 Karpathy 的 Prompt 模板整合到知识库导入流程中</li><li>Monthly lint 可以作为 cronjob 实现</li></ul>
-<h2>行动项</h2>
+<h2 id="行动项">行动项</h2>
 <ul><li>[ ] 测试 Karpathy 的 Ingest Prompt 模板</li><li>[ ] 设计月度 lint 工作流</li><li>[ ] 评估当前知识库是否已达到"复合"阶段</li></ul>
-<h2>关联</h2>
+<h2 id="关联">关联</h2>
 <ul><li>[[karpathy-llm-wiki]] — 同一作者的另一篇高价值内容</li><li>[[wiki-vs-rag-analysis]] — 技术架构对比</li><li>[[nia-docs-filesystem]] — 另一种知识管理方案</li></ul>
 </div>
+</details>
 </section>
 
 <nav class="detail-actions">
+<a class="action-link source-link" href="https://x.com/godofprompt/status/2041265656893489419" target="_blank" rel="noopener">原文链接 ↗</a>
 <a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/legacy-knowledge/2026-04-07-karpathy-second-brain-guide" target="_blank" rel="noopener">GitHub 文件夹 →</a>
 <button class="action-btn" id="copy-path-btn" data-path="content/legacy-knowledge/2026-04-07-karpathy-second-brain-guide">复制 path</button>
 <span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
 </nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
 
 </article>
 </main>
@@ -240,6 +286,20 @@ Check for contradictions, stale claims, orphan pages, missing cross-references.<
         });
       }
     });
+  }
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {
+    const onScroll = function() {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
 })();
 </script>

@@ -7,7 +7,7 @@
 <meta name="description" content="Hacker News 机器学习热门内容 — Hacker News 社区">
 <link rel="stylesheet" href="../../styles.css">
 </head>
-<body class="detail-page">
+<body class="detail-page" id="top">
 <header class="detail-header">
 <a class="back-link" href="../../">← 返回首页</a>
 </header>
@@ -19,6 +19,17 @@
 <p class="detail-title-en">Hacker News ML 热门链接</p>
 </div>
 
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#简介">简介</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#收录标准">收录标准</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#条目列表">条目列表</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#主题标签">主题标签</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#后续维护建议">后续维护建议</a></li>
+</ol>
+</nav>
+
 <section class="detail-meta">
 <div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">resource_collection</div></div>
 <div class="meta-row"><div class="meta-label">作者</div><div class="meta-value">Hacker News 社区</div></div>
@@ -29,66 +40,77 @@
 </section>
 
 <section class="detail-section" id="section-summary">
-<header class="section-header">
-<h2>摘要</h2>
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">摘要</span>
 
-</header>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h2>资源集合概述</h2>
+<h2 id="资源集合概述">资源集合概述</h2>
 <p><strong>Hacker News ML 热门链接</strong> 是从 Hacker News 机器学习板块抓取的热门内容快照，包含 10 条机器学习相关的精选链接。</p>
-<h2>迁移价值</h2>
+<h2 id="迁移价值">迁移价值</h2>
 <ul><li><strong>社区精选</strong>: HN 社区投票机制筛选出的高质量内容</li><li><strong>来源完整</strong>: 每条记录包含原文链接和 HN 讨论链接</li><li><strong>时效快照</strong>: 记录 2026-05-14 的 ML 社区关注热点</li></ul>
-<h2>条目质量</h2>
+<h2 id="条目质量">条目质量</h2>
 <ul><li>共 10 条有效资源</li><li>涵盖教程、研究论文、工具、会议展示等多种类型</li><li>大部分来源可靠（大学、研究机构、知名博客）</li><li>部分链接可能随时间失效</li></ul>
-<h2>后续维护建议</h2>
+<h2 id="后续维护建议">后续维护建议</h2>
 <ul><li>HN 热门具有时效性，建议作为历史快照保留</li><li>如需更新，需重新抓取 HN RSS</li><li>建议定期验证链接有效性</li></ul>
-<h2>已知问题</h2>
+<h2 id="已知问题">已知问题</h2>
 <ul><li><strong>来源缺失</strong>: 无单一 source_url，来源为 HN RSS 聚合</li><li><strong>时效性问题</strong>: HN 热门内容具有时效性，部分链接可能已失效</li><li><strong>重复问题</strong>: 无重复条目</li></ul>
 </div>
+</details>
 </section>
 
 
 <section class="detail-section" id="section-collection">
-<header class="section-header">
-<h2>资源集合</h2>
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">资源集合</span>
 
-</header>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h1>Hacker News ML 热门链接</h1>
-<h2>简介</h2>
+<h1 id="hacker-news-ml-热门链接">Hacker News ML 热门链接</h1>
+<h2 id="简介">简介</h2>
 <p>本资源集合归档自 Hacker News ML 板块的热门内容快照，包含机器学习相关的精选链接。</p>
-<h2>收录标准</h2>
+<h2 id="收录标准">收录标准</h2>
 <ul><li>Hacker News 社区投票产生的 ML 相关内容</li><li>包含可访问的原文链接和讨论链接</li><li>具有参考价值或时效性</li></ul>
-<h2>条目列表</h2>
+<h2 id="条目列表">条目列表</h2>
 <table class="md-table"><thead><tr><th>标题</th><th>类型</th><th>来源</th><th>备注</th></tr></thead><tbody><tr><td>Kyunghyun Cho Teaching Fundamentals of Machine Learning</td><td>教程</td><td><a href="https://kyunghyuncho.me/teaching-fundamentals-of-machine-learning/" target="_blank" rel="noopener">原文</a> / <a href="https://news.ycombinator.com/item?id=48122411" target="_blank" rel="noopener">讨论</a></td><td>Cho 的机器学习基础教学资源</td></tr><tr><td>Machine Learning Offers Faster Analysis of Fermi Surfaces</td><td>研究</td><td><a href="https://www.tus.ac.jp/en/mediarelations/archive/20260417_0478.html" target="_blank" rel="noopener">原文</a> / <a href="https://news.ycombinator.com/item?id=48082033" target="_blank" rel="noopener">讨论</a></td><td>机器学习加速费米面分析</td></tr><tr><td>Quantum Machine Learning: A Pragmatic Guide</td><td>文章</td><td><a href="https://pawankjha.substack.com/p/quantum-machine-learning-the-pragmatic" target="_blank" rel="noopener">原文</a> / <a href="https://news.ycombinator.com/item?id=47993578" target="_blank" rel="noopener">讨论</a></td><td>量子机器学习实用指南</td></tr><tr><td>Linear Algebra for Computer Vision, Robotics, and ML [pdf]</td><td>教材</td><td><a href="https://www.cis.upenn.edu/~cis5150/linalg-I-f.pdf" target="_blank" rel="noopener">原文</a> / <a href="https://news.ycombinator.com/item?id=47947998" target="_blank" rel="noopener">讨论</a></td><td>宾大线性代数教材，面向 CV/机器人/ML</td></tr><tr><td>Machine Learning &amp; Gut Microbiome in Alzheimer's Risk</td><td>研究</td><td><a href="https://alz-journals.onlinelibrary.wiley.com/doi/10.1002/dad2.70340" target="_blank" rel="noopener">原文</a> / <a href="https://news.ycombinator.com/item?id=47892295" target="_blank" rel="noopener">讨论</a></td><td>机器学习预测阿尔茨海默风险</td></tr><tr><td>Machine Learning Visualized</td><td>工具</td><td><a href="https://ml-visualized.com/" target="_blank" rel="noopener">原文</a> / <a href="https://news.ycombinator.com/item?id=47881022" target="_blank" rel="noopener">讨论</a></td><td>机器学习可视化工具</td></tr><tr><td>Apple Machine Learning Research at ICLR 2026</td><td>会议</td><td><a href="https://machinelearning.apple.com/research/iclr-2026" target="_blank" rel="noopener">原文</a> / <a href="https://news.ycombinator.com/item?id=47875550" target="_blank" rel="noopener">讨论</a></td><td>Apple 在 ICLR 2026 的研究展示</td></tr><tr><td>Data-Driven ML Framework for Terahertz Metasurface</td><td>研究</td><td><a href="https://www.researchgate.net/publication/404050094" target="_blank" rel="noopener">原文</a> / <a href="https://news.ycombinator.com/item?id=47870297" target="_blank" rel="noopener">讨论</a></td><td>太赫兹超表面优化</td></tr><tr><td>You Need MLOps: When CI/CD for ML Becomes Mandatory</td><td>文章</td><td><a href="https://blog.ateljevagabond.se/posts/why-you-need-mlops/" target="_blank" rel="noopener">原文</a> / <a href="https://news.ycombinator.com/item?id=47868039" target="_blank" rel="noopener">讨论</a></td><td>MLOps 实践指南</td></tr><tr><td>Topology Meets Machine Learning: Euler Characteristic Transform</td><td>论文</td><td><a href="https://www.ams.org/journals/notices/202507/rnoti-p719.pdf" target="_blank" rel="noopener">原文</a> / <a href="https://news.ycombinator.com/item?id=47831167" target="_blank" rel="noopener">讨论</a></td><td>拓扑学与机器学习交叉研究</td></tr></tbody></table>
-<h2>主题标签</h2>
+<h2 id="主题标签">主题标签</h2>
 <p><code>Machine-Learning</code> · <code>Hacker-News</code> · <code>News</code> · <code>Community</code> · <code>Links</code></p>
-<h2>后续维护建议</h2>
+<h2 id="后续维护建议">后续维护建议</h2>
 <ul><li>HN 热门具有时效性，建议作为历史快照保留</li><li>如需更新，需重新抓取 HN RSS</li><li>部分链接可能失效，建议定期验证</li></ul>
 </div>
+</details>
 </section>
 
 
 <section class="detail-section" id="section-notes">
-<header class="section-header">
-<h2>笔记</h2>
-
-</header>
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">笔记</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h2>迁移备注</h2>
+<h2 id="迁移备注">迁移备注</h2>
 <ul><li>原始文件: <code>~/.hermes/wiki/research/hacker-news-ml.md</code></li><li>迁移日期: 2026-06-20</li><li>迁移类型: resource_collection</li><li>原始内容已保存至 source.md</li></ul>
-<h2>质量观察</h2>
+<h2 id="质量观察">质量观察</h2>
 <ul><li>原始数据为 HN RSS 抓取结果，结构完整</li><li>每条记录包含原文链接和 HN 讨论链接</li><li>数据质量较高，无重复条目</li></ul>
-<h2>维护建议</h2>
+<h2 id="维护建议">维护建议</h2>
 <ul><li>作为历史快照保留，不建议频繁更新</li><li>如需新快照，需重新抓取 HN RSS</li><li>建议每年验证一次链接有效性</li></ul>
 </div>
+</details>
 </section>
 
 <nav class="detail-actions">
+
 <a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/collections/2026-05-14-hacker-news-ml" target="_blank" rel="noopener">GitHub 文件夹 →</a>
 <button class="action-btn" id="copy-path-btn" data-path="content/collections/2026-05-14-hacker-news-ml">复制 path</button>
 <span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
 </nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
 
 </article>
 </main>
@@ -120,6 +142,20 @@
         });
       }
     });
+  }
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {
+    const onScroll = function() {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
 })();
 </script>

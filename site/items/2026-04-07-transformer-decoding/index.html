@@ -7,7 +7,7 @@
 <meta name="description" content="Transformer 解码机制解析 — Amit Shekhar">
 <link rel="stylesheet" href="../../styles.css">
 </head>
-<body class="detail-page">
+<body class="detail-page" id="top">
 <header class="detail-header">
 <a class="back-link" href="../../">← 返回首页</a>
 </header>
@@ -18,6 +18,20 @@
 <h1 class="detail-title">Transformer 解码机制解析</h1>
 <p class="detail-title-en">Transformer 解码机制解析</p>
 </div>
+
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#基本信息">基本信息</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#核心观点">核心观点</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#文章大纲">文章大纲</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#关键概念">关键概念</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#rnn-的问题">RNN 的问题</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#transformer-的解决方案">Transformer 的解决方案</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#架构组成">架构组成</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#来源">来源</a></li>
+</ol>
+</nav>
 
 <section class="detail-meta">
 <div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">note</div></div>
@@ -31,79 +45,90 @@
 </section>
 
 <section class="detail-section" id="section-summary">
-<header class="section-header">
-<h2>摘要</h2>
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">摘要</span>
 
-</header>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h1>摘要：Transformer 解码机制解析</h1>
-<h2>原始内容讲什么</h2>
+<h1 id="摘要transformer-解码机制解析">摘要：Transformer 解码机制解析</h1>
+<h2 id="原始内容讲什么">原始内容讲什么</h2>
 <p>本文是 Amit Shekhar 对 Transformer 架构的系统解析，核心观点是"Transformer 本质是一个 tokens-in, tokens-out 的机器，每个组件都简单，复杂性来自堆叠方式"。文章涵盖：为什么需要 Transformer（解决 RNN 遗忘和速度慢的问题）、Encoder-Decoder 架构、Tokenization/Embedding/Positional Encoding、Attention 机制、Feed-Forward Networks、Residual Connections、Layer Normalization、三种 Transformer 变体。</p>
-<h2>为什么值得迁移</h2>
+<h2 id="为什么值得迁移">为什么值得迁移</h2>
 <ul><li><strong>技术基础内容</strong>：Transformer 是现代 LLM 的核心架构，理解它是理解所有 LLM 的基础</li><li><strong>结构化讲解</strong>：不是论文原文，而是经过整理的中文技术笔记，适合快速复习</li><li><strong>来源可靠</strong>：Amit Shekhar 是 Outcome School 创始人，IIT 毕业，技术背景扎实</li><li><strong>与知识库主题关联</strong>：LLM、深度学习、注意力机制等主题与知识库其他内容形成网络</li></ul>
-<h2>迁移后如何使用</h2>
+<h2 id="迁移后如何使用">迁移后如何使用</h2>
 <ul><li><strong>技术复习</strong>：需要理解 Transformer 时快速查阅</li><li><strong>教学参考</strong>：向他人解释 Transformer 时引用</li><li><strong>架构对比</strong>：与其他架构（RNN、LSTM、Mamba）对比时使用</li><li><strong>面试准备</strong>：技术面试前复习核心概念</li></ul>
-<h2>缺失信息或后续补充建议</h2>
+<h2 id="缺失信息或后续补充建议">缺失信息或后续补充建议</h2>
 <ul><li><strong>详细实现</strong>：原文是概述，可补充 PyTorch 代码实现</li><li><strong>最新变体</strong>：可补充 2024-2025 年的新架构（如 Mamba、Mixture of Experts）</li><li><strong>可视化</strong>：可补充架构图、Attention 可视化</li><li><strong>数学推导</strong>：可补充 Self-Attention 的数学公式推导</li></ul>
 </div>
+</details>
 </section>
 
 
 <section class="detail-section" id="section-source">
-<header class="section-header">
-<h2>原文 / 源文本</h2>
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">原文 / 源文本</span>
 
-</header>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
 <hr>
 <p>name: transformer-decoding description: Amit Shekhar 的 Transformer 架构解析博客，系统讲解 Transformer 各组件 tags: [transformer, deep-learning, architecture, llm, tutorial] hall: research date: 2026-04-07 version: 1.0.0</p>
 <hr>
-<h1>Decoding Transformer Architecture</h1>
-<h2>基本信息</h2>
+<h1 id="decoding-transformer-architecture">Decoding Transformer Architecture</h1>
+<h2 id="基本信息">基本信息</h2>
 <ul><li><strong>作者</strong>: Amit Shekhar (Outcome School 创始人, IIT 2010-14)</li><li><strong>来源</strong>: x.com/amitiitbhu/status/2041479290580287543</li><li><strong>浏览</strong>: 3,077</li></ul>
-<h2>核心观点</h2>
+<h2 id="核心观点">核心观点</h2>
 <blockquote><p>"Transformer 将一系列 token 作为输入，输出一系列 token。本质上是一个 tokens-in, tokens-out 的机器。每个组件都是简单的，复杂性来自于它们的堆叠方式。"</p></blockquote>
-<h2>文章大纲</h2>
+<h2 id="文章大纲">文章大纲</h2>
 <ol><li><strong>为什么需要 Transformer</strong> — 解决 RNN 的遗忘和速度问题</li><li><strong>架构的两半</strong> — Encoder (理解输入) + Decoder (生成输出)</li><li><strong>Tokenization、Embedding、Positional Encoding</strong></li><li><strong>Attention 机制和 Multi-Head Attention</strong></li><li><strong>Feed-Forward Networks、Residual Connections、Layer Normalization</strong></li><li><strong>Encoder 和 Decoder 如何工作</strong></li><li><strong>数据流经整个架构</strong></li><li><strong>Transformer 的三种变体</strong></li><li><strong>为什么 Transformer 如此强大</strong></li></ol>
-<h2>关键概念</h2>
-<h3>RNN 的问题</h3>
+<h2 id="关键概念">关键概念</h2>
+<h3 id="rnn-的问题">RNN 的问题</h3>
 <ul><li><strong>问题 1: 遗忘</strong> — 句子越长，早期单词越容易被遗忘</li><li><strong>问题 2: 速度慢</strong> — 单词逐个处理，后面的词必须等待</li></ul>
-<h3>Transformer 的解决方案</h3>
+<h3 id="transformer-的解决方案">Transformer 的解决方案</h3>
 <ul><li>同时处理所有输入 token</li><li>允许 attention 机制建立任意位置之间的联系</li></ul>
-<h3>架构组成</h3>
+<h3 id="架构组成">架构组成</h3>
 <pre><code>输入 → Tokenization → Embedding → Positional Encoding
      → Encoder (self-attention + FFN)
      → Decoder (self-attention + encoder-decoder attention)
      → 输出</code></pre>
-<h2>来源</h2>
+<h2 id="来源">来源</h2>
 <ul><li>博客: outcomeschool.com</li><li>论文: "Attention Is All You Need" (2017)</li></ul>
 </div>
+</details>
 </section>
 
 
 <section class="detail-section" id="section-notes">
-<header class="section-header">
-<h2>笔记</h2>
-
-</header>
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">笔记</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h1>笔记：Transformer 解码机制解析</h1>
-<h2>关键洞察</h2>
+<h1 id="笔记transformer-解码机制解析">笔记：Transformer 解码机制解析</h1>
+<h2 id="关键洞察">关键洞察</h2>
 <ul><li><strong>核心洞察</strong>：Transformer 的复杂性来自组件堆叠，而非单个组件</li><li><strong>RNN 两大问题</strong>：遗忘 + 速度慢，Transformer 通过并行处理和 Attention 解决</li><li><strong>tokens-in, tokens-out</strong>：简洁的抽象，但实现细节复杂</li></ul>
-<h2>个人思考</h2>
+<h2 id="个人思考">个人思考</h2>
 <ul><li>这是理解所有现代 LLM 的基础，值得反复阅读</li><li>原文是概述，需要配合代码实现才能真正理解</li><li>可以作为技术面试的核心复习材料</li></ul>
-<h2>行动项</h2>
+<h2 id="行动项">行动项</h2>
 <ul><li>[ ] 补充 PyTorch 实现代码</li><li>[ ] 绘制架构图</li><li>[ ] 对比 RNN/LSTM/Transformer/Mamba 的优缺点</li><li>[ ] 理解 Multi-Head Attention 的数学推导</li></ul>
-<h2>关联</h2>
+<h2 id="关联">关联</h2>
 <ul><li>[[karpathy-llm-wiki]] — LLM 知识管理</li><li>[[wiki-vs-rag-analysis]] — 知识架构对比</li></ul>
 </div>
+</details>
 </section>
 
 <nav class="detail-actions">
+<a class="action-link source-link" href="https://x.com/amitiitbhu/status/2041479290580287543" target="_blank" rel="noopener">原文链接 ↗</a>
 <a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/legacy-knowledge/2026-04-07-transformer-decoding" target="_blank" rel="noopener">GitHub 文件夹 →</a>
 <button class="action-btn" id="copy-path-btn" data-path="content/legacy-knowledge/2026-04-07-transformer-decoding">复制 path</button>
 <span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
 </nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
 
 </article>
 </main>
@@ -135,6 +160,20 @@
         });
       }
     });
+  }
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {
+    const onScroll = function() {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
 })();
 </script>

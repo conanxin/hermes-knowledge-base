@@ -174,15 +174,47 @@ def _render_list(items: List[Tuple[str, bool]], ordered: bool) -> str:
     return "".join(out)
 
 
-def render_markdown(md: str) -> str:
-    """Convert a Markdown string to HTML."""
+def _slugify(text: str, used_ids: set[str]) -> str:
+    """Make a URL-safe, Chinese-friendly id from heading text.
+
+    Strategy:
+      1. Lowercase.
+      2. Replace whitespace with '-'.
+      3. Strip everything outside [a-z0-9\\u4e00-\\u9fff-].
+      4. Collapse repeated '-'.
+      5. Deduplicate against `used_ids` by suffixing -2, -3, ...
+    """
+    s = text.lower().strip()
+    s = re.sub(r"\s+", "-", s)
+    s = re.sub(r"[^\w\u4e00-\u9fff\-]+", "", s, flags=re.UNICODE)
+    s = re.sub(r"-+", "-", s).strip("-")
+    if not s:
+        s = "section"
+    base = s
+    n = 1
+    while s in used_ids:
+        n += 1
+        s = f"{base}-{n}"
+    used_ids.add(s)
+    return s
+
+
+def render_markdown(md: str) -> Tuple[str, List[Tuple[int, str, str]]]:
+    """Convert a Markdown string to HTML, returning (html, toc).
+
+    `toc` is a list of `(level, text, id)` tuples for h2/h3 headings —
+    level 2 and 3 only. Headings get stable id attributes so they can be
+    linked to from the page TOC.
+    """
     if not md:
-        return ""
+        return "", []
 
     # Normalize line endings, split lines.
     lines = md.replace("\r\n", "\n").replace("\r", "\n").split("\n")
 
     out: List[str] = []
+    toc: List[Tuple[int, str, str]] = []
+    used_ids: set[str] = set()
     i = 0
     n = len(lines)
 
@@ -220,7 +252,13 @@ def render_markdown(md: str) -> str:
         m = re.match(r"^(#{1,4})\s+(.*)$", stripped)
         if m:
             level = len(m.group(1))
-            out.append(f"<h{level}>{_apply_inline(m.group(2))}</h{level}>")
+            raw_text = m.group(2).strip()
+            heading_id = _slugify(raw_text, used_ids)
+            if level in (2, 3):
+                toc.append((level, raw_text, heading_id))
+            out.append(
+                f'<h{level} id="{heading_id}">{_apply_inline(raw_text)}</h{level}>'
+            )
             i += 1
             continue
 
@@ -239,7 +277,8 @@ def render_markdown(md: str) -> str:
                 quote_lines.append(re.sub(r"^>\s?", "", lines[i].lstrip()))
                 i += 1
             inner_md = "\n".join(quote_lines)
-            out.append(f"<blockquote>{render_markdown(inner_md)}</blockquote>")
+            inner_html, _ = render_markdown(inner_md)
+            out.append(f"<blockquote>{inner_html}</blockquote>")
             continue
 
         # Unordered list.
@@ -290,7 +329,7 @@ def render_markdown(md: str) -> str:
         if para_lines:
             out.append(f"<p>{_apply_inline(' '.join(para_lines))}</p>")
 
-    return "\n".join(out)
+    return "\n".join(out), toc
 
 
 # ---------------------------------------------------------------------------
@@ -463,7 +502,7 @@ TEMPLATE_HEAD = """<!DOCTYPE html>
 <meta name="description" content="{desc_escaped}">
 <link rel="stylesheet" href="{up}styles.css">
 </head>
-<body class="detail-page">
+<body class="detail-page" id="top">
 <header class="detail-header">
 <a class="back-link" href="{up}">← 返回首页</a>
 </header>
@@ -482,24 +521,40 @@ TEMPLATE_METADATA_GRID = """
 </section>
 """
 
+# Section template — uses native <details>/<summary> for collapse. The
+# `open_attr` is either ' open' (default expanded) or '' (default collapsed).
 TEMPLATE_SECTION = """
 <section class="detail-section" id="section-{key}">
-<header class="section-header">
-<h2>{label}</h2>
+<details class="section-details"{open_attr}>
+<summary class="section-summary">
+<span class="section-summary-label">{label}</span>
 {tag}
-</header>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
 {body}
 </div>
+</details>
 </section>
+"""
+
+TEMPLATE_TOC = """
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+{toc_items}
+</ol>
+</nav>
 """
 
 TEMPLATE_ACTIONS = """
 <nav class="detail-actions">
+{source_btn}
 <a class="action-link primary" href="{github_url}" target="_blank" rel="noopener">GitHub 文件夹 →</a>
 <button class="action-btn" id="copy-path-btn" data-path="{path}">复制 path</button>
 <span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
 </nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
 """
 
 TEMPLATE_FOOTER = """
@@ -534,6 +589,20 @@ TEMPLATE_FOOTER = """
       }}
     }});
   }}
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {{
+    const onScroll = function() {{
+      if (window.scrollY > 400) {{
+        topBtn.classList.add('visible');
+      }} else {{
+        topBtn.classList.remove('visible');
+      }}
+    }};
+    window.addEventListener('scroll', onScroll, {{ passive: true }});
+    onScroll();
+  }}
 }})();
 </script>
 </body>
@@ -548,6 +617,48 @@ def _type_label(type_str: str) -> str:
         "project": "project",
         "resource_collection": "collection",
     }.get(type_str, type_str)
+
+
+# Type-aware section open/close defaults (matches task spec).
+# Sections not in the map default to closed.
+SECTION_OPEN_BY_TYPE: Dict[str, set[str]] = {
+    "article": {"summary", "translation"},
+    "resource_collection": {"summary", "collection"},
+    "note": {"summary", "source"},
+    "project": {"summary", "source"},
+}
+
+
+def _section_open(record_type: str, key: str) -> bool:
+    return key in SECTION_OPEN_BY_TYPE.get(record_type, set())
+
+
+def _build_source_btn(source_url: Any) -> str:
+    """Return HTML for the 原文链接 button if source_url is non-empty."""
+    if not source_url:
+        return ""
+    s = str(source_url).strip()
+    if not s or s.lower() in ("null", "~", "none"):
+        return ""
+    safe = html.escape(s, quote=True)
+    return (
+        f'<a class="action-link source-link" href="{safe}" '
+        f'target="_blank" rel="noopener">原文链接 ↗</a>'
+    )
+
+
+def _build_toc_html(toc: List[Tuple[int, str, str]]) -> str:
+    """Render the page TOC from collected h2/h3 entries."""
+    if not toc:
+        return ""
+    items: List[str] = []
+    for level, text, hid in toc:
+        safe_text = html.escape(text)
+        items.append(
+            f'<li class="toc-item toc-level-{level}">'
+            f'<a class="toc-link" href="#{hid}">{safe_text}</a></li>'
+        )
+    return TEMPLATE_TOC.format(toc_items="\n".join(items))
 
 
 def _build_metadata_rows(meta: Dict[str, Any]) -> str:
@@ -579,36 +690,71 @@ def _build_description(meta: Dict[str, Any], record: Dict[str, Any]) -> str:
     return f"{title_zh} — {author}".strip(" —")
 
 
-def _build_sections_html(sections: Dict[str, str], missing: List[str]) -> str:
+def _primary_body_key(record_type: str) -> str:
+    """The section key that holds the main body text (used for TOC)."""
+    return {
+        "article": "translation",
+        "resource_collection": "collection",
+        "note": "source",
+        "project": "source",
+    }.get(record_type, "source")
+
+
+def _build_sections_html(
+    sections: Dict[str, str],
+    missing: List[str],
+    record_type: str,
+) -> Tuple[str, List[Tuple[int, str, str]]]:
+    """Render all body sections, accumulating a page TOC.
+
+    The page TOC is built only from the *primary* body section
+    (`translation` for article, `collection` for resource_collection,
+    `source` for note/project). Other sections (notes, source as
+    secondary) do NOT contribute to the TOC to keep it focused on the
+    main content.
+
+    Returns (sections_html, page_toc).
+    """
     out: List[str] = []
-    rendered_keys = set()
+    primary_key = _primary_body_key(record_type)
+    page_toc: List[Tuple[int, str, str]] = []
+    rendered_keys: set[str] = set()
+
     for key in SECTION_ORDER:
         if key in sections:
             body_md = sections[key]
-            body_html = render_markdown(body_md)
+            body_html, section_toc = render_markdown(body_md)
+            if key == primary_key:
+                page_toc.extend(section_toc)
             tag = ""
             if not body_md.strip():
                 tag = '<span class="section-tag">空</span>'
+            elif not _section_open(record_type, key):
+                tag = '<span class="section-tag section-tag-collapsed">默认折叠</span>'
+            open_attr = " open" if _section_open(record_type, key) else ""
             out.append(
                 TEMPLATE_SECTION.format(
                     key=key,
                     label=SECTION_LABELS.get(key, key),
                     body=body_html or "<p class='placeholder'>暂无该部分</p>",
                     tag=tag,
+                    open_attr=open_attr,
                 )
             )
             rendered_keys.add(key)
     for key in missing:
         label = SECTION_LABELS.get(key, key)
+        # Missing sections: render closed.
         out.append(
             TEMPLATE_SECTION.format(
                 key=key,
                 label=label,
                 body="<p class='placeholder'>暂无该部分</p>",
                 tag='<span class="section-tag">未提供</span>',
+                open_attr="",
             )
         )
-    return "\n".join(out)
+    return "\n".join(out), page_toc
 
 
 # ---------------------------------------------------------------------------
@@ -634,15 +780,19 @@ def render_record_page(record: Dict[str, Any], body: Dict[str, Any]) -> str:
     meta_rows = _build_metadata_rows(meta)
     meta_section = TEMPLATE_METADATA_GRID.format(rows=meta_rows) if meta_rows else ""
 
-    sections_html = _build_sections_html(body["sections"], body["missing"])
+    sections_html, page_toc = _build_sections_html(
+        body["sections"], body["missing"], record_type
+    )
+    toc_html = _build_toc_html(page_toc)
 
     actions = TEMPLATE_ACTIONS.format(
+        source_btn=_build_source_btn(meta.get("source_url")),
         github_url=GITHUB_REPO_BASE + record["path"],
         path=record["path"],
     )
 
     footer = TEMPLATE_FOOTER.format(up="../../")
-    return head + meta_section + sections_html + actions + footer
+    return head + toc_html + meta_section + sections_html + actions + footer
 
 
 def generate_item_pages() -> int:

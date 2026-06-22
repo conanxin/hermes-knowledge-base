@@ -7,7 +7,7 @@
 <meta name="description" content="Session Guard 第一阶段：预请求审查器设计 — Hermes Agent">
 <link rel="stylesheet" href="../../styles.css">
 </head>
-<body class="detail-page">
+<body class="detail-page" id="top">
 <header class="detail-header">
 <a class="back-link" href="../../">← 返回首页</a>
 </header>
@@ -18,6 +18,36 @@
 <h1 class="detail-title">Session Guard 第一阶段：预请求审查器设计</h1>
 <p class="detail-title-en">Session Guard Phase 1: Pre-Request Sanitizer</p>
 </div>
+
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#status-pass">STATUS: PASS</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#host_scope">HOST_SCOPE</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#target_file">TARGET_FILE</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#backup_dir">BACKUP_DIR</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#files_backed_up">FILES_BACKED_UP</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#files_modified">FILES_MODIFIED</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#patch_summary">PATCH_SUMMARY</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#sanitizer_function">SANITIZER_FUNCTION</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#request_integration_point">REQUEST_INTEGRATION_POINT</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#fallback_integration_point">FALLBACK_INTEGRATION_POINT</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#py_compile_result">PY_COMPILE_RESULT</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#synthetic_test_result">SYNTHETIC_TEST_RESULT</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#sha256_before">SHA256_BEFORE</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#sha256_after">SHA256_AFTER</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#production_config_changed-yes_code_patch_only">PRODUCTION_CONFIG_CHANGED: YES_CODE_PATCH_ONLY</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#hermes_main_venv_modified-no">HERMES_MAIN_VENV_MODIFIED: NO</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#packages_installed-none">PACKAGES_INSTALLED: NONE</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#gateway_restarted-no">GATEWAY_RESTARTED: NO</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#cron_changed-no">CRON_CHANGED: NO</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#systemd_changed-no">SYSTEMD_CHANGED: NO</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#openclaw_dist_modified-no">OPENCLAW_DIST_MODIFIED: NO</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#risks">RISKS</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#rollback">ROLLBACK</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#next_best_step">NEXT_BEST_STEP</a></li>
+</ol>
+</nav>
 
 <section class="detail-meta">
 <div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">project</div></div>
@@ -30,54 +60,59 @@
 </section>
 
 <section class="detail-section" id="section-summary">
-<header class="section-header">
-<h2>摘要</h2>
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">摘要</span>
 
-</header>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h2>项目概述</h2>
+<h2 id="项目概述">项目概述</h2>
 <p><strong>Session Guard Phase 1: Pre-Request Sanitizer</strong> 是一个防御性的预请求审查器设计，用于解决 OpenAI 兼容 API 中常见的 HTTP 400 错误：</p>
 <pre><code>an assistant message with &#x27;tool_calls&#x27; must be followed by tool messages responding to each &#x27;tool_call_id&#x27;</code></pre>
 <p>该审查器通过扫描消息历史中的孤立 <code>assistant.tool_calls</code> 条目，并插入合成的 <code>role="tool"</code> 消息来修复问题。</p>
-<h2>迁移价值</h2>
+<h2 id="迁移价值">迁移价值</h2>
 <ul><li><strong>安全功能设计</strong>: 完整记录了防御性编程的实现方案</li><li><strong>可复用</strong>: 审查器模式可应用于其他类似场景</li><li><strong>测试覆盖</strong>: 包含 6 个合成测试用例，验证各种边界条件</li><li><strong>长期参考</strong>: 作为工具调用错误处理的参考实现</li></ul>
-<h2>内容摘要</h2>
+<h2 id="内容摘要">内容摘要</h2>
 <ul><li><strong>核心函数</strong>: <code>_sanitize_orphan_tool_calls_before_request()</code></li><li><strong>集成点</strong>: <code>call_llm()</code> (同步) 和 <code>async_call_llm()</code> (异步)</li><li><strong>关键特性</strong>:</li><li>深拷贝输入，不修改调用者状态</li><li>幂等性：重复运行产生相同结果</li><li>日志输出限制（最多 10 个 ID）</li><li>合成消息清晰标记 <code>[RECOVERED_ORPHAN_TOOL_CALL]</code></li><li><strong>测试覆盖</strong>: 6 个测试用例，全部通过</li><li><strong>风险等级</strong>: 低 — 仅添加合成消息，不删除或修改现有消息</li></ul>
-<h2>使用建议</h2>
+<h2 id="使用建议">使用建议</h2>
 <ul><li>作为 OpenAI API 工具调用错误处理的参考实现</li><li>了解防御性编程和预请求审查模式</li><li>参考合成测试用例的设计方法</li></ul>
-<h2>注意事项</h2>
+<h2 id="注意事项">注意事项</h2>
 <ul><li>该审查器是临时修复，根本问题（上下文压缩器中的截断/压缩 bug）需要单独修复</li><li>建议监控网关日志，评估孤儿工具调用的频率</li><li>如需回滚，可从备份恢复原始文件</li></ul>
-<h2>是否长期参考</h2>
+<h2 id="是否长期参考">是否长期参考</h2>
 <p>是。作为防御性编程和工具调用错误处理的参考案例，具有长期价值。</p>
 </div>
+</details>
 </section>
 
 
 <section class="detail-section" id="section-source">
-<header class="section-header">
-<h2>原文 / 源文本</h2>
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">原文 / 源文本</span>
 
-</header>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h1>Session Guard Phase 1 Report</h1>
-<h2>STATUS: PASS</h2>
-<h2>HOST_SCOPE</h2>
+<h1 id="session-guard-phase-1-report">Session Guard Phase 1 Report</h1>
+<h2 id="status-pass">STATUS: PASS</h2>
+<h2 id="host_scope">HOST_SCOPE</h2>
 <ul><li><strong>hostname:</strong> DESKTOP-3A8N7VN</li><li><strong>user:</strong> conanxin</li><li><strong>date:</strong> 2026-05-14T13:56:21+08:00</li><li><strong>pwd:</strong> /home/conanxin/.openclaw/workspace</li><li><strong>os:</strong> Linux 6.6.87.2-microsoft-standard-WSL2 (x64)</li><li><strong>shell:</strong> bash</li></ul>
-<h2>TARGET_FILE</h2>
+<h2 id="target_file">TARGET_FILE</h2>
 <p><code>/home/conanxin/hermes-agent/agent/auxiliary_client.py</code></p>
-<h2>BACKUP_DIR</h2>
+<h2 id="backup_dir">BACKUP_DIR</h2>
 <p><code>/home/conanxin/.hermes/backups/session_guard_1_20260514_135621</code></p>
-<h2>FILES_BACKED_UP</h2>
+<h2 id="files_backed_up">FILES_BACKED_UP</h2>
 <ul><li><code>auxiliary_client.py.bak</code> (original, 94,588 bytes)</li></ul>
-<h2>FILES_MODIFIED</h2>
+<h2 id="files_modified">FILES_MODIFIED</h2>
 <ul><li><code>/home/conanxin/hermes-agent/agent/auxiliary_client.py</code></li><li>Added <code>import copy</code> at line 45</li><li>Added <code>_sanitize_orphan_tool_calls_before_request()</code> at line 64</li><li>Integrated sanitizer into <code>call_llm()</code> at line 2129</li><li>Integrated sanitizer into <code>async_call_llm()</code> at line 2333</li></ul>
-<h2>PATCH_SUMMARY</h2>
+<h2 id="patch_summary">PATCH_SUMMARY</h2>
 <p>Added a pure-Python pre-request sanitizer that scans the message history for orphaned <code>assistant.tool_calls</code> entries (i.e. assistant messages with <code>tool_calls</code> whose IDs lack matching <code>role="tool"</code> responses). For each orphan, a synthetic <code>role="tool"</code> message is inserted immediately after the assistant message, neutralizing the orphan before the request reaches the OpenAI-compatible API. This prevents the recurring HTTP 400:</p>
 <pre><code>an assistant message with &#x27;tool_calls&#x27; must be followed by tool messages responding to each &#x27;tool_call_id&#x27;</code></pre>
-<h2>SANITIZER_FUNCTION</h2>
+<h2 id="sanitizer_function">SANITIZER_FUNCTION</h2>
 <pre data-lang="python"><code>def _sanitize_orphan_tool_calls_before_request(messages: list) -&gt; tuple:</code></pre>
 <ul><li><strong>Location:</strong> <code>/home/conanxin/hermes-agent/agent/auxiliary_client.py:64</code></li><li><strong>Input:</strong> <code>messages</code> list (OpenAI chat.completions format)</li><li><strong>Output:</strong> <code>(repaired_messages, repair_report)</code></li><li><strong>Behavior:</strong></li><li>Deep-copies input (never mutates caller's list)</li><li>Collects all existing <code>tool_call_id</code>s from <code>role="tool"</code> messages</li><li>For each <code>assistant.tool_calls</code> entry, checks if every <code>id</code> has a matching tool response</li><li>Missing IDs trigger synthetic tool message insertion immediately after the assistant message</li><li>Missing <code>tool_call.id</code> fields are counted in <code>skipped_missing_id_count</code> (no crash)</li><li><strong>Repair report keys:</strong></li><li><code>repaired</code> (bool)</li><li><code>inserted_count</code> (int)</li><li><code>inserted_tool_call_ids</code> (list[str])</li><li><code>skipped_missing_id_count</code> (int)</li></ul>
-<h2>REQUEST_INTEGRATION_POINT</h2>
+<h2 id="request_integration_point">REQUEST_INTEGRATION_POINT</h2>
 <ul><li><strong>Function:</strong> <code>call_llm()</code> (sync)</li><li><strong>Location:</strong> Line 2129</li><li><strong>Code:</strong></li></ul>
 <pre data-lang="python"><code>  messages, _tool_repair = _sanitize_orphan_tool_calls_before_request(messages)
   if _tool_repair.get(&quot;inserted_count&quot;):
@@ -88,55 +123,61 @@
           _tool_repair[&quot;inserted_tool_call_ids&quot;][:10],
       )</code></pre>
 <ul><li><strong>Placement:</strong> Immediately after <code>_resolve_task_provider_model()</code> and before <code>_build_call_kwargs()</code> / <code>client.chat.completions.create()</code></li><li><strong>Effect:</strong> Both primary and fallback API calls use the already-sanitized <code>messages</code> list</li></ul>
-<h2>FALLBACK_INTEGRATION_POINT</h2>
+<h2 id="fallback_integration_point">FALLBACK_INTEGRATION_POINT</h2>
 <ul><li><strong>Function:</strong> <code>async_call_llm()</code> (async)</li><li><strong>Location:</strong> Line 2333</li><li><strong>Code:</strong> Same pattern as sync version</li><li><strong>Placement:</strong> Immediately after <code>_resolve_task_provider_model()</code> and before <code>_build_call_kwargs()</code> / <code>await client.chat.completions.create()</code></li><li><strong>Effect:</strong> Fallback retry uses sanitized messages automatically (since <code>messages</code> is sanitized once at function entry)</li></ul>
-<h2>PY_COMPILE_RESULT</h2>
+<h2 id="py_compile_result">PY_COMPILE_RESULT</h2>
 <ul><li><strong>Command:</strong> <code>python3 -m py_compile agent/auxiliary_client.py</code></li><li><strong>Result:</strong> PASS (exit code 0)</li></ul>
-<h2>SYNTHETIC_TEST_RESULT</h2>
+<h2 id="synthetic_test_result">SYNTHETIC_TEST_RESULT</h2>
 <ul><li><strong>Test script:</strong> <code>/home/conanxin/.hermes/backups/session_guard_1_20260514_135621/test_orphan_tool_sanitizer.py</code></li><li><strong>Test A (normal pairing):</strong> PASS — <code>inserted_count=0</code></li><li><strong>Test B (missing tool response):</strong> PASS — inserted 1 synthetic tool message</li><li><strong>Test C (multi tool_calls partial missing):</strong> PASS — only补缺失的 (2 of 3)</li><li><strong>Test D (tool_call without id):</strong> PASS — no crash, <code>skipped_missing_id_count=1</code></li><li><strong>Test E (no mutation of original):</strong> PASS — original list unchanged</li><li><strong>Test F (empty messages):</strong> PASS — safe return</li><li><strong>Overall:</strong> ALL TESTS PASSED</li></ul>
-<h2>SHA256_BEFORE</h2>
+<h2 id="sha256_before">SHA256_BEFORE</h2>
 <pre><code>22c11ab5dd92796136db4b7ec3ce6cc609c2a2e4a8dcfff05cc51b2464c62464  /home/conanxin/hermes-agent/agent/auxiliary_client.py</code></pre>
-<h2>SHA256_AFTER</h2>
+<h2 id="sha256_after">SHA256_AFTER</h2>
 <pre><code>84621fb8a4f8082a112d3866f79a50291c797b57d690b640f661bce6296bee02  /home/conanxin/hermes-agent/agent/auxiliary_client.py</code></pre>
-<h2>PRODUCTION_CONFIG_CHANGED: YES_CODE_PATCH_ONLY</h2>
-<h2>HERMES_MAIN_VENV_MODIFIED: NO</h2>
-<h2>PACKAGES_INSTALLED: NONE</h2>
-<h2>GATEWAY_RESTARTED: NO</h2>
-<h2>CRON_CHANGED: NO</h2>
-<h2>SYSTEMD_CHANGED: NO</h2>
-<h2>OPENCLAW_DIST_MODIFIED: NO</h2>
-<h2>RISKS</h2>
+<h2 id="production_config_changed-yes_code_patch_only">PRODUCTION_CONFIG_CHANGED: YES_CODE_PATCH_ONLY</h2>
+<h2 id="hermes_main_venv_modified-no">HERMES_MAIN_VENV_MODIFIED: NO</h2>
+<h2 id="packages_installed-none">PACKAGES_INSTALLED: NONE</h2>
+<h2 id="gateway_restarted-no">GATEWAY_RESTARTED: NO</h2>
+<h2 id="cron_changed-no">CRON_CHANGED: NO</h2>
+<h2 id="systemd_changed-no">SYSTEMD_CHANGED: NO</h2>
+<h2 id="openclaw_dist_modified-no">OPENCLAW_DIST_MODIFIED: NO</h2>
+<h2 id="risks">RISKS</h2>
 <ul><li><strong>Low risk.</strong> The sanitizer is a defensive pre-flight check that only <em>adds</em> synthetic tool responses when orphans are detected. It never removes or modifies existing messages.</li><li>The synthetic tool response content (<code>[RECOVERED_ORPHAN_TOOL_CALL] ...</code>) is clearly marked and will not be confused with real tool output.</li><li>Deep-copy prevents mutation of caller state.</li><li>The sanitizer is idempotent: running it twice on the same messages produces the same result (orphans are fixed on first run, second run finds no new orphans).</li><li>Logger output is capped at 10 IDs to prevent log flooding.</li></ul>
-<h2>ROLLBACK</h2>
+<h2 id="rollback">ROLLBACK</h2>
 <pre data-lang="bash"><code># Restore from backup
 cp /home/conanxin/.hermes/backups/session_guard_1_20260514_135621/auxiliary_client.py.bak \
    /home/conanxin/hermes-agent/agent/auxiliary_client.py</code></pre>
-<h2>NEXT_BEST_STEP</h2>
+<h2 id="next_best_step">NEXT_BEST_STEP</h2>
 <ol><li><strong>Phase 2 (Runtime Validation):</strong> Monitor gateway logs for the sanitizer's <code>logger.info</code> lines over the next 24–48 hours. If orphans are detected frequently, the underlying truncation/compression bug needs separate fixes (context_compressor.py, truncateOversizedToolResults).</li><li><strong>Phase 3 (Context Compressor Hardening):</strong> Patch <code>context_compressor.py</code> lines 429–487 to also validate tool-call pairing during compaction, preventing orphans at the source.</li><li><strong>Phase 4 (Request Dump Cleanup):</strong> Extend <code>performGatewaySessionReset</code> to delete stale <code>request_dump_*.json</code> files.</li><li><strong>Phase 5 (OpenClaw Dist):</strong> If Phase 1–3 do not fully eliminate the issue, patch the OpenClaw JS dist fallback path to also sanitize messages before retry.</li></ol>
 </div>
+</details>
 </section>
 
 
 <section class="detail-section" id="section-notes">
-<header class="section-header">
-<h2>笔记</h2>
-
-</header>
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">笔记</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h2>迁移备注</h2>
+<h2 id="迁移备注">迁移备注</h2>
 <ul><li>原始文件: <code>~/.hermes/reports/session_guard/session_guard_1_pre_request_sanitizer_20260514_135621.md</code></li><li>迁移日期: 2026-06-20</li><li>迁移类型: project</li><li>原始内容已保存至 source.md</li></ul>
-<h2>质量观察</h2>
+<h2 id="质量观察">质量观察</h2>
 <ul><li>原始报告结构清晰，包含完整的设计、实现、测试和回滚方案</li><li>代码片段完整，可直接参考</li><li>测试用例覆盖全面，包含正常配对、缺失响应、多工具调用、无 ID、不变性、空消息等场景</li></ul>
-<h2>维护建议</h2>
+<h2 id="维护建议">维护建议</h2>
 <ul><li>如需了解审查器的运行时效果，需查阅网关日志</li><li>如需回滚，可从备份目录恢复原始文件</li><li>建议关注后续 Phase 2-5 的进展，了解根本修复方案</li></ul>
 </div>
+</details>
 </section>
 
 <nav class="detail-actions">
+
 <a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/projects/2026-05-14-session-guard-sanitizer" target="_blank" rel="noopener">GitHub 文件夹 →</a>
 <button class="action-btn" id="copy-path-btn" data-path="content/projects/2026-05-14-session-guard-sanitizer">复制 path</button>
 <span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
 </nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
 
 </article>
 </main>
@@ -168,6 +209,20 @@ cp /home/conanxin/.hermes/backups/session_guard_1_20260514_135621/auxiliary_clie
         });
       }
     });
+  }
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {
+    const onScroll = function() {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
 })();
 </script>

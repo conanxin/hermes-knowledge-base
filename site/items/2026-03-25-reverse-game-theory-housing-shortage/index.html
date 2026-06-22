@@ -7,7 +7,7 @@
 <meta name="description" content="逆向博弈论如何解决住房短缺问题 — HennyGe Wichers">
 <link rel="stylesheet" href="../../styles.css">
 </head>
-<body class="detail-page">
+<body class="detail-page" id="top">
 <header class="detail-header">
 <a class="back-link" href="../../">← 返回首页</a>
 </header>
@@ -18,6 +18,17 @@
 <h1 class="detail-title">逆向博弈论如何解决住房短缺问题</h1>
 <p class="detail-title-en">How Reverse Game Theory Could Solve The Housing Shortage</p>
 </div>
+
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#使合作理性化">使合作理性化</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#建立联盟的市场">建立联盟的市场</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#当机制老化时">当机制老化时</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#为多元性而设计">为多元性而设计</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#前方的架构">前方的架构</a></li>
+</ol>
+</nav>
 
 <section class="detail-meta">
 <div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">article</div></div>
@@ -30,12 +41,14 @@
 </section>
 
 <section class="detail-section" id="section-translation">
-<header class="section-header">
-<h2>中文翻译</h2>
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">中文翻译</span>
 
-</header>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h1>逆向博弈论如何解决住房短缺问题</h1>
+<h1 id="逆向博弈论如何解决住房短缺问题">逆向博弈论如何解决住房短缺问题</h1>
 <p>我们面临的最棘手问题——从住房短缺、气候撤退，到民主信任与技术——并非政治失败，而是激励机制的失败。</p>
 <p>作者：HennyGe Wichers | 2026年3月25日</p>
 <p>每年夏天，在华盛顿特区西北仅30英里处，Kingsbury果园周围的山丘郁郁葱葱，第一批桃子成熟，呈现金红色。空气中弥漫着果糖、湿润泥土和露水青草的味道。黎明时分，与妹妹Sue Ketron共同管理果园的Gene Kingsbury沿着果树行走，用手抚摸那些以家族名字命名的毛茸茸的果实。</p>
@@ -49,7 +62,7 @@
 <p>它奏效了。四十多年后，保护区仍覆盖蒙哥马利县近三分之一的土地。其TDR市场已使70,000英亩土地保持农田用途——全部通过私人交易。该地区500多个运营农场在距离国家首都仅25英里的地方维持着农村生计。</p>
 <p>几十年来，农民出售的TDR使数千套新住房得以在县政府——及其通勤者——需要的地方建造。今天，正如设计该系统的Royce Hanson喜欢说的那样，保护区里马匹比人还多。它的许多田地兼作周边社区的自行车、骑马和采摘日活动的开放空间。</p>
 <p>这不是共识或自上而下命令的奇迹。这是机制设计（mechanism design）的胜利：设计规则以使个人利益与集体利益相一致的科学。蒙哥马利县规划者为住房和保护所想出的办法，现在被机制设计者视为普遍原则：如果你能重写激励机制，你几乎可以在任何地方建立合作。</p>
-<h2>使合作理性化</h2>
+<h2 id="使合作理性化">使合作理性化</h2>
 <p>蒙哥马利县的TDR是同一时期在经济学期刊上正式形成的一种理论的现实世界实验：经济学家所说的机制设计，或逆向博弈论。</p>
 <p>传统博弈论假设规则是固定的——棋盘已摆好，法律已编纂——并询问理性的人在其中会如何行为。它根据现有激励预测结果。机制设计则扭转了这个问题：它询问，例如，我们应该制定什么规则来获得不同的结果——比如，既保护又建房？</p>
 <p>这个想法出现于20世纪60年代，此后已导致两项诺贝尔奖的颁发。其中一项授予了其思想先驱、经济学家William Vickrey，他与经济学家James A. Mirrlees于1996年分享了该奖。Vickrey关于拍卖设计的作品至今仍用于出售从电信带宽到在线广告空间的一切。另一项诺贝尔奖于2007年授予经济学家Leonid Hurwicz、Eric Maskin和Roger Myerson，他们奠定了该领域的基础。</p>
@@ -63,7 +76,7 @@
 <p>但真正的复杂性在于该系统的政治中立性。Hanson面对的是对监管深表怀疑的选民。“农民和土地所有者反对政府干预，”Hanson说。“当然，规划者想要的是某种政府干预——传统上，那是分区。”</p>
 <p>“TDR提供的是，”他继续说，“政府不会参与这些交易的论点。这些完全是私人的——你将与想买你开发权的人谈判定价。”</p>
 <p>该机制为每个人提供了东西，使参与成为逻辑选择。“它已经维持了45年，”Hanson说。他停顿了一下，然后补充道，“你知道，我认为它会维持更久。”</p>
-<h2>建立联盟的市场</h2>
+<h2 id="建立联盟的市场">建立联盟的市场</h2>
 <p>蒙哥马利县的开发权系统并非独一无二。世界各地的规划者都使用同样的逻辑将零和斗争转变为 functioning 市场。类似变化出现在纽约、休斯顿和东京等城市，原因相同：当太多利益相关者可以说不时，进步取决于改变他们的得失。</p>
 <p>TDR最早出现在纽约市的空中。1978年，美国最高法院裁定，该市可以拒绝在大中央车站顶部建造摩天大楼，前提是建筑所有者宾州中央运输公司可以将未使用的“空中权利”出售给开发商，允许他们在相邻地块上建造。这一决定将空中的天空变成了资产，将空中权利确立为可交易财产，并为TDR奠定了基础。</p>
 <p>此后，空中权利的自由市场蓬勃发展，将保护与发展结合起来——并定义了城市的天际线。教堂、剧院和地标出售其上方的空气以资助维护；开发商抢购这些权利，在邻近街区建造越来越高的酒店、公寓和办公室。该机制解决了纽约需要增长与其保护历史的义务之间的紧张关系。</p>
@@ -79,7 +92,7 @@
 <p>他们可以保留、出售或在上面建造。这不完全是共识，但也不完全是征用。该系统强制对齐而不消灭所有权；土地所有者失去了土地面积但获得了价值。当筑波快线于2005年开通时，它得到了回报。这个约75亿美元的项目在开通后仅五年就实现了盈利，比预测早15年。沿线的房地产价值上涨了40%以上，土地所有者分享收益。</p>
 <p>日本没有通过文化或对和谐的呼吁来创造共识——其土地所有者和其他地方一样顽固。相反，它将双赢局面写入了法律。如果项目是私人主导的，同样的机制仍然适用，但需要三分之二的土地所有者多数同意推进。</p>
 <p>在这个规模上，机制设计开始 resemble 治理——不再是建立联盟的方法，而是集体行动的门槛。而这个门槛提出了一个问题：协调与强制之间的界限究竟在哪里？</p>
-<h2>当机制老化时</h2>
+<h2 id="当机制老化时">当机制老化时</h2>
 <p>日本为筑波快线提供的解决方案勉强 qualifies 为机制设计。虽然规则对齐了激励，但参与实际上是强制性的：土地所有者可以对地块的具体细节提出异议，但他们无法阻止火车。是的，这是合作——但是通过约束的合作。</p>
 <p>正是这种紧张关系——在经济效率与人类能动性之间——微软研究员、RadicalxChange基金会创始人Glen Weyl在过去十年中一直在思考。RadicalxChange基金会是一个致力于民主创新和制度设计的非营利组织。</p>
 <p>在2018年的《激进市场》一书中，Weyl和他的合著者认为，资本主义不是因为太自由而失败，而是因为其自由集中——尤其是与财产相关。排除权成为瓶颈，一个小垄断，制造了困住筑波快线的钉子户问题。他提出的解决方案，共同所有权自评估税（COST），将所有财产想象为永久拍卖：所有者公开申报价格，对其纳税，如果有人满足价格就必须出售。</p>
@@ -93,7 +106,7 @@
 <p>如果做不到这一点，机制就有成为陷阱的风险。设计最终是实施的技术，而不是道德。它优化规则指定的任何结果。在仁慈的规划者手中，它保护农田；在坏人手中，它优化排斥。数学解决了激励问题，但忽略了权力问题：谁来设定目标？如果权利的初始分配不公正，一个有效的机制只是将这种不公正结晶成市场。</p>
 <p>这就是为什么架构本身必须可见。没有透明度，Weyl警告说，激励系统可能“从根本上具有欺骗性”。自上而下的机制、隐藏其逻辑的机制，不会建立合作或信任。它们侵蚀它。</p>
 <p>最终，机制设计也是政治的架构。机制需要维护、披露和适应——就像它们服务的社区一样。而正是朝着这种灵活性，下一波设计正在转向。</p>
-<h2>为多元性而设计</h2>
+<h2 id="为多元性而设计">为多元性而设计</h2>
 <p>最成功的机制为具有不同忠诚、利益和身份的人创造了空间，让他们按照自己的方式合作。这正是Weyl现在希望设计者关注的领域——不是理想化的偏好曲线，而是人们带到公共生活的混乱社会动机。</p>
 <p>Weyl最新的项目“Plurality”建立在他作为Plurality Institute联合创始人的工作之上，该非营利组织专注于开发“多元”技术，以“大规模升级民主和支持人类合作”。新项目首先是一本与前台湾数字部长Audrey Tang合著的书，通过开源过程编写，该过程实践了它所倡导的相同参与原则——将机制设计的逻辑扩展到另一个分歧深刻的领域：民主。在这里，目标是重新设计声音——人们如何表达自己以及这些表达如何聚合为权力和影响。</p>
 <p>今天的民主存在保真度问题。在简单投票中，一个人的温和偏好与另一个人的最深信念同等重要。它是一个钝器，压平激情。为了捕捉失去的信号，像二次投票（Quadratic Voting，QV）和二次资助（Quadratic Funding，QF）这样的机制建立在人们不仅有意见，而且有不同强度的直觉之上。</p>
@@ -106,7 +119,7 @@
 <p>2023年，Anthropic和集体智能项目（一个非营利研究中心）使用Polis进行了一项众包大型语言模型宪法的实验，要求公民样本定义聊天机器人应服务的价值观——这证明了多元、民主塑造的AI治理可能是什么样子，正如台湾十年来已经在一定程度上使用的那样。我们可以想象走得更远：使用QV选择哪些AI原则最重要，或使用QF支持开源模型作为数字公共产品，并将这些价值观编码到系统本身。</p>
 <p>标准市场重视稀缺性，但这些机制重视多元性。它们字面上和算法上奖励我们与不同于我们的人合作。</p>
 <p>不过，Weyl向我强调，这些工具不是万能药。它们的意义在于它们揭示的东西：制度是临时的、可调整的，并且通常能够重新设计。这里的设计挑战反映了土地使用中的挑战。机制必须对多元社区理性且有回报，使他们能够合作。如果你接受我们的规则可以重写，那么新问题就变成了：我们接下来需要在哪里应用这个逻辑？</p>
-<h2>前方的架构</h2>
+<h2 id="前方的架构">前方的架构</h2>
 <p>这种设计的 stakes 正在上升。随着气候危机加速，我们将面临比现有住房短缺大得多的协调问题。我们不仅需要决定在哪里建造，还需要决定在哪里撤退。</p>
 <p>从佛罗里达到孟加拉国的沿海社区将面临行星规模的钉子户问题，随着海平面上升。你如何搬迁一个城镇？如果政府一个接一个地买断房主，社区就会破裂。第一个离开的人会破坏那些留下的人的社会结构；最后一个留下的人生活在鬼镇中。</p>
 <p>机制设计提供了第三条道路。不是个人买断，一个社区可以投票集体搬迁，也许使用像日本那样的超级多数门槛。如果门槛达到，整个社区一起搬迁，就像阿拉斯加原住民村庄Mertarvik发生的那样，保留使城镇不仅仅是房屋集合的社会资本：邻居、网络、学校。</p>
@@ -116,16 +129,19 @@
 <p>现在真正的问题——对于住房当局、政府、AI实验室和气候规划者而言——是他们是否愿意将他们的规则手册视为设计空间，而不是约束列表。在这个往往由碎片化和僵局定义的时代，这可能是真正前进的最有希望的方式。</p>
 <p>_更正：2026年3月27日，本文已编辑以明确蒙哥马利县规划部门于1月更新了规则，因此开发商不能再绕过TDR市场。_</p>
 </div>
+</details>
 </section>
 
 
 <section class="detail-section" id="section-source">
-<header class="section-header">
-<h2>原文 / 源文本</h2>
-
-</header>
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">原文 / 源文本</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h1>How Reverse Game Theory Could Solve The Housing Shortage</h1>
+<h1 id="how-reverse-game-theory-could-solve-the-housing-shortage">How Reverse Game Theory Could Solve The Housing Shortage</h1>
 <p>Our hardest problems — from housing shortages to climate retreat to democratic trust and technology — aren't failures of politics; they're failures of incentives.</p>
 <p>By HennyGe Wichers | March 25, 2026</p>
 <p>Each summer, just 30 miles northwest of Washington, D.C., the hills around Kingsbury's Orchard sit lush and green as the first peaches of the season ripen to a golden-red blush. The air is heavy with the smell of fruit sugar, damp earth and dewy grass. At first light, Gene Kingsbury, who manages the farm with his sister Sue Ketron, moves along the rows of trees, running a hand across the fuzzy globes that bear his family name.</p>
@@ -139,7 +155,7 @@
 <p>It worked. More than four decades later, the Reserve still covers almost a third of Montgomery County's land. Its TDR market has enabled 70,000 acres to remain farmland — all via private transactions. The area's more than 500 working farms help sustain rural livelihoods within just 25 miles of the nation's capital.</p>
 <p>Over the decades, the TDRs that farmers sold enabled thousands of new homes to be built exactly where the county — and its commuters — needed them. Today, the Reserve is home to more horses than people, as Royce Hanson, who designed the system, likes to put it. Many of its fields double as open spaces for cycling, horseback riding and pick-your-own produce days out for the surrounding communities.</p>
 <p>This wasn't a miracle of consensus or top-down diktat. It was a triumph of mechanism design: the science of designing rules that align self-interest with the collective good. What Montgomery County's planners figured out for housing and preservation, mechanism designers now see as a general principle: If you can rewrite incentives, you can build cooperation almost anywhere.</p>
-<h2>Making Cooperation Rational</h2>
+<h2 id="making-cooperation-rational">Making Cooperation Rational</h2>
 <p>Montgomery County's TDRs were a real-world experiment in a theory being formalized in economic journals around the very same time: what economists call mechanism design, or reverse game theory.</p>
 <p>Traditional game theory assumes that the rules are fixed — the chessboard is set, the laws codified — and asks how rational people will behave within them. It predicts outcomes based on existing incentives. Mechanism design turns that question around: It asks, for example, what rules should we write to get a different outcome — say, preservation and housing?</p>
 <p>The idea emerged in the 1960s and has since led to the awarding of two Nobel Prizes. One went to its intellectual forefather, economist William Vickrey, who shared the prize with the economist James A. Mirrlees in 1996. Vickrey's work on auction design is still used today to sell everything from telecoms bandwidth to online advertising space. Another Nobel, in 2007, went to the economists Leonid Hurwicz, Eric Maskin and Roger Myerson, who laid the foundations of the field.</p>
@@ -153,7 +169,7 @@
 <p>But the real sophistication lay in the system’s political neutrality. Hanson faced a constituency deeply skeptical of regulation. “Farmers and landowners were opposed to government intervention,” Hanson said. “And, of course, what the planners wanted was some kind of government intervention — traditionally, that had been zoning.”</p>
 <p>“What TDRs offered,” he continued, “was the argument that the government’s not going to be involved in these transactions. These are entirely private — you’re going to set the price in negotiations with somebody who wants to buy your development rights.”</p>
 <p>The mechanism offered something for everyone, making participation the logical choice. “It’s held for 45 years,” Hanson said. He paused, then added, “You know, I think it will hold a lot longer.”</p>
-<h2>Markets That Build Coalitions</h2>
+<h2 id="markets-that-build-coalitions">Markets That Build Coalitions</h2>
 <p>Montgomery County’s system for development rights wasn’t unique. Planners around the world have used the same logic to turn zero-sum battles into functioning markets. Variations have surfaced in cities like New York, Houston and Tokyo for the same reason: When too many stakeholders can say no, progress depends on changing what they stand to gain.</p>
 <p>TDRs first appeared, quite literally, in the air of New York City. In 1978, the U.S. Supreme Court ruled that the city could deny permission to build a skyscraper atop Grand Central Terminal, provided that the building owners, Penn Central Transportation Co., could sell the unused “air rights” to developers, allowing them to build on adjacent plots. That decision turned empty sky into an asset, cementing air rights as tradeable property and laying the foundation for TDRs.</p>
 <p>Since then, a free market in air rights has flourished, aligning preservation and development — and defining the city’s skyline. Churches, theaters and landmarks sell the air above them to fund their upkeep; developers snap up those rights to build ever-taller hotels, apartments and offices on neighboring blocks. The mechanism resolves the tension between New York’s need to grow and its obligation to preserve its history.</p>
@@ -169,7 +185,7 @@
 <p>They could keep them, sell them or build on them. It wasn’t exactly consensus, but it wasn’t entirely expropriation either. The system forced alignment without annihilating ownership; landowners lost land area but gained value. When the Tsukuba Express opened in 2005, it paid off. The roughly $7.5-billion project became profitable in just five years, 15 years earlier than forecast. Property values along the line rose by more than 40%, landowners sharing in the gains.</p>
 <p>Japan didn’t conjure consensus through culture or appeals to harmony — its landowners can be as stubborn as anywhere. Instead, it wrote a win-win situation into law. Had the project been privately led, the same mechanism would still apply, but a two-thirds supermajority of landowners would have needed to agree to move forward.</p>
 <p>At this scale, mechanism design begins to resemble governance — less a method for building coalitions, more a threshold for collective action. And that threshold raises a question: Where exactly is the line between coordination and coercion?</p>
-<h2>When Mechanisms Age</h2>
+<h2 id="when-mechanisms-age">When Mechanisms Age</h2>
 <p>Japan’s solution for the Tsukuba Express qualifies as mechanism design, but only just. While the rules aligned incentives, participation was effectively compulsory: Landowners could dispute the specifics of their lots, but they couldn’t stop the train. It was cooperation, yes — but cooperation by constraint.</p>
 <p>It is precisely this tension — between economic efficiency and human agency — that Glen Weyl, a Microsoft researcher and founder of the RadicalxChange Foundation, a nonprofit dedicated to democratic innovation and institutional design, has spent the last decade pondering.</p>
 <p>In the 2018 book “Radical Markets,” Weyl and his co-author argue that capitalism doesn’t fail because it’s too free, but because its freedoms pool — especially with property. The right to exclude becomes a bottleneck, a small monopoly that creates the holdout problem that trapped the Tsukuba Express. His proposed solution, the Common Ownership Self-Assessed Tax (COST), imagines all property as a perpetual auction: Owners publicly declare a price, pay tax on it, and must sell it if someone meets the price.</p>
@@ -183,7 +199,7 @@
 <p>If it fails to do that, mechanisms risk becoming a trap. Design is ultimately a technology of implementation, not morality. It optimizes for whatever outcome the rules specify. In the hands of a benevolent planner, it preserves farmland; in the hands of a bad actor, it optimizes for exclusion. The math solves the incentives problem, but ignores the power problem: Who gets to set the goal? If the initial distribution of rights is unjust, an efficient mechanism simply crystallizes that injustice into a market.</p>
 <p>That is why the architecture itself must be visible. Without transparency, Weyl warned, incentive systems can be “fundamentally deceiving.” Top-down mechanisms, mechanisms that hide their logic, do not build cooperation or trust. They erode it.</p>
 <p>Ultimately, mechanism design is also the architecture of politics. Mechanisms require maintenance, disclosure and adaptation — just like the communities they serve. And it’s toward that kind of flexibility that the next wave of design is now turning.</p>
-<h2>Designing For Plurality</h2>
+<h2 id="designing-for-plurality">Designing For Plurality</h2>
 <p>The most successful mechanisms created space for people with different loyalties, interests and identities to cooperate on their own terms. That’s the terrain Weyl wants designers to pay attention to now — not idealized preference curves, but the messy social motivations people bring to public life.</p>
 <p>Weyl’s latest project, “Plurality,” builds on work he’s done as cofounder of The Plurality Institute, a nonprofit that focuses on developing “plural” technologies that “upgrade democracy and support human cooperation at scale.” The new project is foremost a book developed with Audrey Tang, formerly Taiwan’s first Digital Minister, written through an open-source process that practices the same participatory principles it champions — that extends the logic of mechanism design into another arena where divides run deep: democracy. Here, the goal is to redesign voice — how people express themselves and how those expressions aggregate into power and influence.</p>
 <p>Democracy today suffers from a problem of fidelity. In a simple vote, one person’s mild preference counts the same as another’s deepest conviction. It’s a blunt instrument flattening passion. To capture that lost signal, mechanisms like Quadratic Voting (QV) and Quadratic Funding (QF) build on the intuition that people don’t just have opinions; they have them with varying intensities.</p>
@@ -196,7 +212,7 @@
 <p>In 2023, Anthropic and the Collective Intelligence Project, a nonprofit research hub, ran an experiment in crowd-sourcing a constitution for large language models using Polis, asking a sampling of citizens to define the values chatbots should serve — a proof of concept for what plural, democratically shaped AI governance could look like, as Taiwan has already been using to some degree for about a decade. We can imagine going further still: using QV to choose which AI principles matter most, or QF to support open-source models as digital public goods, and encode those values into the systems themselves.</p>
 <p>Standard markets value scarcity, but these mechanisms value plurality. They reward us, literally and algorithmically, for collaborating with people who are different from us.</p>
 <p>Still, Weyl stressed to me that these tools are not a panacea. Their significance lies in what they reveal: Institutions are provisional, adjustable and generally capable of redesign. The design challenge here mirrors the one in land-use. Mechanisms must be rational and rewarding for diverse communities to cooperate. And if we accept that our rules can be rewritten, the new question becomes: Where do we need to apply this logic next?</p>
-<h2>The Architecture Ahead</h2>
+<h2 id="the-architecture-ahead">The Architecture Ahead</h2>
 <p>The stakes for this kind of design are rising. As the climate crisis accelerates, we will face coordination problems that dwarf our existing housing shortages. We will not only need to decide where to build but also where to retreat.</p>
 <p>Coastal communities from Florida to Bangladesh will face the holdout problem on a planetary scale as sea levels rise. How do you move a town? If the government buys out homeowners one by one, the community breaks. The first to leave damages the social fabric for those who stay; the last to stay is living in a ghost town.</p>
 <p>Mechanism design offers a third way. Instead of individual buyouts, a community could vote to move collectively, perhaps using a supermajority threshold like in Japan. If the threshold is met, the whole community moves together, as happened with the Alaskan native village Mertarvik, preserving the social capital that makes a town more than just a collection of houses: the neighbors, the networks, the schools.</p>
@@ -206,29 +222,35 @@
 <p>The real question now — for housing authorities, governments, AI labs and climate planners alike — is whether they are willing to treat their rulebooks as design spaces, rather than lists of constraints. In an era often defined by fragmentation and deadlock, that might be the most promising way to truly move forward.</p>
 <p>_Correction: On March 27, 2026, this essay was edited to make clear that the Montgomery County Planning Department updated its rules in January so that developers can no longer bypass the TDR market._</p>
 </div>
+</details>
 </section>
 
 
 <section class="detail-section" id="section-notes">
-<header class="section-header">
-<h2>笔记</h2>
-
-</header>
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">笔记</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
 <div class="markdown-body">
-<h2>阅读笔记</h2>
+<h2 id="阅读笔记">阅读笔记</h2>
 <ul><li>本文是机制设计理论的优秀现实案例集，特别适合理解“激励设计”如何优于传统监管或道德呼吁。</li><li>强调机制必须“可见”和“可维护”，否则会成为黑箱或被绕过——这对AI治理和平台设计有直接启发。</li><li>Glen Weyl从“Radical Markets”到“Plurality”的思想演进值得追踪：从纯机制到强调人类部分动机和跨差异关系。</li><li>二次投票/资助已在台湾和科罗拉多有实际应用，可作为未来民主实验的参考。</li></ul>
-<h2>相关链接</h2>
+<h2 id="相关链接">相关链接</h2>
 <ul><li>原作者后续作品：RadicalxChange Foundation、Plurality Institute</li><li>相关概念：Vickrey auction、Quadratic Voting、Land Readjustment</li></ul>
-<h2>待验证/扩展点</h2>
+<h2 id="待验证扩展点">待验证/扩展点</h2>
 <ul><li>蒙哥马利县2026年1月规则更新细节</li><li>筑波快线土地整理的长期社会影响数据</li><li>QV在更多政府层面的可扩展性</li></ul>
 </div>
+</details>
 </section>
 
 <nav class="detail-actions">
+<a class="action-link source-link" href="https://www.noemamag.com/the-architecture-of-cooperation/" target="_blank" rel="noopener">原文链接 ↗</a>
 <a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-03-25-reverse-game-theory-housing-shortage" target="_blank" rel="noopener">GitHub 文件夹 →</a>
 <button class="action-btn" id="copy-path-btn" data-path="content/articles/2026/2026-03-25-reverse-game-theory-housing-shortage">复制 path</button>
 <span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
 </nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
 
 </article>
 </main>
@@ -260,6 +282,20 @@
         });
       }
     });
+  }
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {
+    const onScroll = function() {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
 })();
 </script>

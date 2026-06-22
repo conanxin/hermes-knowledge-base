@@ -194,18 +194,32 @@ https://conanxin.github.io/hermes-knowledge-base/items/<slug>/
 
 例如：<https://conanxin.github.io/hermes-knowledge-base/items/2026-06-22-your-ai-is-not-a-tool/>
 
-详情页结构：
+详情页结构（v0.3.9 起为每种类型提供差异化的默认展开/折叠）：
 
 | 区域 | 内容 |
 |------|------|
 | 顶部 | 返回首页链接 |
 | 标题 | `title_zh` + 英文副标题 `title` |
+| 目录 TOC | 来自正文主体的 h2/h3 标题（带编号 + 平滑滚动到锚点） |
 | 元数据 | 类型、作者、来源、发布日期、采集日期、迁移日期、标签、主题 |
-| 正文 | 按类型加载：<br>· `article` → `translation.zh-CN.md` + `source.md`<br>· `resource_collection` → `collection.md` + `summary.md`<br>· `note` / `project` → `source.md` + `summary.md` |
-| 笔记 | 全部类型均加载 `notes.md`（如有） |
-| 底部 | GitHub 文件夹跳转 + 复制 path 按钮 |
+| 摘要 summary.md | 默认展开（所有类型） |
+| 主体正文 | 文章=中文翻译 / 资源集合=collection / 笔记·项目=source。默认展开 |
+| 原文 / 笔记 | 默认折叠，长文不会撑爆页面 |
+| 底部 | 原文链接（如有）+ GitHub 文件夹 + 复制 path |
+| 浮窗 | 滚动 400px 后右下角出现"↑ 返回顶部" |
 
 可选文件缺失时，详情页显示"暂无该部分"，不会崩溃。
+
+类型差异化默认展开/折叠（v0.3.9+）：
+
+| 类型 | summary | translation / collection / source | source (次要) | notes |
+|------|---------|------------------------------------|----------------|-------|
+| article | 展开 | 展开（translation） | 折叠 | 折叠 |
+| resource_collection | 展开 | 展开（collection） | — | 折叠 |
+| note | 展开 | 展开（source） | — | 折叠 |
+| project | 展开 | 展开（source） | — | 折叠 |
+
+> 用户随时可以点击 section 标题手动展开/折叠，状态**不**持久化。
 
 `update_site.py` 一键重建并同步：
 
