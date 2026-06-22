@@ -45,23 +45,27 @@ ITEMS_DIR = REPO_ROOT / "site" / "items"
 GITHUB_REPO_BASE = "https://github.com/conanxin/hermes-knowledge-base/tree/main/"
 SITE_BASE = "https://conanxin.github.io/hermes-knowledge-base/"
 
-# Type-specific body files (relative to the record directory)
+# Type-specific body files (relative to the record directory).
+# The `summary` slot, when present, is rendered as the first body section
+# (default-expanded) and is what the page TOC is sourced from. The order
+# here also drives the visual order on the page.
 BODY_FILES_BY_TYPE: Dict[str, List[Tuple[str, str]]] = {
     "article": [
+        ("summary", "summary.md"),
         ("translation", "translation.zh-CN.md"),
         ("source", "source.md"),
     ],
     "resource_collection": [
-        ("collection", "collection.md"),
         ("summary", "summary.md"),
+        ("collection", "collection.md"),
     ],
     "note": [
-        ("source", "source.md"),
         ("summary", "summary.md"),
+        ("source", "source.md"),
     ],
     "project": [
-        ("source", "source.md"),
         ("summary", "summary.md"),
+        ("source", "source.md"),
     ],
 }
 
