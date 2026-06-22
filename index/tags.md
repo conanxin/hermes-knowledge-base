@@ -18,6 +18,10 @@
 
 - Nia Docs — 把整个 Web 变成文件系统
 
+## Airbnb
+
+- How to Earn a Billion Dollars
+
 ## Amit Shekhar
 
 - Transformer 解码机制解析
@@ -87,6 +91,10 @@
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
+## Justin.TV
+
+- How to Earn a Billion Dollars
+
 ## Karpathy
 
 - Karpathy Second Brain 实现指南
@@ -130,9 +138,14 @@
 
 - Nia Docs — 把整个 Web 变成文件系统
 
+## Oxford Union
+
+- How to Earn a Billion Dollars
+
 ## Paul Graham
 
 - Superlinear Returns
+- How to Earn a Billion Dollars
 
 ## Prompt
 
@@ -197,9 +210,17 @@
 
 - Transformer 解码机制解析
 
+## Twitch
+
+- How to Earn a Billion Dollars
+
 ## Wiki
 
 - Wiki 代替 RAG 的可行性评估
+
+## Y Combinator
+
+- How to Earn a Billion Dollars
 
 ## agent-training
 
@@ -394,6 +415,10 @@
 
 - Karpathy Second Brain 实现指南
 
+## 亿万富翁
+
+- How to Earn a Billion Dollars
+
 ## 企业形象
 
 - 日本铁路如何在分裂中保持统一
@@ -410,6 +435,10 @@
 
 - Superlinear Returns
 
+## 创业公司
+
+- How to Earn a Billion Dollars
+
 ## 口述史
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
@@ -417,6 +446,10 @@
 ## 品牌设计
 
 - 日本铁路如何在分裂中保持统一
+
+## 增速
+
+- How to Earn a Billion Dollars
 
 ## 复利
 
@@ -446,6 +479,10 @@
 
 - 灵感资源库
 - Your AI Is Not a Tool
+
+## 市场需求
+
+- How to Earn a Billion Dollars
 
 ## 怀特海
 
@@ -478,6 +515,7 @@
 ## 指数增长
 
 - Superlinear Returns
+- How to Earn a Billion Dollars
 
 ## 教皇利奥
 
@@ -519,6 +557,10 @@
 
 - 日本铁路如何在分裂中保持统一
 
+## 欺骗
+
+- How to Earn a Billion Dollars
+
 ## 汉娜·阿伦特
 
 - AI 没有意识，但它正在成为我们的无意识
@@ -530,6 +572,10 @@
 ## 环境
 
 - Your AI Is Not a Tool
+
+## 用户同理心
+
+- How to Earn a Billion Dollars
 
 ## 电影
 

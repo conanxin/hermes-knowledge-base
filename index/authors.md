@@ -63,6 +63,7 @@
 ## Paul Graham
 
 - Superlinear Returns
+- How to Earn a Billion Dollars
 
 ## 社区整理
 
