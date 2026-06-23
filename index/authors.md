@@ -64,6 +64,10 @@
 
 - Hermes Agent Self-Evolution
 
+## Otto Scharmer
+
+- We May Be Entering A Second Axial Age
+
 ## Paul Graham
 
 - Superlinear Returns

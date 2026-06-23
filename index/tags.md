@@ -6,6 +6,7 @@
 - AI 没有意识，但它正在成为我们的无意识
 - Your AI Is Not a Tool
 - Ken Liu on AI and Freedom
+- We May Be Entering A Second Axial Age
 
 ## AI 产品
 
@@ -51,6 +52,10 @@
 
 - Ken Liu on AI and Freedom
 
+## Charles Taylor
+
+- We May Be Entering A Second Axial Age
+
 ## ChinaTalk
 
 - Ken Liu on AI and Freedom
@@ -84,6 +89,10 @@
 
 - Nia Docs — 把整个 Web 变成文件系统
 
+## Francisco Varela
+
+- We May Be Entering A Second Axial Age
+
 ## Frankenstein
 
 - Ken Liu on AI and Freedom
@@ -92,13 +101,29 @@
 
 - Hermes Agent Self-Evolution
 
+## Goethe
+
+- We May Be Entering A Second Axial Age
+
 ## Gregory Ulmer
 
 - AI 没有意识，但它正在成为我们的无意识
 
+## Henri Bortoft
+
+- We May Be Entering A Second Axial Age
+
 ## Hermes Agent
 
 - Hermes Agent Self-Evolution
+
+## Highlander Folk School
+
+- We May Be Entering A Second Axial Age
+
+## Ilya Prigogine
+
+- We May Be Entering A Second Axial Age
 
 ## Indiana Jones
 
@@ -115,6 +140,10 @@
 ## Justin.TV
 
 - How to Earn a Billion Dollars
+
+## Karl Jaspers
+
+- We May Be Entering A Second Axial Age
 
 ## Karpathy
 
@@ -152,9 +181,17 @@
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
+## Myles Horton
+
+- We May Be Entering A Second Axial Age
+
 ## NDC
 
 - 日本铁路如何在分裂中保持统一
+
+## NOEMA
+
+- We May Be Entering A Second Axial Age
 
 ## Nia Docs
 
@@ -171,6 +208,10 @@
 ## Orwell
 
 - Ken Liu on AI and Freedom
+
+## Otto Scharmer
+
+- We May Be Entering A Second Axial Age
 
 ## Oxford Union
 
@@ -239,6 +280,10 @@
 ## The Intrinsic Perspective
 
 - Don't dethrone consciousness!
+
+## Theory U
+
+- We May Be Entering A Second Axial Age
 
 ## Tolkien
 
@@ -337,6 +382,10 @@
 ## federated-learning
 
 - ArXiv AI Agents 论文列表
+
+## folk-bildung
+
+- We May Be Entering A Second Axial Age
 
 ## github
 
@@ -477,6 +526,14 @@
 
 - Don't dethrone consciousness!
 
+## 公民会议
+
+- We May Be Entering A Second Axial Age
+
+## 再生农业
+
+- We May Be Entering A Second Axial Age
+
 ## 创业
 
 - Superlinear Returns
@@ -580,6 +637,10 @@
 
 - AI 没有意识，但它正在成为我们的无意识
 
+## 数据主权
+
+- We May Be Entering A Second Axial Age
+
 ## 整合信息理论
 
 - Don't dethrone consciousness!
@@ -650,6 +711,10 @@
 - Wiki 代替 RAG 的可行性评估
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
 
+## 社会土壤
+
+- We May Be Entering A Second Axial Age
+
 ## 私有化
 
 - 日本铁路如何在分裂中保持统一
@@ -661,6 +726,10 @@
 ## 笔记系统
 
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
+
+## 第四人称认知
+
+- We May Be Entering A Second Axial Age
 
 ## 精神分析
 
@@ -702,6 +771,10 @@
 
 - Your AI Is Not a Tool
 
+## 认识论单一生境
+
+- We May Be Entering A Second Axial Age
+
 ## 设计
 
 - 灵感资源库
@@ -718,6 +791,10 @@
 
 - Superlinear Returns
 
+## 轴心时代
+
+- We May Be Entering A Second Axial Age
+
 ## 道家
 
 - Ken Liu on AI and Freedom
@@ -733,6 +810,10 @@
 ## 门槛效应
 
 - Superlinear Returns
+
+## 集体内在性
+
+- We May Be Entering A Second Axial Age
 
 ## 集体无意识
 
