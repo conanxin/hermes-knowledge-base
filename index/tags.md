@@ -3,14 +3,18 @@
 ## AI
 
 - 灵感资源库
-- AI 没有意识，但它正在成为我们的无意识
-- Your AI Is Not a Tool
-- Ken Liu on AI and Freedom
 - We May Be Entering A Second Axial Age
+- Ken Liu on AI and Freedom
+- Your AI Is Not a Tool
+- AI 没有意识，但它正在成为我们的无意识
 
 ## AI 产品
 
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
+
+## AI 时代
+
+- Owning Our Words: Sounding the Depths of Language
 
 ## AI意识
 
@@ -82,8 +86,8 @@
 
 ## Erik Hoel
 
-- AI 没有意识，但它正在成为我们的无意识
 - Don't dethrone consciousness!
+- AI 没有意识，但它正在成为我们的无意识
 
 ## Filesystem
 
@@ -100,6 +104,10 @@
 ## GEPA
 
 - Hermes Agent Self-Evolution
+
+## George Steiner
+
+- Owning Our Words: Sounding the Depths of Language
 
 ## Goethe
 
@@ -129,6 +137,10 @@
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
+## Iris Murdoch
+
+- Owning Our Words: Sounding the Depths of Language
+
 ## JR
 
 - 日本铁路如何在分裂中保持统一
@@ -136,6 +148,10 @@
 ## Jaws
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
+
+## Josef Pieper
+
+- Owning Our Words: Sounding the Depths of Language
 
 ## Justin.TV
 
@@ -147,13 +163,17 @@
 
 ## Karpathy
 
-- Karpathy Second Brain 实现指南
 - Wiki 代替 RAG 的可行性评估
+- Karpathy Second Brain 实现指南
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
 
 ## Ken Liu
 
 - Ken Liu on AI and Freedom
+
+## L. M. Sacasas
+
+- Owning Our Words: Sounding the Depths of Language
 
 ## LLM
 
@@ -176,6 +196,10 @@
 ## Magnifica humanitas
 
 - Your AI Is Not a Tool
+
+## Marilyn Chandler McIntyre
+
+- Owning Our Words: Sounding the Depths of Language
 
 ## Movie Brats
 
@@ -219,8 +243,8 @@
 
 ## Paul Graham
 
-- Superlinear Returns
 - How to Earn a Billion Dollars
+- Superlinear Returns
 
 ## Pluribus
 
@@ -274,8 +298,9 @@
 
 ## The Convivial Society
 
-- AI 没有意识，但它正在成为我们的无意识
+- Owning Our Words: Sounding the Depths of Language
 - Your AI Is Not a Tool
+- AI 没有意识，但它正在成为我们的无意识
 
 ## The Intrinsic Perspective
 
@@ -300,6 +325,10 @@
 ## Twitch
 
 - How to Earn a Billion Dollars
+
+## Wendell Berry
+
+- Owning Our Words: Sounding the Depths of Language
 
 ## Wiki
 
@@ -327,9 +356,9 @@
 
 ## arxiv
 
+- Awesome LLM Long Context 资源列表
 - ArXiv AI Agents 论文列表
 - ArXiv LLM Systems 论文列表
-- Awesome LLM Long Context 资源列表
 
 ## audit
 
@@ -425,8 +454,8 @@
 
 ## llm
 
-- ArXiv LLM Systems 论文列表
 - Awesome LLM Long Context 资源列表
+- ArXiv LLM Systems 论文列表
 
 ## long-context
 
@@ -474,8 +503,8 @@
 
 ## research
 
-- ArXiv AI Agents 论文列表
 - Awesome LLM Long Context 资源列表
+- ArXiv AI Agents 论文列表
 
 ## resources
 
@@ -525,6 +554,10 @@
 ## 元认知
 
 - Don't dethrone consciousness!
+
+## 公共语言
+
+- Owning Our Words: Sounding the Depths of Language
 
 ## 公民会议
 
@@ -609,8 +642,8 @@
 
 ## 技术哲学
 
-- AI 没有意识，但它正在成为我们的无意识
 - Ken Liu on AI and Freedom
+- AI 没有意识，但它正在成为我们的无意识
 
 ## 技术评估
 
@@ -622,8 +655,8 @@
 
 ## 指数增长
 
-- Superlinear Returns
 - How to Earn a Billion Dollars
+- Superlinear Returns
 
 ## 教皇利奥
 
@@ -707,8 +740,8 @@
 
 ## 知识管理
 
-- Karpathy Second Brain 实现指南
 - Wiki 代替 RAG 的可行性评估
+- Karpathy Second Brain 实现指南
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
 
 ## 社会土壤
@@ -783,6 +816,14 @@
 
 - 日本铁路如何在分裂中保持统一
 
+## 语言机器
+
+- Owning Our Words: Sounding the Depths of Language
+
+## 语言衰退
+
+- Owning Our Words: Sounding the Depths of Language
+
 ## 资源库
 
 - 灵感资源库
@@ -811,17 +852,21 @@
 
 - Superlinear Returns
 
+## 隐喻
+
+- Owning Our Words: Sounding the Depths of Language
+
 ## 集体内在性
 
 - We May Be Entering A Second Axial Age
 
 ## 集体无意识
 
-- AI 没有意识，但它正在成为我们的无意识
 - Ken Liu on AI and Freedom
+- AI 没有意识，但它正在成为我们的无意识
 
 ## 麦克卢汉
 
-- AI 没有意识，但它正在成为我们的无意识
 - Your AI Is Not a Tool
+- AI 没有意识，但它正在成为我们的无意识
 

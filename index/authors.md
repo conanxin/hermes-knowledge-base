@@ -42,9 +42,9 @@
 
 ## Hermes Agent
 
-- Wiki 代替 RAG 的可行性评估
-- 灵感资源库
 - ArXiv LLM Systems 论文列表
+- 灵感资源库
+- Wiki 代替 RAG 的可行性评估
 - Session Guard Phase 1: Pre-Request Sanitizer
 - Hydro0x01 Local Hermes Security Audit
 
@@ -54,6 +54,7 @@
 
 ## L. M. Sacasas
 
+- Owning Our Words: Sounding the Depths of Language
 - Your AI Is Not a Tool
 
 ## L. M. Sacasas (Michael)
@@ -70,8 +71,8 @@
 
 ## Paul Graham
 
-- Superlinear Returns
 - How to Earn a Billion Dollars
+- Superlinear Returns
 
 ## 社区整理
 
