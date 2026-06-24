@@ -12,6 +12,7 @@
 - Superlinear Returns
 - Your AI Is Not a Tool
 - We May Be Entering A Second Axial Age
+- Sign of the future: GPT-5.5
 - Owning Our Words: Sounding the Depths of Language
 
 ## 2026-05

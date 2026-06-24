@@ -32,6 +32,10 @@
 
 - Don't dethrone consciousness!
 
+## Ethan Mollick
+
+- Sign of the future: GPT-5.5
+
 ## Hacker News 社区
 
 - Hacker News ML 热门链接

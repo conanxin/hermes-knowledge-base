@@ -1,5 +1,9 @@
 # Tags Index
 
+## AGI 时间表
+
+- Sign of the future: GPT-5.5
+
 ## AI
 
 - AI 没有意识，但它正在成为我们的无意识
@@ -15,6 +19,10 @@
 ## AI 时代
 
 - Owning Our Words: Sounding the Depths of Language
+
+## AI 进度
+
+- Sign of the future: GPT-5.5
 
 ## AI意识
 
@@ -64,6 +72,10 @@
 
 - Ken Liu on AI and Freedom
 
+## Codex
+
+- Sign of the future: GPT-5.5
+
 ## DSPy
 
 - Hermes Agent Self-Evolution
@@ -89,6 +101,10 @@
 - AI 没有意识，但它正在成为我们的无意识
 - Don't dethrone consciousness!
 
+## Ethan Mollick
+
+- Sign of the future: GPT-5.5
+
 ## Filesystem
 
 - Nia Docs — 把整个 Web 变成文件系统
@@ -104,6 +120,14 @@
 ## GEPA
 
 - Hermes Agent Self-Evolution
+
+## GPT-5.5
+
+- Sign of the future: GPT-5.5
+
+## GPT-5.5 Pro
+
+- Sign of the future: GPT-5.5
 
 ## George Steiner
 
@@ -228,6 +252,14 @@
 ## Nozomio Labs
 
 - Nia Docs — 把整个 Web 变成文件系统
+
+## One Useful Thing
+
+- Sign of the future: GPT-5.5
+
+## OpenAI
+
+- Sign of the future: GPT-5.5
 
 ## Orwell
 
@@ -444,6 +476,10 @@
 
 - Hydro0x01 Local Hermes Security Audit
 
+## jagged frontier
+
+- Sign of the future: GPT-5.5
+
 ## land-readjustment
 
 - How Reverse Game Theory Could Solve The Housing Shortage
@@ -657,6 +693,10 @@
 
 - How to Earn a Billion Dollars
 - Superlinear Returns
+
+## 推理模型
+
+- Sign of the future: GPT-5.5
 
 ## 教皇利奥
 
