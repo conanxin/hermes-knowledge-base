@@ -1,0 +1,180 @@
+---
+description: Design rules for hermes-knowledge-base UI changes. Always apply when writing or modifying CSS, components, or layout for the knowledge base.
+globs:
+  - "site/**/*.css"
+  - "docs/**/*.css"
+  - "site/**/*.html"
+  - "docs/**/*.html"
+  - "site/**/*.js"
+  - "docs/**/*.js"
+alwaysApply: true
+---
+
+# hermes-knowledge-base — Taste Rules
+
+**Primary reference**: linear.app
+**Secondary reference**: vercel.com
+**Source audit**: `outputs/taste-1b-hermes-kb/HERMES_KB_DESIGN_AUDIT.md`
+**In-repo rationale**: `../DESIGN_RATIONALE.md`
+**Agent rules**: `../CLAUDE.md`
+
+---
+
+## Identity
+
+The knowledge base is a **tool that hosts content**, not a marketing page that sells it.
+Interface should disappear when user is reading. Light theme only — dark theme is wrong for
+varied lighting conditions.
+
+## Color tokens
+
+Always use these CSS variables; never hardcode hex outside `:root` in `styles.css`:
+
+```
+--color-bg: #FAFAFA
+--color-surface: #FFFFFF
+--color-text-primary: #1A1A1A
+--color-text-secondary: #555555
+--color-text-meta: #6B7280
+--color-border: #E5E7EB
+--color-accent: #2563EB
+--color-on-accent: #FFFFFF
+--color-accent-bg: #EFF6FF
+--color-tag-bg: #F3F4F6
+--color-tag-text: #374151
+--color-category-a: #EFF6FF (blue, informational)
+--color-category-b: #FEF3C7 (amber, caution)
+--color-category-c: #D1FAE5 (emerald, safe)
+--color-category-d: #F3E8FF (purple, exploratory)
+```
+
+## Accent rationing (single most important rule)
+
+`#2563EB` / `var(--color-accent)` may appear ONLY on:
+- `<a>` links
+- `<button>` primary and `[role="button"]`
+- `:focus-visible` outlines
+- Exactly one active filter pill at a time
+
+Never on: section headers, dividers, category labels, card decorations, banner backgrounds,
+stat-card numbers, type badges.
+
+Before any merge, run `grep -rE '#2563EB|var\(--color-accent\)' site/styles.css docs/styles.css`
+and verify the count hasn't grown compared to baseline.
+
+## Typography
+
+- Font family: `-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif`
+- 2 weights only: `400` and `600`
+- No web fonts. No Inter. No Geist. No IBM Plex. No JetBrains Mono.
+- Scale (rem-based):
+  - H1 (page title): 1.6rem / 600 / line-height 1.6
+  - Body: 0.95rem / 400 / line-height 1.6
+  - Meta: 0.75rem / 400 / line-height 1.5
+- No negative letter-spacing anywhere.
+- Single H1 per page; no H2–H6 outside `.markdown-body`.
+
+## Spacing scale (only these values)
+
+```
+--space-1: 4px
+--space-2: 8px (base)
+--space-3: 12px
+--space-4: 16px
+--space-5: 24px
+--space-6: 32px
+--space-7: 40px
+--space-8: 64px
+--space-9: 96px (max section gap)
+```
+
+No `13px`, no `105px`, no other values. Use the closest scale value.
+
+## Cards
+
+- Width: 720px on 1440px container (49% container-width)
+- Padding: 18px horizontal / 16px vertical
+- Gap between cards: 16px
+- Border: 1px solid `var(--color-border)`
+- Category signal: pastel badge (`var(--color-category-*)`) — not a stripe, since the current
+  type-badge pattern already encodes category visually
+- Shadow: `box-shadow: var(--shadow-card)` (border-style, NOT blur)
+- Radius: `var(--radius-card)` = 8px
+- Title: 1.05rem / 600
+- Description: 0.85rem / secondary text
+- Tags: 0.75rem / meta color
+- Metadata row: 0.8rem / secondary text / inline separator
+- Hover: change border to `var(--color-text-secondary)`, NO shadow change, NO lift, NO scale
+
+## Radius tokens
+
+```
+--radius-button: 6px
+--radius-card: 8px
+--radius-pill: 12px
+--radius-banner: 20px
+```
+
+## Filter pills
+
+- Default: `var(--color-surface)` background, secondary text
+- Hover: border becomes accent, text becomes accent, **background stays surface** (no full flip)
+- Active: accent background, `var(--color-on-accent)` text (exactly one at a time)
+- Counter format: `Category (24)` in meta color, no bold
+- Never use category pastels as pill backgrounds — pastels are for type badges only
+- Radius: `var(--radius-pill)` = 12px
+
+## Search box
+
+- 720px wide, ~39px tall
+- Radius: 8px (`var(--radius-card)`)
+- Single bottom border is OK; current full border is fine
+- No inner icon
+
+## Empty state
+
+When filter returns zero cards:
+- Center-aligned, body text in `--color-text-secondary`
+- No illustration, no CTA, no emoji, no exclamation mark
+- Never write "Oops!" or "Try adjusting your search!"
+
+## Mobile (below 768px)
+
+- Cards: full-width, no 720px constraint
+- Below 480px: filter tabs collapse to horizontal scroll row (not dropdown, not hamburger)
+- Touch targets: min 44×44px
+- Font sizes stay the same (system font scales with OS preference)
+
+## Container
+
+- Max-width: 1440px (was 1408px — aligned to Vercel reference)
+
+## Anti-patterns (always forbidden)
+
+- Gradients anywhere except existing banner element
+- Multi-layer shadows
+- `filter: drop-shadow(...)`
+- Glow effects
+- Hover animations (scale, translate, opacity)
+- Decorative icons in empty states / headers / category labels
+- SaaS-hero layout (big headline + subhead + CTA)
+- Generic empty-state copy ("Oops!", "Try a different search!")
+- Vague adjectives without measurements ("clean", "modern", "seamless")
+- Exclamation marks in user-facing strings
+- Hardcoded hex values outside `:root` in `styles.css`
+- Inline styles for color / spacing / radius
+- New web fonts added to the repo
+- Negative letter-spacing
+- H2–H6 elements (single H1 per page only)
+
+## Documentation requirements
+
+When adding a new component or pattern, document it with the **Trigger → Decision → Reason →
+Evidence** structure (4 principles: Readability / System Font / Pastel Categories / Structural
+Flatness).
+
+## When in doubt
+
+Read `outputs/taste-1b-hermes-kb/HERMES_KB_DESIGN_AUDIT.md` and `DESIGN_RATIONALE.md`. If a change
+doesn't fit any of the 4 documented principles, propose it as a separate design review — not a
+silent code change.
