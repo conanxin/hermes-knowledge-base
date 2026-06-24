@@ -114,3 +114,80 @@ export_site_data.py
 generate_item_pages.py
 sync_pages_docs.py
 ```
+
+## 云端 Hermes 使用同一知识库
+
+> 适用于云端 Hermes Agent (Ubuntu VM, `ubuntu@VM-0-4-ubuntu`)
+
+### 云端路径
+
+- **本地仓库路径**：`~/hermes-knowledge-base/`
+- **远程 URL**：`https://github.com/conanxin/hermes-knowledge-base.git`
+- **不使用** `~/.hermes/wiki/knowledge/` 作为知识库路径（该目录是 Hermes 内部研究归档，命名空间独立）
+- **不修改** OpenClaw 目录（`~/.openclaw/` 等）
+
+### 云端导入前必须 pull --ff-only
+
+```bash
+cd ~/hermes-knowledge-base
+git fetch origin
+git pull --ff-only origin main
+git status   # 必须干净
+```
+
+- 任何非 fast-forward 的情况都意味着本地有未推送的 commit 或历史分歧 — 立即停止并报告
+- 拉取后必须确认 `git log -1` 与 origin/main 一致
+
+### 云端 push 走 repo-local proxy
+
+云端网络环境特殊：默认 `ALL_PROXY=socks5://127.0.0.1:7898` 环境变量会触发 git 客户端的 GnuTLS bug（`GnuTLS recv error (-110)`），导致 `git fetch` / `git push` 失败。
+
+**解决方案（只对当前 KB 仓库生效，不污染全局）**：
+
+```bash
+cd ~/hermes-knowledge-base
+git config --local http.proxy  socks5://127.0.0.1:7898
+git config --local https.proxy socks5://127.0.0.1:7898
+```
+
+**验证**：
+
+```bash
+git config --local --get http.proxy   # 预期: socks5://127.0.0.1:7898
+git config --local --get https.proxy  # 预期: socks5://127.0.0.1:7898
+git fetch origin                       # 静默 exit 0
+git pull --ff-only origin main         # "Already up to date."
+git push --dry-run origin main         # "Everything up-to-date"
+```
+
+如果仍出现 GnuTLS -110：说明 SOCKS 代理端口或 sing-box 状态变化（pid 1751052 / 1751024）— 排查代理健康。如果出现 401/403：token 失效 — 报告，不执行 `gh auth refresh`。
+
+### 云端约束（与本地一致 + 额外）
+
+- 不 force push
+- 不 rebase 共享分支
+- 不修改历史 commit
+- 不写入 token
+- 不执行 `gh auth refresh`
+- 不修改 Telegram / gateway / cron / systemd
+- 不依赖 Telegram 通知（云端 Telegram 通道当前离线）
+- commit 前必须确认工作区只包含本次导入相关文件
+
+### 云端完整流水线顺序
+
+```
+git fetch origin
+git pull --ff-only origin main
+check_kb.py            ← 质量门禁，FAIL 立即停止（不得 commit / push）
+build_index.py
+export_site_data.py
+generate_item_pages.py
+sync_pages_docs.py
+check_pages_sync.py
+check_translation_residue.py
+git add <本次相关文件>
+git commit -m "<语义化 message>"
+git push origin main
+```
+
+完整规范与故障排查：[CLOUD_HERMES_INTEGRATION.md](CLOUD_HERMES_INTEGRATION.md)
