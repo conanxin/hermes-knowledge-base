@@ -806,6 +806,11 @@ def generate_item_pages() -> int:
         return 1
 
     records: List[Dict[str, Any]] = json.loads(CATALOG_JSON.read_text(encoding="utf-8"))
+    # Sort by path so iteration order is stable across re-runs. export_site_data.py
+    # already sorts, but reading from a stale jsonl or pre-optimization catalog
+    # could leave records in arbitrary order. This guarantees the HTML pages
+    # are generated in the same order every time.
+    records.sort(key=lambda r: r.get("path", ""))
     content_root = REPO_ROOT
 
     if ITEMS_DIR.exists():

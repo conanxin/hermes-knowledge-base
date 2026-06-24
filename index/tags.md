@@ -2,11 +2,11 @@
 
 ## AI
 
-- 灵感资源库
-- We May Be Entering A Second Axial Age
+- AI 没有意识，但它正在成为我们的无意识
 - Ken Liu on AI and Freedom
 - Your AI Is Not a Tool
-- AI 没有意识，但它正在成为我们的无意识
+- We May Be Entering A Second Axial Age
+- 灵感资源库
 
 ## AI 产品
 
@@ -86,8 +86,8 @@
 
 ## Erik Hoel
 
-- Don't dethrone consciousness!
 - AI 没有意识，但它正在成为我们的无意识
+- Don't dethrone consciousness!
 
 ## Filesystem
 
@@ -163,9 +163,9 @@
 
 ## Karpathy
 
-- Wiki 代替 RAG 的可行性评估
-- Karpathy Second Brain 实现指南
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
+- Karpathy Second Brain 实现指南
+- Wiki 代替 RAG 的可行性评估
 
 ## Ken Liu
 
@@ -177,13 +177,13 @@
 
 ## LLM
 
-- Transformer 解码机制解析
 - Ken Liu on AI and Freedom
+- Transformer 解码机制解析
 
 ## LLM Wiki
 
-- Karpathy Second Brain 实现指南
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
+- Karpathy Second Brain 实现指南
 
 ## Le Guin
 
@@ -260,8 +260,8 @@
 
 ## RAG
 
-- Wiki 代替 RAG 的可行性评估
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
+- Wiki 代替 RAG 的可行性评估
 - Nia Docs — 把整个 Web 变成文件系统
 
 ## Richard Dawkins
@@ -298,9 +298,9 @@
 
 ## The Convivial Society
 
-- Owning Our Words: Sounding the Depths of Language
-- Your AI Is Not a Tool
 - AI 没有意识，但它正在成为我们的无意识
+- Your AI Is Not a Tool
+- Owning Our Words: Sounding the Depths of Language
 
 ## The Intrinsic Perspective
 
@@ -356,9 +356,9 @@
 
 ## arxiv
 
-- Awesome LLM Long Context 资源列表
 - ArXiv AI Agents 论文列表
 - ArXiv LLM Systems 论文列表
+- Awesome LLM Long Context 资源列表
 
 ## audit
 
@@ -454,8 +454,8 @@
 
 ## llm
 
-- Awesome LLM Long Context 资源列表
 - ArXiv LLM Systems 论文列表
+- Awesome LLM Long Context 资源列表
 
 ## long-context
 
@@ -503,8 +503,8 @@
 
 ## research
 
-- Awesome LLM Long Context 资源列表
 - ArXiv AI Agents 论文列表
+- Awesome LLM Long Context 资源列表
 
 ## resources
 
@@ -613,8 +613,8 @@
 
 ## 工具
 
-- 灵感资源库
 - Your AI Is Not a Tool
+- 灵感资源库
 
 ## 市场需求
 
@@ -642,8 +642,8 @@
 
 ## 技术哲学
 
-- Ken Liu on AI and Freedom
 - AI 没有意识，但它正在成为我们的无意识
+- Ken Liu on AI and Freedom
 
 ## 技术评估
 
@@ -740,9 +740,9 @@
 
 ## 知识管理
 
-- Wiki 代替 RAG 的可行性评估
-- Karpathy Second Brain 实现指南
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
+- Karpathy Second Brain 实现指南
+- Wiki 代替 RAG 的可行性评估
 
 ## 社会土壤
 
@@ -862,11 +862,11 @@
 
 ## 集体无意识
 
-- Ken Liu on AI and Freedom
 - AI 没有意识，但它正在成为我们的无意识
+- Ken Liu on AI and Freedom
 
 ## 麦克卢汉
 
-- Your AI Is Not a Tool
 - AI 没有意识，但它正在成为我们的无意识
+- Your AI Is Not a Tool
 

@@ -9,10 +9,42 @@ CONTENT_DIR = BASE_DIR / "content"
 INDEX_DIR = BASE_DIR / "index"
 
 
+# Canonical field order for catalog.jsonl / catalog.json. Records are
+# reconstructed in this order so the serialized output is byte-stable
+# regardless of the source metadata.yaml key order.
+FIELD_ORDER = [
+    "title",
+    "title_zh",
+    "type",
+    "path",
+    "author",
+    "source_url",
+    "source_site",
+    "source_url_missing",
+    "language",
+    "translation_language",
+    "status",
+    "published_date",
+    "captured_date",
+    "migrated_date",
+    "item_count",
+    "topics",
+    "tags",
+    "word_count",
+    "slug",
+    "detail_url",
+    "github_url",
+    "updated_date",
+]
+
+
 def scan_metadata():
-    """Scan all metadata.yaml files under content/"""
+    """Scan all metadata.yaml files under content/, sorted by path for stability."""
     records = []
-    for meta_file in CONTENT_DIR.rglob("metadata.yaml"):
+    # Sort rglob results by path string so the iteration order is deterministic
+    # across filesystems and Python versions.
+    meta_files = sorted(CONTENT_DIR.rglob("metadata.yaml"), key=lambda p: str(p))
+    for meta_file in meta_files:
         rel_path = meta_file.relative_to(BASE_DIR)
         try:
             import yaml
@@ -26,8 +58,18 @@ def scan_metadata():
                     if ":" in line and not line.strip().startswith("#"):
                         key, val = line.split(":", 1)
                         data[key.strip()] = val.strip().strip('"').strip("'")
-        data["path"] = str(rel_path.parent)
-        records.append(data)
+        # Reconstruct dict in canonical FIELD_ORDER so the jsonl output is
+        # stable regardless of the order keys appear in metadata.yaml.
+        ordered = {}
+        for key in FIELD_ORDER:
+            if key in data:
+                ordered[key] = data[key]
+        # Append any unknown keys at the end (deterministic order via sort).
+        for key in sorted(data.keys()):
+            if key not in ordered:
+                ordered[key] = data[key]
+        ordered["path"] = str(rel_path.parent)
+        records.append(ordered)
     return records
 
 

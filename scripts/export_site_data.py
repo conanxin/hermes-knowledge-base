@@ -16,19 +16,34 @@ OUTPUT_JSON = Path("site/data/catalog.json")
 # GitHub Pages + repo base URLs (kept in sync with the static site).
 GITHUB_REPO_BASE = "https://github.com/conanxin/hermes-knowledge-base/tree/main/"
 
-# Fields to preserve
+# Fields to preserve, in the canonical output order. This is the single
+# source of truth for the order in which keys appear in catalog.json.
+# Records are reconstructed in this exact order so the output is
+# byte-stable regardless of how keys were ordered in the source
+# metadata.yaml or in index/catalog.jsonl.
 FIELDS = [
     "title",
     "title_zh",
     "type",
     "path",
-    "tags",
-    "topics",
     "author",
+    "source_url",
+    "source_site",
+    "source_url_missing",
+    "language",
+    "translation_language",
+    "status",
+    "published_date",
     "captured_date",
     "migrated_date",
-    "published_date",
     "item_count",
+    "topics",
+    "tags",
+    "word_count",
+    "slug",
+    "detail_url",
+    "github_url",
+    "updated_date",
 ]
 
 
@@ -55,7 +70,17 @@ def export_site_data():
             if not line:
                 continue
             data = json.loads(line)
-            filtered = {k: v for k, v in data.items() if k in FIELDS}
+            # Reconstruct in canonical FIELDS order so the output is
+            # byte-stable regardless of the order keys appear in
+            # metadata.yaml or catalog.jsonl.
+            filtered = {}
+            for key in FIELDS:
+                if key in data:
+                    filtered[key] = data[key]
+            # Append any unknown keys at the end (deterministic order via sort).
+            for key in sorted(data.keys()):
+                if key not in filtered:
+                    filtered[key] = data[key]
             filtered["updated_date"] = get_updated_date(data)
 
             # Detail page support: derive slug, detail_url, github_url.
@@ -74,9 +99,17 @@ def export_site_data():
 
             records.append(filtered)
 
+    # Sort records by path for stable output order. Records with no path
+    # are placed at the end (alphabetically by their stringified key state).
+    records.sort(key=lambda r: r.get("path", ""))
+
     OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
-        json.dump(records, f, ensure_ascii=False, indent=2)
+    # Write with ensure_ascii=False so non-ASCII characters are preserved
+    # verbatim, and emit a trailing newline so editors/git don't flag the
+    # file as "no newline at end of file".
+    with open(OUTPUT_JSON, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(records, f, ensure_ascii=False, indent=2, sort_keys=False)
+        f.write("\n")
 
     n_with_detail = sum(1 for r in records if r.get("detail_url"))
     print(

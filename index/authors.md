@@ -54,8 +54,8 @@
 
 ## L. M. Sacasas
 
-- Owning Our Words: Sounding the Depths of Language
 - Your AI Is Not a Tool
+- Owning Our Words: Sounding the Depths of Language
 
 ## L. M. Sacasas (Michael)
 

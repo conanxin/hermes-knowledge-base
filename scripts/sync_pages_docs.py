@@ -38,9 +38,26 @@ def sync_top_level_files() -> list[str]:
             continue  # optional — generator may not have run yet
         dst = DOCS_DIR / f
         dst.parent.mkdir(parents=True, exist_ok=True)
+        # Skip the copy when the destination is already byte-identical to
+        # the source. This avoids touching mtime on docs/ files (which
+        # has no effect on git content, but keeps the working tree as
+        # quiet as possible and is more efficient on large sites).
+        if dst.exists() and _files_byte_identical(src, dst):
+            continue
         shutil.copy2(src, dst)
         synced.append(f)
     return synced
+
+
+def _files_byte_identical(a: Path, b: Path) -> bool:
+    """Return True if both files exist and have identical bytes."""
+    if not (a.is_file() and b.is_file()):
+        return False
+    try:
+        with open(a, "rb") as fa, open(b, "rb") as fb:
+            return fa.read() == fb.read()
+    except OSError:
+        return False
 
 
 def _copy_tree(src_root: Path, dst_root: Path) -> tuple[list[str], list[str]]:
@@ -70,6 +87,10 @@ def _copy_tree(src_root: Path, dst_root: Path) -> tuple[list[str], list[str]]:
     for rel, src_p in src_paths.items():
         dst_p = dst_root / rel
         dst_p.parent.mkdir(parents=True, exist_ok=True)
+        # Skip the copy when the destination is already byte-identical
+        # to the source. See sync_top_level_files() for the rationale.
+        if dst_p.exists() and _files_byte_identical(src_p, dst_p):
+            continue
         shutil.copy2(src_p, dst_p)
         copied.append(rel)
 
