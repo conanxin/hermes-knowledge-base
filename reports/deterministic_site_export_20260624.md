@@ -313,30 +313,85 @@ def sync_top_level_files() -> list[str]:
 
 ---
 
-## 11. commit + push 计划
+## 11. commit + push 结果
 
-**Commit 内容**（10 个文件 = 4 脚本 + 6 派生文件）：
+**Commit**: `3a3caa0` — `Make site export deterministic`
+
+| 项 | 值 |
+|---|---|
+| **Commit SHA (short)** | `3a3caa0` |
+| **Commit SHA (full)** | `3a3caa03ce8c3c66cf12ac41e1e3a25e87ba8c25` |
+| **Date** | 2026-06-24 18:01 +0800 |
+| **Message** | `Make site export deterministic` |
+| **Parent** | `a05ee25f3d1d448ba434956ee43f30edc841041f` |
+| **Stats** | 11 files, +2091 / -1108 |
+| **Push** | `a05ee25..3a3caa0 main -> main` exit 0 |
+
+**commit 内容**：
 
 ```
-A  scripts/build_index.py
-M  scripts/export_site_data.py
-M  scripts/generate_item_pages.py
-M  scripts/sync_pages_docs.py
-M  index/catalog.jsonl
-M  index/timeline.md
-M  index/tags.md
-M  index/authors.md
-M  site/data/catalog.json
-M  docs/data/catalog.json
+M  docs/data/catalog.json          (1284 行 diff, 字段重排 + 新字段)
+M  index/authors.md                (2 行)
+M  index/catalog.jsonl             (48 行, 73% rewrite)
+M  index/tags.md                   (40 行)
+M  index/timeline.md               (20 行)
+M  site/data/catalog.json          (1284 行 diff)
+M  scripts/build_index.py          (+50 行, FIELD_ORDER)
+M  scripts/export_site_data.py     (+47 行, 完整 FIELDS + 排序)
+M  scripts/generate_item_pages.py  (+5 行, 防御性排序)
+M  scripts/sync_pages_docs.py      (+21 行, byte-identical skip)
+A  reports/deterministic_site_export_20260624.md  (15.4 KB)
 ```
 
-**Commit message**: `Make site export deterministic`
+**GitHub 链接**：
 
-**Push 走 repo-local proxy** (`socks5://127.0.0.1:7898`)。
+- Commit: https://github.com/conanxin/hermes-knowledge-base/commit/3a3caa03ce8c3c66cf12ac41e1e3a25e87ba8c25
+- 报告: https://github.com/conanxin/hermes-knowledge-base/blob/main/reports/deterministic_site_export_20260624.md
 
 ---
 
-## 12. 审计自检（对照任务约束）
+## 12. **关键验证** — Commit 后 update_site.py 真正 0 diff
+
+**Commit `3a3caa0` 后**：
+
+```bash
+$ git status --short
+(干净 ✅)
+
+$ python3 scripts/update_site.py
+... All steps completed successfully.
+
+$ git status --short
+(仍干净 ✅  — 0 diff 验证通过)
+```
+
+**第四轮 update_site.py 后**：
+
+```bash
+$ python3 scripts/update_site.py
+... All steps completed successfully.
+
+$ git status --short
+(仍干净 ✅)
+```
+
+**派生文件 SHA1 验证**（commit 后多轮运行）：
+
+| 文件 | SHA1 |
+|---|---|
+| `site/data/catalog.json` | `015e0a1e208aa4d89a334fd4b120bece65af4b00` |
+| `docs/data/catalog.json` | `015e0a1e208aa4d89a334fd4b120bece65af4b00` ✅ 与 site 完全一致 |
+| `index/catalog.jsonl` | `b990a66158a5e8243b5d5454ee28339bbdcf8dc7` |
+| `index/timeline.md` | `401c5274b2931541fe2cd8094476bbd574e7392f` |
+| `index/tags.md` | `5b56907f314148c51743e2ed0353669de1deb0fb` |
+| `index/authors.md` | `0bd3fcbc9d592bcaa03b9b417ce09ef298aa2864` |
+
+✅ **site/data/catalog.json == docs/data/catalog.json byte-identical**（同 SHA1 `015e0a1e...`）
+✅ **所有派生文件 SHA1 在多轮运行中保持不变**
+
+---
+
+## 13. 审计自检（对照任务约束）
 
 | 约束 | 状态 |
 |---|---|
