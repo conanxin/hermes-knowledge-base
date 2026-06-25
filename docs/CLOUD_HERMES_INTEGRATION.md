@@ -102,7 +102,47 @@ git push --dry-run origin main      # "Everything up-to-date"
 - "翻译后入库：【URL】"
 - "把这篇文章完整翻译并加入知识库：URL"
 
-**云端执行流程**：
+### 🚨 5.0 路由判定（硬性，违反立即停止）
+
+**这是 KB 入库流程的第一道门**，必须在 `git fetch` / `git pull` 之前执行：
+
+```
+输入：用户原话（含触发语 + URL）
+        ↓
+[步骤 1] 扫描触发语关键词
+        ├─ 命中"知识库 / KB / 入库 / 翻译后入库" → 走 KB 路线（强制）
+        ├─ 命中"专题页 / 独立项目 / 项目页 / projects 页面" → 走 project 路线（强制）
+        └─ 都没命中 → 停止，用 clarify 询问
+        ↓
+[步骤 2] 输出路径校验
+        ├─ KB 路线：必须在 ~/hermes-knowledge-base/content/articles/YYYY-MM-DD-<source>-<slug>/ 下生成 5 文件
+        └─ Project 路线：必须在 ~/conanxin.github.io/projects/<slug>/ 下生成独立项目
+        ↓
+[步骤 3] URL 自检（防 wrong route）
+        ├─ 输出 URL 形如 https://conanxin.github.io/projects/.../  → 触发"加入知识库"了？→ wrong route
+        └─ 输出 URL 形如 https://conanxin.github.io/hermes-knowledge-base/items/.../ → KB 路线 OK
+```
+
+**Wrong route 触发条件**：
+- 触发语是"加入知识库"等 KB 关键词，但最终输出 URL 是 `/projects/...` → wrong route
+- 触发语是"专题页"等 project 关键词，但用户没要入库 → 不要顺手入库 KB（除非明确要求"两个都做"）
+
+**Wrong route 修复动作（云端）**：
+
+1. **不要删除** `~/conanxin.github.io/projects/<slug>/` —— 该目录已在线，用户可能访问
+2. **不要修改** `~/conanxin.github.io/projects/data.json` —— projects grid 不收录 standalone project
+3. **生成 wrong route 报告**到 `~/.hermes/workspace/reports/cloud_hermes_wrong_route_<date>_<slug>.md`
+4. **补做 KB 入库**：在 `~/hermes-knowledge-base/content/articles/YYYY-MM-DD-<source>-<slug>/` 下生成完整 5 文件，并在 `metadata.yaml` 加 `related_project_url` 指向 standalone project
+5. **跑完整门禁**：`check_kb.py` → `update_site.py` → `check_pages_sync.py` → `check_translation_residue.py` → 全 PASS
+6. **commit + push 两条路线**：
+   - KB 路线：`git add ~/hermes-knowledge-base && git commit -m "Add import: <slug> (after wrong route recovery)"`
+   - Project 路线：`git add ~/conanxin.github.io && git commit -m "Add standalone: <slug> (marked wrong route, superseded by KB import)"`
+7. **最终回复用户**：明确说明上一轮是 wrong route，已补做 KB 入库，详情页 URL 是 `https://conanxin.github.io/hermes-knowledge-base/items/<slug>/`
+
+**反例（云端历史错误）**：
+- ❌ 2026-06-24 Yarvin 文章：用户说"加入知识库"，却生成了 `~/conanxin.github.io/projects/yarvin-moldbug-cn/`。修复方式：保留 standalone project、补 KB 入库、在 metadata.yaml `related_project_url` 标注。这是 wrong route 的标杆案例。
+
+**关联文档**：`docs/AGENT_COMMANDS.md` § 硬规则：路由判定 是唯一权威定义，本节是云端执行层。
 
 ### 5.1 前置同步
 

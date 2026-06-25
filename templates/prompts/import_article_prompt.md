@@ -1,5 +1,77 @@
 # 完整翻译并加入知识库（导入流程提示模板）
 
+## 🚨 硬规则：路由判定（v0.4+ 新增，2026-06-25）
+
+**本节是导入流程的第一道门，必须在所有其他动作之前读完并应用。**
+
+### 触发语 → 目标仓库映射（不允许自由发挥）
+
+| 用户消息包含 | 唯一正确目标 | 绝对禁止 |
+|------------|-------------|---------|
+| 「加入知识库」 / 「入库」 / 「完整翻译并加入知识库」 / 「翻译后入库」 / 「KB」 | `~/hermes-knowledge-base` | ❌ 创建 standalone project / 专题页 / 独立 GitHub Pages 项目 / 修改 `~/conanxin.github.io/projects/data.json` |
+| 「做成专题页」 / 「生成独立项目」 / 「发布成项目页」 / 「加入 projects 页面」 | `~/conanxin.github.io/projects/<slug>/` | ❌ 顺手入库 KB（用户没说要入库） |
+| 都不包含 | —— | ❌ 默认猜；必须用 `clarify` 工具反问 |
+
+### 正确输出结构
+
+**KB 路线**（默认 / 推荐）：
+
+```
+~/hermes-knowledge-base/content/articles/YYYY-MM-DD-<source>-<slug>/
+├── metadata.yaml         # 完整 schema + word_count + related_project_url (可选)
+├── source.md             # 原文完整
+├── translation.zh-CN.md  # 中文翻译完整
+├── summary.md            # 摘要 + 关键人物/概念 + 延伸问题
+└── notes.md              # 关键摘记 + 我的想法 + 可延伸研究 + 待确认问题
+```
+
+**Project 路线**（仅在用户明确说"做成专题页"等时）：
+
+```
+~/conanxin.github.io/projects/<slug>/
+├── index.html
+├── styles.css
+├── app.js
+└── content/             # 可选
+```
+
+### Wrong route 检测（每个输出完成后必跑）
+
+```python
+# 在最终回复之前，Hermes 必须自检：
+output_url = "..."  # 你即将输出的最终 URL
+user_input = "..."  # 用户原始消息
+
+is_kb_route = any(kw in user_input for kw in ["加入知识库", "入库", "KB", "翻译后入库"])
+is_project_route = any(kw in user_input for kw in ["专题页", "独立项目", "项目页", "projects 页面"])
+
+if is_kb_route and "/projects/" in output_url:
+    raise WrongRouteError("用户说加入知识库，但输出 /projects/ URL → wrong route")
+if is_project_route and "/hermes-knowledge-base/items/" in output_url and "同时加入知识库" not in user_input:
+    raise WrongRouteError("用户只要专题页，但顺手入了 KB → 越权")
+```
+
+### Wrong route 恢复流程（标准动作）
+
+1. **不删除**已生成的 standalone project（用户可能在线访问）
+2. **立即停止**后续 push / commit
+3. **生成 wrong route 报告**到 `~/.hermes/workspace/reports/cloud_hermes_wrong_route_<date>_<slug>.md`
+4. **补做 KB 入库**到 `~/hermes-knowledge-base/content/articles/YYYY-MM-DD-<source>-<slug>/`，在 metadata.yaml 加：
+   ```yaml
+   related_project_url: "https://conanxin.github.io/projects/<slug>/"
+   related_project_note: "上一轮误生成但保留的专题页（wrong route 标杆案例）"
+   ```
+5. **跑完整门禁**：`check_kb.py` → `update_site.py` → `check_pages_sync.py` → `check_translation_residue.py` → 全 PASS
+6. **commit + push 两条路线**，commit message 注明 "wrong route" / "after wrong route recovery"
+7. **不修改** `~/conanxin.github.io/projects/data.json`（standalone project 不属于 projects grid）
+8. **最终回复**：显式说明上一轮是 wrong route + 已补做 KB 入库 + 输出正确的 KB 详情页 URL
+
+### 历史案例（防止再犯）
+
+- ❌ 2026-06-24 Yarvin 文章：用户说"加入知识库"，却生成了 `~/conanxin.github.io/projects/yarvin-moldbug-cn/` standalone project + 修改了 `projects/data.json`。本节硬规则就是为防止再犯而设。
+
+---
+
 ## 触发条件
 
 用户说以下任意表达时执行：

@@ -20,6 +20,54 @@
 | tags/topics | 由 Hermes 根据内容自动判断 |
 | commit & push | 自动执行 |
 
+### 🚨 硬规则：路由判定（v0.4+ 新增，2026-06-25）
+
+**触发语 → 目标仓库的映射是硬性规则，不允许自由发挥：**
+
+| 触发语类型 | 唯一目标 | 禁止动作 |
+|-----------|---------|----------|
+| 「加入知识库」「入库」「完整翻译并加入知识库」「翻译后入库」 | `~/hermes-knowledge-base` | ❌ 不得创建 standalone project / 专题页 / 独立 GitHub Pages 项目 / projects grid 条目 |
+| 「做成专题页」「生成独立项目」「发布成项目页」「加入 projects 页面」 | `~/conanxin.github.io/projects/<slug>/` | ❌ 不得顺手入库 KB（用户没说要入库） |
+
+**判定步骤**（每次导入前必走）：
+
+1. **优先匹配"知识库"语义**：用户消息里只要出现"知识库""KB""入库""翻译后入库"任何一词，**强制走 KB 路线**。
+2. **次优匹配"项目"语义**：只有出现"专题页""独立项目""项目页""projects 页面"时，才走 project publishing workflow。
+3. **歧义时询问**：如果两者都没出现，**必须用 `clarify` 工具反问**，不得默认猜。
+4. **默认绝不走 project 路线**：即使文章本身视觉上适合做专题页（如长篇翻译 + 配图），只要用户说"加入知识库"，就只入库 KB。专题页是 separate step。
+5. **误路由检测（任何时候都跑）**：任何执行结果输出 `https://conanxin.github.io/projects/...` URL 时，必须自检：
+   - 用户原话里有"知识库" / "KB" / "入库" 吗？ → 有 → **wrong route，立即修复**
+   - 用户原话里有"专题页" / "独立项目" 吗？ → 有 → 合法
+   - 都没有？ → 立即停止，询问用户
+
+**Wrong route 恢复流程（必须按顺序执行）**：
+
+1. **不要删除已生成的 standalone project**（用户可能已经在访问，删了会丢数据）
+2. **立即停止后续步骤**，不要继续 commit/push standalone project 路线
+3. **生成 wrong route 报告**到 `~/.hermes/workspace/reports/cloud_hermes_wrong_route_<date>_<slug>.md`，明确写出：
+   - 用户原话触发语
+   - 误生成的 URL
+   - 正确的目标 URL
+   - 修复动作清单
+4. **补做 KB 入库**：在 `~/hermes-knowledge-base/content/articles/YYYY/YYYY-MM-DD-<source>-<slug>/` 下生成完整 5 文件
+5. **同时**在 `metadata.yaml` 中加 `related_project_url` 字段指向 standalone project，注明 "上一轮误生成但保留的专题页"，让两份资源互相可发现
+6. **跑完整质量门禁** → commit KB 入库 → push（standalone project 路线同步 commit，但 commit message 注明 "wrong route"）
+7. **不修改** `~/conanxin.github.io/projects/data.json`（projects grid）—— 因为 standalone project 不属于项目索引
+8. **最终回复用户时显式说明**：上一轮是 wrong route，已补做 KB 入库，详情页 URL 是 `https://conanxin.github.io/hermes-knowledge-base/items/<slug>/`
+
+**反例**（禁止行为）：
+
+- ❌ 用户说"加入知识库"，却生成了 `/projects/<slug>/` standalone project
+- ❌ 看到文章适合做专题页就擅自加 "做成可访问页面"
+- ❌ 翻译完顺手同步给 `projects/data.json` projects grid
+- ❌ 因为 KB 入库流程"麻烦"而走更简单的 project 路线
+
+**正例**（期望行为）：
+
+- ✅ 用户说"加入知识库" → 走 KB 5 文件流程 → 输出 `items/<slug>/` URL
+- ✅ 用户说"做成专题页" → 走 project workflow → 输出 `/projects/<slug>/` URL
+- ✅ 用户说"加入知识库 + 做成专题页" → 两个都做，但 KB 是主、专题页是辅（在 KB metadata 里 `related_project_url` 标注）
+
 ### 执行流程
 
 1. 抓取正文（web_extract → browser 降级）
