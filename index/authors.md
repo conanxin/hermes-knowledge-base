@@ -28,8 +28,13 @@
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
+## Conan O'Brien
+
+- Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
+
 ## David Perell
 
+- Andrew Hunter Murray: Writing Advice Better Than Your English Classes
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
 ## Erik Hoel
@@ -55,6 +60,10 @@
 - Wiki 代替 RAG 的可行性评估
 - Session Guard Phase 1: Pre-Request Sanitizer
 - Hydro0x01 Local Hermes Security Audit
+
+## Jasmine Sun
+
+- The Old World Is Dying
 
 ## Juan Ruocco
 
@@ -85,6 +94,10 @@
 
 - How to Earn a Billion Dollars
 - Superlinear Returns
+
+## Sean Kenji Starrs and Robert Hunter Wade
+
+- No end in sight for global capitalism: The sinews of US structural power in the 21st century
 
 ## 社区整理
 

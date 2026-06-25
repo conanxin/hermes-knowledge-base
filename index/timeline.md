@@ -13,9 +13,13 @@
 - Your AI Is Not a Tool
 - We May Be Entering A Second Axial Age
 - The People Are Never Right
+- Andrew Hunter Murray: Writing Advice Better Than Your English Classes
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 - Sign of the future: GPT-5.5
 - Owning Our Words: Sounding the Depths of Language
+- The Old World Is Dying
+- No end in sight for global capitalism: The sinews of US structural power in the 21st century
+- Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
 
 ## 2026-05
 
