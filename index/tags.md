@@ -515,6 +515,7 @@
 ## ai-learning
 
 - YouTube Video Brief Workflow
+- 一键把 YouTube 视频加入知识库
 
 ## ai-safety
 
@@ -670,6 +671,7 @@
 ## hermes
 
 - YouTube Video Brief Workflow
+- 一键把 YouTube 视频加入知识库
 - Hydro0x01 Local Hermes Security Audit
 
 ## hermes-agent
@@ -683,6 +685,10 @@
 ## hydro0x01
 
 - Hydro0x01 Local Hermes Security Audit
+
+## import
+
+- 一键把 YouTube 视频加入知识库
 
 ## improvisation
 
@@ -719,6 +725,7 @@
 ## knowledge-base
 
 - YouTube Video Brief Workflow
+- 一键把 YouTube 视频加入知识库
 
 ## land-readjustment
 
@@ -768,6 +775,7 @@
 ## openclaw
 
 - YouTube Video Brief Workflow
+- 一键把 YouTube 视频加入知识库
 
 ## papers
 
@@ -904,10 +912,12 @@
 ## video-brief
 
 - YouTube Video Brief Workflow
+- 一键把 YouTube 视频加入知识库
 
 ## workflow
 
 - YouTube Video Brief Workflow
+- 一键把 YouTube 视频加入知识库
 
 ## writing
 
@@ -920,6 +930,7 @@
 ## youtube
 
 - YouTube Video Brief Workflow
+- 一键把 YouTube 视频加入知识库
 
 ## 三体
 
@@ -1194,6 +1205,7 @@
 
 ## 知识管理
 
+- 一键把 YouTube 视频加入知识库
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
 - Karpathy Second Brain 实现指南
 - Wiki 代替 RAG 的可行性评估
@@ -1252,6 +1264,7 @@
 
 ## 自动化
 
+- 一键把 YouTube 视频加入知识库
 - Karpathy Second Brain 实现指南
 
 ## 自我认知

@@ -917,6 +917,54 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-25-youtube-video-brief-workflow"
   },
   {
+    "title": "一键把 YouTube 视频加入知识库",
+    "title_zh": "一键把 YouTube 视频加入知识库",
+    "type": "article",
+    "path": "content/articles/2026/2026-06-26-youtube-kb-import-command",
+    "author": "OpenClaw Agent",
+    "source_url": "",
+    "source_site": "OpenClaw",
+    "source_url_missing": true,
+    "language": "zh",
+    "translation_language": "zh-CN",
+    "status": "original",
+    "published_date": "2026-06-26",
+    "captured_date": "2026-06-26",
+    "topics": [
+      "OpenClaw",
+      "Hermes",
+      "YouTube",
+      "视频解读",
+      "知识库",
+      "工作流",
+      "一键入库",
+      "AI 学习"
+    ],
+    "tags": [
+      "openclaw",
+      "hermes",
+      "youtube",
+      "video-brief",
+      "knowledge-base",
+      "workflow",
+      "import",
+      "ai-learning",
+      "自动化",
+      "知识管理"
+    ],
+    "word_count": {
+      "source": 2500,
+      "translation": 0
+    },
+    "author_zh": "辛",
+    "category": "workflow",
+    "source_type": "workflow",
+    "updated_date": "2026-06-26",
+    "slug": "2026-06-26-youtube-kb-import-command",
+    "detail_url": "items/2026-06-26-youtube-kb-import-command/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-youtube-kb-import-command"
+  },
+  {
     "title": "ArXiv AI Agents 论文列表",
     "title_zh": "ArXiv AI Agents 相关论文",
     "type": "resource_collection",

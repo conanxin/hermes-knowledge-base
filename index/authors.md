@@ -89,6 +89,7 @@
 ## OpenClaw Agent
 
 - YouTube Video Brief Workflow
+- 一键把 YouTube 视频加入知识库
 
 ## Otto Scharmer
 
