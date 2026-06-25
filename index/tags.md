@@ -48,6 +48,10 @@
 
 - Transformer 解码机制解析
 
+## Andrew Stanton
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
 ## Antón Barba-Kay
 
 - Your AI Is Not a Tool
@@ -67,6 +71,10 @@
 ## Barthes
 
 - Ken Liu on AI and Freedom
+
+## Brain Trust
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
 ## Cathedral
 
@@ -96,6 +104,10 @@
 
 - Ken Liu on AI and Freedom
 
+## David Perell
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
 ## Deep Learning
 
 - Transformer 解码机制解析
@@ -120,6 +132,10 @@
 ## Filesystem
 
 - Nia Docs — 把整个 Web 变成文件系统
+
+## Finding Nemo
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
 ## Francisco Varela
 
@@ -165,6 +181,10 @@
 
 - We May Be Entering A Second Axial Age
 
+## How I Write
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
 ## Ilya Prigogine
 
 - We May Be Entering A Second Axial Age
@@ -188,6 +208,10 @@
 ## Jaws
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
+
+## John Lasseter
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
 ## Josef Pieper
 
@@ -323,6 +347,10 @@
 
 - The People Are Never Right
 
+## Pixar
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
 ## Pluribus
 
 - Ken Liu on AI and Freedom
@@ -361,6 +389,10 @@
 
 - Hermes Agent Self-Evolution
 
+## Steve Jobs
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
 ## Steven Spielberg
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
@@ -391,6 +423,10 @@
 
 - Ken Liu on AI and Freedom
 
+## Toy Story
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
 ## Transformer
 
 - Transformer 解码机制解析
@@ -406,6 +442,10 @@
 ## Unqualified Reservations
 
 - The People Are Never Right
+
+## WALL-E
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
 ## Wendell Berry
 
@@ -430,6 +470,10 @@
 ## ai-safety
 
 - ArXiv LLM Systems 论文列表
+
+## animation
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
 ## architecture
 
@@ -468,6 +512,10 @@
 ## cooperation
 
 - How Reverse Game Theory Could Solve The Housing Shortage
+
+## creative process
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
 ## defensive-programming
 
@@ -599,6 +647,10 @@
 
 - Session Guard Phase 1: Pre-Request Sanitizer
 
+## screenwriting
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
 ## security
 
 - Session Guard Phase 1: Pre-Request Sanitizer
@@ -611,6 +663,10 @@
 ## speech-generation
 
 - ArXiv LLM Systems 论文列表
+
+## storytelling
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
 ## tool-calls
 
@@ -659,6 +715,18 @@
 ## 创业公司
 
 - How to Earn a Billion Dollars
+
+## 创作过程
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
+## 剧本写作
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
+## 动画
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
 ## 口述史
 
@@ -811,9 +879,17 @@
 
 - AI 没有意识，但它正在成为我们的无意识
 
+## 海底总动员
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
 ## 灵感
 
 - 灵感资源库
+
+## 玩具总动员
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
 ## 环境
 
@@ -826,6 +902,10 @@
 ## 电影
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
+
+## 皮克斯
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
 ## 知识架构
 
@@ -908,6 +988,10 @@
 ## 认识论单一生境
 
 - We May Be Entering A Second Axial Age
+
+## 讲故事
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
 ## 设计
 

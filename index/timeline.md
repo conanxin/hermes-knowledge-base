@@ -13,6 +13,7 @@
 - Your AI Is Not a Tool
 - We May Be Entering A Second Axial Age
 - The People Are Never Right
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 - Sign of the future: GPT-5.5
 - Owning Our Words: Sounding the Depths of Language
 

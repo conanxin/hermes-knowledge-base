@@ -28,6 +28,10 @@
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
+## David Perell
+
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
 ## Erik Hoel
 
 - Don't dethrone consciousness!
