@@ -1,5 +1,9 @@
 # Tags Index
 
+## 421.news
+
+- The People Are Never Right
+
 ## AGI 时间表
 
 - Sign of the future: GPT-5.5
@@ -64,6 +68,10 @@
 
 - Ken Liu on AI and Freedom
 
+## Cathedral
+
+- The People Are Never Right
+
 ## Charles Taylor
 
 - We May Be Entering A Second Axial Age
@@ -75,6 +83,10 @@
 ## Codex
 
 - Sign of the future: GPT-5.5
+
+## Curtis Yarvin
+
+- The People Are Never Right
 
 ## DSPy
 
@@ -165,6 +177,10 @@
 
 - Owning Our Words: Sounding the Depths of Language
 
+## J.D. Vance
+
+- The People Are Never Right
+
 ## JR
 
 - 日本铁路如何在分裂中保持统一
@@ -176,6 +192,10 @@
 ## Josef Pieper
 
 - Owning Our Words: Sounding the Depths of Language
+
+## Juan Ruocco
+
+- The People Are Never Right
 
 ## Justin.TV
 
@@ -213,6 +233,10 @@
 
 - Ken Liu on AI and Freedom
 
+## MAGA
+
+- The People Are Never Right
+
 ## MCP
 
 - Nia Docs — 把整个 Web 变成文件系统
@@ -224,6 +248,11 @@
 ## Marilyn Chandler McIntyre
 
 - Owning Our Words: Sounding the Depths of Language
+
+## Mencius Moldbug
+
+- The People Are Never Right
+- The People Are Never Right
 
 ## Movie Brats
 
@@ -240,6 +269,14 @@
 ## NOEMA
 
 - We May Be Entering A Second Axial Age
+
+## Neocameralism
+
+- The People Are Never Right
+
+## Neoreaction
+
+- The People Are Never Right
 
 ## Nia Docs
 
@@ -273,10 +310,18 @@
 
 - How to Earn a Billion Dollars
 
+## Patchwork
+
+- The People Are Never Right
+
 ## Paul Graham
 
 - How to Earn a Billion Dollars
 - Superlinear Returns
+
+## Peter Thiel
+
+- The People Are Never Right
 
 ## Pluribus
 
@@ -357,6 +402,10 @@
 ## Twitch
 
 - How to Earn a Billion Dollars
+
+## Unqualified Reservations
+
+- The People Are Never Right
 
 ## Wendell Berry
 
@@ -615,6 +664,10 @@
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
+## 右翼思想史
+
+- The People Are Never Right
+
 ## 品牌设计
 
 - 日本铁路如何在分裂中保持统一
@@ -659,6 +712,10 @@
 ## 庄子
 
 - Ken Liu on AI and Freedom
+
+## 当代美国政治
+
+- The People Are Never Right
 
 ## 怀特海
 
@@ -816,6 +873,10 @@
 
 - Your AI Is Not a Tool
 
+## 红丸
+
+- The People Are Never Right
+
 ## 绩效
 
 - Superlinear Returns
@@ -875,6 +936,10 @@
 ## 轴心时代
 
 - We May Be Entering A Second Axial Age
+
+## 辉格史
+
+- The People Are Never Right
 
 ## 道家
 
