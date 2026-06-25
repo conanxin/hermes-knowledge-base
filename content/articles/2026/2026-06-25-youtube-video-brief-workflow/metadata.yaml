@@ -1,0 +1,37 @@
+title: "YouTube Video Brief Workflow"
+title_zh: "把 YouTube 视频变成中文知识包"
+source_url: ""
+source_site: "OpenClaw"
+author: "OpenClaw Agent"
+author_zh: "辛"
+published_date: "2026-06-25"
+captured_date: "2026-06-25"
+language: "zh"
+translation_language: "zh-CN"
+status: "original"
+type: "article"
+category: "workflow"
+source_type: "workflow"
+source_url_missing: true
+topics:
+  - "OpenClaw"
+  - "Hermes"
+  - "YouTube"
+  - "视频解读"
+  - "工作流"
+  - "知识库"
+  - "AI 学习"
+tags:
+  - "openclaw"
+  - "hermes"
+  - "youtube"
+  - "video-brief"
+  - "workflow"
+  - "knowledge-base"
+  - "ai-learning"
+  - "字幕提取"
+  - "翻译"
+  - "知识卡片"
+word_count:
+  source: 3500
+  translation: 0

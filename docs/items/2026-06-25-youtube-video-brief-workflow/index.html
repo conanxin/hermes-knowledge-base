@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>把 YouTube 视频变成中文知识包 · hermes-knowledge-base</title>
+<meta name="description" content="把 YouTube 视频变成中文知识包 — OpenClaw Agent">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="detail-page" id="top">
+<header class="detail-header">
+<a class="back-link" href="../../">← 返回首页</a>
+</header>
+<main class="detail-main">
+<article class="detail-article">
+<div class="detail-title-block">
+<span class="type-badge article">article</span>
+<h1 class="detail-title">把 YouTube 视频变成中文知识包</h1>
+<p class="detail-title-en">YouTube Video Brief Workflow</p>
+</div>
+
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#说明">说明</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#工作流名称">工作流名称</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#核心流程">核心流程</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#输出目录规则">输出目录规则</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#失败处理原则">失败处理原则</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#扩展方向">扩展方向</a></li>
+</ol>
+</nav>
+
+<section class="detail-meta">
+<div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">article</div></div>
+<div class="meta-row"><div class="meta-label">作者</div><div class="meta-value">OpenClaw Agent</div></div>
+<div class="meta-row"><div class="meta-label">来源</div><div class="meta-value">OpenClaw</div></div>
+<div class="meta-row"><div class="meta-label">发布日期</div><div class="meta-value">2026-06-25</div></div>
+<div class="meta-row"><div class="meta-label">采集日期</div><div class="meta-value">2026-06-25</div></div>
+<div class="meta-row"><div class="meta-label">标签</div><div class="meta-value meta-tags"><span class="chip">openclaw</span><span class="chip">hermes</span><span class="chip">youtube</span><span class="chip">video-brief</span><span class="chip">workflow</span><span class="chip">knowledge-base</span><span class="chip">ai-learning</span><span class="chip">字幕提取</span><span class="chip">翻译</span><span class="chip">知识卡片</span></div></div>
+<div class="meta-row"><div class="meta-label">主题</div><div class="meta-value meta-tags"><span class="chip">OpenClaw</span><span class="chip">Hermes</span><span class="chip">YouTube</span><span class="chip">视频解读</span><span class="chip">工作流</span><span class="chip">知识库</span><span class="chip">AI 学习</span></div></div>
+</section>
+
+<section class="detail-section" id="section-summary">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">摘要</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="把-youtube-视频变成中文知识包">把 YouTube 视频变成中文知识包</h1>
+<h2 id="这个能力是什么">这个能力是什么</h2>
+<p><strong>YouTube Video Brief</strong> 是一个端到端的视频解读工作流。你只需提供一个 YouTube 链接，系统会自动完成字幕提取、中文翻译、深度解读、知识卡片生成和报告输出，最终生成一个结构化的中文知识包。</p>
+<h2 id="输入是什么">输入是什么</h2>
+<ul><li><strong>YouTube URL</strong>（必填）</li><li>目标语言（可选，默认中文）</li><li>输出目录（可选，自动命名）</li></ul>
+<h2 id="输出是什么">输出是什么</h2>
+<p>一个完整的知识包，包含 11 个文件：</p>
+<table class="md-table"><thead><tr><th>文件</th><th>说明</th></tr></thead><tbody><tr><td>metadata.json</td><td>视频元数据</td></tr><tr><td>transcript.original.srt</td><td>原始英文字幕</td></tr><tr><td>transcript.zh.md</td><td>中文翻译字幕</td></tr><tr><td>transcript.bilingual.md</td><td>双语对照</td></tr><tr><td>analysis.zh.md</td><td>深度解读</td></tr><tr><td>summary-post.zh.md</td><td>分享文章</td></tr><tr><td>index.md</td><td>知识库总入口</td></tr><tr><td>notes.md</td><td>永久笔记</td></tr><tr><td>cards.md</td><td>知识卡片</td></tr><tr><td>cover.jpg</td><td>视频封面</td></tr><tr><td>report.md</td><td>执行报告</td></tr></tbody></table>
+<h2 id="适合什么场景">适合什么场景</h2>
+<ul><li><strong>学习</strong>: 把英文演讲、课程、访谈转化为可检索的中文笔记</li><li><strong>写作</strong>: 为文章、演讲、讨论准备素材</li><li><strong>研究</strong>: 追踪特定主题的视频内容，建立知识索引</li><li><strong>分享</strong>: 生成适合发布的中文总结文章</li></ul>
+<h2 id="为什么适合进入知识库">为什么适合进入知识库</h2>
+<ol><li><strong>可复用</strong>: 一次配置，永久使用</li><li><strong>标准化</strong>: 输出格式统一，便于检索和比较</li><li><strong>累积</strong>: 每次解读都增加知识库的厚度</li><li><strong>连接</strong>: 通过标签和索引，视频内容与其他知识条目自然关联</li></ol>
+<h2 id="和-hermes-knowledge-base-如何配合">和 Hermes Knowledge Base 如何配合</h2>
+<ul><li>解读产物直接存入知识库的 <code>content/articles/</code> 目录</li><li>自动参与索引构建（catalog.jsonl、tags.md、authors.md、timeline.md）</li><li>通过站点生成器自动发布到 GitHub Pages</li><li>支持语义检索和标签检索</li></ul>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-translation">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">中文翻译</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="中文原文">中文原文</h1>
+<h2 id="说明">说明</h2>
+<p>本文为 OpenClaw 工作流说明文档，原文即为中文，无需翻译。</p>
+<h2 id="工作流名称">工作流名称</h2>
+<p>YouTube Video Brief — 把 YouTube 视频变成中文知识包</p>
+<h2 id="核心流程">核心流程</h2>
+<ol><li>获取视频 Metadata（标题、频道、时长、发布日期）</li><li>提取字幕（优先人工字幕，其次自动字幕）</li><li>翻译字幕为中文（保留时间戳）</li><li>生成双语对照稿</li><li>生成深度解读（analysis.zh.md）</li><li>生成分享文章（summary-post.zh.md）</li><li>生成知识库入口（index.md）</li><li>生成永久笔记（notes.md）</li><li>生成知识卡片（cards.md）</li><li>生成执行报告（report.md）</li></ol>
+<h2 id="输出目录规则">输出目录规则</h2>
+<pre><code>outputs/youtube-video-brief/YYYYMMDD-video-title-slug/</code></pre>
+<h2 id="失败处理原则">失败处理原则</h2>
+<ul><li>无字幕 → BLOCKED</li><li>需要音频转写 → BLOCKED（需用户授权）</li><li>视频不可访问 → BLOCKED</li></ul>
+<h2 id="扩展方向">扩展方向</h2>
+<ul><li>导入 Hermes Knowledge Base</li><li>导入 Open Notebook</li><li>生成小红书笔记</li><li>生成公众号文章</li><li>生成播客提纲</li><li>生成 Anki 卡片</li></ul>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-source">
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">原文 / 源文本</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="source-youtube-video-brief-workflow">Source: YouTube Video Brief Workflow</h1>
+<h2 id="能力来源">能力来源</h2>
+<p>本工作流来源于对 Conan O'Brien 哈佛大学 2026 毕业演讲的完整解读实践。在处理该视频的过程中，沉淀出一套标准化的 YouTube 视频知识包生成流程。</p>
+<h2 id="关联文档">关联文档</h2>
+<ul><li><strong>Workflow 文档</strong>: <code>docs/workflows/youtube-video-brief-workflow.md</code></li><li><strong>命令文档</strong>: <code>docs/commands/youtube-brief-command.md</code></li></ul>
+<h2 id="使用场景">使用场景</h2>
+<p>当你想要：</p>
+<ul><li>深入理解一个 YouTube 视频的核心内容</li><li>将英文视频转化为可检索、可复用的中文知识</li><li>生成结构化的学习笔记和知识卡片</li><li>为写作、演讲、讨论准备素材</li></ul>
+<h2 id="技术栈">技术栈</h2>
+<ul><li><code>baoyu-youtube-transcript</code> — 字幕提取</li><li>OpenClaw subagent — 翻译和分析</li><li>Hermes Knowledge Base — 知识存储和检索</li></ul>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-notes">
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">笔记</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="能力笔记youtube-video-brief">能力笔记：YouTube Video Brief</h1>
+<h2 id="输入">输入</h2>
+<ul><li>YouTube URL（支持标准链接、短链接、嵌入链接）</li></ul>
+<h2 id="处理步骤">处理步骤</h2>
+<ol><li><strong>获取 Metadata</strong></li></ol>
+<ul><li>标题、频道、时长、发布日期</li><li>视频封面图</li></ul>
+<ol><li><strong>提取字幕</strong></li></ol>
+<ul><li>优先级：人工英文字幕 → 自动英文字幕 → 其他语言字幕</li><li>如无字幕 → BLOCKED，不擅自音频转写</li></ul>
+<ol><li><strong>翻译字幕</strong></li></ol>
+<ul><li>保留原始时间戳</li><li>分段翻译（通常 30-60 段）</li><li>保留原文风格（幽默、讽刺、口语化）</li></ul>
+<ol><li><strong>生成双语稿</strong></li></ol>
+<ul><li>英文 + 中文逐段对照</li></ul>
+<ol><li><strong>生成深度解读</strong></li></ol>
+<ul><li>核心观点、关键概念、背景补充</li><li>中国语境下的启发</li><li>可操作建议</li></ul>
+<ol><li><strong>生成分享文章</strong></li></ol>
+<ul><li>标题 ≤ 20 字</li><li>结构清晰，有具体内容</li></ul>
+<ol><li><strong>生成知识库入口</strong></li></ol>
+<ul><li>文件清单、推荐阅读顺序、适合谁读</li></ul>
+<ol><li><strong>生成永久笔记</strong></li></ol>
+<ul><li>核心问题、观点、概念、可迁移方法</li></ul>
+<ol><li><strong>生成知识卡片</strong></li></ol>
+<ul><li>10 张可复用卡片</li></ul>
+<ol><li><strong>生成报告</strong></li></ol>
+<ul><li>执行过程、字幕来源、文件清单</li></ul>
+<h2 id="输出文件清单">输出文件清单</h2>
+<p>详见 summary.md 中的表格。</p>
+<h2 id="失败处理">失败处理</h2>
+<table class="md-table"><thead><tr><th>场景</th><th>处理</th></tr></thead><tbody><tr><td>无字幕</td><td>BLOCKED，建议用户确认是否音频转写</td></tr><tr><td>需要音频转写</td><td>BLOCKED，重型 Whisper 需用户授权</td></tr><tr><td>视频不可访问</td><td>BLOCKED，建议检查网络或链接</td></tr></tbody></table>
+<h2 id="最短命令">最短命令</h2>
+<pre><code>解读这个 YouTube 视频：https://youtu.be/VIDEO_ID</code></pre>
+<h2 id="标准命令">标准命令</h2>
+<pre><code>请按照 youtube-video-brief-workflow.md 处理这个 YouTube 视频：https://youtu.be/VIDEO_ID</code></pre>
+<h2 id="成功案例">成功案例</h2>
+<p>Conan O'Brien 哈佛大学 2026 毕业演讲（24 分 53 秒）。完整产物见知识库条目： <code>content/articles/2026/2026-06-25-conan-harvard-commencement-2026/</code></p>
+<h2 id="注意事项">注意事项</h2>
+<ul><li>不登录 YouTube 账号</li><li>不读取浏览器 Cookie</li><li>不下载完整视频</li><li>无字幕时 BLOCKED</li><li>公开内容不暴露本地绝对路径</li></ul>
+</div>
+</details>
+</section>
+
+<nav class="detail-actions">
+
+<a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-25-youtube-video-brief-workflow" target="_blank" rel="noopener">GitHub 文件夹 →</a>
+<button class="action-btn" id="copy-path-btn" data-path="content/articles/2026/2026-06-25-youtube-video-brief-workflow">复制 path</button>
+<span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
+</nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
+
+</article>
+</main>
+<footer>
+<p><a href="../../">hermes-knowledge-base</a> · 站内详情页</p>
+</footer>
+<script>
+(function() {
+  const btn = document.getElementById('copy-path-btn');
+  const fb = document.getElementById('copy-feedback');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      const path = btn.getAttribute('data-path') || '';
+      const done = function() {
+        if (fb) {
+          fb.textContent = '已复制: ' + path;
+          setTimeout(function() { fb.textContent = ''; }, 2500);
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(path).then(done, function() {
+          // Fallback for non-secure contexts.
+          const ta = document.createElement('textarea');
+          ta.value = path;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); done(); } catch (e) {}
+          document.body.removeChild(ta);
+        });
+      }
+    });
+  }
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {
+    const onScroll = function() {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+</body>
+</html>

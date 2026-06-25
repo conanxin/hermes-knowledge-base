@@ -12,6 +12,8 @@
 
 Conan O'Brien '85 delivers the commencement address during the 375th Commencement Exercises at Harvard University on Thursday, May 28, 2026.
 
-## Raw Subtitle File
+## About This Entry
 
-See `transcript.original.srt` for the original English subtitle file.
+This entry was created by extracting subtitles from the original video, translating them into Chinese, and generating structured analysis, notes, and knowledge cards for personal knowledge base use.
+
+The subtitle file and translation are preserved for learning and retrieval purposes only.

@@ -17,9 +17,10 @@
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 - Sign of the future: GPT-5.5
 - Owning Our Words: Sounding the Depths of Language
+- Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
 - The Old World Is Dying
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
-- Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
+- YouTube Video Brief Workflow
 
 ## 2026-05
 

@@ -6,7 +6,11 @@
 - Author: Conan O'Brien
 - Source: [YouTube](https://www.youtube.com/watch?v=F3fCktnkBbc)
 
-## 中文翻译
+## 说明
+
+本文为视频字幕中文整理稿，保留时间戳，供个人知识库学习检索使用。
+
+---
 
 > 时长：约 24 分钟
 

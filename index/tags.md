@@ -1,9 +1,5 @@
 # Tags Index
 
-##  commencement
-
-- Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
-
 ## 2026
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
@@ -22,8 +18,8 @@
 - Ken Liu on AI and Freedom
 - Your AI Is Not a Tool
 - We May Be Entering A Second Axial Age
-- 灵感资源库
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
+- 灵感资源库
 
 ## AI 产品
 
@@ -516,6 +512,10 @@
 
 - ArXiv AI Agents 论文列表
 
+## ai-learning
+
+- YouTube Video Brief Workflow
+
 ## ai-safety
 
 - ArXiv LLM Systems 论文列表
@@ -669,6 +669,7 @@
 
 ## hermes
 
+- YouTube Video Brief Workflow
 - Hydro0x01 Local Hermes Security Audit
 
 ## hermes-agent
@@ -715,6 +716,10 @@
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
 
+## knowledge-base
+
+- YouTube Video Brief Workflow
+
 ## land-readjustment
 
 - How Reverse Game Theory Could Solve The Housing Shortage
@@ -759,6 +764,10 @@
 ## openai-api
 
 - Session Guard Phase 1: Pre-Request Sanitizer
+
+## openclaw
+
+- YouTube Video Brief Workflow
 
 ## papers
 
@@ -892,6 +901,14 @@
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
 
+## video-brief
+
+- YouTube Video Brief Workflow
+
+## workflow
+
+- YouTube Video Brief Workflow
+
 ## writing
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
@@ -899,6 +916,10 @@
 ## youth
 
 - The Old World Is Dying
+
+## youtube
+
+- YouTube Video Brief Workflow
 
 ## 三体
 
@@ -991,6 +1012,10 @@
 ## 好莱坞
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
+
+## 字幕提取
+
+- YouTube Video Brief Workflow
 
 ## 学习
 
@@ -1155,6 +1180,10 @@
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
+## 知识卡片
+
+- YouTube Video Brief Workflow
+
 ## 知识架构
 
 - Wiki 代替 RAG 的可行性评估
@@ -1212,6 +1241,10 @@
 ## 绩效
 
 - Superlinear Returns
+
+## 翻译
+
+- YouTube Video Brief Workflow
 
 ## 老子
 

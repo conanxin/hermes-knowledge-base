@@ -86,6 +86,10 @@
 
 - Hermes Agent Self-Evolution
 
+## OpenClaw Agent
+
+- YouTube Video Brief Workflow
+
 ## Otto Scharmer
 
 - We May Be Entering A Second Axial Age
