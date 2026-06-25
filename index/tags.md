@@ -1,5 +1,9 @@
 # Tags Index
 
+## 10-use-cases
+
+- An "infovore" shares his chats
+
 ## 2026
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
@@ -45,6 +49,10 @@
 
 - How to Earn a Billion Dollars
 
+## Algerian rai
+
+- An "infovore" shares his chats
+
 ## All That We See or Seem
 
 - Ken Liu on AI and Freedom
@@ -77,6 +85,10 @@
 
 - Ken Liu on AI and Freedom
 
+## Belle chess
+
+- An "infovore" shares his chats
+
 ## Brain Trust
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
@@ -88,6 +100,10 @@
 ## Charles Taylor
 
 - We May Be Entering A Second Axial Age
+
+## ChatGPT Pro
+
+- An "infovore" shares his chats
 
 ## ChinaTalk
 
@@ -105,6 +121,10 @@
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
 
+## Conversations with Tyler
+
+- An "infovore" shares his chats
+
 ## Curtis Yarvin
 
 - The People Are Never Right
@@ -120,6 +140,10 @@
 ## David Perell
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
+## Deep Blue
+
+- An "infovore" shares his chats
 
 ## Deep Learning
 
@@ -169,6 +193,10 @@
 ## GPT-5.5 Pro
 
 - Sign of the future: GPT-5.5
+
+## George Mason University
+
+- An "infovore" shares his chats
 
 ## George Steiner
 
@@ -289,6 +317,10 @@
 ## Magnifica humanitas
 
 - Your AI Is Not a Tool
+
+## Marginal Revolution
+
+- An "infovore" shares his chats
 
 ## Marilyn Chandler McIntyre
 
@@ -414,6 +446,10 @@
 
 - Hermes Agent Self-Evolution
 
+## Sibelius
+
+- An "infovore" shares his chats
+
 ## Steve Jobs
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
@@ -467,6 +503,10 @@
 ## Twitch
 
 - How to Earn a Billion Dollars
+
+## Tyler Cowen
+
+- An "infovore" shares his chats
 
 ## Unqualified Reservations
 
@@ -533,6 +573,10 @@
 
 - Hydro0x01 Local Hermes Security Audit
 
+## art-appraisal
+
+- An "infovore" shares his chats
+
 ## arxiv
 
 - ArXiv AI Agents 论文列表
@@ -570,6 +614,10 @@
 ## charisma
 
 - The Old World Is Dying
+
+## chess-analysis
+
+- An "infovore" shares his chats
 
 ## china
 
@@ -713,6 +761,10 @@
 ## inequality
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
+
+## infovore
+
+- An "infovore" shares his chats
 
 ## international_political_economy
 
@@ -949,9 +1001,17 @@
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
 
+## travel-itinerary
+
+- An "infovore" shares his chats
+
 ## us_hegemony
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
+
+## use-cases
+
+- An "infovore" shares his chats
 
 ## video-brief
 

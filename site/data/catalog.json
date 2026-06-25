@@ -917,6 +917,56 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-25-youtube-video-brief-workflow"
   },
   {
+    "title": "An \"infovore\" shares his chats",
+    "title_zh": "一个\"信息饕餮\"分享他的对话",
+    "type": "article",
+    "path": "content/articles/2026/2026-06-26-chatgptpro-tyler-cowen-infovore",
+    "author": "ChatGPT Pro Community (profile of Tyler Cowen)",
+    "source_url": "https://chatgptpro.substack.com/p/tyler-cowen",
+    "source_site": "ChatGPT Pro Community (Substack)",
+    "language": "en",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "2026-06-24",
+    "captured_date": "2026-06-26",
+    "topics": [
+      "人工智能",
+      "ChatGPT",
+      "AI使用案例",
+      "信息消费",
+      "知识工作者",
+      "经济学",
+      "艺术鉴赏",
+      "文化解码",
+      "Prompt工程"
+    ],
+    "tags": [
+      "Tyler Cowen",
+      "ChatGPT Pro",
+      "infovore",
+      "Marginal Revolution",
+      "Conversations with Tyler",
+      "George Mason University",
+      "Belle chess",
+      "Deep Blue",
+      "use-cases",
+      "10-use-cases",
+      "art-appraisal",
+      "travel-itinerary",
+      "chess-analysis",
+      "Sibelius",
+      "Algerian rai"
+    ],
+    "word_count": {
+      "source": 1062,
+      "translation": 1753
+    },
+    "updated_date": "2026-06-26",
+    "slug": "2026-06-26-chatgptpro-tyler-cowen-infovore",
+    "detail_url": "items/2026-06-26-chatgptpro-tyler-cowen-infovore/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-chatgptpro-tyler-cowen-infovore"
+  },
+  {
     "title": "How AI Will Change Us",
     "title_zh": "AI 将如何改变我们",
     "type": "article",

@@ -21,6 +21,7 @@
 - The Old World Is Dying
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
 - YouTube Video Brief Workflow
+- An "infovore" shares his chats
 - How AI Will Change Us
 - 一键把 YouTube 视频加入知识库
 

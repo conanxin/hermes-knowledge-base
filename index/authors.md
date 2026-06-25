@@ -28,6 +28,10 @@
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
+## ChatGPT Pro Community (profile of Tyler Cowen)
+
+- An "infovore" shares his chats
+
 ## Conan O'Brien
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
