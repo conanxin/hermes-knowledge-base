@@ -512,6 +512,10 @@
 
 - ArXiv AI Agents 论文列表
 
+## ai-companions
+
+- How AI Will Change Us
+
 ## ai-learning
 
 - YouTube Video Brief Workflow
@@ -620,6 +624,10 @@
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
 
+## embodiment
+
+- How AI Will Change Us
+
 ## error-handling
 
 - Session Guard Phase 1: Pre-Request Sanitizer
@@ -643,6 +651,10 @@
 ## folk-bildung
 
 - We May Be Entering A Second Axial Age
+
+## friendship
+
+- How AI Will Change Us
 
 ## future_of_work
 
@@ -706,6 +718,10 @@
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
 
+## interpretation
+
+- How AI Will Change Us
+
 ## interview
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
@@ -744,6 +760,10 @@
 - ArXiv LLM Systems 论文列表
 - Awesome LLM Long Context 资源列表
 
+## loneliness
+
+- How AI Will Change Us
+
 ## long-context
 
 - Awesome LLM Long Context 资源列表
@@ -764,9 +784,17 @@
 
 - Hacker News ML 热门链接
 
+## noema
+
+- How AI Will Change Us
+
 ## novel_writing
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
+
+## openai
+
+- How AI Will Change Us
 
 ## openai-api
 
@@ -777,9 +805,17 @@
 - YouTube Video Brief Workflow
 - 一键把 YouTube 视频加入知识库
 
+## openclaw-suggested
+
+- How AI Will Change Us
+
 ## papers
 
 - ArXiv AI Agents 论文列表
+
+## participation
+
+- How AI Will Change Us
 
 ## personal_growth
 
@@ -800,6 +836,10 @@
 ## political_economy
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
+
+## presence
+
+- How AI Will Change Us
 
 ## prisma
 
@@ -838,6 +878,10 @@
 ## resources
 
 - Awesome LLM Long Context 资源列表
+
+## ritual
+
+- How AI Will Change Us
 
 ## sanitizer
 
@@ -913,6 +957,10 @@
 
 - YouTube Video Brief Workflow
 - 一键把 YouTube 视频加入知识库
+
+## vulnerability
+
+- How AI Will Change Us
 
 ## workflow
 

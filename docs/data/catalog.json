@@ -917,6 +917,56 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-25-youtube-video-brief-workflow"
   },
   {
+    "title": "How AI Will Change Us",
+    "title_zh": "AI 将如何改变我们",
+    "type": "article",
+    "path": "content/articles/2026/2026-06-26-noema-how-ai-will-change-us",
+    "author": "Houda Nait El Barj",
+    "source_url": "https://www.noemamag.com/how-ai-will-change-us/?utm_source=noematwitter&utm_medium=noemasocial",
+    "source_site": "Noema Magazine",
+    "language": "en",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "2026-06-25",
+    "captured_date": "2026-06-26",
+    "topics": [
+      "人工智能",
+      "AI与社会",
+      "存在主义",
+      "孤独",
+      "陪伴",
+      "意义",
+      "身体性",
+      "海德格尔",
+      "亚里士多德",
+      "技术哲学",
+      "nashat",
+      "Geworfenheit"
+    ],
+    "tags": [
+      "noema",
+      "ai-companions",
+      "loneliness",
+      "embodiment",
+      "presence",
+      "participation",
+      "interpretation",
+      "friendship",
+      "ritual",
+      "vulnerability",
+      "openai",
+      "openclaw-suggested"
+    ],
+    "word_count": {
+      "source": 3447,
+      "translation": 5774
+    },
+    "updated_date": "2026-06-26",
+    "slug": "2026-06-26-noema-how-ai-will-change-us",
+    "detail_url": "items/2026-06-26-noema-how-ai-will-change-us/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-noema-how-ai-will-change-us"
+  },
+  {
     "title": "一键把 YouTube 视频加入知识库",
     "title_zh": "一键把 YouTube 视频加入知识库",
     "type": "article",

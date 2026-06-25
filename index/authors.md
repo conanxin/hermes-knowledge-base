@@ -61,6 +61,10 @@
 - Session Guard Phase 1: Pre-Request Sanitizer
 - Hydro0x01 Local Hermes Security Audit
 
+## Houda Nait El Barj
+
+- How AI Will Change Us
+
 ## Jasmine Sun
 
 - The Old World Is Dying
