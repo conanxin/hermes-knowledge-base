@@ -78,10 +78,10 @@ content/articles/2026/2026-06-25-youtube-video-brief-workflow/
 - `docs/data/catalog.json`
 
 ## Commit Hash
-（待提交后填充）
+fc451e4 — Add YouTube video brief knowledge entry
 
 ## Push 结果
-（待推送后填充）
+**success** — pushed to https://github.com/conanxin/hermes-knowledge-base.git (main)
 
 ## 后续建议
 
