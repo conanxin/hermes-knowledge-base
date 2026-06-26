@@ -1389,6 +1389,51 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-youtube-link-preflight-failure-archive"
   },
   {
+    "title": "Self-Reliance",
+    "title_zh": "论自立",
+    "type": "essay",
+    "path": "content/articles/2026/2026-06-27-emerson-self-reliance",
+    "author": "Ralph Waldo Emerson",
+    "source_url": "https://www.gutenberg.org/files/2944/2944-h/2944-h.htm",
+    "source_site": "gutenberg.org",
+    "language": "en",
+    "translation_language": "zh-CN",
+    "status": "published",
+    "published_date": "1841-08-01",
+    "captured_date": "2026-06-27",
+    "topics": [
+      "American Transcendentalism",
+      "Self-trust and nonconformity",
+      "Original thought vs imitation",
+      "Moral intuition and integrity",
+      "Civil disobedience precursors"
+    ],
+    "tags": [
+      "transcendentalism",
+      "self-reliance",
+      "individualism",
+      "american-literature",
+      "philosophy",
+      "19th-century",
+      "nonconformity",
+      "ralph-waldo-emerson"
+    ],
+    "word_count": {
+      "source": 11000,
+      "translation": 11000
+    },
+    "extracted_date": "2026-06-27",
+    "extraction_scope": "Only II. SELF-RELIANCE from Essays, First Series (1841). Boundaries: from <h2 id=\"link2H_4_0002\"> to start of <h2 id=\"link2H_4_0003\"> (Compensation).",
+    "publication_year": 1841,
+    "source": "Project Gutenberg",
+    "source_collection": "Essays, First Series",
+    "source_gutenberg_id": "2944",
+    "updated_date": "2026-06-27",
+    "slug": "2026-06-27-emerson-self-reliance",
+    "detail_url": "items/2026-06-27-emerson-self-reliance/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-27-emerson-self-reliance"
+  },
+  {
     "title": "A Modest Proposal",
     "title_zh": "一个温和的建议",
     "type": "essay",

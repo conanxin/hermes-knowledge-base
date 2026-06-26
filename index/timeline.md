@@ -29,6 +29,7 @@
 - The 100 greatest songs of the 1960s
 - 一键把 YouTube 视频加入知识库
 - 先预检，再解读 YouTube 视频
+- Self-Reliance
 - A Modest Proposal
 - On the Duty of Civil Disobedience
 - Hermes Agent Task Report Template

@@ -141,6 +141,10 @@
 - How to Earn a Billion Dollars
 - Superlinear Returns
 
+## Ralph Waldo Emerson
+
+- Self-Reliance
+
 ## Sean Kenji Starrs and Robert Hunter Wade
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
