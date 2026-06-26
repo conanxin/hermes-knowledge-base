@@ -245,6 +245,6 @@ The only remaining `needs_verification` tracks (12 total):
 
 ## 13. Links
 
-- **Commit**: https://github.com/conanxin/hermes-knowledge-base/commit/[COMMIT_HASH]
+- **Commit**: https://github.com/conanxin/hermes-knowledge-base/commit/e9b76a3
 - **Tag**: https://github.com/conanxin/hermes-knowledge-base/releases/tag/v0.3.32-final-candidate-sweep-and-coverage-sync
 - **GitHub Pages Detail Page**: https://conanxin.github.io/hermes-knowledge-base/items/2026-06-26-paste-greatest-songs-1960s/
