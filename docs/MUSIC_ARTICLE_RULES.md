@@ -208,6 +208,73 @@ python3 scripts/check_tracks.py
 
 ---
 
+
+## 10. 剩余曲目审计分层 (v0.3.30+)
+
+当某条音乐长名单文章有较多 `needs_verification` 曲目且短期内补 verified 链接无望时,
+应对每首 needs_verification 曲目做分层审计,明确:
+
+- 是否还有希望找到官方 / Topic / label YouTube 来源
+- 是否 YouTube 高置信源缺,但 Spotify / Apple Music 可能更可靠
+- 是否需要人工进一步判断版本、厂牌、发行信息
+- 是否应永久 defer(小厂牌、无官方 channel、只有 fan upload / vinyl rip / live / archive video)
+
+### 10.1 四种 audit_status
+
+| 值 | 含义 | 下一步建议 |
+|---|---|---|
+| `candidate` | 仍有希望找到官方 / Topic / label YouTube 来源 | v0.3.31+ 继续 oEmbed 验证 |
+| `spotify_or_apple_preferred` | YouTube 高置信源缺,但 Spotify / Apple Music 因厂牌收购 / 完整曲库更可靠 | 优先在 Spotify / Apple Music 验证官方 source URL;YouTube 侧仅作 fallback |
+| `needs_manual_research` | 需要人工进一步判断版本、厂牌、发行信息(独立厂牌 / 自由爵士 / niche 流派) | 人工调研厂牌官方网站 / Bandcamp / SoundCloud;若无,降级为 `defer` |
+| `defer` | 小厂牌、无官方 channel、只有 fan upload / vinyl rip / live / archive / reaction / cover,不应继续硬填 | 长期 defer;保留 search 链接,不硬填 |
+
+### 10.2 tracks.yaml 新增字段
+
+每条 `confidence: needs_verification` track 应包含:
+
+```yaml
+audit_status: candidate | spotify_or_apple_preferred | needs_manual_research | defer
+audit_reason: "<为什么暂不 verified 的简明理由>"
+next_action: "<v0.3.31 后的具体下一步建议>"
+```
+
+- `audit_status` 必填,且必须从上述 4 值中选一
+- `audit_reason` 必填,应包含厂牌、年份、当前 YouTube 验证结果(若有 oEmbed 记录)
+- `next_action` 必填,应指向下一个版本号或具体行动(如"v0.3.31: oEmbed 验证 Columbia - Topic")
+- `confidence: verified` 的曲目**不应**包含这三个 audit 字段(已 verified 无需审计)
+
+### 10.3 禁止行为(配合 v0.3.30 audit 原则)
+
+| 行为 | 原因 |
+|---|---|
+| 把 fan upload / vinyl rip / archive video / reaction / cover 改为 `confidence: verified` | 违反"防止伪造"原则 |
+| 把 live 演出版本(非原文指定的 live)改为 verified | 原文指明 studio 原曲;live 是另一首 |
+| 跳过 audit 直接重新走 oEmbed 批量填 verified | 浪费时间在已知无源曲目上 |
+| 把 `defer` 改为 `candidate` 但不给出新证据 | 决定应基于可重复验证的事实,不是时间压力 |
+| 把 `candidate` 走 oEmbed 后没找到 - Topic 仍强行填 `confidence: verified` | 应保留 `needs_verification` 直至有高置信源 |
+
+### 10.4 案例:Paste「The 100 greatest songs of the 1960s」v0.3.30 audit 结果
+
+17 首 needs_verification 曲目分层结果(详见 `reports/music_remaining_track_audit_20260626.md`):
+
+- `candidate`: 6 首(适合 v0.3.31 继续 oEmbed 验证)
+- `spotify_or_apple_preferred`: 4 首(优先 Spotify / Apple Music)
+- `defer`: 6 首(长期 defer;含 The Sonics #54)
+- `needs_manual_research`: 1 首(Albert Ayler #71,需人工调研 ESP-Disk 官网)
+
+### 10.5 与 v0.3.28 / v0.3.29 的关系
+
+- v0.3.19–v0.3.27:verified 数量从 5 增到 33,8 轮增量 verified(每轮 1–7 首)
+- v0.3.28:可播放曲目筛选 UI
+- v0.3.29:覆盖率摘要
+- **v0.3.30**:剩余 17 首分层审计,**不再硬找 verified**,只 metadata
+- v0.3.31+ (未来):基于本 audit 的 `candidate` + `spotify_or_apple_preferred` 清单做增量补 verified
+  - 不再扫全部 17 首
+  - 每次只在 `candidate` 池里抽 N 首做 oEmbed
+  - 找到源就升 verified + 撤 audit 字段
+  - 找不到就保留 audit 字段,候选池下次再扫
+
+
 **维护者**: Hermes Agent
 **最后更新**: 2026-06-26
 **关联文档**:

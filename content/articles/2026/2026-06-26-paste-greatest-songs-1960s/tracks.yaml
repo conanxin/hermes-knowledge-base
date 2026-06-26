@@ -22,6 +22,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+Wayne+Shorter+Infant+Eyes+1966+official
   confidence: needs_verification
   note: ''
+  audit_status: candidate
+  audit_reason: 'Wayne Shorter - Infant Eyes: 1964 Blue Note recording (MusicBrainz 7530962f-6a09-4c26-862b-533e33bd12a6). Blue Note Records 可能运营 - Topic channel 抓 RVG Remaster; Wayne Shorter - Topic 也可能存在。'
+  next_action: 'v0.3.31: 优先 oEmbed 验证 Blue Note - Topic 或 Wayne Shorter - Topic 是否包含此曲(避免 non-Topic fan upload)'
 - rank: 99
   artist: Pink Floyd
   title: Bike
@@ -73,6 +76,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+Laura+Nyro+Stoned+Soul+Picnic+1968+official
   confidence: needs_verification
   note: ''
+  audit_status: candidate
+  audit_reason: 'Laura Nyro - Stoned Soul Picnic: 1968 Columbia 单曲 (Sony/Columbia 厂牌活跃)。可能有 Columbia Records - Topic / Laura Nyro - Topic 频道。'
+  next_action: 'v0.3.31: oEmbed 验证 Columbia - Topic 或 Laura Nyro - Topic;若两通道都无,降级为 spotify_or_apple_preferred'
 - rank: 96
   artist: King Crimson
   title: 21st Century Schizoid Man
@@ -132,6 +138,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+Blind+Faith+Had+to+Cry+Today+1969+official
   confidence: needs_verification
   note: ''
+  audit_status: defer
+  audit_reason: 'Blind Faith - Had to Cry Today: Atco/Polydor 厂牌。YouTube 高置信源仅 Eric Clapton 2010 Hyde Park live (非原曲)。无 studio 原版 1969 官方 channel。'
+  next_action: '长期 defer;若 v0.3.31+ 仍无可信源,建议永久保留 search 链接,不硬填 live / cover / fan upload'
 - rank: 93
   artist: Ike & Tina Turner
   title: River Deep – Mountain High
@@ -188,6 +197,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+Scott+Walker+The+Seventh+Seal+1969+official
   confidence: needs_verification
   note: ''
+  audit_status: defer
+  audit_reason: 'Scott Walker - The Seventh Seal: 1969 Philips/4AD 单曲。Scott Walker 2019 去世后官方管理松散,YouTube 主导为 fan upload / tribute channel。'
+  next_action: '长期 defer;不硬填 fan / tribute / cover 来源'
 - rank: 90
   artist: Patsy Cline
   title: She's Got You
@@ -259,6 +271,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+The+Angels+My+Boyfriend's+Back+1963+official
   confidence: needs_verification
   note: ''
+  audit_status: spotify_or_apple_preferred
+  audit_reason: 'The Angels - My Boyfriend''s Back: 1963 Smash/Motown。YouTube 上高置信官方少,主导为 fan/compilation upload。Spotify/Apple Music 因 UMG/Motown 完整曲库更可靠。'
+  next_action: 'v0.3.31: 优先在 Spotify (UMG) / Apple Music 上验证官方/厂牌 source URL;YouTube 侧仅作为最后 fallback'
 - rank: 86
   artist: Bill Evans & Jim Hall
   title: Darn That Dream
@@ -337,6 +352,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+Serge+Gainsbourg+&+Brigitte+Bardot+Bonnie+and+Clyde+1968+official
   confidence: needs_verification
   note: ''
+  audit_status: candidate
+  audit_reason: 'Serge Gainsbourg & Brigitte Bardot - Bonnie and Clyde: 1968 Philips/Universal France。法语区厂牌管理积极,可能有 Gainsbourg - Topic 或 Universal Music France - Topic 频道。'
+  next_action: 'v0.3.31: oEmbed 验证 Serge Gainsbourg - Topic 或 Universal Music France - Topic'
 - rank: 82
   artist: Merle Haggard
   title: Mama Tried
@@ -373,6 +391,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+The+Tammys+Egyptian+Shumba+1963+official
   confidence: needs_verification
   note: ''
+  audit_status: defer
+  audit_reason: 'The Tammys - Egyptian Shumba: 1963 Scepter Records subsidiary 极小厂牌单曲。无在线官方 channel。'
+  next_action: '长期 defer;不硬填'
 - rank: 80
   artist: Love
   title: The Red Telephone
@@ -445,6 +466,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+Buffy+Sainte-Marie+Adam+1967+official
   confidence: needs_verification
   note: ''
+  audit_status: defer
+  audit_reason: 'Buffy Sainte-Marie - Adam: 1967 Vanguard Records。Buffy 近年身世争议导致厂牌对原曲官方 channel 管理保守。'
+  next_action: '长期 defer;除非找到 Vanguard Records - Topic 或 Buffy Sainte-Marie - Topic 官方 source,否则不硬填'
 - rank: 76
   artist: Roy Orbison
   title: In Dreams
@@ -521,6 +545,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+Charles+Mingus+Track+B-Duet+Solo+Dancers+1963+official
   confidence: needs_verification
   note: ''
+  audit_status: candidate
+  audit_reason: 'Charles Mingus - Track B-Duet Solo Dancers: 1963 Atlantic/Impulse!。Mingus 经典曲,可能有 Impulse Records - Topic / Charles Mingus - Topic 频道。'
+  next_action: 'v0.3.31: oEmbed 验证 Impulse Records - Topic 或 Charles Mingus - Topic'
 - rank: 72
   artist: Os Mutantes
   title: A Minha Menina
@@ -535,6 +562,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+Os+Mutantes+A+Minha+Menina+1968+official
   confidence: needs_verification
   note: ''
+  audit_status: spotify_or_apple_preferred
+  audit_reason: 'Os Mutantes - A Minha Menina: 1968 Polydor Brazil (UMG Brazil)。oEmbed 验证 2 个候选视频 (IB02v-IaW74, jCB5dOcmhaM) 均为 fan channel (RioRecords / uaifree),无官方 - Topic 频道。'
+  next_action: 'v0.3.31: 优先在 Spotify / Apple Music (UMG Brazil) 上验证官方曲库;YouTube 侧除非找到 Polydor/UMG Brazil 官方,否则不硬填 fan upload'
 - rank: 71
   artist: Albert Ayler
   title: Ghosts
@@ -549,6 +579,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+Albert+Ayler+Ghosts+1964+official
   confidence: needs_verification
   note: ''
+  audit_status: needs_manual_research
+  audit_reason: 'Albert Ayler - Ghosts: 1964 ESP-Disk 自由爵士。ESP-Disk 仍是独立厂牌,YouTube 官方 / Topic 频道可能不存在。Ayler 自由爵士受众小,YouTube 主导为 fan / archive upload。'
+  next_action: 'v0.3.31: 人工调研 ESP-Disk 官方网站 / Bandcamp / SoundCloud,看是否有官方 channel;若无,长期 defer'
 - rank: 70
   artist: Tommy James & The Shondells
   title: Crimson and Clover
@@ -584,6 +617,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+Jacques+Brel+J'Arrive+1968+official
   confidence: needs_verification
   note: ''
+  audit_status: spotify_or_apple_preferred
+  audit_reason: 'Jacques Brel - J''Arrive: 1968 Barclay/Universal France。法语区经典,Spotify/Apple Music 完整曲库(因 UMG 收购 Barclay);YouTube 高置信官方少。'
+  next_action: 'v0.3.31: 优先 Spotify / Apple Music 验证官方曲库;YouTube 侧仅作为 fallback'
 - rank: 68
   artist: Etta James
   title: At Last
@@ -658,6 +694,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+Vanilla+Fudge+You+Keep+Me+Hangin'+On+1967+official
   confidence: needs_verification
   note: ''
+  audit_status: candidate
+  audit_reason: 'Vanilla Fudge - You Keep Me Hangin'' On: 1967 Atco/Atlantic。可能有 Atlantic Records - Topic / Vanilla Fudge - Topic 频道。'
+  next_action: 'v0.3.31: oEmbed 验证 Atlantic Records - Topic 或 Vanilla Fudge - Topic'
 - rank: 64
   artist: Midnight Movers
   title: Medicated Goo
@@ -672,6 +711,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+Midnight+Movers+Medicated+Goo+1969+official
   confidence: needs_verification
   note: ''
+  audit_status: defer
+  audit_reason: 'Midnight Movers - Medicated Goo: 1969 Eastbound Records (极小厂牌)。仅一张专辑,无在线官方 channel。'
+  next_action: '长期 defer;不硬填'
 - rank: 63
   artist: Loretta Lynn
   title: Don't Come Home a Drinkin' (With Lovin' on Your Mind)
@@ -733,6 +775,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+Captain+Beefheart+and+His+Magic+Band+Moonlight+on+Vermont+1969+official
   confidence: needs_verification
   note: ''
+  audit_status: candidate
+  audit_reason: 'Captain Beefheart and His Magic Band - Moonlight on Vermont: 1969 Straight/Reprise (Warner Music)。可能有 Reprise Records - Topic / Warner Records - Topic / Captain Beefheart - Topic 频道。'
+  next_action: 'v0.3.31: oEmbed 验证 Reprise - Topic 或 Warner Records - Topic;注意避 live / tribute'
 - rank: 60
   artist: The Chiffons
   title: One Fine Day
@@ -847,6 +892,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+Ketty+Lester+Love+Letters+1961+official
   confidence: needs_verification
   note: ''
+  audit_status: spotify_or_apple_preferred
+  audit_reason: 'Ketty Lester - Love Letters: 1961 Era Records / Dot Records。YouTube 官方少,fan upload / compilation 主导。Spotify/Apple Music 因 UMG 完整曲库更可靠。'
+  next_action: 'v0.3.31: 优先 Spotify / Apple Music 验证;YouTube 侧仅作为 fallback'
 - rank: 54
   artist: The Sonics
   title: Strychnine
@@ -861,6 +909,9 @@ tracks:
   search_url: https://www.google.com/search?q=site:youtube.com+The+Sonics+Strychnine+1965+official
   confidence: needs_verification
   note: ''
+  audit_status: defer
+  audit_reason: 'The Sonics - Strychnine: 1965 Etiquette Records (Seattle 小厂牌),1999 Norton Records reissue。Web search 确认所有 YouTube 候选为 live (Roxy 2014) / fan upload (Norton vinyl rip) / reaction / guitar lesson / reissue upload。无 online 官方 / label channel。'
+  next_action: '长期 defer;连续 4 轮 (v0.3.23/3.24/3.25/3.26/3.27) 已确认无高置信源,建议永久保留 search 链接'
 - rank: 53
   artist: Jorge Ben
   title: Mas, que nada!
