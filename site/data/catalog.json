@@ -1018,10 +1018,10 @@
   },
   {
     "title": "The 100 greatest songs of the 1960s",
-    "title_zh": "1960 年代最伟大的 100 首歌",
+    "title_zh": "1960 年代最伟大的 100 首歌（#100–#51）",
     "type": "article",
     "path": "content/articles/2026/2026-06-26-paste-greatest-songs-1960s",
-    "author": "Matt Mitchell (Paste staff and contributors: Mariam Abdel-Razek, Casey Epstein-Gross, Grant Sharples, Cassidy Sollazzo, Miranda Wollen, Elise Soutar, Nathan Stevens, Sam Rosenberg, Derrick Rossignol)",
+    "author": "Matt Mitchell (Paste staff and contributors: Mariam Abdel-Razek, Casey Epstein-Gross, Grant Sharples, Cassidy Sollazzo, Miranda Wollen, Elise Soutar, Nathan Stevens, Sam Rosenberg, Derrick Rossignol, Matt Melis)",
     "source_url": "https://www.pastemagazine.com/music/best-songs/the-greatest-songs-of-the-1960s",
     "source_site": "Paste Magazine",
     "language": "en",
@@ -1074,6 +1074,19 @@
       "source": 9385,
       "translation": 12883
     },
+    "coverage_scope": "rank_100_to_51_only",
+    "is_partial_series": true,
+    "series_info": {
+      "total_parts": 3,
+      "this_part": 1,
+      "covered_range": "rank_100_to_51",
+      "total_songs_in_full_list": 100,
+      "songs_in_this_entry": 50,
+      "remaining_songs_outside_entry": 50,
+      "remaining_range": "rank_50_to_1",
+      "remaining_note": "原榜单的 #50-#1 部分分布在 Paste 的后续页面；本条目不涵盖。"
+    },
+    "translation_notes": "check_translation_residue.py returned suspicious_count=85 (KB 最高).\n这是音乐目录型长名单文章的必然产物：50 首歌名 + 50+ 艺人名 + 30+ 专辑名\n全部为不可译专名（保留为英文）。无真正漏译段。\n详见 reports/paste_1960s_listicle_quality_fix_20260626.md §6.",
     "updated_date": "2026-06-26",
     "slug": "2026-06-26-paste-greatest-songs-1960s",
     "detail_url": "items/2026-06-26-paste-greatest-songs-1960s/",

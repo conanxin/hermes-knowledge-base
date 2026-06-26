@@ -105,10 +105,52 @@ Paste 这份榜单是 2026 年中段少数几份**不是「伟大歌曲综合指
 - 如果你只读一段：读 **#80 Love「The Red Telephone」**——它是整份榜单里写得最尖锐的一段（关于 Arthur Lee 在白人迷幻场景里的孤独、关于「if you think I'm happy, paint me white」这句歌词的重量）。
 - 这篇文章不必预先了解 1960 年代音乐史，但如果你熟悉其中 5-10 位艺人，会更容易看出 Paste 团队的选择标准（哪些被「低估」、哪些被「重新定位」、哪些被「忽略」）。
 
-## 九、对翻译本身的诚实评估
+## 九、导入经验记录 / 质量审计（Import Audit Log）
 
-**这次翻译有一个中段错位问题**。在首次翻译时,我使用 web_extract 提供的截断版本 (#89 之后不可见),导致 #76 到 #66 这 11 首歌的中文 H2 标题全部错位(#76 = Sly "Everyday People",实际应该是 Roy Orbison "In Dreams";#74 = Staple Singers,实际应该是 Johnny Cash "Ring of Fire";#75 = 缺失)。这是翻译版本最严重的问题。
+> 本节记录本次入库过程的**质量审计与修正历史**，非读者面向内容。供未来同类任务参考。
 
-**修正方法**:直接用 source.md 重新提取这 11 首歌的英文原文,用 patch 工具替换中文翻译中的相应部分。最终版本与 source 真实标题对齐 49/50(1/50 是 ASCII `'` vs 弯引号 `'` 的微小差异)。
+**已修复的导入问题**：
 
-**记入教训**:对于**长名单型文章**(50+ 条目),web_extract 截断后必须**先从 HTML 完整解析出原文**,再开始翻译,而不能边翻译边猜后续内容。这次抓到的 218KB HTML 实际上**包含完整 50 首歌的内容**——问题在于我用 web_extract 快速验证后就直接开始翻译,没有先解析完整 HTML。这是流程上的失误,已经在 patch 中修复,但应该在未来的同类任务里更早做完整解析。
+本次入库过程中曾出现以下错位（均已在 commit 阶段或后续 fix 阶段修复）：
+
+- **#76–#66 共 11 首歌的 H2 标题编号错位**：首次翻译时使用 `web_extract` 的截断版本（截断在 #89），基于截断版继续构造，导致 #76–#66 这 11 首歌的中文 H2 标题编号全部错位（如翻译中 #76 = Sly "Everyday People"，实际应为 Roy Orbison "In Dreams"）。
+- **#75 Led Zeppelin 缺失**。
+- **#74 凭空捏造**：翻译里出现了一个原文根本不存在的「The Staple Singers 'Respect Yourself'」段落。
+- **修复方法**：直接用 `source.md` 重新提取这 11 首歌的英文原文，用 `patch` 工具精确替换中文翻译中的相应部分，保留正确的 #100–#77 和 #65–#51 段。
+- **dedup**：修复后清理掉 8 个重复 H2，最终与 source 真实标题对齐 **49/50**（1/50 是 ASCII `'` vs 弯引号 `'` 的微小差异）。
+
+**记入教训**：
+
+对于**长名单型文章**（50+ 条目），`web_extract` 截断后必须**先从 HTML 完整解析出原文**，再开始翻译，而不能边翻译边猜后续内容。本次抓到的 218KB HTML 实际上**包含完整 50 首歌的内容**——问题在于先用 `web_extract` 快速验证后就直接开始翻译，没有先解析完整 HTML。
+
+**已在 commit `e95cf7e` 固化为规则**：见 [docs/LISTICLE_IMPORT_RULES.md](../../docs/LISTICLE_IMPORT_RULES.md) — 包含 7 条核心约束（长名单识别、必须先完整解析、翻译前后结构预检/对齐、coverage_scope 必填、residue 解读、PASS_WITH_WARNINGS 状态）。
+
+**后续 fix commit**：`Fix Paste 1960s listicle summary integrity`（2026-06-26）
+
+- `summary.md` 重写：清除「等等 / 见上 / 已删 / 错误 / 实际是 / placeholder / Supremes / Dusty Springfield / Junior Wells」等编辑过程残留
+- 修正矛盾表述：「#100 到 #11（即 #100–#51）」改为清晰的「#100 至 #51，共 50 首歌」
+- 修正「page 3 / Top 10 / #1-#50」表述不清：明确说明「原榜单共 100 首分多页发布，本条目仅覆盖 #100–#51」
+- 删除不在 canonical song list 中的歌曲（如「#72 The Supremes」错误条目）
+- 主题性分类改用「参考性分组，非唯一分配统计」明确标注
+- `metadata.yaml` 增加 `coverage_scope` + `is_partial_series` + `series_info` + `translation_notes` 字段
+
+详见 `reports/paste_1960s_listicle_quality_fix_20260626.md`。
+
+## 十、本次新增条目其他记号
+
+`metadata.yaml` 现包含：
+
+- `coverage_scope: "rank_100_to_51_only"`
+- `is_partial_series: true`
+- `series_info` 块（3 部分，本条目为 part 1 of 3，覆盖 #100–#51）
+- `translation_notes`（解释 residue=85 是音乐专名残留）
+
+`summary.md` 重写后的核心结构：
+
+- 一句话总结
+- 编辑前言（Matt Mitchell 的开场准则）
+- **50 首歌完整列表**（按排名顺序 + 撰稿人）
+- **主题性分组**（明确标注为「参考性分组，非唯一分配统计」）
+- 撰稿人署名统计
+- 关键引用汇编（10 条）
+- 来源与系列信息（明确说明覆盖范围与未覆盖部分）
