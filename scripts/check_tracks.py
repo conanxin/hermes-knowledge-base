@@ -246,6 +246,14 @@ def validate_tracks_file(path: Path) -> list[str]:
         if search and not URL_PATTERN.match(search):
             issues.append(f"{label}: search_url is set but not a valid URL ({search[:60]!r})")
 
+        # v0.3.33: streaming link URL format validation
+        spotify = t.get("spotify_url", "") or ""
+        if spotify and not spotify.startswith("https://open.spotify.com/track/"):
+            issues.append(f"{label}: spotify_url must start with https://open.spotify.com/track/ ({spotify[:60]!r})")
+        apple = t.get("apple_music_url", "") or ""
+        if apple and not apple.startswith("https://music.apple.com/"):
+            issues.append(f"{label}: apple_music_url must start with https://music.apple.com/ ({apple[:60]!r})")
+
         # v0.3.20: verified tracks must have at least one playable URL and a note.
         if conf == "verified":
             has_yt = bool(t.get("youtube_embed_url", "") or "")

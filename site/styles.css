@@ -1190,6 +1190,14 @@ body.detail-page {
   color: var(--color-text-secondary);
 }
 
+.track-link-spotify {
+  color: #1DB954;
+}
+
+.track-link-apple {
+  color: #FA243C;
+}
+
 .track-confidence {
   margin-top: 8px;
   font-size: 0.78rem;

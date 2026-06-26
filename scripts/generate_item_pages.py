@@ -800,7 +800,7 @@ def _build_track_cards(
                 f'<a class="track-link track-link-apple" href="{html.escape(apple_url, quote=True)}" '
                 f'target="_blank" rel="noopener">Apple Music ↗</a>'
             )
-        if search_url and not (youtube_url or spotify_url or apple_url):
+        if search_url:
             actions.append(
                 f'<a class="track-link track-link-search" href="{html.escape(search_url, quote=True)}" '
                 f'target="_blank" rel="noopener">查找版本 ↗</a>'

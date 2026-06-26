@@ -897,14 +897,14 @@ tracks:
   section_heading_translation: '## 55. Ketty Lester：《Love Letters》（1961 年）'
   youtube_url: ''
   youtube_embed_url: ''
-  spotify_url: ''
-  apple_music_url: ''
+  spotify_url: 'https://open.spotify.com/track/7BzE4zhLE1L7wDVvLcGfml'
+  apple_music_url: 'https://music.apple.com/gb/song/love-letters/291441768'
   search_url: https://www.google.com/search?q=site:youtube.com+Ketty+Lester+Love+Letters+1961+official
   confidence: needs_verification
-  note: ''
+  note: 'Spotify/Apple Music verified 2026-06-27: Spotify track page by Ketty Lester, 1961. Apple Music song page by Ketty Lester, 1962, duration 2:40. Both official artist pages, not cover/live/fan upload. YouTube embed not available.'
   audit_status: spotify_or_apple_preferred
   audit_reason: 'Ketty Lester - Love Letters: 1961 Era Records / Dot Records。YouTube 官方少,fan upload / compilation 主导。Spotify/Apple Music 因 UMG 完整曲库更可靠。'
-  next_action: 'v0.3.31: 优先 Spotify / Apple Music 验证;YouTube 侧仅作为 fallback'
+  next_action: 'v0.3.33: Spotify/Apple Music link rendering pilot completed'
 - rank: 54
   artist: The Sonics
   title: Strychnine

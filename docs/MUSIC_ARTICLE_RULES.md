@@ -275,8 +275,33 @@ next_action: "<v0.3.31 后的具体下一步建议>"
   - 找不到就保留 audit 字段,候选池下次再扫
 
 
+## 11. Spotify / Apple Music 外部链接
+
+Spotify 和 Apple Music 链接属于 **external streaming links**，不是 YouTube embed。
+
+### 规则
+
+1. **不计入 YouTube verified / play button**：streaming links 不改变 `confidence: verified` 计数，不生成 `youtube_embed_url`，不使用 `.track-play-button`。
+2. **保留 search_url**：即使有了 Spotify/Apple Music 链接，仍保留 `search_url` 作为 fallback。
+3. **验证依据**：必须说明平台页面标题、artist、track title、album/release 信息，且不是 cover/live/fan upload。
+4. **URL 格式**：
+   - Spotify: `https://open.spotify.com/track/<ID>`
+   - Apple Music: `https://music.apple.com/<region>/song/<name>/<ID>`
+5. **渲染方式**：
+   - 普通 `<a>` 外链，不是 iframe
+   - `target="_blank" rel="noopener noreferrer"`
+   - CSS class: `.track-link-spotify` / `.track-link-apple`
+6. **不得误标**：不要把外链误标为站内播放按钮。
+
+### 使用场景
+
+- `spotify_or_apple_preferred` 池中的曲目（YouTube 官方 channel 缺失，但 Spotify/Apple Music 有官方页面）
+- 作为 YouTube verified 的补充，不是替代
+
+---
+
 **维护者**: Hermes Agent
-**最后更新**: 2026-06-26
+**最后更新**: 2026-06-27
 **关联文档**:
 - [docs/LISTICLE_IMPORT_RULES.md](LISTICLE_IMPORT_RULES.md) — 长名单文章规则
 - [docs/AGENT_COMMANDS.md](AGENT_COMMANDS.md) — 导入规则总览
