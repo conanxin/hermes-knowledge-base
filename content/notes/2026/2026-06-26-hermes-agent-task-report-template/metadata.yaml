@@ -1,0 +1,38 @@
+title: "Hermes Agent Task Report Template"
+title_zh: "Hermes Agent 任务报告模板"
+source_url: "https://www.shapeof.ai/"
+source_site: "shapeof.ai"
+author: "Conan Xin"
+published_date: "2026-06-26"
+captured_date: "2026-06-26"
+language: "zh-CN"
+translation_language: null
+status: "active"
+type: "note"
+category: "template"
+source_type: "derived"
+topics:
+  - "Hermes Agent"
+  - "Agent Workflow"
+  - "任务报告"
+  - "报告模板"
+  - "P0 实施规范"
+  - "CDN 同步"
+  - "并发协议"
+  - "状态三态"
+tags:
+  - "Hermes"
+  - "Agent Workflow"
+  - "报告模板"
+  - "P0"
+  - "PASS/WARN/FAIL"
+  - "PENDING_CDN_SYNC"
+  - "Agent UI"
+  - "Codex"
+word_count:
+  source: 4302
+based_on:
+  - "2026-06-26-hermes-agent-ui-p0-implementation-spec"
+  - "2026-06-26-hermes-agent-ui-self-audit-v1"
+  - "2026-06-26-hermes-agent-ui-shape-of-ai-checklist"
+path: "content/notes/2026/2026-06-26-hermes-agent-task-report-template/"

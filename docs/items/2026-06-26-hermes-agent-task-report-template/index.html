@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Agent 任务报告模板 · hermes-knowledge-base</title>
+<meta name="description" content="Hermes Agent 任务报告模板 — Conan Xin">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="detail-page" id="top">
+<header class="detail-header">
+<a class="back-link" href="../../">← 返回首页</a>
+</header>
+<main class="detail-main">
+<article class="detail-article">
+<div class="detail-title-block">
+<span class="type-badge note">note</span>
+<h1 class="detail-title">Hermes Agent 任务报告模板</h1>
+<p class="detail-title-en">Hermes Agent Task Report Template</p>
+</div>
+
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#派生关系">派生关系</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#模板-vs-规范-vs-实施">模板 vs 规范 vs 实施</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#标签词汇表的设计">标签词汇表的设计</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#模板分段的设计">模板分段的设计</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#4-支撑章节的来源">4 支撑章节的来源</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#何时不要用本模板">何时不要用本模板</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#维护约定">维护约定</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#何时升级-v1-v2">何时升级 v1 → v2</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#不要做的事">不要做的事</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#已知限制">已知限制</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#与项目记忆的关联">与项目记忆的关联</a></li>
+</ol>
+</nav>
+
+<section class="detail-meta">
+<div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">note</div></div>
+<div class="meta-row"><div class="meta-label">作者</div><div class="meta-value">Conan Xin</div></div>
+<div class="meta-row"><div class="meta-label">来源</div><div class="meta-value">shapeof.ai</div></div>
+<div class="meta-row"><div class="meta-label">发布日期</div><div class="meta-value">2026-06-26</div></div>
+<div class="meta-row"><div class="meta-label">采集日期</div><div class="meta-value">2026-06-26</div></div>
+<div class="meta-row"><div class="meta-label">标签</div><div class="meta-value meta-tags"><span class="chip">Hermes</span><span class="chip">Agent Workflow</span><span class="chip">报告模板</span><span class="chip">P0</span><span class="chip">PASS/WARN/FAIL</span><span class="chip">PENDING_CDN_SYNC</span><span class="chip">Agent UI</span><span class="chip">Codex</span></div></div>
+<div class="meta-row"><div class="meta-label">主题</div><div class="meta-value meta-tags"><span class="chip">Hermes Agent</span><span class="chip">Agent Workflow</span><span class="chip">任务报告</span><span class="chip">报告模板</span><span class="chip">P0 实施规范</span><span class="chip">CDN 同步</span><span class="chip">并发协议</span><span class="chip">状态三态</span></div></div>
+</section>
+
+<section class="detail-section" id="section-summary">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">摘要</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="hermes-agent-任务报告模板摘要">Hermes Agent 任务报告模板：摘要</h1>
+<h2 id="是什么">是什么</h2>
+<p><strong>Hermes Agent Task Report Template</strong> 是 <a href="2026-06-26-hermes-agent-ui-p0-implementation-spec" target="_blank" rel="noopener">P0 Implementation Spec</a> 中 8 段报告模板的<strong>可直接复制版本</strong>。目标是"用一行命令复制粘贴、填空就发",不再写长篇理论。</p>
+<p><strong>一句话定位</strong>：本条目是 SOP 的"实操清单",P0 Spec 是"理论依据"。<strong>用本模板,引用 P0 Spec 解释为什么</strong>。</p>
+<h2 id="三个模板">三个模板</h2>
+<table class="md-table"><thead><tr><th>模板</th><th>适用</th><th>必填段</th></tr></thead><tbody><tr><td><a href="#模板-1-只读审计任务报告模板" target="_blank" rel="noopener">只读审计任务报告模板</a></td><td>read / search / grep / analyze</td><td>3 段 (Status / Scope / Evidence)</td></tr><tr><td><a href="#模板-2-写入但不发布任务报告模板" target="_blank" rel="noopener">写入但不发布任务报告模板</a></td><td>patch / write / build / 报告生成</td><td>5 段 (+ Actions / Files)</td></tr><tr><td><a href="#模板-3-写入并发布任务报告模板" target="_blank" rel="noopener">写入并发布任务报告模板</a></td><td>push / deploy / publish / 跨 agent 共享</td><td>9 段 (全部,含 Checks / Live / Next)</td></tr></tbody></table>
+<h2 id="标签词汇表直接用">标签词汇表(直接用)</h2>
+<ul><li><strong>状态标签</strong>:<code>PASS</code> / <code>WARN</code> / <code>FAIL</code> / <code>PENDING_CDN_SYNC</code> / <code>RESOLVED</code></li><li><strong>执行标签</strong>:<code>[READ-ONLY]</code> / <code>[WRITE]</code> / <code>[GENERATE]</code> / <code>[PUSH]</code> / <code>[LIVE]</code></li><li><strong>生命周期标签</strong>:<code>proposed</code> / <code>applied</code> / <code>pushed</code> / <code>live</code>(每个动作必须属于其一)</li></ul>
+<p><strong>注意</strong>:P0 Spec 用 <code>[DRY-RUN]</code> / <code>[APPLIED]</code>,本模板用 <code>[READ-ONLY]</code> / <code>[WRITE]</code> / <code>[GENERATE]</code> / <code>[PUSH]</code> / <code>[LIVE]</code>(更具体)。<strong>两套标签都有效,本模板以更细粒度为准</strong>。</p>
+<h2 id="何时用哪个模板">何时用哪个模板</h2>
+<p>按 <strong>任务对远端状态的影响</strong> 分类:</p>
+<table class="md-table"><thead><tr><th>影响等级</th><th>模板</th><th>例子</th></tr></thead><tbody><tr><td><strong>只读</strong></td><td>模板 1 (3 段)</td><td><code>ls /</code> / <code>grep</code> / <code>web_search</code> / <code>read_file</code></td></tr><tr><td><strong>写本地</strong></td><td>模板 2 (5 段)</td><td><code>write_file</code> / <code>patch</code> / <code>build_index.py</code></td></tr><tr><td><strong>发远端</strong></td><td>模板 3 (9 段)</td><td><code>git push</code> / <code>deploy</code> / <code>send_message</code> / <code>publish</code></td></tr></tbody></table>
+<p>如果任务从"写本地"升级为"发远端"(如发现需要 push),<strong>必须改用模板 3</strong> 并补全缺失段。</p>
+<h2 id="4-个支撑章节">4 个支撑章节</h2>
+<table class="md-table"><thead><tr><th>章节</th><th>作用</th></tr></thead><tbody><tr><td><a href="#1-状态三态说明" target="_blank" rel="noopener">§1 状态三态说明</a></td><td>3 套三态(PASS/WARN/FAIL、读写发、本地/远端/live)的语义边界</td></tr><tr><td><a href="#2-cdn-延迟处理规则" target="_blank" rel="noopener">§2 CDN 延迟处理规则</a></td><td><code>PENDING_CDN_SYNC</code> 的进入和退出条件</td></tr><tr><td><a href="#3-多-agent-并发最小协议" target="_blank" rel="noopener">§3 多 agent 并发最小协议</a></td><td>5 步最小协议(从 P0 Spec §8 简化)</td></tr><tr><td><a href="#4-以后如何使用" target="_blank" rel="noopener">§4 以后如何使用</a></td><td>强制/可选使用场景 + 反模式</td></tr></tbody></table>
+<h2 id="不做什么">不做什么</h2>
+<ul><li><strong>不写长篇理论</strong>:P0 Spec 已写,本条目只复制 + 简化</li><li><strong>不复述 P0 Spec 的所有内容</strong>:每节用 1-2 句话引用</li><li><strong>不引入新概念</strong>:<code>proposed / applied / pushed / live</code> 是生命周期标签,与 P0 Spec 的 [DRY-RUN] / [APPLIED] 一一对应</li><li><strong>不强制</strong>:<code>[READ-ONLY]</code> / <code>[WRITE]</code> 等标签是建议,不用也不阻断任务完成</li></ul>
+<h2 id="派生关系">派生关系</h2>
+<pre><code>2026-06-26-shape-of-ai-ux-patterns                              (原始, 资源条目)
+  └── 2026-06-26-hermes-agent-ui-shape-of-ai-checklist          (自检表 v1)
+        └── 2026-06-26-hermes-agent-ui-self-audit-v1            (审计 v1)
+              └── 2026-06-26-hermes-agent-ui-p0-implementation-spec  (P0 规范)
+                    └── 2026-06-26-hermes-agent-task-report-template  (本条目, 实操模板)</code></pre>
+<p>5 层派生的最下游,直接给 agent 用。</p>
+<h2 id="何时更新本模板">何时更新本模板</h2>
+<ul><li>当 P0 Spec 升级到 v2 时,本模板同步更新</li><li>当某类任务出现模板不覆盖的情况(如下次出现)时,扩展模板</li><li>当 §3 最小协议增加新步骤时,本模板的"写入并发布"段同步更新</li></ul>
+<h2 id="与-p0-spec-的差异">与 P0 Spec 的差异</h2>
+<table class="md-table"><thead><tr><th>维度</th><th>P0 Spec</th><th>本模板</th></tr></thead><tbody><tr><td>性质</td><td>规范 (SOP 理论)</td><td>模板 (实操清单)</td></tr><tr><td>长度</td><td>长(2600 行)</td><td>短(&lt; 500 行)</td></tr><tr><td>复用</td><td>引用为权威</td><td>复制粘贴直接用</td></tr><tr><td>抽象度</td><td>抽象(Section 编号、原则解释)</td><td>具体(填空、命令行、具体 URL 格式)</td></tr><tr><td>验证</td><td>5 P0 逐条规范</td><td>3 模板 + 4 支撑</td></tr><tr><td>读者</td><td>设计者</td><td>实施者(agent 自身)</td></tr></tbody></table>
+<h2 id="一句话总结">一句话总结</h2>
+<blockquote><p><strong>本模板 = "复制 → 填空 → 发送"。P0 Spec = "为什么这样填空"。</strong></p></blockquote>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-source">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">原文 / 源文本</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="hermes-agent-任务报告模板来源与方法">Hermes Agent 任务报告模板：来源与方法</h1>
+<h2 id="派生关系">派生关系</h2>
+<p>5 层派生的最下游:</p>
+<pre><code>2026-06-26-shape-of-ai-ux-patterns                              (resource_collection, 原始)
+  └── 2026-06-26-hermes-agent-ui-shape-of-ai-checklist          (note, 自检表 v1)
+        └── 2026-06-26-hermes-agent-ui-self-audit-v1            (note, 审计 v1)
+              └── 2026-06-26-hermes-agent-ui-p0-implementation-spec  (note, P0 规范)
+                    └── 2026-06-26-hermes-agent-task-report-template  (note, 本条目, 实操模板)</code></pre>
+<p><code>based_on</code> 字段列出 3 个直接上游(不列原始 Shape of AI 和 checklist,因已是 P0 Spec 的上游)。</p>
+<h2 id="模板-vs-规范-vs-实施">模板 vs 规范 vs 实施</h2>
+<table class="md-table"><thead><tr><th>类型</th><th>含义</th><th>本条目</th></tr></thead><tbody><tr><td><strong>模板 (Template)</strong></td><td>可直接复制的填空清单</td><td>✅ 是</td></tr><tr><td><strong>规范 (Spec)</strong></td><td>定义"应该怎么输出"的原则</td><td>引用(P0 Spec)</td></tr><tr><td><strong>实施 (Implementation)</strong></td><td>改 prompt / 话术 / 工具描述</td><td>agent 自身应用</td></tr><tr><td><strong>实现 (Engineering)</strong></td><td>写新工具 / 组件 / 脚本</td><td>❌ 不在本条目</td></tr></tbody></table>
+<p><strong>本条目的边界</strong>:<strong>只回答"怎么填",不回答"为什么这样填"</strong>。所有"为什么"都引用 P0 Spec。</p>
+<h2 id="标签词汇表的设计">标签词汇表的设计</h2>
+<p>本模板在 P0 Spec 的 <code>[DRY-RUN] / [APPLIED]</code> 基础上扩展为更细的 5 标签系统:</p>
+<table class="md-table"><thead><tr><th>标签</th><th>P0 Spec 对应</th><th>含义</th></tr></thead><tbody><tr><td><code>[READ-ONLY]</code></td><td>(P0 Spec 未明确)</td><td>只读操作,无副作用</td></tr><tr><td><code>[WRITE]</code></td><td><code>[APPLIED]</code> 本地</td><td>已写入本地文件,未推远端</td></tr><tr><td><code>[GENERATE]</code></td><td><code>[APPLIED]</code> 派生</td><td>已生成派生文件(如 catalog.json),源来自本地</td></tr><tr><td><code>[PUSH]</code></td><td><code>[APPLIED]</code> 远端</td><td>已 push 到远端(git push)</td></tr><tr><td><code>[LIVE]</code></td><td>(本条目新加)</td><td>已在 live CDN 验证</td></tr></tbody></table>
+<p><strong>为什么不用 P0 Spec 的二标签</strong>:实际任务中"已应用"和"已 push"和"已 live"是 3 个不同的事,二标签把它们混为一谈。<strong>5 标签让 8 段报告里的"动作生命周期"更精确</strong>。</p>
+<p><strong>向后兼容</strong>:用 <code>[DRY-RUN] / [APPLIED]</code> 也接受,但本模板鼓励用 5 标签。</p>
+<h2 id="模板分段的设计">模板分段的设计</h2>
+<p>P0 Spec §6 用 8 段(Sta/Scop/Act/Evid/Com/Live/Lim/Next),本模板扩展为 9 段(+ <strong>Files changed</strong> + <strong>Checks</strong>):</p>
+<table class="md-table"><thead><tr><th>段</th><th>P0 Spec</th><th>本模板</th><th>区别</th></tr></thead><tbody><tr><td>Status</td><td>§1</td><td>§1</td><td>相同</td></tr><tr><td>Scope</td><td>§2</td><td>§2</td><td>相同</td></tr><tr><td>Actions</td><td>§3</td><td>§3</td><td>用 5 标签,更细</td></tr><tr><td>Evidence</td><td>§4</td><td>§4</td><td>相同(三件套)</td></tr><tr><td><strong>Files changed</strong></td><td>(隐含)</td><td>§5</td><td><strong>本模板新增</strong>:独立列出修改文件</td></tr><tr><td><strong>Checks</strong></td><td>(隐含)</td><td>§6</td><td><strong>本模板新增</strong>:check_kb / check_pages_sync 等</td></tr><tr><td>Commit / Push</td><td>§5</td><td>§7</td><td>合并到一段</td></tr><tr><td>Live</td><td>§6</td><td>§8</td><td>同 P0 Spec</td></tr><tr><td>Limitations</td><td>§7</td><td>(合并到 §9 Next 之前的备注)</td><td>简化</td></tr><tr><td>Next</td><td>§8</td><td>§9</td><td>相同</td></tr></tbody></table>
+<p><strong>为什么加 Files / Checks 段</strong>:P0 Spec 把"文件变更"和"check 结果"分别隐含在 §3 Actions / §4 Evidence 里,但实际复盘时<strong>单独成段</strong>更易 grep / 解析。本模板把它们独立。</p>
+<h2 id="4-支撑章节的来源">4 支撑章节的来源</h2>
+<table class="md-table"><thead><tr><th>章节</th><th>来自 P0 Spec 哪里</th><th>简化原则</th></tr></thead><tbody><tr><td>状态三态说明</td><td>P0 Spec §6 三态验收 + §7 三类任务</td><td>把 3 套三态合并到一节,加交叉引用表</td></tr><tr><td>CDN 延迟处理规则</td><td>P0 Spec §8.3 模式 B</td><td>从 bash 脚本 + 失败模式总结为 5 行规则</td></tr><tr><td>多 agent 并发最小协议</td><td>P0 Spec §8.2 13 步</td><td>简化为 5 步最小集(非最小集回到 P0 Spec)</td></tr><tr><td>以后如何使用</td><td>P0 Spec §9</td><td>缩短 + 加"反模式"段落</td></tr></tbody></table>
+<h2 id="何时不要用本模板">何时不要用本模板</h2>
+<ul><li><strong>纯只读且结果极简</strong> (如 <code>ls</code> 列出 3 个文件):不需要报告,直接贴结果</li><li><strong>debug 类诊断</strong>:本模板不适用,直接贴错误 + 调用栈</li><li><strong>chat 闲聊</strong>:不用任何模板</li><li><strong>用户明确说"brief"</strong>:简化为 1-2 句话,不强制 8/9 段</li></ul>
+<h2 id="维护约定">维护约定</h2>
+<h3 id="何时升级-v1-v2">何时升级 v1 → v2</h3>
+<ul><li>当某类任务"用本模板仍报告不完整"出现 3+ 次时,扩展该模板</li><li>当 P0 Spec 升级到 v2 时,本模板同步升级</li><li>当最小协议 (§3) 需要新增步骤时,本模板的"写入并发布"段同步</li></ul>
+<h3 id="不要做的事">不要做的事</h3>
+<ul><li><strong>不要</strong>在每段都强加字数要求 — 简洁优于完整</li><li><strong>不要</strong>把"4 支撑章节"当模板必填 — 它们是参考</li><li><strong>不要</strong>让本模板变成"形式主义" — 一个 5 行的报告,填空到位,优于一个 50 行的报告凑字数</li></ul>
+<h2 id="已知限制">已知限制</h2>
+<ol><li><strong>本模板是"填空清单",不是"完整报告生成器"</strong> — 复杂的 reasoning / debugging 不适合用此格式</li><li><strong>状态三态有重叠</strong>:PASS + PENDING_CDN_SYNC 可能同时出现(本模板定义为"PASS in Git, PENDING_CDN_SYNC in live",§1 详述)</li><li><strong>CDN 轮询脚本只对 GitHub Pages 适用</strong> — 其他 CDN (Vercel / Cloudflare Pages) 需要替换轮询 URL</li><li><strong>本模板不强制</strong>:本仓库内只用于 hermes-knowledge-base 相关任务;其他 agent (OpenClaw / ConPort) 引用本模板时,需要适配</li><li><strong>附录里的"已废弃标签"段落</strong>:P0 Spec 的 <code>[DRY-RUN] / [APPLIED]</code> 仍可用但已非首选,本模板推荐 5 标签体系</li></ol>
+<h2 id="与项目记忆的关联">与项目记忆的关联</h2>
+<p>本模板的执行依赖项目记忆:</p>
+<ul><li><strong>Telegram typing action</strong>:对应"执行中"状态</li><li><strong>MEDIA 协议</strong>:用于 [PUSH] 后的"已生效"反馈</li><li><strong>sub-agent 隔离</strong>:用于 §3 最小协议中的"并发写入"判断</li><li><strong>session DB 持久化</strong>:用于 Evidence 段的"last-validated"时间</li><li><strong>多平台 home channel</strong>:用于 [LIVE] 段的逐平台 curl</li></ul>
+<p>如果项目记忆本身有误,本模板相应段需要修正。</p>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-notes">
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">笔记</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="hermes-agent-任务报告模板">Hermes Agent 任务报告模板</h1>
+<blockquote><p><strong>基础</strong>：<a href="2026-06-26-hermes-agent-ui-p0-implementation-spec" target="_blank" rel="noopener">P0 Implementation Spec</a> 的 8 段报告 + 5 标签系统 <strong>性质</strong>：可直接复制填空的报告模板,不是长篇理论 <strong>范围</strong>：所有"通过 agent 完成、可能影响远端状态"的任务 <strong>基线日期</strong>：2026-06-26</p></blockquote>
+<hr>
+<h2 id="速查">速查</h2>
+<pre><code>任务类型 → 模板选哪个?
+- 只读 (read/search/grep)  → 模板 1 (3 段)
+- 写本地 (write/patch)     → 模板 2 (5 段)
+- 发远端 (push/deploy)      → 模板 3 (9 段)</code></pre>
+<p>执行标签:<code>[READ-ONLY]</code> / <code>[WRITE]</code> / <code>[GENERATE]</code> / <code>[PUSH]</code> / <code>[LIVE]</code> 状态标签:<code>PASS</code> / <code>WARN</code> / <code>FAIL</code> / <code>PENDING_CDN_SYNC</code> / <code>RESOLVED</code> 生命周期:<code>proposed</code> / <code>applied</code> / <code>pushed</code> / <code>live</code></p>
+<hr>
+<h2 id="模板-1-只读审计任务报告模板">模板 1: 只读审计任务报告模板</h2>
+<p><strong>适用</strong>:<code>read</code> / <code>search</code> / <code>grep</code> / <code>web_search</code> / <code>read_file</code> / <code>analyze</code> 等无副作用操作 <strong>必填段</strong>:3 段(Status / Scope / Evidence)</p>
+<pre data-lang="`markdown"><code>## 任务报告: &lt;任务简述&gt;
+
+### 1. STATUS
+- 状态: PASS / WARN / FAIL
+- 任务类型: 只读审计
+- 耗时: &lt;X 秒/分&gt;
+
+### 2. SCOPE
+- 做了什么: &lt;一句话, 如 &quot;扫描所有 metadata.yaml 的 type 字段分布&quot;&gt;
+- 没做什么: &lt;明确不修改任何文件&gt;
+- 边界: 本任务只读,不影响任何状态
+
+### 3. EVIDENCE
+| 引用 | 置信度 | 验证时间 |
+|------|--------|----------|
+| &lt;本地文件路径或 URL&gt; | n/a (本地) / high / medium | &lt;ISO 8601 或 &quot;X 分钟前&quot;&gt; |
+| &lt;结果统计, 如 &quot;41 个 metadata.yaml, type 分布: 27 article / 5 note / 4 project / 4 collection / 1 resource_collection&quot;&gt; | high | &lt;刚才&gt; |
+
+**Checks (若有)**:
+- [READ-ONLY] &lt;使用的工具, 如 `rg &#x27;type:&#x27; content/**/metadata.yaml`&gt;
+
+**Known limitations**:
+- &lt;未覆盖的范围, 如 &quot;只统计 type 字段,未看 type 是否在合法枚举中&quot;&gt;
+- &lt;启发式判断, 如 &quot;基于文件名,不验证 frontmatter 完整性&quot;&gt;
+
+**Next action**:
+- &lt;下一步建议, 如 &quot;如果需要精确统计,可加 frontmatter parse&quot;&gt;</code></pre>
+<hr>
+<h2 id="模板-2-写入但不发布任务报告模板">模板 2: 写入但不发布任务报告模板</h2>
+<p><strong>适用</strong>:<code>write_file</code> / <code>patch</code> / <code>edit</code> / <code>build_index.py</code> / <code>run local script</code> 等修改本地文件但<strong>不</strong> push 远端 <strong>必填段</strong>:5 段(Status / Scope / Actions / Files / Evidence)</p>
+<pre data-lang="`markdown"><code>## 任务报告: &lt;任务简述&gt;
+
+### 1. STATUS
+- 状态: PASS / WARN / FAIL
+- 任务类型: 写入但不发布
+- 耗时: &lt;X 秒/分&gt;
+
+### 2. SCOPE
+- 做了什么: &lt;文件/路径列表&gt;
+- 没做什么: &lt;明确不 push / 不改远端&gt;
+- 边界: 修改仅限本地仓库工作区
+
+### 3. ACTIONS
+- [WRITE] patch `&lt;file&gt;: &lt;field&gt;` &lt;old&gt; → &lt;new&gt;
+- [WRITE] write `&lt;new-file&gt;` (&lt;字节数&gt;)
+- [WRITE] run `&lt;script&gt;` (&lt;exit code&gt;)
+- [GENERATE] catalog.json 包含新条目 (count: N → N+1, 验证方式: &lt;读 + 校验字段&gt;)
+
+按时间顺序列出,每个 [WRITE] 都对应一个 Files 段里的文件。
+
+### 4. FILES CHANGED
+| 路径 | 操作 | 行数 Δ |
+|------|------|--------|
+| `&lt;path&gt;` | [WRITE] | +X / -Y |
+| `&lt;path&gt;` | [GENERATE] | +X / -Y |
+| `&lt;path&gt;` | [READ-ONLY] (verify) | 0 |
+
+**Files unchanged** (明确列出):&lt;没有碰的文件&gt;
+
+### 5. EVIDENCE
+| 引用 | 置信度 | 验证时间 |
+|------|--------|----------|
+| &lt;local file path&gt; | n/a (本地) | &lt;刚才&gt; |
+| &lt;script output, 如 `check_kb.py: PASS 45/45`&gt; | high | &lt;刚才&gt; |
+| &lt;catalog.json record count&gt; | high | &lt;刚才&gt; |
+
+**Known limitations**:
+- &lt;本地检查通过 ≠ 远端会通过, 如 &quot;未跑 update_site.py 二次确认&quot;&gt;
+- &lt;未跑 checks, 如 &quot;只跑了 check_kb.py, 未跑 check_pages_sync.py&quot;&gt;
+
+**Next action**:
+- &lt;下一步建议, 如 &quot;如需发布, 跑 update_site.py + per-file git add + push&quot;&gt;
+- &lt;或 &quot;如保持只本地, 可暂不 commit&quot;&gt;</code></pre>
+<hr>
+<h2 id="模板-3-写入并发布任务报告模板">模板 3: 写入并发布任务报告模板</h2>
+<p><strong>适用</strong>:<code>git push</code> / <code>deploy</code> / <code>send_message</code> / <code>publish</code> / 跨 agent 共享写入 <strong>必填段</strong>:9 段(全部)</p>
+<pre data-lang="`markdown"><code>## 任务报告: &lt;任务简述&gt;
+
+### 1. STATUS
+- 状态: PASS / WARN / FAIL / PENDING_CDN_SYNC
+- 任务类型: 写入并发布
+- 任务进度: 思考中 / 执行中 / 已完成
+- 阶段: &lt;当前阶段名, 如 &quot;Step 3/5 — 同步 push&quot;&gt;
+- 耗时: &lt;X 秒/分&gt;
+- 状态说明:
+  - PASS = git push 成功 + live CDN 同步
+  - WARN = git push 成功但 live 暂未同步(标 PENDING_CDN_SYNC)
+  - FAIL = 任何环节失败(rebase 冲突 / check FAIL / push failed)
+
+### 2. SCOPE
+- 做了什么: &lt;完整列表, 如 &quot;新增 1 条 KB 记录 (4 文件) + 更新 catalog + push 到 origin/main&quot;&gt;
+- 没做什么: &lt;明确排除, 如 &quot;未改任何其他记录 / 未改 app.js / styles.css / generate_item_pages.py&quot;&gt;
+- 边界声明: &lt;任务类型的免责声明, 如 &quot;派生条目,不修改源&quot;&gt;
+
+### 3. ACTIONS
+按阶段列出,每阶段单独成块:
+
+**阶段 1: 准备**
+- [READ-ONLY] fetch origin
+- [READ-ONLY] pull --rebase --autostash
+- [READ-ONLY] verify 0/0 + git status -s empty
+
+**阶段 2: 写入**
+- [WRITE] create metadata.yaml
+- [WRITE] create summary.md
+- [WRITE] create source.md
+- [WRITE] create notes.md
+
+**阶段 3: 构建**
+- [GENERATE] run python3 scripts/update_site.py (5/5 OK)
+- [GENERATE] catalog.json records 44 → 45
+- [GENERATE] site/items/&lt;slug&gt;/index.html generated
+
+**阶段 4: 检查**
+- [READ-ONLY] check_kb.py: PASS 45/45, warnings=0
+- [READ-ONLY] check_pages_sync.py: PASS 45/45, site/ ↔ docs/ byte-identical
+
+**阶段 5: 发布**
+- [WRITE] git add &lt;12 files, per-file&gt;
+- [PUSH] git commit -m &quot;&lt;message&gt;&quot;
+- [PUSH] git push origin main (success)
+
+**阶段 6: live 验证**
+- [LIVE] curl live catalog → 45 records
+- [LIVE] curl live item page → HTTP 200
+- [LIVE] sha256 byte-identical vs local
+- 状态: &lt;synced / PENDING_CDN_SYNC (iteration N / 等待 X min)&gt;
+
+### 4. FILES CHANGED
+| 路径 | 操作 | 行数 Δ |
+|------|------|--------|
+| content/notes/2026/&lt;slug&gt;/metadata.yaml | [WRITE] (new) | +38 |
+| content/notes/2026/&lt;slug&gt;/summary.md | [WRITE] (new) | +126 |
+| content/notes/2026/&lt;slug&gt;/source.md | [WRITE] (new) | +119 |
+| content/notes/2026/&lt;slug&gt;/notes.md | [WRITE] (new) | +761 |
+| site/data/catalog.json | [GENERATE] | +48 |
+| docs/data/catalog.json | [GENERATE] | +48 |
+| index/catalog.jsonl | [GENERATE] | +1 |
+| index/authors.md | [GENERATE] | +1 |
+| index/tags.md | [GENERATE] | +20 |
+| index/timeline.md | [GENERATE] | +1 |
+| site/items/&lt;slug&gt;/index.html | [GENERATE] | +714 |
+| docs/items/&lt;slug&gt;/index.html | [GENERATE] | +714 |
+
+**Files unchanged (重要 — 明确没动)**:
+- 所有其他 KB 记录(41 条)
+- check_kb.py / app.js / generate_item_pages.py / styles.css
+
+**Diff stat**: 12 files changed, 2591 insertions(+), 0 deletions(-)
+
+### 5. EVIDENCE
+| 引用 | 置信度 | 验证时间 |
+|------|--------|----------|
+| commit `&lt;hash&gt;` | high | &lt;刚才 commit time&gt; |
+| `git show origin/main:docs/data/catalog.json` 包含新 slug | high | &lt;刚才&gt; |
+| live `&lt;catalog URL&gt;` → records=45 | high | &lt;刚才 live curl&gt; |
+| live `&lt;item URL&gt;` → HTTP 200 | high | &lt;刚才 live curl&gt; |
+| live sha256 vs local sha256 → byte-identical | high | &lt;刚才&gt; |
+| `python3 scripts/check_kb.py` → PASS 45/45 | high | &lt;刚才&gt; |
+| `python3 scripts/check_pages_sync.py` → PASS 45/45 | high | &lt;刚才&gt; |
+
+### 6. CHECKS
+| 检查 | 命令 | 结果 |
+|------|------|------|
+| KB integrity | `python3 scripts/check_kb.py` | PASS 45/45, warnings=0 |
+| Pages sync | `python3 scripts/check_pages_sync.py` | PASS 45/45 |
+| Build pipeline | `python3 scripts/update_site.py` | 5/5 OK |
+| Pre-push rebase | `git pull --rebase --autostash` | clean (0/0) |
+| Git history | `git log --oneline -3` | expected |
+| Live HTTP | `curl -sI &lt;live URL&gt;` | 200 |
+| Live byte-identity | `sha256sum local + remote` | identical |
+
+### 7. COMMIT / PUSH / LIVE
+- commit hash: `&lt;full SHA, 40 chars&gt;`
+- commit time: &lt;ISO 8601&gt;
+- push status: success / failed / pending
+- rebase status: clean / conflicts
+- 远端 ahead/behind: 0/0
+- live CDN: synced (iteration N) / PENDING_CDN_SYNC (X min waited)
+- live last-modified: &lt;header value&gt;
+
+### 8. KNOWN LIMITATIONS
+- 启发式判断: &lt;yes / no, 具体哪些&gt;
+- 未跑全流程: &lt;yes / no, 哪些步骤未跑&gt;
+- CDN 延迟: &lt;yes / no, 等了 X min, 是否追上&gt;
+- 其他: &lt;具体限制, 如 &quot;未做跨平台 curl,只 curl 了 GitHub Pages&quot;&gt;
+
+### 9. NEXT ACTION
+- 后续任务 / 用户反馈等待: &lt;具体&gt;
+- 二轮审计 / 复现实验: &lt;条件&gt;
+- v2 触发条件: &lt;如有, 如 &quot;30 天内应用 ≥ 10 次 WARN &lt; 5%&quot;&gt;
+- 已知风险: &lt;如有&gt;</code></pre>
+<hr>
+<h2 id="1-状态三态说明">1. 状态三态说明</h2>
+<p>3 套独立的三态,经常一起使用:</p>
+<h3 id="11-pass-warn-fail-任务结果三态">1.1 PASS / WARN / FAIL — 任务结果三态</h3>
+<table class="md-table"><thead><tr><th>状态</th><th>含义</th><th>行动</th></tr></thead><tbody><tr><td><strong>PASS</strong></td><td>任务完成 + 所有检查通过 + 报告齐全</td><td>任务结束</td></tr><tr><td><strong>WARN</strong></td><td>任务完成但有缺项(启发式、CDN 暂未同步、Evidence 缺项)</td><td>标注限制,继续;下次补</td></tr><tr><td><strong>FAIL</strong></td><td>任务未完成(关键缺失 / gate FAIL / push failed)</td><td>不完成任务,标注 PENDING</td></tr></tbody></table>
+<h3 id="12-proposed-applied-pushed-live-动作生命周期四态">1.2 proposed / applied / pushed / live — 动作生命周期四态</h3>
+<p>每个动作的"当前位置"必须明确:</p>
+<table class="md-table"><thead><tr><th>状态</th><th>含义</th><th>对应模板标签</th></tr></thead><tbody><tr><td><strong>proposed</strong></td><td>建议/草稿,未执行</td><td><code>[READ-ONLY]</code> 描述,无副作用</td></tr><tr><td><strong>applied</strong></td><td>已应用到本地,未推远端</td><td><code>[WRITE]</code> / <code>[GENERATE]</code></td></tr><tr><td><strong>pushed</strong></td><td>已推到远端 git 仓库</td><td><code>[PUSH]</code></td></tr><tr><td><strong>live</strong></td><td>已在 live CDN 验证可见</td><td><code>[LIVE]</code></td></tr></tbody></table>
+<p><strong>关键区分</strong>:<code>applied ≠ pushed ≠ live</code>。一个动作可能 <code>applied</code> 但未 <code>pushed</code>(写本地),或 <code>pushed</code> 但 <code>live</code> 暂未同步(标 PENDING_CDN_SYNC)。</p>
+<h3 id="13-建议-草稿-已执行-中文三态同-12">1.3 建议 / 草稿 / 已执行 — 中文三态(同 1.2)</h3>
+<table class="md-table"><thead><tr><th>中文</th><th>等同英文</th><th>标签</th></tr></thead><tbody><tr><td>建议</td><td>proposed</td><td><code>[READ-ONLY]</code> 描述</td></tr><tr><td>草稿</td><td>proposed (具体文件)</td><td><code>[WRITE]</code> 但未 commit</td></tr><tr><td>已执行</td><td>applied / pushed / live</td><td><code>[WRITE]</code> / <code>[PUSH]</code> / <code>[LIVE]</code></td></tr></tbody></table>
+<h3 id="14-只读-写入-发布-任务类型三态">1.4 只读 / 写入 / 发布 — 任务类型三态</h3>
+<table class="md-table"><thead><tr><th>类型</th><th>模板</th><th>例子</th></tr></thead><tbody><tr><td><strong>只读</strong></td><td>模板 1 (3 段)</td><td><code>read</code> / <code>search</code> / <code>grep</code> / <code>analyze</code></td></tr><tr><td><strong>写入</strong></td><td>模板 2 (5 段)</td><td><code>write</code> / <code>patch</code> / <code>build_index</code></td></tr><tr><td><strong>发布</strong></td><td>模板 3 (9 段)</td><td><code>push</code> / <code>deploy</code> / <code>publish</code> / <code>send_message</code></td></tr></tbody></table>
+<h3 id="15-本地成功-远端成功-live-成功-写入并发布任务的子状态">1.5 本地成功 / 远端成功 / live 成功 — 写入并发布任务的子状态</h3>
+<p><strong>关键</strong>:这三个状态<strong>可能不同步</strong>:</p>
+<table class="md-table"><thead><tr><th>状态</th><th>含义</th><th>出现 PENDING_CDN_SYNC 的条件</th></tr></thead><tbody><tr><td><strong>本地成功</strong></td><td>写入本地文件、commit 成功</td><td>(不会触发)</td></tr><tr><td><strong>远端成功</strong></td><td>git push 成功,远端 git tree 包含</td><td>(不会触发)</td></tr><tr><td><strong>live 成功</strong></td><td>GitHub Pages / CDN 已同步并可访问</td><td><strong>是</strong>(CDN 缓存 5-10 min)</td></tr></tbody></table>
+<p>当 PENDING_CDN_SYNC 出现时,任务状态是 <strong>PASS(本地+远端) + PENDING(live)</strong>,<strong>不判整体 FAIL</strong>。</p>
+<h3 id="16-状态组合示例">1.6 状态组合示例</h3>
+<table class="md-table"><thead><tr><th>场景</th><th>状态</th></tr></thead><tbody><tr><td>写本地未 commit</td><td><code>proposed</code></td></tr><tr><td>写本地已 commit 未 push</td><td><code>applied</code></td></tr><tr><td>push 成功,CDN 已同步</td><td><code>live</code> + PASS</td></tr><tr><td>push 成功,CDN 暂未同步</td><td><code>pushed</code> + PENDING_CDN_SYNC</td></tr><tr><td>rebase 冲突</td><td>FAIL + reset-and-rebuild 模式</td></tr><tr><td>check_kb.py FAIL</td><td>FAIL + 修后重跑</td></tr><tr><td>启发式判断未验证</td><td>WARN(不是 FAIL)</td></tr><tr><td>关键证据缺失</td><td>FAIL</td></tr><tr><td>报告 8 段缺一段</td><td>WARN(不是 FAIL)</td></tr></tbody></table>
+<hr>
+<h2 id="2-cdn-延迟处理规则">2. CDN 延迟处理规则</h2>
+<h3 id="21-进入-pending_cdn_sync-的条件">2.1 进入 PENDING_CDN_SYNC 的条件</h3>
+<p>满足以下<strong>全部</strong>条件时进入:</p>
+<ul><li><code>git push origin main</code> 成功(exit 0)</li><li><code>git show origin/main:docs/data/catalog.json</code> 显示新记录(说明 push 真实成功)</li><li>但 <code>curl https://&lt;user&gt;.github.io/&lt;repo&gt;/data/catalog.json</code> 仍返回旧 records 数 / 旧 item</li></ul>
+<p><strong>根因</strong>:GitHub Pages 部署后,CDN 需要 5-10 min 同步(我们的最近 3 次任务都是 ~30s-60s 内追上,但理论上限更高)。</p>
+<h3 id="22-处理流程">2.2 处理流程</h3>
+<pre><code>[Step 1] git push 成功
+[Step 2] 立刻 curl live,验证是否已同步
+[Step 3] 如果未同步,标 PENDING_CDN_SYNC
+[Step 4] 每 30s 轮询一次,最多 8 min
+[Step 5] 一旦同步,标 RESOLVED
+[Step 6] 报告 §7 状态:
+  - 状态: PASS + PENDING_CDN_SYNC → 已 RESOLVED (iteration N, waited X min)
+  - 或: 状态: PASS + PENDING_CDN_SYNC → 仍 PENDING (waited 8 min, 需人工介入)</code></pre>
+<h3 id="23-轮询脚本可直接用">2.3 轮询脚本(可直接用)</h3>
+<pre data-lang="bash"><code># 替换 &lt;live-catalog-url&gt; 和 &lt;expected-count&gt;
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16; do
+  live_count=$(curl -sL &quot;&lt;live-catalog-url&gt;&quot; | python3 -c &quot;
+import json, sys
+print(len(json.load(sys.stdin)))
+&quot;)
+  if [ &quot;$live_count&quot; = &quot;&lt;expected-count&gt;&quot; ]; then
+    echo &quot;CDN RESOLVED at iteration $i&quot;
+    break
+  fi
+  sleep 30
+done</code></pre>
+<h3 id="24-关键原则">2.4 关键原则</h3>
+<ul><li><strong>PENDING_CDN_SYNC 不判 FAIL</strong> — git 成功 + live 暂时缓存是已知现象</li><li><strong>git show origin/main 是权威</strong> — 用来区分 "CDN 缓存" vs "push 真的失败"</li><li><strong>8 min 是上限</strong> — 超出后标 PENDING 等待人工介入,不要无限轮询</li><li><strong>RESOLVED 后再标 PASS</strong> — 报告最终状态应该是 "PASS + RESOLVED" 或 "PASS + PENDING(超时)"</li></ul>
+<h3 id="25-状态转换表">2.5 状态转换表</h3>
+<table class="md-table"><thead><tr><th>阶段</th><th>状态</th><th>报告字段</th></tr></thead><tbody><tr><td>刚 push 完,live 还未追上</td><td><code>PASS + PENDING_CDN_SYNC</code></td><td>§1 标 PENDING,§7 说明等待</td></tr><tr><td>live 追上</td><td><code>PASS + RESOLVED</code></td><td>§1 改 PASS,§7 标 RESOLVED</td></tr><tr><td>8 min 仍未追上</td><td><code>WARN + PENDING_CDN_SYNC (超时)</code></td><td>§1 标 WARN,§7 需人工</td></tr><tr><td>区分不清 (CDN vs push 失败)</td><td><code>FAIL + 需调查</code></td><td>用 <code>git show origin/main:...</code> 区分</td></tr></tbody></table>
+<hr>
+<h2 id="3-多-agent-并发最小协议">3. 多 agent 并发最小协议</h2>
+<p>完整的 13 步协议见 <a href="2026-06-26-hermes-agent-ui-p0-implementation-spec" target="_blank" rel="noopener">P0 Spec §8.2</a>。本节是<strong>最小可工作集</strong>(5 步),适用于多数任务。</p>
+<h3 id="31-最小协议-5-步">3.1 最小协议 5 步</h3>
+<pre><code>[CP-1] git fetch origin
+       退出条件: 命令成功
+
+[CP-2] git pull --rebase --autostash origin main
+       退出条件: rebase 成功, ahead/behind = 0/0
+       失败处理: reset-and-rebuild (见 3.2)
+
+[CP-3] python3 scripts/update_site.py
+       退出条件: 5/5 OK
+       内部已 hard-stop: check_kb.py FAIL 时不进 build/export/sync
+
+[CP-4] re-run checks (check_kb.py + check_pages_sync.py)
+       退出条件: 两个 gate 都 PASS
+       目的: 二次确认 Step 3 的副作用没破坏 gate
+
+[CP-5] per-file git add + git commit + git push origin main
+       退出条件: push 成功
+       注意: 不 git add . 或 git add -A</code></pre>
+<p><strong>完整协议(13 步)</strong> vs <strong>最小协议(5 步)</strong>:多数任务用最小协议即可;涉及 sub-agent、跨平台 deploy、CDN 同步、紧急回滚时,用完整协议。</p>
+<h3 id="32-失败处理reset-and-rebuild">3.2 失败处理:reset-and-rebuild</h3>
+<p>当 CP-2 失败(rebase 冲突)或 CP-5 失败(push rejected)时:</p>
+<pre data-lang="bash"><code># 保存本地新内容到 /tmp
+cp -r content/&lt;new-dir&gt; /tmp/kb-stash/
+
+# 丢弃本地 commit,回到 origin/main
+git reset --hard origin/main
+
+# 恢复新内容
+cp -r /tmp/kb-stash/* content/
+
+# 重新走完整流程
+python3 scripts/check_kb.py
+python3 scripts/update_site.py
+python3 scripts/check_pages_sync.py
+git add &lt;per-file&gt;
+git commit -m &quot;&lt;message&gt;&quot;
+git push origin main</code></pre>
+<p><strong>为什么不用 <code>git pull --rebase</code> 手动解冲突</strong>:catalog JSON 文件的 UU 冲突不好手动解,reset-and-rebuild 让 <code>update_site.py</code> 从 <code>content/</code> 重新生成,一次解决。</p>
+<h3 id="33-何时升级到完整协议">3.3 何时升级到完整协议</h3>
+<ul><li>多个 agent 共享同一仓库同时写(明确并发)</li><li>涉及 cross-region deploy(不止 GitHub Pages)</li><li>涉及 cronjob / background 进程(不只是 git push)</li><li>紧急回滚场景(需要精确控制每步)</li></ul>
+<h3 id="34-协议时间预算">3.4 协议时间预算</h3>
+<table class="md-table"><thead><tr><th>Step</th><th>预期时长</th><th>超出则</th></tr></thead><tbody><tr><td>CP-1 (fetch)</td><td>&lt; 10s</td><td>检查网络</td></tr><tr><td>CP-2 (pull)</td><td>&lt; 30s</td><td>可能冲突,转 reset-and-rebuild</td></tr><tr><td>CP-3 (update_site)</td><td>&lt; 60s</td><td>检查脚本权限</td></tr><tr><td>CP-4 (re-run checks)</td><td>&lt; 30s</td><td>极少见,检查 commit 是否成功</td></tr><tr><td>CP-5 (commit + push)</td><td>&lt; 30s</td><td>检查 commit msg / 远端权限</td></tr><tr><td><strong>总预算</strong></td><td><strong>&lt; 3 min</strong></td><td>转完整协议 13 步</td></tr></tbody></table>
+<hr>
+<h2 id="4-以后如何使用">4. 以后如何使用</h2>
+<h3 id="41-强制场景">4.1 强制场景</h3>
+<table class="md-table"><thead><tr><th>场景</th><th>强制程度</th></tr></thead><tbody><tr><td>跨 agent 共享的写入</td><td><strong>强制</strong> — 至少模板 2 (5 段)</td></tr><tr><td><code>git push</code> / <code>deploy</code> / <code>publish</code></td><td><strong>强制</strong> — 必须模板 3 (9 段)</td></tr><tr><td>用户明确说"安全" / "可验证"</td><td><strong>强制</strong> — 模板 3</td></tr><tr><td>长任务(&gt; 5 步)</td><td><strong>强烈推荐</strong> — 模板 3</td></tr><tr><td>纯只读 + 极简(ls / wc)</td><td><strong>可选</strong> — 可不用模板</td></tr><tr><td>紧急任务 + 用户说"brief"</td><td><strong>最低要求</strong> — 至少 3 段</td></tr></tbody></table>
+<h3 id="42-必填段任意模板">4.2 必填段(任意模板)</h3>
+<p>无论用哪个模板,以下字段<strong>不可省略</strong>:</p>
+<ul><li><strong>Status</strong>(PASS / WARN / FAIL + 任务类型)</li><li><strong>Scope</strong>(做了什么 + 没做什么)</li><li><strong>Evidence</strong>(Source citation 三件套或本地验证)</li></ul>
+<p>其他段(Next action / Files changed / Checks 等)按任务复杂度决定。</p>
+<h3 id="43-反模式不要做">4.3 反模式(不要做)</h3>
+<ul><li>❌ <strong>不要用一句"完成了"替代证据</strong></li><li>反例: "已完成,详见以上" → FAIL</li><li>正例: "已完成,commit &lt;hash&gt;, live HTTP 200, evidence 见 §5" → PASS</li></ul>
+<ul><li>❌ <strong>不要混用生命周期标签</strong></li><li>反例: 标 "已 applied" 但其实只是 proposed → FAIL(诚实问题)</li><li>正例: 每个动作明确标 <code>[READ-ONLY]</code> / <code>[WRITE]</code> / <code>[PUSH]</code> / <code>[LIVE]</code></li></ul>
+<ul><li>❌ <strong>不要把"草稿"和"已执行"放在同一行</strong></li><li>反例: "[APPLIED] 建议 patch file" → FAIL(语义矛盾)</li><li>正例: "[DRY-RUN] 建议 patch file" / "[WRITE] 已 patch file"</li></ul>
+<ul><li>❌ <strong>不要在 git push 失败时仍标 PASS</strong></li><li>反例: push rejected 但报告说"已发布" → FAIL</li><li>正例: push rejected → FAIL + reset-and-rebuild 模式</li></ul>
+<ul><li>❌ <strong>不要在 live 未同步时标 PASS</strong></li><li>反例: push 成功但 live 仍 404,报告说 PASS → WARN(PENDING_CDN_SYNC)</li><li>正例: 标 PASS + PENDING_CDN_SYNC,等 RESOLVED 后改回 PASS</li></ul>
+<ul><li>❌ <strong>不要在 check FAIL 时仍标 PASS</strong></li><li>反例: check_kb.py FAIL 但报告说"已完成" → FAIL</li><li>正例: check FAIL → 修后重跑,再标 PASS</li></ul>
+<h3 id="44-区分-proposed-applied-pushed-live">4.4 区分 proposed / applied / pushed / live</h3>
+<p>每次任务报告中,<strong>每个动作必须属于以下 4 态之一</strong>:</p>
+<table class="md-table"><thead><tr><th>状态</th><th>在哪里</th><th>谁能验证</th></tr></thead><tbody><tr><td><strong>proposed</strong></td><td>agent 内部想法,未执行</td><td>无</td></tr><tr><td><strong>applied</strong></td><td>本地文件,已写入</td><td><code>git diff</code> / <code>cat</code></td></tr><tr><td><strong>pushed</strong></td><td>远端 git 仓库</td><td><code>git show origin/main:...</code></td></tr><tr><td><strong>live</strong></td><td>GitHub Pages / CDN</td><td><code>curl &lt;live URL&gt;</code></td></tr></tbody></table>
+<p><strong>重要性</strong>:<code>applied ≠ pushed</code> 是新手最常犯的错(改了本地就说"已发布")。<code>pushed ≠ live</code> 是 CDN 缓存常被忽略。</p>
+<p><strong>报告模板中的体现</strong>:模板 3 的 §3 Actions 严格按"阶段 1 准备 [READ-ONLY] / 阶段 2 写入 [WRITE] / 阶段 3 构建 [GENERATE] / 阶段 4 检查 [READ-ONLY] / 阶段 5 发布 [PUSH] / 阶段 6 live 验证 [LIVE]"分阶段标注,不允许跨阶段混标签。</p>
+<h3 id="45-报告生成流程建议">4.5 报告生成流程建议</h3>
+<ol><li><strong>任务开始</strong>:在心里(或草稿)选模板(1/2/3)</li><li><strong>任务执行中</strong>:用 todo / log 记录每个动作的 [READ-ONLY] / [WRITE] / [PUSH] / [LIVE] 标签</li><li><strong>任务结束</strong>:按模板逐段填充,不省略必填段</li><li><strong>检查报告</strong>:对照 §4.3 反模式,确认没有违反</li><li><strong>发送报告</strong>:即使 brief reply,也带 8 段(或最少 3 段)</li></ol>
+<h3 id="46-反馈循环">4.6 反馈循环</h3>
+<p>如果某次报告"按本模板仍写不清楚",记录:</p>
+<ul><li>哪种任务类型(只读 / 写入 / 发布)?</li><li>缺哪一段?</li><li>是模板字段不够,还是填写时漏了?</li></ul>
+<p>累积 3+ 次同类反馈后,扩展模板或新增字段。</p>
+<hr>
+<h2 id="附录-完整示例">附录: 完整示例</h2>
+<p>下面是一个<strong>真实回填</strong>的模板 3 报告,数据来自 P0 Spec 创建任务 (<code>012eb6b</code>):</p>
+<pre data-lang="`markdown"><code>## 任务报告: P0 实施规范条目创建
+
+### 1. STATUS
+- 状态: PASS + RESOLVED
+- 任务类型: 写入并发布
+- 阶段: 已完成(13 步并发协议全部执行)
+- 耗时: ~10 min
+- 状态说明: git push 成功,CDN 第二次轮询同步
+
+### 2. SCOPE
+- 做了什么:
+  - content/notes/2026/2026-06-26-hermes-agent-ui-p0-implementation-spec/ (4 文件, 1044 行)
+  - site/data/catalog.json (44 → 45 records)
+  - docs/data/catalog.json, index/catalog.jsonl, index/{authors,tags,timeline}.md
+  - site/items/&lt;slug&gt;/index.html, docs/items/&lt;slug&gt;/index.html
+- 没做什么:
+  - 源 self-audit v1 / checklist 原条目
+  - check_kb.py / app.js / generate_item_pages.py / styles.css
+  - 任何其他 KB 记录(43 条)
+- 边界: 派生条目,不修改源,无代码改动
+
+### 3. ACTIONS
+- 阶段 1: [READ-ONLY] fetch + pull --rebase (fast-forward clean)
+- 阶段 2: [WRITE] 4 文件 (metadata/summary/source/notes)
+- 阶段 3: [GENERATE] update_site.py (5/5 OK)
+- 阶段 4: [READ-ONLY] check_kb.py PASS 44/44, check_pages_sync.py PASS 44/44
+- 阶段 5: [WRITE] per-file git add (12 files, 2591 insertions)
+- 阶段 5: [PUSH] commit 012eb6b + push origin main (success)
+- 阶段 6: [LIVE] curl live catalog → 44 records (initial), PENDING_CDN_SYNC
+- 阶段 6: [LIVE] 第二次轮询 → 44 records, HTTP 200, byte-identical → RESOLVED
+
+### 4. FILES CHANGED
+| 路径 | 操作 | Δ |
+|------|------|---|
+| content/notes/2026/&lt;slug&gt;/metadata.yaml | [WRITE] (new) | +38 |
+| content/notes/2026/&lt;slug&gt;/summary.md | [WRITE] (new) | +126 |
+| content/notes/2026/&lt;slug&gt;/source.md | [WRITE] (new) | +119 |
+| content/notes/2026/&lt;slug&gt;/notes.md | [WRITE] (new) | +761 |
+| site/data/catalog.json | [GENERATE] | +48 |
+| docs/data/catalog.json | [GENERATE] | +48 |
+| index/catalog.jsonl | [GENERATE] | +1 |
+| index/authors.md | [GENERATE] | +1 |
+| index/tags.md | [GENERATE] | +20 |
+| index/timeline.md | [GENERATE] | +1 |
+| site/items/&lt;slug&gt;/index.html | [GENERATE] | +714 |
+| docs/items/&lt;slug&gt;/index.html | [GENERATE] | +714 |
+
+**Files unchanged**:43 个其他 KB 记录 + 所有脚本和样式文件
+**Diff stat**: 12 files changed, 2591 insertions(+), 0 deletions(-)
+
+### 5. EVIDENCE
+| 引用 | 置信度 | 验证时间 |
+|------|--------|----------|
+| commit 012eb6ba1868ac13eef0c241db5ca17df4979aa3 | high | 2026-06-27 04:33:00 |
+| site/data/catalog.json records=44 (本地) | high | 2026-06-27 04:32:00 |
+| live catalog records=44 (HTTP 200) | high | 2026-06-27 04:33:30 |
+| live sha256 8ab8e27d...= local sha256 | high | 2026-06-27 04:33:30 |
+| check_kb.py: PASS 44/44 | high | 2026-06-27 04:31:00 |
+| check_pages_sync.py: PASS 44/44 | high | 2026-06-27 04:31:00 |
+
+### 6. CHECKS
+| 检查 | 结果 |
+|------|------|
+| check_kb.py | PASS 44/44, warnings=0 |
+| check_pages_sync.py | PASS 44/44, site/ ↔ docs/ byte-identical |
+| update_site.py | 5/5 OK |
+| pre-push rebase | clean (0/0) |
+| Live HTTP | 200 |
+| Live byte-identity | identical |
+
+### 7. COMMIT / PUSH / LIVE
+- commit hash: 012eb6ba1868ac13eef0c241db5ca17df4979aa3
+- commit time: 2026-06-27 04:33:00
+- push status: success (52ad493..012eb6b)
+- rebase status: clean (0/0)
+- 远端 ahead/behind: 0/0
+- live CDN: RESOLVED (iteration 2, ~30s waited)
+- live last-modified: Fri, 26 Jun 2026 20:32:06 GMT
+
+### 8. KNOWN LIMITATIONS
+- 启发式判断: yes (P0 Spec 是 SOP,不是 enforcement)
+- 未跑全流程: no (13 步并发协议全过)
+- CDN 延迟: yes (30s 同步窗口,已 RESOLVED)
+- 其他: notes.md 局部结构因 patch 调整,内容最终一致
+
+### 9. NEXT ACTION
+- 后续任务按本模板输出报告
+- v2 触发: 5 P0 全部落地 / 30 天内应用 ≥ 10 次 WARN &lt; 5% / Self-Audit 出 v2</code></pre>
+<hr>
+<h2 id="变更日志">变更日志</h2>
+<ul><li><strong>2026-06-26</strong>:v1 初版。基于 P0 Implementation Spec 的 8 段报告 + 5 标签系统,扩展为 9 段 + 3 模板 + 4 支撑章节</li><li><strong>v2 触发</strong>:P0 Spec 出 v2 / 某模板字段不敷使用 / 最小协议增加新步骤</li></ul>
+</div>
+</details>
+</section>
+
+<nav class="detail-actions">
+<a class="action-link source-link" href="https://www.shapeof.ai/" target="_blank" rel="noopener">原文链接 ↗</a>
+<a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/notes/2026/2026-06-26-hermes-agent-task-report-template" target="_blank" rel="noopener">GitHub 文件夹 →</a>
+<button class="action-btn" id="copy-path-btn" data-path="content/notes/2026/2026-06-26-hermes-agent-task-report-template">复制 path</button>
+<span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
+</nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
+
+</article>
+</main>
+<footer>
+<p><a href="../../">hermes-knowledge-base</a> · 站内详情页</p>
+</footer>
+<script src="../../app.js" defer></script>
+<script>
+(function() {
+  const btn = document.getElementById('copy-path-btn');
+  const fb = document.getElementById('copy-feedback');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      const path = btn.getAttribute('data-path') || '';
+      const done = function() {
+        if (fb) {
+          fb.textContent = '已复制: ' + path;
+          setTimeout(function() { fb.textContent = ''; }, 2500);
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(path).then(done, function() {
+          // Fallback for non-secure contexts.
+          const ta = document.createElement('textarea');
+          ta.value = path;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); done(); } catch (e) {}
+          document.body.removeChild(ta);
+        });
+      }
+    });
+  }
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {
+    const onScroll = function() {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+</body>
+</html>

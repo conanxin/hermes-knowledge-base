@@ -83,12 +83,14 @@
 
 ## Agent UI
 
+- Hermes Agent Task Report Template
 - Hermes Agent UI P0 Implementation Spec
 - Hermes Agent UI Self-Audit v1
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 
 ## Agent Workflow
 
+- Hermes Agent Task Report Template
 - Hermes Agent UI P0 Implementation Spec
 
 ## Agentic UX
@@ -178,6 +180,7 @@
 ## Codex
 
 - Sign of the future: GPT-5.5
+- Hermes Agent Task Report Template
 
 ## Community
 
@@ -331,6 +334,7 @@
 
 ## Hermes
 
+- Hermes Agent Task Report Template
 - Hermes Agent UI P0 Implementation Spec
 - Hermes Agent UI Self-Audit v1
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
@@ -583,11 +587,20 @@
 
 ## P0
 
+- Hermes Agent Task Report Template
 - Hermes Agent UI P0 Implementation Spec
 
 ## P0/P1/P2
 
 - Hermes Agent UI Self-Audit v1
+
+## PASS/WARN/FAIL
+
+- Hermes Agent Task Report Template
+
+## PENDING_CDN_SYNC
+
+- Hermes Agent Task Report Template
 
 ## Palantir
 
@@ -1599,6 +1612,10 @@
 ## 技术评估
 
 - Wiki 代替 RAG 的可行性评估
+
+## 报告模板
+
+- Hermes Agent Task Report Template
 
 ## 报告规范
 

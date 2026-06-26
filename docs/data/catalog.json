@@ -1796,6 +1796,54 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/legacy-knowledge/2026-04-07-wiki-vs-rag-analysis"
   },
   {
+    "title": "Hermes Agent Task Report Template",
+    "title_zh": "Hermes Agent 任务报告模板",
+    "type": "note",
+    "path": "content/notes/2026/2026-06-26-hermes-agent-task-report-template",
+    "author": "Conan Xin",
+    "source_url": "https://www.shapeof.ai/",
+    "source_site": "shapeof.ai",
+    "language": "zh-CN",
+    "translation_language": null,
+    "status": "active",
+    "published_date": "2026-06-26",
+    "captured_date": "2026-06-26",
+    "topics": [
+      "Hermes Agent",
+      "Agent Workflow",
+      "任务报告",
+      "报告模板",
+      "P0 实施规范",
+      "CDN 同步",
+      "并发协议",
+      "状态三态"
+    ],
+    "tags": [
+      "Hermes",
+      "Agent Workflow",
+      "报告模板",
+      "P0",
+      "PASS/WARN/FAIL",
+      "PENDING_CDN_SYNC",
+      "Agent UI",
+      "Codex"
+    ],
+    "word_count": {
+      "source": 4302
+    },
+    "based_on": [
+      "2026-06-26-hermes-agent-ui-p0-implementation-spec",
+      "2026-06-26-hermes-agent-ui-self-audit-v1",
+      "2026-06-26-hermes-agent-ui-shape-of-ai-checklist"
+    ],
+    "category": "template",
+    "source_type": "derived",
+    "updated_date": "2026-06-26",
+    "slug": "2026-06-26-hermes-agent-task-report-template",
+    "detail_url": "items/2026-06-26-hermes-agent-task-report-template/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/notes/2026/2026-06-26-hermes-agent-task-report-template"
+  },
+  {
     "title": "Hermes Agent UI P0 Implementation Spec",
     "title_zh": "Hermes Agent UI P0 实施规范",
     "type": "note",
