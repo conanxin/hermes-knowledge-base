@@ -39,6 +39,29 @@
 
 ## 标准执行步骤
 
+### Step 0: YouTube 链接预检
+
+在正式处理视频前，必须先运行 `youtube-link-preflight` 工作流：
+
+```bash
+yt-dlp --skip-download --print-json "VIDEO_URL"
+yt-dlp --skip-download --list-subs "VIDEO_URL"
+```
+
+**预检结果处理**：
+- **PASS**：视频可访问且有字幕 → 继续 Step 1
+- **BLOCKED**：视频不可访问或无字幕 → 停止流程，生成 failure archive
+
+**失败返回格式**：
+```
+OPENCLAW_STATUS: BLOCKED
+PREFLIGHT_STATUS: BLOCKED
+VIDEO_ID: <video_id>
+FAILURE_TYPE: <failure_type>
+FAILURE_ARCHIVE: <path>
+NEXT_ACTION: provide_accessible_link
+```
+
 ### Step 1: 检查仓库
 
 进入知识库仓库，确认：

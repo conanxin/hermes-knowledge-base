@@ -106,6 +106,7 @@
 
 - YouTube Video Brief Workflow
 - 一键把 YouTube 视频加入知识库
+- 先预检，再解读 YouTube 视频
 
 ## Otto Scharmer
 

@@ -26,6 +26,7 @@
 - How AI Will Change Us
 - The 100 greatest songs of the 1960s
 - 一键把 YouTube 视频加入知识库
+- 先预检，再解读 YouTube 视频
 
 ## 2026-05
 

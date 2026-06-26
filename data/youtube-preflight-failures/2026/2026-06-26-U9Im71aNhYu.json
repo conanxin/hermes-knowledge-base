@@ -1,0 +1,48 @@
+{
+  "video_id": "U9Im71aNhYu",
+  "url": "https://www.youtube.com/watch?v=U9Im71aNhYu",
+  "checked_at": "2026-06-26T15:13:00+08:00",
+  "preflight_status": "BLOCKED",
+  "failure_type": "video_unavailable",
+  "failure_reason": "Video unavailable. This video is not available. The uploader may have removed it or set it to private.",
+  "attempted_methods": [
+    {
+      "method": "yt-dlp metadata-only check",
+      "command": "yt-dlp --skip-download --list-subs U9Im71aNhYu",
+      "result": "ERROR: [youtube] U9Im71aNhYu: Video unavailable"
+    },
+    {
+      "method": "curl with standard User-Agent",
+      "command": "curl -sL https://www.youtube.com/watch?v=U9Im71aNhYu",
+      "result": "HTTP 200 but page shows 'Video unavailable'"
+    },
+    {
+      "method": "curl with alternate User-Agent",
+      "command": "curl -sL -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' https://www.youtube.com/watch?v=U9Im71aNhYu",
+      "result": "Same 'Video unavailable' response"
+    }
+  ],
+  "safety_boundary": {
+    "no_login": true,
+    "no_cookie": true,
+    "no_full_video_download": true,
+    "no_bypass": true,
+    "no_whisper": true
+  },
+  "possible_causes": [
+    "视频已删除",
+    "视频设为私密",
+    "地区限制",
+    "需要登录",
+    "版权移除"
+  ],
+  "recommended_next_action": "provide_accessible_link",
+  "alternative_actions": [
+    "提供可访问的替代链接",
+    "上传字幕/文字稿后走 notes-first import",
+    "使用其他平台的同内容视频"
+  ],
+  "related_version": "v0.3.20 / v0.3.21",
+  "related_task": "TAG_V0320_YOUTUBE_KB_IMPORT_PILOT",
+  "notes": "这是 v0.3.20 实战试运行期间的失败案例，用于验证 youtube-preflight 的失败归档机制。"
+}

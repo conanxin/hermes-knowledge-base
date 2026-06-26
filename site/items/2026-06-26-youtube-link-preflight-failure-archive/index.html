@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>先预检，再解读 YouTube 视频 · hermes-knowledge-base</title>
+<meta name="description" content="先预检，再解读 YouTube 视频 — OpenClaw Agent">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="detail-page" id="top">
+<header class="detail-header">
+<a class="back-link" href="../../">← 返回首页</a>
+</header>
+<main class="detail-main">
+<article class="detail-article">
+<div class="detail-title-block">
+<span class="type-badge article">article</span>
+<h1 class="detail-title">先预检，再解读 YouTube 视频</h1>
+<p class="detail-title-en">先预检，再解读 YouTube 视频</p>
+</div>
+
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#说明">说明</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#命令名称">命令名称</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#核心流程">核心流程</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#输入">输入</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#输出">输出</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#失败分类">失败分类</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#安全边界">安全边界</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#关联能力">关联能力</a></li>
+</ol>
+</nav>
+
+<section class="detail-meta">
+<div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">article</div></div>
+<div class="meta-row"><div class="meta-label">作者</div><div class="meta-value">OpenClaw Agent</div></div>
+<div class="meta-row"><div class="meta-label">来源</div><div class="meta-value">OpenClaw</div></div>
+<div class="meta-row"><div class="meta-label">发布日期</div><div class="meta-value">2026-06-26</div></div>
+<div class="meta-row"><div class="meta-label">采集日期</div><div class="meta-value">2026-06-26</div></div>
+<div class="meta-row"><div class="meta-label">标签</div><div class="meta-value meta-tags"><span class="chip">openclaw</span><span class="chip">hermes</span><span class="chip">youtube</span><span class="chip">preflight</span><span class="chip">failure-archive</span><span class="chip">video-brief</span><span class="chip">knowledge-base</span><span class="chip">workflow</span><span class="chip">ai-learning</span><span class="chip">安全边界</span></div></div>
+<div class="meta-row"><div class="meta-label">主题</div><div class="meta-value meta-tags"><span class="chip">OpenClaw</span><span class="chip">Hermes</span><span class="chip">YouTube</span><span class="chip">预检</span><span class="chip">失败归档</span><span class="chip">视频解读</span><span class="chip">知识库</span><span class="chip">工作流</span></div></div>
+</section>
+
+<section class="detail-section" id="section-summary">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">摘要</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="先预检再解读-youtube-视频">先预检，再解读 YouTube 视频</h1>
+<h2 id="为什么-youtube-视频入库前需要预检">为什么 YouTube 视频入库前需要预检</h2>
+<p>当你看到一个 YouTube 视频链接，第一反应可能是"解读它"。但在动手之前，有一个关键问题：<strong>这个视频真的能被处理吗？</strong></p>
+<p>YouTube 上的视频状态复杂多变：</p>
+<ul><li>有些视频已删除，链接成了死链</li><li>有些设为私密，外人无法访问</li><li>有些受地区限制，某些国家无法观看</li><li>有些需要登录或年龄验证</li><li>有些没有字幕，解读成本剧增</li></ul>
+<p>如果不预检直接开始解读流程，可能会浪费大量时间在不可处理的视频上。更危险的是，为了"强行"处理，可能会违反安全边界（登录账号、读取 Cookie、绕过限制）。</p>
+<p><strong>预检的意义：在投入资源前，先判断视频是否值得处理。</strong></p>
+<h2 id="哪些失败不应该继续跑">哪些失败不应该继续跑</h2>
+<table class="md-table"><thead><tr><th>失败类型</th><th>说明</th><th>是否可恢复</th></tr></thead><tbody><tr><td><strong>视频已删除</strong></td><td>链接指向不存在的视频</td><td>❌ 不可恢复</td></tr><tr><td><strong>私密视频</strong></td><td>需要视频所有者授权</td><td>❌ 不可恢复</td></tr><tr><td><strong>地区限制</strong></td><td>视频在部分地区不可用</td><td>⚠️ 可能可恢复（换网络）</td></tr><tr><td><strong>需要登录</strong></td><td>YouTube 要求登录验证</td><td>❌ 不登录</td></tr><tr><td><strong>年龄限制</strong></td><td>需要年龄验证</td><td>❌ 不登录</td></tr><tr><td><strong>无字幕</strong></td><td>视频没有字幕</td><td>⚠️ 可能可恢复（音频转写，但默认不启用）</td></tr><tr><td><strong>直播未开始</strong></td><td>直播预约但尚未开始</td><td>⏰ 等待后可恢复</td></tr></tbody></table>
+<p><strong>核心原则</strong>：不登录、不读 Cookie、不下载完整视频、不绕过限制。</p>
+<h2 id="为什么失败也要归档">为什么失败也要归档</h2>
+<p>失败不是终点，而是知识。</p>
+<p>当一个视频预检失败时，归档记录：</p>
+<ul><li><strong>什么时候失败的</strong> — 避免重复检查同一链接</li><li><strong>为什么失败的</strong> — 区分技术问题（网络）和内容问题（删除）</li><li><strong>尝试过什么</strong> — 记录已验证的方法</li><li><strong>安全边界是否遵守</strong> — 证明没有违规操作</li><li><strong>后续建议</strong> — 为用户提供替代方案</li></ul>
+<p>这些归档形成一个"失败知识库"，帮助：</p>
+<ul><li>避免重复浪费时间在已知失败链接上</li><li>分析失败模式（某类视频经常不可访问？）</li><li>改进预检逻辑（发现新的失败类型）</li><li>为用户提供更好的失败反馈</li></ul>
+<h2 id="它和-v0319-v0320-的关系">它和 v0.3.19 / v0.3.20 的关系</h2>
+<pre><code>v0.3.19: 一键入库命令能力建设
+  │
+  └── youtube-kb-import: 把视频知识包加入知识库
+
+v0.3.20: 首次实战试运行
+  │
+  ├── Dario Amodei 视频: 成功入库
+  └── U9Im71aNhYu: 失败（不可访问）
+
+v0.3.21: 预检与失败归档能力建设
+  │
+  └── youtube-preflight: 在入库前先判断视频是否可处理</code></pre>
+<p><strong>v0.3.21 不是替代 v0.3.19/20，而是前置增强。</strong></p>
+<p>以后的使用流程：</p>
+<ol><li>用户提供一个 YouTube 链接</li><li><strong>先运行 youtube-preflight</strong> — 判断可访问性</li><li>如果 PASS — 继续 youtube-kb-import（v0.3.19/20 能力）</li><li>如果 BLOCKED — 生成失败归档，停止流程</li></ol>
+<h2 id="对个人知识库的价值">对个人知识库的价值</h2>
+<h3 id="时间节省">时间节省</h3>
+<p>避免在不可处理的视频上浪费 30-60 分钟的解读时间。</p>
+<h3 id="安全合规">安全合规</h3>
+<p>预检机制强制执行安全边界，防止为了"完成任务"而违规操作。</p>
+<h3 id="知识积累">知识积累</h3>
+<p>失败归档本身就是知识资产。它记录了你尝试过的链接、失败原因、替代方案。</p>
+<h3 id="流程标准化">流程标准化</h3>
+<p>把"先判断再动手"变成自动化流程，减少人为判断失误。</p>
+<h2 id="可访问视频和不可访问视频分别怎么处理">可访问视频和不可访问视频分别怎么处理</h2>
+<h3 id="可访问视频pass">可访问视频（PASS）</h3>
+<pre><code>youtube-preflight ──PASS──→ youtube-kb-import ──→ 视频解读 ──→ KB 入库</code></pre>
+<h3 id="不可访问视频blocked">不可访问视频（BLOCKED）</h3>
+<pre><code>youtube-preflight ──BLOCKED──→ failure archive ──→ 返回失败原因 + 替代方案</code></pre>
+<p><strong>替代方案</strong>：</p>
+<ol><li><strong>提供可访问链接</strong> — 如果同一视频有其他链接</li><li><strong>Notes-first import</strong> — 如果用户有字幕/文字稿</li><li><strong>其他平台</strong> — 如果视频在 Bilibili、Vimeo 等有镜像</li><li><strong>放弃</strong> — 如果确实无法获取</li></ol>
+<hr>
+<p><em>先预检，再动手。节省时间，遵守边界，积累知识。</em></p>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-translation">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">中文翻译</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="中文原文">中文原文</h1>
+<h2 id="说明">说明</h2>
+<p>本文为 OpenClaw 工作流说明文档，原文即为中文，无需翻译。</p>
+<h2 id="命令名称">命令名称</h2>
+<p>先预检，再解读 YouTube 视频 — YouTube Link Preflight</p>
+<h2 id="核心流程">核心流程</h2>
+<ol><li>解析 YouTube URL / video id</li><li>使用 yt-dlp metadata-only 检查可访问性</li><li>检查字幕可用性</li><li>分类失败原因</li><li>生成 preflight.json</li><li>如失败，生成 failure archive</li><li>返回 PASS 或 BLOCKED</li></ol>
+<h2 id="输入">输入</h2>
+<ul><li>YouTube URL 或 video id</li><li>可选参数：需要字幕、允许自动字幕、允许音频转写、归档失败</li></ul>
+<h2 id="输出">输出</h2>
+<ul><li>PASS：视频可访问且有字幕，可以进入 youtube-kb-import</li><li>BLOCKED：视频不可访问或无字幕，已归档失败</li></ul>
+<h2 id="失败分类">失败分类</h2>
+<ul><li>video_unavailable</li><li>private_video</li><li>deleted_video</li><li>geo_restricted</li><li>login_required</li><li>age_restricted</li><li>live_not_started</li><li>no_subtitles</li><li>unsupported_url</li><li>metadata_fetch_failed</li><li>unknown_failure</li></ul>
+<h2 id="安全边界">安全边界</h2>
+<ul><li>不登录账号</li><li>不读取 Cookie</li><li>不下载完整视频</li><li>不绕过地区限制</li><li>不处理私密视频</li><li>不伪造字幕</li><li>不伪造元数据</li><li>不把失败视频当作成功知识条目</li><li>不对同一失效链接反复重试</li></ul>
+<h2 id="关联能力">关联能力</h2>
+<ul><li>youtube-preflight：预检命令</li><li>youtube-kb-import：一键入库命令</li><li>Hermes Knowledge Base：知识存储和索引</li></ul>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-source">
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">原文 / 源文本</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="source-先预检再解读-youtube-视频">Source: 先预检，再解读 YouTube 视频</h1>
+<h2 id="能力来源">能力来源</h2>
+<p>本能力基于 v0.3.20 实战试运行中的真实失败案例（U9Im71aNhYu 不可访问）沉淀而来。</p>
+<p>在 v0.3.20 期间：</p>
+<ul><li>Dario Amodei 视频成功入库（验证了一键入库命令的可行性）</li><li>U9Im71aNhYu 视频不可访问（暴露了缺少预检机制的问题）</li></ul>
+<h2 id="关联文档">关联文档</h2>
+<ul><li><strong>YouTube Link Preflight Workflow</strong>: <code>docs/workflows/youtube-link-preflight-workflow.md</code></li><li><strong>youtube-preflight Command</strong>: <code>docs/commands/youtube-preflight-command.md</code></li><li><strong>YouTube KB Import Workflow</strong>: <code>docs/workflows/youtube-video-kb-import-workflow.md</code></li><li><strong>youtube-kb-import Command</strong>: <code>docs/commands/youtube-kb-import-command.md</code></li></ul>
+<h2 id="失败归档">失败归档</h2>
+<ul><li><strong>JSON</strong>: <code>data/youtube-preflight-failures/2026/2026-06-26-U9Im71aNhYu.json</code></li><li><strong>MD</strong>: <code>data/youtube-preflight-failures/2026/2026-06-26-U9Im71aNhYu.md</code></li></ul>
+<h2 id="基线版本">基线版本</h2>
+<ul><li><strong>v0.3.20</strong>: <code>v0.3.20-youtube-kb-import-pilot</code>（ae1458c）— 首次实战试运行</li><li><strong>v0.3.21</strong>: 预检与失败归档能力建设</li></ul>
+<h2 id="使用场景">使用场景</h2>
+<p>当你想要：</p>
+<ul><li>解读一个 YouTube 视频前先确认它是否可访问</li><li>避免在不可处理的视频上浪费时间</li><li>自动归档失败案例供后续参考</li><li>强制执行安全边界（不登录、不绕过限制）</li></ul>
+<h2 id="技术栈">技术栈</h2>
+<ul><li>yt-dlp — 视频元数据和字幕预检</li><li>OpenClaw — 执行预检步骤</li><li>Hermes Knowledge Base — 失败归档存储</li></ul>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-notes">
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">笔记</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="能力笔记先预检再解读-youtube-视频">能力笔记：先预检，再解读 YouTube 视频</h1>
+<h2 id="核心问题">核心问题</h2>
+<p>如何在一键入库 YouTube 视频前，先判断视频是否可访问、是否有字幕，避免无效流程和安全边界违反？</p>
+<h2 id="预检命令">预检命令</h2>
+<h3 id="最短命令">最短命令</h3>
+<pre><code>预检这个 YouTube 视频：https://www.youtube.com/watch?v=VIDEO_ID</code></pre>
+<h3 id="标准命令">标准命令</h3>
+<pre><code>请按照 youtube-link-preflight-workflow.md 预检这个 YouTube 视频：
+
+VIDEO_URL:
+https://www.youtube.com/watch?v=VIDEO_ID
+
+要求：
+- 不登录
+- 不读取 Cookie
+- 不下载完整视频
+- 检查视频是否可访问
+- 检查字幕是否可用
+- 如果失败，生成失败归档</code></pre>
+<h2 id="内部判断流程">内部判断流程</h2>
+<pre><code>1. 解析 YouTube URL / video id
+2. 标准化 URL
+3. 使用 yt-dlp metadata-only 检查可访问性
+4. 禁止登录、Cookie、完整下载
+5. 检查视频状态（public/private/deleted/unavailable）
+6. 检查字幕可用性
+7. 分类失败原因
+8. 生成 preflight.json
+9. 如失败，生成 failure archive
+10. 返回 PASS 或 BLOCKED</code></pre>
+<h2 id="失败分类">失败分类</h2>
+<table class="md-table"><thead><tr><th>failure_type</th><th>说明</th><th>可恢复？</th></tr></thead><tbody><tr><td>video_unavailable</td><td>视频不可访问</td><td>❌</td></tr><tr><td>private_video</td><td>私密视频</td><td>❌</td></tr><tr><td>deleted_video</td><td>已删除</td><td>❌</td></tr><tr><td>geo_restricted</td><td>地区限制</td><td>⚠️</td></tr><tr><td>login_required</td><td>需要登录</td><td>❌</td></tr><tr><td>age_restricted</td><td>年龄限制</td><td>❌</td></tr><tr><td>live_not_started</td><td>直播未开始</td><td>⏰</td></tr><tr><td>no_subtitles</td><td>无字幕</td><td>⚠️</td></tr><tr><td>unsupported_url</td><td>不支持的 URL</td><td>❌</td></tr><tr><td>metadata_fetch_failed</td><td>元数据获取失败</td><td>⚠️</td></tr><tr><td>unknown_failure</td><td>未知失败</td><td>⚠️</td></tr></tbody></table>
+<h2 id="失败归档结构">失败归档结构</h2>
+<pre><code>data/youtube-preflight-failures/
+└── YYYY/
+    ├── YYYY-MM-DD-&lt;video-id&gt;.json
+    └── YYYY-MM-DD-&lt;video-id&gt;.md</code></pre>
+<p><strong>JSON 文件</strong>：结构化失败信息（video_id, failure_type, attempted_methods, safety_boundary） <strong>MD 文件</strong>：人类可读失败说明（失败原因、尝试方法、安全边界、后续建议）</p>
+<h2 id="安全边界">安全边界</h2>
+<ul><li>不登录账号</li><li>不读取 Cookie</li><li>不下载完整视频</li><li>不绕过地区限制</li><li>不处理私密视频</li><li>不伪造字幕</li><li>不伪造元数据</li><li>不把失败视频当作成功知识条目</li><li>不对同一失效链接反复重试</li></ul>
+<h2 id="和一键入库命令的组合方式">和一键入库命令的组合方式</h2>
+<pre><code>youtube-preflight ──PASS──→ youtube-kb-import ──→ KB 入库
+        │
+        └──BLOCKED──→ failure archive ──→ 返回失败原因</code></pre>
+<p><strong>规则</strong>：</p>
+<ul><li>youtube-kb-import 必须先调用 youtube-preflight</li><li>只有 PASS 才允许进入入库流程</li></ul>
+<h2 id="可继续扩展方向">可继续扩展方向</h2>
+<ol><li><strong>自动重试机制</strong>：对 metadata_fetch_failed 支持定时重试</li><li><strong>批量预检</strong>：同时预检多个 YouTube 链接</li><li><strong>历史记录</strong>：建立预检历史数据库，避免重复检查</li><li><strong>用户通知</strong>：BLOCKED 时自动通知用户并提供替代方案</li><li><strong>多平台扩展</strong>：支持 Vimeo、Bilibili 等平台预检</li></ol>
+<h2 id="关联能力">关联能力</h2>
+<ul><li><strong>youtube-preflight</strong>：预检命令（本能力）</li><li><strong>youtube-kb-import</strong>：一键入库命令（v0.3.19/20）</li><li><strong>youtube-video-brief</strong>：视频解读工作流</li><li><strong>Hermes Knowledge Base</strong>：知识存储和索引</li></ul>
+</div>
+</details>
+</section>
+
+<nav class="detail-actions">
+
+<a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-youtube-link-preflight-failure-archive" target="_blank" rel="noopener">GitHub 文件夹 →</a>
+<button class="action-btn" id="copy-path-btn" data-path="content/articles/2026/2026-06-26-youtube-link-preflight-failure-archive">复制 path</button>
+<span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
+</nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
+
+</article>
+</main>
+<footer>
+<p><a href="../../">hermes-knowledge-base</a> · 站内详情页</p>
+</footer>
+<script>
+(function() {
+  const btn = document.getElementById('copy-path-btn');
+  const fb = document.getElementById('copy-feedback');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      const path = btn.getAttribute('data-path') || '';
+      const done = function() {
+        if (fb) {
+          fb.textContent = '已复制: ' + path;
+          setTimeout(function() { fb.textContent = ''; }, 2500);
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(path).then(done, function() {
+          // Fallback for non-secure contexts.
+          const ta = document.createElement('textarea');
+          ta.value = path;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); done(); } catch (e) {}
+          document.body.removeChild(ta);
+        });
+      }
+    });
+  }
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {
+    const onScroll = function() {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+</body>
+</html>

@@ -697,6 +697,7 @@
 
 - YouTube Video Brief Workflow
 - 一键把 YouTube 视频加入知识库
+- 先预检，再解读 YouTube 视频
 
 ## ai-safety
 
@@ -845,6 +846,10 @@
 
 - The Old World Is Dying
 
+## failure-archive
+
+- 先预检，再解读 YouTube 视频
+
 ## fastify
 
 - Hydro0x01 Local Hermes Security Audit
@@ -897,6 +902,7 @@
 
 - YouTube Video Brief Workflow
 - 一键把 YouTube 视频加入知识库
+- 先预检，再解读 YouTube 视频
 - Hydro0x01 Local Hermes Security Audit
 
 ## hermes-agent
@@ -967,6 +973,7 @@
 
 - YouTube Video Brief Workflow
 - 一键把 YouTube 视频加入知识库
+- 先预检，再解读 YouTube 视频
 
 ## land-readjustment
 
@@ -1029,6 +1036,7 @@
 
 - YouTube Video Brief Workflow
 - 一键把 YouTube 视频加入知识库
+- 先预检，再解读 YouTube 视频
 
 ## openclaw-suggested
 
@@ -1065,6 +1073,10 @@
 ## political_economy
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
+
+## preflight
+
+- 先预检，再解读 YouTube 视频
 
 ## presence
 
@@ -1218,6 +1230,7 @@
 
 - YouTube Video Brief Workflow
 - 一键把 YouTube 视频加入知识库
+- 先预检，再解读 YouTube 视频
 
 ## vulnerability
 
@@ -1227,6 +1240,7 @@
 
 - YouTube Video Brief Workflow
 - 一键把 YouTube 视频加入知识库
+- 先预检，再解读 YouTube 视频
 
 ## writing
 
@@ -1240,6 +1254,7 @@
 
 - YouTube Video Brief Workflow
 - 一键把 YouTube 视频加入知识库
+- 先预检，再解读 YouTube 视频
 
 ## 三体
 
@@ -1344,6 +1359,10 @@
 ## 学习
 
 - Superlinear Returns
+
+## 安全边界
+
+- 先预检，再解读 YouTube 视频
 
 ## 导演
 

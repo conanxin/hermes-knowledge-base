@@ -1210,6 +1210,54 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-youtube-kb-import-command"
   },
   {
+    "title": "先预检，再解读 YouTube 视频",
+    "title_zh": "先预检，再解读 YouTube 视频",
+    "type": "article",
+    "path": "content/articles/2026/2026-06-26-youtube-link-preflight-failure-archive",
+    "author": "OpenClaw Agent",
+    "source_url": "",
+    "source_site": "OpenClaw",
+    "source_url_missing": true,
+    "language": "zh",
+    "translation_language": "zh-CN",
+    "status": "original",
+    "published_date": "2026-06-26",
+    "captured_date": "2026-06-26",
+    "topics": [
+      "OpenClaw",
+      "Hermes",
+      "YouTube",
+      "预检",
+      "失败归档",
+      "视频解读",
+      "知识库",
+      "工作流"
+    ],
+    "tags": [
+      "openclaw",
+      "hermes",
+      "youtube",
+      "preflight",
+      "failure-archive",
+      "video-brief",
+      "knowledge-base",
+      "workflow",
+      "ai-learning",
+      "安全边界"
+    ],
+    "word_count": {
+      "source": 2000,
+      "translation": 0
+    },
+    "author_zh": "辛",
+    "category": "workflow",
+    "source_type": "workflow",
+    "updated_date": "2026-06-26",
+    "slug": "2026-06-26-youtube-link-preflight-failure-archive",
+    "detail_url": "items/2026-06-26-youtube-link-preflight-failure-archive/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-youtube-link-preflight-failure-archive"
+  },
+  {
     "title": "ArXiv AI Agents 论文列表",
     "title_zh": "ArXiv AI Agents 相关论文",
     "type": "resource_collection",
