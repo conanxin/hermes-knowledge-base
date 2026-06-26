@@ -142,9 +142,9 @@
 
 | 字段 | 值 |
 |------|-----|
-| Commit | 待提交 |
+| Commit | bbb693c |
 | Message | Document YouTube capabilities for OSS users |
-| Push | 待推送 |
+| Push | success |
 
 ---
 
