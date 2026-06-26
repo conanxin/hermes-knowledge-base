@@ -36,6 +36,10 @@
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
 
+## Dario Amodei / Emily Chang
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
 ## David Perell
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes

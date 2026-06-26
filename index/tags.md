@@ -33,6 +33,14 @@
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
 - 灵感资源库
 
+## AI governance
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
+## AI safety
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
 ## AI 产品
 
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
@@ -73,6 +81,10 @@
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
+## Anthropic
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
 ## Antón Barba-Kay
 
 - Your AI Is Not a Tool
@@ -97,6 +109,10 @@
 
 - An "infovore" shares his chats
 
+## Bloomberg
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
 ## Brain Trust
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
@@ -116,6 +132,10 @@
 ## ChinaTalk
 
 - Ken Liu on AI and Freedom
+
+## Claude
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 
 ## Codex
 
@@ -145,6 +165,10 @@
 
 - Ken Liu on AI and Freedom
 
+## Dario Amodei
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
 ## David Perell
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
@@ -157,6 +181,10 @@
 
 - Transformer 解码机制解析
 
+## Demis Hassabis
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
 ## Documentation
 
 - Nia Docs — 把整个 Web 变成文件系统
@@ -168,6 +196,10 @@
 ## Elvis Presley
 
 - The 100 greatest songs of the 1960s
+
+## Emily Chang
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 
 ## Erik Hoel
 
@@ -334,6 +366,14 @@
 
 - The 100 greatest songs of the 1960s
 
+## Leo Szilard
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
+## Long Term Benefit Trust
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
 ## Luck
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
@@ -383,6 +423,10 @@
 
 - We May Be Entering A Second Axial Age
 
+## Mythos
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
 ## NDC
 
 - 日本铁路如何在分裂中保持统一
@@ -418,6 +462,7 @@
 ## OpenAI
 
 - Sign of the future: GPT-5.5
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 
 ## Orwell
 
@@ -430,6 +475,10 @@
 ## Oxford Union
 
 - How to Earn a Billion Dollars
+
+## Palantir
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 
 ## Paste Magazine
 
@@ -447,6 +496,10 @@
 
 - How to Earn a Billion Dollars
 - Superlinear Returns
+
+## Pentagon
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 
 ## Peter Thiel
 
@@ -490,6 +543,14 @@
 
 - Hermes Agent Self-Evolution
 
+## SaaSpocalypse
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
+## Sam Altman
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
 ## Schindler's List
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
@@ -525,6 +586,10 @@
 ## Ted Chiang
 
 - Don't dethrone consciousness!
+
+## The Circuit
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 
 ## The Convivial Society
 
@@ -711,6 +776,10 @@
 
 - Hacker News ML 热门链接
 
+## constitutional AI
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
 ## cooperation
 
 - How Reverse Game Theory Could Solve The Housing Shortage
@@ -731,6 +800,10 @@
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
 - The Old World Is Dying
+
+## cyber kill chain
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 
 ## decade-list
 
@@ -829,6 +902,10 @@
 ## hermes-agent
 
 - Session Guard Phase 1: Pre-Request Sanitizer
+
+## high-tech authoritarian
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 
 ## humor
 
@@ -965,6 +1042,10 @@
 
 - How AI Will Change Us
 
+## patch and defend
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
 ## personal_growth
 
 - The Old World Is Dying
@@ -1004,6 +1085,10 @@
 ## quadratic-voting
 
 - How Reverse Game Theory Could Solve The Housing Shortage
+
+## race to the top
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 
 ## reading
 
@@ -1068,6 +1153,10 @@
 
 - Session Guard Phase 1: Pre-Request Sanitizer
 
+## smooth exponential
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
 ## soul
 
 - The 100 greatest songs of the 1960s
@@ -1100,6 +1189,10 @@
 ## technology
 
 - The Old World Is Dying
+
+## token tax
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 
 ## tool-calls
 
@@ -1183,6 +1276,10 @@
 ## 再生农业
 
 - We May Be Entering A Second Axial Age
+
+## 出口管制
+
+- Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 
 ## 创业
 
