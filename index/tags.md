@@ -35,6 +35,7 @@
 
 ## AI UX
 
+- Hermes Agent UI P0 Implementation Spec
 - Hermes Agent UI Self-Audit v1
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 - The Shape of AI
@@ -74,8 +75,13 @@
 
 ## Agent UI
 
+- Hermes Agent UI P0 Implementation Spec
 - Hermes Agent UI Self-Audit v1
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
+
+## Agent Workflow
+
+- Hermes Agent UI P0 Implementation Spec
 
 ## Agentic UX
 
@@ -317,6 +323,7 @@
 
 ## Hermes
 
+- Hermes Agent UI P0 Implementation Spec
 - Hermes Agent UI Self-Audit v1
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 
@@ -343,6 +350,10 @@
 ## Ilya Prigogine
 
 - We May Be Entering A Second Axial Age
+
+## Implementation Spec
+
+- Hermes Agent UI P0 Implementation Spec
 
 ## Indiana Jones
 
@@ -553,6 +564,10 @@
 ## Oxford Union
 
 - How to Earn a Billion Dollars
+
+## P0
+
+- Hermes Agent UI P0 Implementation Spec
 
 ## P0/P1/P2
 
@@ -1382,6 +1397,7 @@
 
 ## 产品设计
 
+- Hermes Agent UI P0 Implementation Spec
 - Hermes Agent UI Self-Audit v1
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 
@@ -1543,6 +1559,10 @@
 ## 技术评估
 
 - Wiki 代替 RAG 的可行性评估
+
+## 报告规范
+
+- Hermes Agent UI P0 Implementation Spec
 
 ## 持久化知识
 

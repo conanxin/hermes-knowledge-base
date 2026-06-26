@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Agent UI P0 实施规范 · hermes-knowledge-base</title>
+<meta name="description" content="Hermes Agent UI P0 实施规范 — Conan Xin">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="detail-page" id="top">
+<header class="detail-header">
+<a class="back-link" href="../../">← 返回首页</a>
+</header>
+<main class="detail-main">
+<article class="detail-article">
+<div class="detail-title-block">
+<span class="type-badge note">note</span>
+<h1 class="detail-title">Hermes Agent UI P0 实施规范</h1>
+<p class="detail-title-en">Hermes Agent UI P0 Implementation Spec</p>
+</div>
+
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#派生关系">派生关系</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#规范-vs-实施-vs-实现">规范 vs 实施 vs 实现</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#数据来源本规范的实证基础">数据来源：本规范的&quot;实证基础&quot;</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#实施规范的设计原则">实施规范的设计原则</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#原则-18-段报告是下限不是上限">原则 1：8 段报告是下限，不是上限</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#原则-2pass-warn-fail-三态不只有-pass-fail">原则 2：PASS / WARN / FAIL 三态，不只有 PASS / FAIL</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#原则-3每条-p0-都有最小实施规则不依赖-ui">原则 3：每条 P0 都有&quot;最小实施规则&quot;——不依赖 UI</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#原则-4并发协议独立成章节它影响所有-p0">原则 4：并发协议独立成章节——它影响所有 P0</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#借鉴的其他规范">借鉴的其他规范</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#维护约定">维护约定</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#何时升级-v1-v2">何时升级 v1 → v2</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#不要做的事">不要做的事</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#已知限制">已知限制</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#与项目记忆的关联">与项目记忆的关联</a></li>
+</ol>
+</nav>
+
+<section class="detail-meta">
+<div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">note</div></div>
+<div class="meta-row"><div class="meta-label">作者</div><div class="meta-value">Conan Xin</div></div>
+<div class="meta-row"><div class="meta-label">来源</div><div class="meta-value">shapeof.ai</div></div>
+<div class="meta-row"><div class="meta-label">发布日期</div><div class="meta-value">2026-06-26</div></div>
+<div class="meta-row"><div class="meta-label">采集日期</div><div class="meta-value">2026-06-26</div></div>
+<div class="meta-row"><div class="meta-label">标签</div><div class="meta-value meta-tags"><span class="chip">Hermes</span><span class="chip">Agent UI</span><span class="chip">P0</span><span class="chip">Implementation Spec</span><span class="chip">AI UX</span><span class="chip">Agent Workflow</span><span class="chip">报告规范</span><span class="chip">产品设计</span></div></div>
+<div class="meta-row"><div class="meta-label">主题</div><div class="meta-value meta-tags"><span class="chip">Hermes Agent</span><span class="chip">Agent UI</span><span class="chip">P0 实施规范</span><span class="chip">Shape of AI</span><span class="chip">AI UX</span><span class="chip">Agent 报告</span><span class="chip">工作流协议</span><span class="chip">6 层模型</span></div></div>
+</section>
+
+<section class="detail-section" id="section-summary">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">摘要</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="hermes-agent-ui-p0-实施规范摘要">Hermes Agent UI P0 实施规范：摘要</h1>
+<h2 id="是什么">是什么</h2>
+<p><strong>Hermes Agent UI P0 Implementation Spec</strong> 是对 <a href="2026-06-26-hermes-agent-ui-self-audit-v1" target="_blank" rel="noopener">Hermes Agent UI Self-Audit v1</a> 中 5 个 P0 行动项的<strong>可执行规范</strong>——不是工程实现方案，而是<strong>给 agent 自己的 SOP（标准作业流程）+ 报告模板</strong>。</p>
+<p>适用对象：所有"通过 agent 完成、可能影响远端状态"的任务（patch / push / deploy / 跨 agent 协作 / 用户能看到的 UI 调整等）。</p>
+<p>不适用：纯一次性、只读、不可观察的任务（grep / read / search 等）。</p>
+<h2 id="5-个-p0-行动项的精确措辞">5 个 P0 行动项的精确措辞</h2>
+<p>来自 Self-Audit v1 P0 汇总表，编号沿用：</p>
+<table class="md-table"><thead><tr><th>#</th><th>P0 行动项</th><th>类别</th><th>本规范的执行抓手</th></tr></thead><tbody><tr><td>1</td><td>Status indicator 三态化（思考中 / 执行中 / 已完成）</td><td>Identifiers</td><td>报告模板的 "Status" 字段强制三态标注</td></tr><tr><td>2</td><td>Stop 链路口径明确（级联到 sub-agent）</td><td>Governors</td><td>并发 agent 写仓库协议（见 §并发协议）</td></tr><tr><td>3</td><td>Inline Action 加"预览 / 已生效"标签</td><td>Wayfinders</td><td>报告模板的 "Actions taken" 用 [DRY-RUN] / [APPLIED] 前缀</td></tr><tr><td>4</td><td>Source citation 三件套（URL + 置信度 + 验证时间）</td><td>Trust builders</td><td>报告模板的 "Evidence" 字段强制三件套</td></tr><tr><td>5</td><td>Long task 阶段名显式化（不是只显示百分比）</td><td>Identifiers</td><td>报告模板的 "Actions taken" 按阶段切分，每阶段单独报告</td></tr></tbody></table>
+<h2 id="本规范的两大组成">本规范的两大组成</h2>
+<h3 id="1-5-个-p0-的逐条规范notesmd-1-5">1. 5 个 P0 的逐条规范（notes.md §1-§5）</h3>
+<p>每条 P0 包含 6 段：问题定义 / 为什么重要 / 最小实施规则 / agent 输出格式 / PASS-WARN-FAIL 验收标准 / 示例报告片段。</p>
+<h3 id="2-统一任务报告模板notesmd-6">2. 统一任务报告模板（notes.md §6）</h3>
+<p>8 段式固定结构：</p>
+<pre><code>Status      — 思考中 / 执行中 / 已完成（三态）
+Scope       — 任务边界（什么改了、什么没改）
+Actions     — 实际动作（按阶段切分，Inline Action 带 [DRY-RUN]/[APPLIED]）
+Evidence    — 证据（Source citation 三件套：URL + 置信度 + 验证时间）
+Commit/Push — git 操作记录（commit hash、push 状态、rebase 状态）
+Live        — live 状态验证（HTTP / sha256 / byte-identity）
+Limits      — 已知限制（heuristic、CDN 延迟、未跑全流程等）
+Next        — 下一步行动（PR / 复现实验 / 二轮审计等）</code></pre>
+<p>每条任务报告必须按这 8 段输出，缺一段视为 WARN（不阻断但报告不完整）。</p>
+<h2 id="三类任务的差异化处理notesmd-7">三类任务的差异化处理（notes.md §7）</h2>
+<table class="md-table"><thead><tr><th>任务类型</th><th>报告 8 段是否全部要求</th><th>关键差异化</th></tr></thead><tbody><tr><td><strong>只读任务</strong> (read / search / grep)</td><td>Status / Scope / Evidence (3 段)</td><td>无 Commit/Push / Live，可省略</td></tr><tr><td><strong>写入任务</strong> (edit / write / patch)</td><td>Status / Scope / Actions / Evidence (4 段)</td><td>必须有 Actions 详细分步</td></tr><tr><td><strong>发布任务</strong> (push / deploy / publish)</td><td>全部 8 段</td><td>Commit/Push + Live 必填，CDN 同步状态必填</td></tr></tbody></table>
+<h2 id="并发-agent-写仓库时的状态协议notesmd-8">并发 agent 写仓库时的状态协议（notes.md §8）</h2>
+<p>复用最近 3 次任务（item_count 修复、checklist 创建、self-audit 创建）的真实经验：</p>
+<pre><code>[CONCURRENT-PROTOCOL]
+1. fetch + pull --rebase --autostash origin main
+2. 确认 ahead/behind = 0/0
+3. 确认 git status -s 为空
+4. 写文件（per-file git add 在最后）
+5. 跑 check_kb.py + check_pages_sync.py（必须 PASS, warnings=0）
+6. 跑 update_site.py
+7. 跑两个独立 gate（再确认）
+8. per-file git add（不 git add . 或 git add -A）
+9. pre-push 再次 fetch + pull --rebase
+10. commit + push
+11. 轮询 live CDN（最多 8 min，每 30s 一次）
+12. 区分 CDN-stale vs push-failed（用 git show origin/main:... 作为权威）
+13. PENDING_CDN_SYNC 不判 FAIL</code></pre>
+<p>每个 step 都有<strong>退出条件（exit condition）</strong>——前一步不通过就不进下一步。</p>
+<h2 id="验收标准pass-warn-fail">验收标准：PASS / WARN / FAIL</h2>
+<table class="md-table"><thead><tr><th>级别</th><th>含义</th><th>行动</th></tr></thead><tbody><tr><td><strong>PASS</strong></td><td>报告 8 段齐全、证据三件套、commit hash 有效、live byte-identical</td><td>任务完成</td></tr><tr><td><strong>WARN</strong></td><td>报告有缺段 / 证据缺项 / CDN 暂未同步 / 启发式判断未经验证</td><td>标注后继续，下次补</td></tr><tr><td><strong>FAIL</strong></td><td>报告 8 段严重缺失 / 关键证据缺失 / 验收 gate FAIL / push 失败</td><td>不完成任务，标注 PENDING</td></tr></tbody></table>
+<h2 id="在后续任务中如何使用本规范">在后续任务中如何使用本规范</h2>
+<ul><li><strong>每次任务结束</strong>输出一份按本规范模板的报告（即使是 brief reply）</li><li><strong>复盘时</strong>对比 Self-Audit v1 的 5 P0，检查"本次报告是否满足规范"</li><li><strong>每月审计</strong>时把当月所有报告合并统计，看 WARN 比例是否在下降</li><li><strong>v2 触发</strong>时把本规范纳入对比基线</li></ul>
+<h2 id="不做什么">不做什么</h2>
+<ul><li><strong>不修改 Self-Audit v1 原条目</strong>——本规范基于它，但不动它</li><li><strong>不修改 checklist 原条目</strong>——三者是独立 KB 条目</li><li><strong>不写新代码 / 脚本 / 工具</strong>——本规范只是 SOP</li><li><strong>不假装已经在所有 agent 中实施</strong>——本规范发布后，agent 在每次任务中<strong>应当</strong>遵循，但不是"已强制"</li><li><strong>不替代 Self-Audit v1</strong>——审计是"现状评估"，本规范是"未来 SOP"</li></ul>
+<h2 id="派生关系">派生关系</h2>
+<pre><code>2026-06-26-shape-of-ai-ux-patterns  (原始, 资源条目)
+    └── 2026-06-26-hermes-agent-ui-shape-of-ai-checklist  (自检表 v1)
+            └── 2026-06-26-hermes-agent-ui-self-audit-v1  (审计 v1)
+                    └── 2026-06-26-hermes-agent-ui-p0-implementation-spec  (本条目)</code></pre>
+<p>本条目是 4 层派生的最下游，直接面向 agent SOP。</p>
+<h2 id="何时更新本规范">何时更新本规范</h2>
+<ul><li>当 5 P0 全部落地（Status 三态、Long task 阶段、Stop 链路、Inline Action 标签、Source 三件套）后，做 v1 → v2 升级</li><li>当 Self-Audit 出 v2 时，本规范也必须更新</li><li>当 agent 工作流新增工具（cronjob / delegate_task / 跨 agent）时，扩展并发协议章节</li></ul>
+<h2 id="与-self-audit-v1-的差异">与 Self-Audit v1 的差异</h2>
+<table class="md-table"><thead><tr><th>维度</th><th>Self-Audit v1</th><th>本规范</th></tr></thead><tbody><tr><td>性质</td><td>审计（评估现状）</td><td>规范（定义未来）</td></tr><tr><td>目标</td><td>知道该改什么</td><td>知道怎么改、按什么格式报告</td></tr><tr><td>输出</td><td>7 类审计 + P0/P1/P2 汇总 + 3 阶段路线</td><td>5 P0 逐条规范 + 报告模板 + 并发协议</td></tr><tr><td>读者</td><td>维护者（人）</td><td>agent 自身（也是维护者）</td></tr><tr><td>时间</td><td>静态（v1 时点）</td><td>动态（每次任务应用）</td></tr><tr><td>派生</td><td>自检表 v1</td><td>Self-Audit v1</td></tr></tbody></table>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-source">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">原文 / 源文本</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="hermes-agent-ui-p0-实施规范来源与方法">Hermes Agent UI P0 实施规范：来源与方法</h1>
+<h2 id="派生关系">派生关系</h2>
+<p>本条目是 4 层派生的最下游：</p>
+<pre><code>2026-06-26-shape-of-ai-ux-patterns                              (resource_collection, 原始)
+  └── 2026-06-26-hermes-agent-ui-shape-of-ai-checklist          (note, 自检表 v1)
+        └── 2026-06-26-hermes-agent-ui-self-audit-v1            (note, 审计 v1)
+              └── 2026-06-26-hermes-agent-ui-p0-implementation-spec  (note, 本条目, 实施规范)</code></pre>
+<p><code>based_on</code> 字段列出 3 个直接上游（不列 Shape of AI，因其已是 checklist 的上游）。</p>
+<h2 id="规范-vs-实施-vs-实现">规范 vs 实施 vs 实现</h2>
+<p>本规范的三个边界：</p>
+<table class="md-table"><thead><tr><th>类型</th><th>含义</th><th>是否本规范</th></tr></thead><tbody><tr><td><strong>规范（Spec）</strong></td><td>定义"应该怎么输出"、"按什么模板"、"哪些字段必填"</td><td>✅ 是</td></tr><tr><td><strong>实施（Implementation）</strong></td><td>改 prompt / 话术 / 工具描述 / 报告模板</td><td>引用本规范（agent 自我实施）</td></tr><tr><td><strong>实现（Engineering）</strong></td><td>写新工具 / 新组件 / 新脚本</td><td>❌ 不在本规范范围（属 v1 路线阶段 3）</td></tr></tbody></table>
+<p><strong>关键区分</strong>：本规范只回答"输出格式"和"验收标准"，不回答"怎么改代码"。</p>
+<h2 id="数据来源本规范的实证基础">数据来源：本规范的"实证基础"</h2>
+<p>本规范的并发协议章节（§8）基于以下最近 3 次实际任务经验：</p>
+<ol><li><strong>2026-06-26 item_count 修复</strong> (<code>b42212d</code>)：单 agent 顺序 push，CDN 第二次轮询同步（~30s）</li><li><strong>2026-06-26 checklist 创建</strong> (<code>9aed075</code>)：catalog 41→42，第一次 push 失败（force-push 风险），reset-and-rebuild 模式被验证</li><li><strong>2026-06-26 self-audit 创建</strong> (<code>dd833d5</code>)：catalog 42→43，CDN 第二次轮询同步（~30s），rebase 已 fast-forward</li></ol>
+<p>这 3 次任务的真实数据成为本规范的<strong>经验基底</strong>——所有"CDN 同步时间"、"PENDING_CDN_SYNC 不判 FAIL"等结论都来自实证，不是推测。</p>
+<h2 id="实施规范的设计原则">实施规范的设计原则</h2>
+<h3 id="原则-18-段报告是下限不是上限">原则 1：8 段报告是下限，不是上限</h3>
+<p>报告模板的 8 段（Status / Scope / Actions / Evidence / Commit/Push / Live / Limits / Next）是<strong>最低要求</strong>。任务复杂时（如包含多 sub-agent、跨平台 verify、CDN 同步）可加段，但不减段。</p>
+<p><strong>为什么不强制更多段</strong>：报告 8 段已经覆盖 Trust builders 的 3 个 P0 项（Source citation / Human review / Confidence score）。更多段会提高门槛，反而让人不写。</p>
+<h3 id="原则-2pass-warn-fail-三态不只有-pass-fail">原则 2：PASS / WARN / FAIL 三态，不只有 PASS / FAIL</h3>
+<p><code>WARN</code> 的引入是为了诚实标注"未完成 / 未验证 / 暂未同步"等状态，而不是把它们藏起来或者误报 PASS。</p>
+<p><strong>例子</strong>：</p>
+<ul><li>"CDN 暂未同步，标记 PENDING_CDN_SYNC" → WARN（不阻断，等同步后复查）</li><li>"未跑复现实验，仅启发式判断" → WARN（不阻断，下次补实验）</li><li>"Evidence 缺置信度字段" → WARN（不阻断，下次补）</li><li>"check_kb.py FAIL" → FAIL（阻断，必须修）</li><li>"push 失败" → FAIL（阻断，必须重试或 reset-and-rebuild）</li></ul>
+<h3 id="原则-3每条-p0-都有最小实施规则不依赖-ui">原则 3：每条 P0 都有"最小实施规则"——不依赖 UI</h3>
+<p>5 P0 的最小实施规则<strong>全部在 prompt / 报告 / 工具描述层可改</strong>，不需要新写工具或新组件。这与 Self-Audit v1 路线阶段 1（无代码流程规范）对齐。</p>
+<p><strong>反例警告</strong>：</p>
+<blockquote><p>如果某条 P0 的最小实施规则必须改 UI 组件才能满足，那这条 P0 应该被推迟到路线阶段 3，不在 v1 范围。</p></blockquote>
+<h3 id="原则-4并发协议独立成章节它影响所有-p0">原则 4：并发协议独立成章节——它影响所有 P0</h3>
+<p>并发 agent 写仓库是本规范<strong>最常被违反</strong>的边界。把 fetch / pull / rebase / check / push / CDN 同步独立成 §8 章节，目的是让 agent 在写多步任务时<strong>不必重新发明协议</strong>——直接照抄。</p>
+<p><strong>为什么 §8 最重要</strong>：其他 P0 影响"输出格式"，§8 影响"任务能否完成"。§8 失败则整个任务 FAIL。</p>
+<h2 id="借鉴的其他规范">借鉴的其他规范</h2>
+<p>本规范参考了以下已有的工程实践（不直接复制）：</p>
+<ul><li><strong>CONTRIBUTING.md 模式</strong>：模板化报告 → 降低边际成本</li><li><strong>Conventional Commits 模式</strong>：固定 commit message 格式 → 可解析</li><li><strong>Status Page 模式</strong>：Status / Scope / Actions / Evidence / Next 的分段</li><li><strong>Postmortem 模板（Google SRE）</strong>：Limits / Next 的诚实标注</li><li><strong>kb-article-import skill 的 STATUS block</strong>：Telegram 友好的报告格式</li></ul>
+<h2 id="维护约定">维护约定</h2>
+<h3 id="何时升级-v1-v2">何时升级 v1 → v2</h3>
+<p>满足以下任一条件时升级：</p>
+<ol><li>5 P0 全部落地（按 Self-Audit v1 路线阶段 1 + 2 完成）</li><li>30 天内应用本规范 ≥ 10 次，复盘显示 WARN 比例 &lt; 5%</li><li>Self-Audit 出 v2，本规范必须同步升级</li><li>新增 agent 工作流工具（cronjob / delegate_task），并发协议章节需扩展</li></ol>
+<h3 id="不要做的事">不要做的事</h3>
+<ul><li><strong>不要</strong>把本规范固化为"agent 必须遵守"——它是 SOP 不是宪法</li><li><strong>不要</strong>因为某次任务没按规范而 FAIL 整个任务——WARN 是设计目的</li><li><strong>不要</strong>在没复现实验的情况下把"启发式"误报为"实证"——诚实标注来源</li><li><strong>不要</strong>让本规范变成纯流程清单——必须包含示例报告片段（agent 抄作业用）</li></ul>
+<h2 id="已知限制">已知限制</h2>
+<ol><li><strong>本规范是 SOP，不是 enforcement</strong>——没有代码层面的检查点</li><li><strong>WARN 状态依赖 agent 自觉</strong>——可能存在"漏报 WARN"的情况</li><li><strong>并发协议基于最近 3 次经验</strong>——更多边缘情况（multi-agent parallel push）未覆盖</li><li><strong>报告模板不带国际化</strong>——目前只中文，跨语言任务需扩展</li><li><strong>8 段报告对简单任务偏重</strong>——比如纯 read 类任务只需 3 段（见 §7 三类任务差异化）</li></ol>
+<h2 id="与项目记忆的关联">与项目记忆的关联</h2>
+<p>本规范的执行依赖以下项目记忆：</p>
+<ul><li><strong>Telegram typing action</strong>：Status "思考中" 的视觉对应</li><li><strong>MEDIA 协议</strong>：Inline Action 的"已生效"标签可借助 MEDIA 消息格式</li><li><strong>sub-agent 隔离</strong>：<code>hermes-agent-spawning</code> / <code>delegate_task</code> 提供独立 cwd</li><li><strong>session DB 持久化</strong>：所有 commit / push 操作可回看（"Evidence" 的 last-validated 字段）</li><li><strong>multi-platform home channel</strong>：Live 验证需逐平台 curl / sha256</li><li><strong>OpenClaw 异步任务</strong>：cronjob 任务需在 PENDING 状态时单独标注</li></ul>
+<p>如果项目记忆本身有误（如某工具已下线），本规范相应章节需要修正。</p>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-notes">
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">笔记</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="hermes-agent-ui-p0-实施规范">Hermes Agent UI P0 实施规范</h1>
+<blockquote><p><strong>基础</strong>：<a href="2026-06-26-hermes-agent-ui-self-audit-v1" target="_blank" rel="noopener">Hermes Agent UI Self-Audit v1</a> 的 5 个 P0 行动项 <strong>性质</strong>：给 agent 自己的 SOP + 报告模板，<strong>不是</strong>工程实现方案 <strong>范围</strong>：所有"通过 agent 完成、可能影响远端状态"的任务 <strong>基线日期</strong>：2026-06-26</p></blockquote>
+<hr>
+<h2 id="规范使用概览">规范使用概览</h2>
+<blockquote><p><strong>速查关键词</strong> — 5 P0（Status 三态 / Long task 阶段名 / Stop 链路 / Inline Action 标签 / Source citation 三件套）+ 统一报告模板（PASS / WARN / FAIL 三态）+ 并发协议（13 步）。</p></blockquote>
+<p><strong>本规范的两大组成</strong>：</p>
+<ol><li><strong>5 个 P0 逐条规范</strong>（§1-§5）：每条 P0 包含问题定义 / 为什么重要 / 最小实施规则 / agent 输出格式 / PASS-WARN-FAIL 验收标准 / 示例报告片段</li><li><strong>统一任务报告模板</strong>（§6）：所有任务结束时的 8 段式固定输出结构</li></ol>
+<p><strong>两个支撑章节</strong>：</p>
+<ol><li><strong>三类任务差异化处理</strong>（§7）：只读 / 写入 / 发布 三种任务类型的报告长度差异</li><li><strong>并发 agent 写仓库协议</strong>（§8）：基于最近 3 次任务经验的多 agent 并发状态协议</li></ol>
+<p><strong>1 个使用章节</strong>：</p>
+<ol><li><strong>如何在后续任务中使用本规范</strong>（§9）：维护约定 + 升级触发条件</li></ol>
+<hr>
+<h2 id="1-p0-1-status-indicator-三态化">§1 P0-1: Status indicator 三态化</h2>
+<h3 id="问题定义">问题定义</h3>
+<p>当前 Hermes Agent 的 Status 指示是<strong>二态</strong>："思考中 / 已完成"。缺"执行中"中间态，导致用户在 5 步任务中只看到"思考中"长时间不更新，会怀疑 agent 卡死。</p>
+<h3 id="为什么重要">为什么重要</h3>
+<ul><li>状态不可见是 AI 产品<strong>最普遍</strong>的 UX 失败模式</li><li>"执行中" vs "思考中" 在用户感知中是两个不同的事——前者说明 agent 在做事，后者说明 agent 在等</li><li>单步任务能容忍"思考中"，但多步任务<strong>必须</strong>显示阶段</li></ul>
+<h3 id="最小实施规则">最小实施规则</h3>
+<p>所有"执行步骤 ≥ 2 步"的任务，在每一步结束时输出：</p>
+<pre><code>[Status: 执行中] Step 2/5 — 提取翻译 → 下一步: 校对</code></pre>
+<p>不允许只显示"思考中"超过 30 秒（用户感知阈值）。</p>
+<h3 id="agent-输出格式">Agent 输出格式</h3>
+<pre><code>## 当前任务状态
+- Status: 思考中 / 执行中 / 已完成
+- Step: &lt;当前步骤号&gt; / &lt;总步骤数&gt;
+- Phase: &lt;当前阶段名，如 &quot;提取翻译&quot;&gt;
+- Next: &lt;下一步要做什么&gt;</code></pre>
+<h3 id="验收标准">验收标准</h3>
+<table class="md-table"><thead><tr><th>级别</th><th>标准</th></tr></thead><tbody><tr><td><strong>PASS</strong></td><td>每个阶段切换都明确标注三态之一 + Phase + Next</td></tr><tr><td><strong>WARN</strong></td><td>二态也能接受，但需要解释为什么缺"执行中"（如任务确实只 1 步）</td></tr><tr><td><strong>FAIL</strong></td><td>5 步任务从头到尾只显示"思考中"，无阶段切分</td></tr></tbody></table>
+<h3 id="示例报告片段">示例报告片段</h3>
+<pre><code>## 当前任务状态
+- Status: 执行中
+- Step: 2/5
+- Phase: 提取翻译（en → zh-CN）
+- Next: Step 3 — 校对（CJK 字数对齐 + 专名一致性）
+
+&gt; 状态变更记录：
+&gt; 21:50:00 Status=思考中（收到任务）
+&gt; 21:50:05 Status=执行中 Step 1/5（开始：源文件扫描）
+&gt; 21:50:12 Status=执行中 Step 2/5（当前：提取翻译）</code></pre>
+<hr>
+<h2 id="2-p0-2-long-task-阶段名显式化">§2 P0-2: Long task 阶段名显式化</h2>
+<h3 id="问题定义-2">问题定义</h3>
+<p>长任务（&gt;2 步）只显示"百分比"或"思考中"是低信息量的。用户看到 "60%" 不知道 agent 在做"翻译"还是"校对"还是"查重"。</p>
+<h3 id="为什么重要-2">为什么重要</h3>
+<ul><li>阶段名比百分比<strong>信息密度高 5-10 倍</strong></li><li>阶段名让用户能<strong>预测剩余时间</strong>和<strong>理解当前进度</strong></li><li>当 agent 卡在某阶段时，阶段名让用户能精确报告问题</li></ul>
+<h3 id="最小实施规则-2">最小实施规则</h3>
+<p>所有 ≥ 3 步的任务，<strong>每一步必须显式命名</strong>阶段（不是只显示百分比）。阶段名应当是<strong>动词 + 对象</strong>的格式，如"提取翻译"、"校对字"、"查链接"，而不是抽象的"处理中"。</p>
+<h3 id="agent-输出格式-2">Agent 输出格式</h3>
+<pre><code>## Long task 阶段
+- Total: 5 阶段
+- Current: 阶段 2（提取翻译）
+- Completed: 阶段 1（源文件扫描）
+- Remaining: 3 阶段（校对 / 查链接 / 写报告）</code></pre>
+<h3 id="验收标准-2">验收标准</h3>
+<table class="md-table"><thead><tr><th>级别</th><th>标准</th></tr></thead><tbody><tr><td><strong>PASS</strong></td><td>所有阶段都有动词+对象命名，且阶段数 = 实际步骤数</td></tr><tr><td><strong>WARN</strong></td><td>部分阶段命名抽象（如"处理中"），但总数对</td></tr><tr><td><strong>FAIL</strong></td><td>只显示百分比 / 抽象 "处理中" / 阶段数与实际不符</td></tr></tbody></table>
+<h3 id="示例报告片段-2">示例报告片段</h3>
+<pre><code>## Long task 阶段
+- Total: 5 阶段
+- Current: 阶段 2/5 — 提取翻译（en → zh-CN）
+- Completed:
+  - 阶段 1 — 源文件扫描（2 文件、135 行）
+- Remaining:
+  - 阶段 3 — 校对（CJK 字数 + 专名一致性）
+  - 阶段 4 — 查链接（外部 URL 可达性）
+  - 阶段 5 — 写报告</code></pre>
+<hr>
+<h2 id="3-p0-3-stop-pause-rollback-链路">§3 P0-3: Stop / pause / rollback 链路</h2>
+<h3 id="问题定义-3">问题定义</h3>
+<p>当前 <code>/stop</code> 在主 agent 层中断，<strong>不一定级联到 sub-agent</strong>。这导致：用户以为停了，结果 sub-agent 还在后台跑，事后才发现副作用（如文件被写、commit 被 push、远端被改）。</p>
+<h3 id="为什么重要-3">为什么重要</h3>
+<ul><li>"Stop" 是破坏性操作的<strong>安全网</strong>，失效一次 = 整个 agent 不可信</li><li>多 agent 协作是 Hermes Agent 的核心能力，Stop 链路必须级联</li><li>用户的"停止"是 final state，不应留半成品</li></ul>
+<h3 id="最小实施规则-3">最小实施规则</h3>
+<p>任何包含 sub-agent / delegate_task / cronjob / background 进程 的任务，<strong>必须在 Status 字段中标注 Stop 链路</strong>：</p>
+<pre><code>## Stop 链路
+- 主 agent: 已停止（21:55:00）
+- Sub-agent 1 (delegate_task): 已级联停止 ✓
+- Sub-agent 2 (cronjob): 仍在 PENDING，需手动 kill
+- 回滚路径: git reset HEAD~1 (未执行)</code></pre>
+<p>每个 sub-agent / 后台进程都需逐项标注，<strong>不允许"应该停了"这种模糊表述</strong>。</p>
+<h3 id="agent-输出格式-3">Agent 输出格式</h3>
+<pre><code>## Stop / Pause / Rollback 链路
+- 主 agent 状态: 已停止 / 部分停止 / 未停止
+- Sub-agent N 状态: 已停止 / 在跑 / 未知
+- 后台进程: &lt;PID 列表 + 状态&gt;
+- 回滚动作: 已执行 / 未执行 / 不需要
+- 回滚命令: &lt;具体命令 + 是否已验证&gt;</code></pre>
+<h3 id="验收标准-3">验收标准</h3>
+<table class="md-table"><thead><tr><th>级别</th><th>标准</th></tr></thead><tbody><tr><td><strong>PASS</strong></td><td>所有 sub-agent / 后台进程状态明确标注，主 agent 停止后 sub-agent 全部停止</td></tr><tr><td><strong>WARN</strong></td><td>部分进程状态未知（"应该停了"），但主 agent 已停</td></tr><tr><td><strong>FAIL</strong></td><td>主 agent 停后仍有 sub-agent 在跑且无标注 / 出现"应该停了"等模糊表述</td></tr></tbody></table>
+<h3 id="示例报告片段-3">示例报告片段</h3>
+<pre><code>## Stop / Pause / Rollback 链路
+- 主 agent 状态: 已停止（2026-06-27 04:32:15）
+- Sub-agent 状态:
+  - delegate_task #1 (extract): 已停止 ✓
+  - delegate_task #2 (translate): 已停止 ✓
+  - cronjob #3 (cleanup): 在跑（PID 12345，下次触发 04:45:00）
+- 后台进程: 无
+- 回滚动作: 不需要（未提交任何变更）
+- 回滚命令: N/A</code></pre>
+<hr>
+<h2 id="4-p0-4-inline-action-加预览-已生效标签">§4 P0-4: Inline Action 加"预览 / 已生效"标签</h2>
+<h3 id="问题定义-4">问题定义</h3>
+<p>当前 agent 输出 Inline Action（如 patch 描述、push 命令、文件操作）时，<strong>视觉上与"已执行"动作无区别</strong>。用户容易把"草稿 / 建议"误以为是"已执行"，导致误判。</p>
+<h3 id="为什么重要-4">为什么重要</h3>
+<ul><li>草稿和建议的<strong>语义差异常被忽略</strong>——一个未执行，一个已执行</li><li>用户在 Telegram 端看到"建议 patch 这 3 个文件"如果没标签，会以为已经 patch 了</li><li>误判 = 不信任。一次误判可能让用户<strong>永久</strong>不再相信 agent 输出</li></ul>
+<h3 id="最小实施规则-4">最小实施规则</h3>
+<p>所有"在消息中描述、但未实际执行"的动作，必须以 <code>[DRY-RUN]</code> 开头；所有"已实际执行"的动作必须以 <code>[APPLIED]</code> 开头。<strong>禁止</strong>任何无标签的"建议"或"已执行"动作。</p>
+<h3 id="agent-输出格式-4">Agent 输出格式</h3>
+<pre><code>## Actions taken
+- [DRY-RUN] 建议 patch 3 个文件:
+  - content/notes/2026/X/metadata.yaml
+  - content/notes/2026/X/notes.md
+  - content/notes/2026/X/source.md
+- [APPLIED] 已 patch 上述 3 个文件（commit: 9aed075）
+- [DRY-RUN] 建议 push 到 origin/main
+- [APPLIED] 已 push 到 origin/main</code></pre>
+<h3 id="验收标准-4">验收标准</h3>
+<table class="md-table"><thead><tr><th>级别</th><th>标准</th></tr></thead><tbody><tr><td><strong>PASS</strong></td><td>所有"建议"用 [DRY-RUN] 前缀；所有"已执行"用 [APPLIED] 前缀；无遗漏</td></tr><tr><td><strong>WARN</strong></td><td>80%+ 动作有正确前缀，但有 1-2 处遗漏</td></tr><tr><td><strong>FAIL</strong></td><td>多个动作无标签 / 标签混用（如把已执行标 [DRY-RUN]）</td></tr></tbody></table>
+<h3 id="示例报告片段-4">示例报告片段</h3>
+<pre><code>## Actions taken
+- [DRY-RUN] 建议在 content/notes/2026/2026-06-26-Y/ 创建 4 文件
+- [APPLIED] 已创建 metadata.yaml / summary.md / source.md / notes.md
+- [DRY-RUN] 建议运行 python3 scripts/update_site.py
+- [APPLIED] 已运行（exit 0，5/5 步 OK）
+- [DRY-RUN] 建议 per-file git add
+- [APPLIED] 已 git add（12 个文件，1605 insertions）
+- [DRY-RUN] 建议 commit + push
+- [APPLIED] 已 commit（dd833d5）+ push（origin/main updated）</code></pre>
+<hr>
+<h2 id="5-p0-5-source-citation-三件套">§5 P0-5: Source citation 三件套</h2>
+<h3 id="问题定义-5">问题定义</h3>
+<p>当前 agent 输出引用（web_search 结果、文件路径、commit hash、远端 URL）时，<strong>只给"是什么"</strong>（URL、路径、SHA），<strong>不给"多可信"和"什么时候验证的"</strong>。用户无法判断引用是否新鲜、是否经过验证。</p>
+<h3 id="为什么重要-5">为什么重要</h3>
+<ul><li>Trust builders 是 Self-Audit v1 识别的<strong>最大 P0 风险面</strong></li><li>用户看到 URL 不知道是该点还是不点</li><li>用户看到 commit hash 不知道是不是已经 push</li><li>"URL + 置信度 + 验证时间" 三件套缺一不可——任何单独一项都不够</li></ul>
+<h3 id="最小实施规则-5">最小实施规则</h3>
+<p>所有"引用 / 证据"类输出必须包含三件套：</p>
+<ol><li><strong>URL / 路径 / 标识</strong>（必须）</li><li><strong>置信度</strong>（0-100%，或定性 high/medium/low）</li><li><strong>验证时间</strong>（ISO 8601 或 "5 分钟前" 等相对时间）</li></ol>
+<p><strong>允许简化的场景</strong>：</p>
+<ul><li>100% 系统可验证的引用（如本地文件路径、刚 commit 的 SHA）可以省略置信度（标 "n/a"），但必须有验证时间</li><li>文档化引用（如官方文档）置信度可以标 "high"，但验证时间必填</li></ul>
+<h3 id="agent-输出格式-5">Agent 输出格式</h3>
+<pre><code>## Evidence (Source citation 三件套)
+| 引用 | 置信度 | 验证时间 |
+|------|--------|----------|
+| https://github.com/X/Y/commit/9aed075 | high | 2026-06-27 04:30:00 |
+| /home/conan/projects/Z/file.md | n/a (本地) | 2026-06-27 04:25:00 |
+| https://www.shapeof.ai/ | medium | 5 分钟前 |</code></pre>
+<h3 id="验收标准-5">验收标准</h3>
+<table class="md-table"><thead><tr><th>级别</th><th>标准</th></tr></thead><tbody><tr><td><strong>PASS</strong></td><td>所有引用都有 3 件套（URL + 置信度 + 验证时间）</td></tr><tr><td><strong>WARN</strong></td><td>80%+ 引用有 3 件套，但本地路径类引用缺验证时间（"刚刚"等模糊）</td></tr><tr><td><strong>FAIL</strong></td><td>多个引用缺三件套中任一项 / 验证时间 &gt; 1 小时前未刷新</td></tr></tbody></table>
+<h3 id="示例报告片段-5">示例报告片段</h3>
+<pre><code>## Evidence (Source citation 三件套)
+| 引用 | 置信度 | 验证时间 |
+|------|--------|----------|
+| https://github.com/conanxin/hermes-knowledge-base/commit/dd833d5 | high | 2026-06-27 04:32:00 |
+| https://conanxin.github.io/hermes-knowledge-base/items/2026-06-26-X/ | high | 2026-06-27 04:32:30 (live HTTP 200) |
+| python3 scripts/check_kb.py output | high | 2026-06-27 04:30:00 (just run) |
+| https://www.shapeof.ai/patterns/example-gallery | medium | 2026-06-27 04:25:00 (5 min ago, page reachable) |</code></pre>
+<hr>
+<h2 id="6-统一任务报告模板">§6 统一任务报告模板</h2>
+<p>所有"通过 agent 完成、可能影响远端状态"的任务，结束时必须按本模板输出报告。</p>
+<h3 id="模板结构8-段">模板结构（8 段）</h3>
+<pre><code>## 任务报告
+
+### 1. Status
+- 思考中 / 执行中 / 已完成（三态）
+- Step: &lt;当前步骤号&gt; / &lt;总步骤数&gt;
+- Phase: &lt;当前阶段名&gt;
+
+### 2. Scope
+- 改了什么: &lt;文件/路径列表&gt;
+- 没改什么: &lt;明确排除的范围&gt;
+- 边界声明: &lt;任务类型的免责声明&gt;
+
+### 3. Actions taken
+- [DRY-RUN] &lt;建议但未执行的动作&gt;
+- [APPLIED] &lt;已实际执行的动作&gt;
+- 按阶段切分（参考 §2）
+
+### 4. Evidence
+- Source citation 三件套（参考 §5）
+- 表格形式
+
+### 5. Commit / Push
+- commit hash: &lt;hash&gt;
+- push 状态: &lt;success / failed / pending&gt;
+- rebase 状态: &lt;clean / conflicts&gt;
+- 远端 ahead/behind: &lt;0/0 / N/M&gt;
+
+### 6. Live verification
+- catalog records: &lt;本地 N → 远端 N&gt;
+- HTTP 状态: &lt;200 / 404 / pending&gt;
+- byte-identity: &lt;yes / no / pending&gt;
+- CDN sync: &lt;synced / PENDING_CDN_SYNC&gt;
+- PENDING_CDN_SYNC 不判 FAIL
+
+### 7. Known limitations
+- 启发式判断: &lt;yes / no&gt;
+- 未跑全流程: &lt;yes / no&gt;
+- CDN 延迟: &lt;yes / no, 等待 N min&gt;
+- 其他: &lt;具体限制&gt;
+
+### 8. Next action
+- PR / 复现实验 / 二轮审计 / etc.
+- 触发 v2 的条件（如有）</code></pre>
+<h3 id="完整示例真实任务回填">完整示例（真实任务回填）</h3>
+<p>下面是按本模板的<strong>完整报告</strong>，数据来自 item_count 修复任务 (<code>b42212d</code>)：</p>
+<pre><code>## 任务报告: Shape of AI item_count 修复
+
+### 1. Status
+- 已完成
+- 5 步任务: 读 metadata / 改 4 文件 / update_site / check / push
+
+### 2. Scope
+- 改了什么:
+  - content/resource_collections/2026-06-26-shape-of-ai-ux-patterns/metadata.yaml (item_count 42→37)
+  - 同目录 collection.md / summary.md / notes.md / source.md 中的 &quot;42&quot; 文字统一改为 &quot;37&quot;
+- 没改什么:
+  - Shape of AI 原始网站
+  - Emily Campbell / Dario Amodei / Conan Harvard 等其他记录
+  - check_kb.py / app.js / generate_item_pages.py
+
+### 3. Actions taken
+- [APPLIED] patch metadata.yaml item_count 42→37
+- [APPLIED] patch collection.md &quot;总计:42&quot;→&quot;总计:37&quot;
+- [APPLIED] patch summary.md (2 处 &quot;42&quot; → &quot;37&quot;)
+- [APPLIED] patch notes.md &quot;42 个模式&quot; → &quot;37&quot;
+- [APPLIED] patch source.md (2 处 &quot;42&quot; → &quot;37&quot;)
+- [APPLIED] run python3 scripts/update_site.py (5/5 OK)
+- [APPLIED] run check_kb.py (PASS 42/42, warnings=0)
+- [APPLIED] run check_pages_sync.py (PASS 42/42)
+- [APPLIED] git add (10 个文件, per-file)
+- [APPLIED] git commit b42212d
+- [APPLIED] git push origin main (success)
+
+### 4. Evidence
+| 引用 | 置信度 | 验证时间 |
+|------|--------|----------|
+| commit b42212d | high | 2026-06-27 04:06:21 (just now) |
+| site/data/catalog.json item_count=37 | high | 2026-06-27 04:08:00 (just verified) |
+| https://conanxin.github.io/hermes-knowledge-base/data/catalog.json | high | 2026-06-27 04:10:00 (HTTP 200, byte-identical) |
+| check_kb.py output: PASS 42/42 | high | 2026-06-27 04:08:00 |
+| check_pages_sync.py output: PASS 42/42 | high | 2026-06-27 04:08:00 |
+
+### 5. Commit / Push
+- commit hash: b42212d78a549cefdb5e72e42e704031a1252814
+- push 状态: success
+- rebase 状态: clean (already up to date, 0/0)
+- 远端 ahead/behind: 0/0
+
+### 6. Live verification
+- catalog records: 42 → 42 (无变化，仅 item_count 字段修改)
+- HTTP 状态: 200
+- byte-identity: yes (c9bbd0a3b263c6047ec4245e1fe22e379bc2b37f13dac573cab61a01e916ef24)
+- CDN sync: synced (第二次轮询即追上，~30s)
+- PENDING_CDN_SYNC: no
+
+### 7. Known limitations
+- 启发式判断: yes (item_count 来自实际 collection.md 计数，不是设计目标)
+- 未跑全流程: no (gate 全过)
+- CDN 延迟: yes (30s 同步窗口，但已追上)
+- 其他: 无
+
+### 8. Next action
+- 等待后续任务或用户反馈
+- 若用户希望 item_count 反映更新（如站点新增模式），重做计数
+- P0 行动项 5 条的实施规范已记录在本规范（2026-06-26-hermes-agent-ui-p0-implementation-spec）</code></pre>
+<h3 id="最小可接受报告">最小可接受报告</h3>
+<p>如果任务极简（如只修改 1 个文件的 1 个字段），可以<strong>省略 §3 中按阶段切分</strong>、<strong>省略 §6 中 byte-identity</strong>，但 §1 / §2 / §4 / §7 / §8 不可省略——这 5 段是报告的<strong>最小可接受集</strong>。</p>
+<hr>
+<h2 id="7-三类任务的差异化处理">§7 三类任务的差异化处理</h2>
+<h3 id="71-任务分类">7.1 任务分类</h3>
+<table class="md-table"><thead><tr><th>类型</th><th>定义</th><th>例子</th></tr></thead><tbody><tr><td><strong>只读任务</strong></td><td>不修改任何文件、状态、远端</td><td>read / search / grep / analyze / list</td></tr><tr><td><strong>写入任务</strong></td><td>修改本地文件 / 状态，但不影响远端</td><td>write / edit / patch / build_index</td></tr><tr><td><strong>发布任务</strong></td><td>修改远端状态（push / deploy / publish）</td><td>push / deploy / send_message / publish</td></tr></tbody></table>
+<h3 id="72-报告-8-段是否全部要求">7.2 报告 8 段是否全部要求</h3>
+<table class="md-table"><thead><tr><th>任务类型</th><th>必填段</th><th>可省略段</th></tr></thead><tbody><tr><td><strong>只读任务</strong></td><td>§1 Status, §2 Scope, §4 Evidence (3 段)</td><td>§3 Actions, §5 Commit/Push, §6 Live, §7 Limits, §8 Next</td></tr><tr><td><strong>写入任务</strong></td><td>§1 Status, §2 Scope, §3 Actions, §4 Evidence (4 段)</td><td>§5 Commit/Push, §6 Live, §7 Limits, §8 Next</td></tr><tr><td><strong>发布任务</strong></td><td><strong>全部 8 段</strong></td><td>任何一段缺失 → WARN</td></tr></tbody></table>
+<h3 id="73-判定规则">7.3 判定规则</h3>
+<p>agent 应当在任务开始时<strong>显式声明任务类型</strong>（在 Status 段）：</p>
+<pre><code>## 任务报告
+- 类型: 发布任务（push 到 origin/main）
+- 必填段: 全部 8 段</code></pre>
+<p>如果任务中途从"写入"升级为"发布"（如原本不打算 push 但发现需要 push），<strong>必须更新任务类型声明</strong>。</p>
+<h3 id="74-三类任务的差异化示例">7.4 三类任务的差异化示例</h3>
+<p><strong>只读任务示例</strong>（grep）：</p>
+<pre><code>## 任务报告: 检查所有 metadata.yaml 的 type 字段
+- 类型: 只读任务
+- 必填段: 3 段
+
+### 1. Status: 已完成（1 步）
+### 2. Scope: 扫描 content/**/*.yaml 的 type 字段分布
+### 4. Evidence: 扫描结果表格（见下）</code></pre>
+<p><strong>写入任务示例</strong>（patch 1 个文件）：</p>
+<pre><code>## 任务报告: 修复 shape-of-ai-ux-patterns item_count
+- 类型: 写入任务
+- 必填段: 4 段
+
+### 1. Status: 已完成
+### 2. Scope: 仅修改 metadata.yaml item_count 字段
+### 3. Actions: [APPLIED] patch 1 处
+### 4. Evidence: 验证 item_count = 37</code></pre>
+<p><strong>发布任务示例</strong>（push 到 origin）：</p>
+<pre><code>## 任务报告: push 修复 commit
+- 类型: 发布任务
+- 必填段: 8 段 (全部)
+...
+### 5. Commit / Push
+### 6. Live verification
+### 7. Known limitations
+### 8. Next action</code></pre>
+<hr>
+<h2 id="8-并发-agent-写仓库时的状态协议">§8 并发 agent 写仓库时的状态协议</h2>
+<h3 id="81-协议触发条件">8.1 协议触发条件</h3>
+<p>满足以下任一条件时启动本协议：</p>
+<ul><li>多个 agent 共享同一仓库（多 sub-agent 并发）</li><li>agent 在 push / deploy / publish 前</li><li>agent 即将修改 <code>content/</code> 或 <code>site/</code> 或 <code>docs/</code></li><li>用户明确要求"安全发布"</li></ul>
+<h3 id="82-完整协议13-步">8.2 完整协议（13 步）</h3>
+<pre><code>[CONCURRENT-PROTOCOL] 启动时间: &lt;ISO 8601&gt;
+
+Step 1: git fetch origin
+  退出条件: 命令成功，输出 FETCH_HEAD
+
+Step 2: git pull --rebase --autostash origin main
+  退出条件: 无冲突（如果冲突，转 reset-and-rebuild 模式，见 §8.3）
+  检查: git rev-list --left-right --count origin/main...HEAD = 0/0
+
+Step 3: git status -s
+  退出条件: 输出为空（如果有输出，agent 评估是否 stash 已有改动）
+  警告: 如果 status 非空，agent 不应继续，先 stash 自己的修改
+
+Step 4: 写文件（4 文件 + metadata.yaml 等）
+  退出条件: 文件实际写入成功（write_file 之后 read_file 验证）
+
+Step 5: python3 scripts/check_kb.py
+  退出条件: PASS, warnings=0, exit 0
+  FAIL 处理: 不进 Step 6, 先修
+
+Step 6: python3 scripts/check_pages_sync.py
+  退出条件: PASS, site/ ↔ docs/ byte-identical
+
+Step 7: python3 scripts/update_site.py
+  退出条件: 5/5 步 OK
+  内部已 hard-stop: 如果 check_kb.py FAIL, 不进 build/export/sync
+
+Step 8: 再次运行 check_kb.py + check_pages_sync.py (独立 gate 二次确认)
+  退出条件: 两次 gate 都 PASS
+
+Step 9: per-file git add (不 git add . 或 git add -A)
+  退出条件: git status -s 显示全部预期文件已 staged, 无未预期文件
+
+Step 10: 再次 fetch + pull --rebase (pre-push concurrency safety)
+  退出条件: rebase 成功, 0/0
+
+Step 11: git commit + git push origin main
+  退出条件: push 成功, origin/main = HEAD
+  FAIL 处理: reset-and-rebuild 模式 (见 §8.3)
+
+Step 12: 轮询 live CDN (最多 8 min, 每 30s 一次)
+  退出条件: live records / HTTP / byte-identity 都匹配
+
+Step 13: 报告 §6 Live verification 字段
+  - PENDING_CDN_SYNC 不判 FAIL
+  - git show origin/main:... 是权威 (用于区分 CDN-stale vs push-failed)
+
+[CONCURRENT-PROTOCOL] 完成时间: &lt;ISO 8601&gt;</code></pre>
+<h3 id="83-失败处理模式">8.3 失败处理模式</h3>
+<h4 id="模式-a-reset-and-rebuild-rebase-冲突时">模式 A: reset-and-rebuild (rebase 冲突时)</h4>
+<p>适用于：多 agent 共享仓库，remote 已有新 commits 跟本地冲突。</p>
+<pre data-lang="bash"><code># 保存本地新内容
+cp -r content/&lt;new-content-dir&gt; /tmp/kb-stash/
+# 丢弃本地 commit
+git reset --hard origin/main
+# 恢复内容 + 重新 build
+cp -r /tmp/kb-stash/* content/
+python3 scripts/check_kb.py
+python3 scripts/update_site.py
+# per-file git add + commit + push</code></pre>
+<p><strong>为什么不用 <code>git pull --rebase</code> 解决冲突</strong>：catalog JSON 文件的 UU 冲突不好手动解,reset-and-rebuild 让 <code>update_site.py</code> 从 <code>content/</code> 重新生成,一次解决。</p>
+<h4 id="模式-b-pending_cdn_sync-cdn-延迟时">模式 B: PENDING_CDN_SYNC (CDN 延迟时)</h4>
+<p>适用于：push 成功但 live 还在缓存旧 commit。</p>
+<pre data-lang="bash"><code># 轮询 live, 不超过 8 min
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16; do
+  live_count=$(curl -sL &quot;&lt;live-catalog&gt;&quot; | python3 -c &quot;import json,sys; print(len(json.load(sys.stdin)))&quot;)
+  if [ &quot;$live_count&quot; = &quot;N+1&quot; ]; then
+    echo &quot;CDN synced at iteration $i&quot;
+    break
+  fi
+  sleep 30
+done</code></pre>
+<p><strong>关键</strong>: 区分 <code>push failed</code> vs <code>CDN stale</code> —— 用 <code>git show origin/main:docs/data/catalog.json</code> 作为权威：</p>
+<ul><li>如果 <code>git show</code> 显示新 record → push 成功，CDN 缓存问题，<strong>继续轮询</strong></li><li>如果 <code>git show</code> 不显示新 record → push 失败，<strong>进 reset-and-rebuild</strong></li></ul>
+<h4 id="模式-c-启发式判断未验证-self-audit-限制">模式 C: 启发式判断未验证 (Self-Audit 限制)</h4>
+<p>适用于：所有 Self-Audit v1 识别的"未评估"项。</p>
+<p><strong>在报告中标注</strong>：</p>
+<pre><code>## 7. Known limitations
+- 启发式判断: yes (item_count 基于 collection.md 实际计数)
+- 启发式判断: yes (某些 &quot;已具备&quot; 项未跑复现实验)</code></pre>
+<p>不视为 FAIL，但明确标注。</p>
+<h3 id="84-协议执行时间盒">8.4 协议执行时间盒</h3>
+<p>每步应有时长预算：</p>
+<table class="md-table"><thead><tr><th>Step</th><th>预期时长</th><th>超出则</th></tr></thead><tbody><tr><td>Step 1-3 (git ops)</td><td>&lt; 30s</td><td>检查网络</td></tr><tr><td>Step 5-7 (gate + build)</td><td>&lt; 60s</td><td>检查脚本权限 / Python 路径</td></tr><tr><td>Step 8 (二次 gate)</td><td>&lt; 30s</td><td>检查 commit 前的修改</td></tr><tr><td>Step 10 (pre-push rebase)</td><td>&lt; 30s</td><td>检查远端是否有新 commit</td></tr><tr><td>Step 11 (commit + push)</td><td>&lt; 30s</td><td>检查 commit msg / 远端权限</td></tr><tr><td>Step 12 (CDN poll)</td><td>&lt; 8 min</td><td>标 PENDING_CDN_SYNC，不判 FAIL</td></tr><tr><td><strong>总预算</strong></td><td><strong>&lt; 12 min</strong></td><td>任何一步卡住，先标 WARN，再人工介入</td></tr></tbody></table>
+<h3 id="85-协议输出要求">8.5 协议输出要求</h3>
+<p>执行完本协议后，<strong>报告 §6 Live verification 字段必须包含</strong>：</p>
+<pre><code>### 6. Live verification
+- catalog records: &lt;本地 N → 远端 N+1 (CDN 追上后)&gt;
+- HTTP 状态: &lt;200 / 404 / pending&gt;
+- byte-identity: &lt;yes / no / pending&gt;
+- CDN sync: &lt;synced (iteration N) / PENDING_CDN_SYNC (CDN 暂未同步)&gt;
+- PENDING_CDN_SYNC: &lt;no / yes, 等待 N min&gt;
+- remote git tree authority: &lt;git show origin/main:docs/data/catalog.json has N+1 records&gt;</code></pre>
+<p><code>PENDING_CDN_SYNC</code> 出现时<strong>不视为 FAIL</strong>——但要在 §7 Known limitations 中明确标注。</p>
+<hr>
+<h2 id="9-如何在后续任务中使用本规范">§9 如何在后续任务中使用本规范</h2>
+<h3 id="91-立即使用每次任务结束">9.1 立即使用（每次任务结束）</h3>
+<p>每次 agent 完成"通过 agent 完成、可能影响远端状态"的任务时，<strong>必须</strong>按 §6 统一报告模板输出报告。</p>
+<p>如果任务极简（纯只读），可省略部分段（见 §7.2）。如果任务复杂（含 sub-agent / 多平台 / CDN 同步），可在 8 段基础上<strong>加段</strong>（如"Sub-agent 状态"作为 §6.1）。</p>
+<h3 id="92-复盘使用每月一次">9.2 复盘使用（每月一次）</h3>
+<p>每月复盘时：</p>
+<ol><li>抽取当月所有 agent 任务报告</li><li>对照本规范的 5 P0，检查"本次报告是否满足规范"</li><li>统计 WARN / FAIL 比例</li><li>如果 FAIL &gt; 5% 或某条 P0 多次触发 WARN，<strong>升级本规范</strong></li></ol>
+<h3 id="93-升级使用触发-v1-v2-时">9.3 升级使用（触发 v1 → v2 时）</h3>
+<p>满足以下任一条件时升级本规范：</p>
+<ol><li>5 P0 全部落地（按 Self-Audit v1 路线阶段 1+2 完成）</li><li>30 天内应用 ≥ 10 次，WARN 比例 &lt; 5%</li><li>Self-Audit 出 v2，本规范必须同步升级</li><li>新增 agent 工作流工具（cronjob / delegate_task），并发协议章节需扩展</li></ol>
+<h3 id="94-强制使用-vs-参考使用">9.4 强制使用 vs 参考使用</h3>
+<table class="md-table"><thead><tr><th>场景</th><th>强制程度</th></tr></thead><tbody><tr><td><strong>发布任务</strong> (push / deploy / publish)</td><td><strong>强制</strong>——任何发布任务必须有 8 段完整报告，否则视作发布未完成</td></tr><tr><td><strong>写入任务</strong> (patch / write)</td><td><strong>强烈推荐</strong>——4 段报告应在每次写入后输出</td></tr><tr><td><strong>只读任务</strong> (read / search)</td><td><strong>可选</strong>——3 段简报即可</td></tr><tr><td><strong>紧急任务</strong> (用户显式说"快" / "brief")</td><td><strong>最低要求</strong>——3 段简报，其他段可标注"省略"</td></tr></tbody></table>
+<h3 id="95-与项目记忆的关联">9.5 与项目记忆的关联</h3>
+<p>本规范的"已具备"判断依赖项目记忆（与 Self-Audit v1 共用）：</p>
+<ul><li>Telegram typing action 对应 Status "思考中"</li><li>MEDIA 协议可用于 Inline Action 的"已生效"标签</li><li>sub-agent 隔离对应 Stop 链路的级联目标</li><li>session DB 持久化对应 Evidence 的 last-validated 时间</li><li>多平台 home channel 对应 Live verification 的逐平台 curl</li></ul>
+<p>如果项目记忆本身有误（如某功能已下线），本规范相应章节需要修正。这正是 Self-Audit v1 推荐 v2 做"复现实验"的原因。</p>
+<h3 id="96-反馈循环">9.6 反馈循环</h3>
+<p><strong>本规范本身是 living document</strong>。每次 agent 实际任务中遇到"本规范没说清楚"的场景，应当：</p>
+<ol><li>在当次报告中标注"本规范需要补充 X"</li><li>累积 3 次以上"同一类需要补充"后，正式修订本规范</li><li>修订时同时更新 <code>summary.md</code> 和 <code>source.md</code> 的"何时更新"章节</li></ol>
+<hr>
+<h2 id="附录-a-报告模板速查卡">附录 A: 报告模板速查卡</h2>
+<pre><code>┌─ 任务报告 ────────────────────────────────┐
+│ §1 Status (3 段必填)                      │
+│ §2 Scope                                  │
+│ §3 Actions [DRY-RUN]/[APPLIED]            │
+│ §4 Evidence 三件套                        │
+│ §5 Commit/Push (发布任务)                 │
+│ §6 Live verification (发布任务)           │
+│ §7 Known limitations                      │
+│ §8 Next action                            │
+└───────────────────────────────────────────┘
+
+只读 → 3 段;写入 → 4 段;发布 → 8 段
+WARN = 缺段 / 启发式 / CDN 未同步
+FAIL = 关键缺失 / gate FAIL / push failed
+PENDING_CDN_SYNC 不判 FAIL</code></pre>
+<h2 id="附录-b-并发协议速查卡">附录 B: 并发协议速查卡</h2>
+<pre><code>[CP-1]  fetch
+[CP-2]  pull --rebase --autostash
+[CP-3]  status -s 为空
+[CP-4]  写文件
+[CP-5]  check_kb.py PASS
+[CP-6]  check_pages_sync.py PASS
+[CP-7]  update_site.py OK
+[CP-8]  二次 gate PASS
+[CP-9]  per-file git add
+[CP-10] pre-push 再次 rebase
+[CP-11] commit + push
+[CP-12] CDN poll (≤8 min)
+[CP-13] 报告 §6 Live
+
+失败模式:
+- rebase 冲突 → reset-and-rebuild
+- push 失败 → reset-and-rebuild
+- CDN 慢 → PENDING_CDN_SYNC, 继续轮询</code></pre>
+<h2 id="变更日志">变更日志</h2>
+<ul><li><strong>2026-06-26</strong>：v1 初版。基于 Self-Audit v1 的 5 P0 + 最近 3 次任务实证经验</li><li><strong>v2 触发</strong>：见 §9.3 4 个条件</li></ul>
+</div>
+</details>
+</section>
+
+<nav class="detail-actions">
+<a class="action-link source-link" href="https://www.shapeof.ai/" target="_blank" rel="noopener">原文链接 ↗</a>
+<a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/notes/2026/2026-06-26-hermes-agent-ui-p0-implementation-spec" target="_blank" rel="noopener">GitHub 文件夹 →</a>
+<button class="action-btn" id="copy-path-btn" data-path="content/notes/2026/2026-06-26-hermes-agent-ui-p0-implementation-spec">复制 path</button>
+<span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
+</nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
+
+</article>
+</main>
+<footer>
+<p><a href="../../">hermes-knowledge-base</a> · 站内详情页</p>
+</footer>
+<script src="../../app.js" defer></script>
+<script>
+(function() {
+  const btn = document.getElementById('copy-path-btn');
+  const fb = document.getElementById('copy-feedback');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      const path = btn.getAttribute('data-path') || '';
+      const done = function() {
+        if (fb) {
+          fb.textContent = '已复制: ' + path;
+          setTimeout(function() { fb.textContent = ''; }, 2500);
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(path).then(done, function() {
+          // Fallback for non-secure contexts.
+          const ta = document.createElement('textarea');
+          ta.value = path;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); done(); } catch (e) {}
+          document.body.removeChild(ta);
+        });
+      }
+    });
+  }
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {
+    const onScroll = function() {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+title: "Hermes Agent UI P0 Implementation Spec"
+title_zh: "Hermes Agent UI P0 实施规范"
+source_url: "https://www.shapeof.ai/"
+source_site: "shapeof.ai"
+author: "Conan Xin"
+published_date: "2026-06-26"
+captured_date: "2026-06-26"
+language: "zh-CN"
+translation_language: null
+status: "active"
+type: "note"
+category: "spec"
+source_type: "derived"
+topics:
+  - "Hermes Agent"
+  - "Agent UI"
+  - "P0 实施规范"
+  - "Shape of AI"
+  - "AI UX"
+  - "Agent 报告"
+  - "工作流协议"
+  - "6 层模型"
+tags:
+  - "Hermes"
+  - "Agent UI"
+  - "P0"
+  - "Implementation Spec"
+  - "AI UX"
+  - "Agent Workflow"
+  - "报告规范"
+  - "产品设计"
+word_count:
+  source: 6011
+based_on:
+  - "2026-06-26-hermes-agent-ui-self-audit-v1"
+  - "2026-06-26-hermes-agent-ui-shape-of-ai-checklist"
+  - "2026-06-26-shape-of-ai-ux-patterns"
+path: "content/notes/2026/2026-06-26-hermes-agent-ui-p0-implementation-spec/"
