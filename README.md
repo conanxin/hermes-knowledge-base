@@ -325,6 +325,15 @@ python3 scripts/update_site.py
 #   4. sync_pages_docs.py
 ```
 
+## Releases
+
+See [CHANGELOG.md](CHANGELOG.md) and [docs/RELEASES.md](docs/RELEASES.md) for version history and release notes.
+
+- **Latest YouTube capability entry**: [`v0.3.24-youtube-public-entry-qa`](https://github.com/conanxin/hermes-knowledge-base/releases/tag/v0.3.24-youtube-public-entry-qa)
+- **Music player fix**: [`v0.3.22-music-player-js-loader-fix`](https://github.com/conanxin/hermes-knowledge-base/releases/tag/v0.3.22-music-player-js-loader-fix)
+
+---
+
 ## 质量门禁（硬性规则）
 
 `update_site.py` 已在最前面内置 `check_kb.py` 硬停止：

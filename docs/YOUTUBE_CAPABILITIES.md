@@ -240,6 +240,7 @@ User provides YouTube URL
 | v0.3.21 | `v0.3.21-youtube-preflight-failure-archive` | Link preflight and failure archive | 1b73df5 |
 | v0.3.22 | `v0.3.22-music-player-js-loader-fix` | Music player JS loader fix | 82fd039 |
 | v0.3.23 | `v0.3.23-youtube-capability-oss-exposure` | OSS exposure and documentation | bbb693c |
+| v0.3.24 | `v0.3.24-youtube-public-entry-qa` | Public entry verification and navigation fix | 9d0df38 |
 
 ---
 
