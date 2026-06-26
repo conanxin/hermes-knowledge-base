@@ -145,6 +145,96 @@ cp templates/prompts/import_article_prompt.md /tmp/my_import.md
 
 详见 `templates/prompts/import_article_prompt.md` 和 `docs/AGENT_COMMANDS.md`。
 
+## YouTube 视频知识包
+
+Hermes Knowledge Base 支持将 YouTube 视频转换为完整的中文知识包。
+
+### 能力说明
+
+将 YouTube 视频（含字幕）转换为：
+- `metadata` — 视频元数据
+- `transcript.original` — 原始字幕（英文）
+- `transcript.zh` — 中文字幕
+- `transcript.bilingual` — 双语对照字幕
+- `analysis.zh` — 深度解读
+- `summary-post.zh` — 分享文章
+- `notes` — 永久笔记
+- `cards` — 知识卡片
+- `preflight-failure-archive` — 失败预检归档（如视频不可访问）
+- `KB 条目` — 知识库正式条目
+- `GitHub Pages 站点更新` — 自动发布到浏览站点
+
+### 最短命令
+
+```
+预检这个 YouTube 视频：<YOUTUBE_URL>
+解读这个 YouTube 视频并加入 Hermes 知识库：<YOUTUBE_URL>
+```
+
+### 预检命令
+
+在正式解读前，先判断视频是否可处理：
+
+```
+预检这个 YouTube 视频：<YOUTUBE_URL>
+```
+
+预检结果：
+- **PASS**：视频可访问且有字幕 → 继续解读和入库
+- **BLOCKED**：视频不可访问或无字幕 → 停止并归档失败
+
+### 输出结构
+
+**成功视频**：
+```
+content/articles/YYYY/YYYY-MM-DD-video-slug/
+├── metadata.yaml
+├── summary.md
+├── notes.md
+├── source.md
+├── translation.zh-CN.md
+├── cards.md
+└── ...
+```
+
+**失败预检**：
+```
+data/youtube-preflight-failures/YYYY/YYYY-MM-DD-video-id.json
+data/youtube-preflight-failures/YYYY/YYYY-MM-DD-video-id.md
+```
+
+### 安全边界
+
+- 不登录 YouTube 账号
+- 不读取浏览器 Cookie
+- 不下载完整视频（只提取字幕和元数据）
+- 不绕过地区限制或私密限制
+- 不处理私密视频
+- 不伪造字幕或元数据
+- 不可访问视频直接 BLOCKED 并归档，不继续处理
+
+### 相关文档
+
+| 文档 | 路径 | 说明 |
+|------|------|------|
+| 视频解读工作流 | `docs/workflows/youtube-video-brief-workflow.md` | 从 URL 到知识包的完整流程 |
+| 一键入库工作流 | `docs/workflows/youtube-video-kb-import-workflow.md` | 将知识包导入知识库 |
+| 链接预检工作流 | `docs/workflows/youtube-link-preflight-workflow.md` | 入库前的预检判断 |
+| 视频解读命令 | `docs/commands/youtube-brief-command.md` | 视频解读快捷命令 |
+| 一键入库命令 | `docs/commands/youtube-kb-import-command.md` | 入库快捷命令 |
+| 预检命令 | `docs/commands/youtube-preflight-command.md` | 预检快捷命令 |
+
+### 版本演进
+
+| 版本 | 内容 |
+|------|------|
+| v0.3.18 | 视频解读成功案例（Conan O'Brien 毕业演讲） |
+| v0.3.19 | 一键视频入库命令能力建设 |
+| v0.3.20 | 真实视频入库试运行（Dario Amodei 采访） |
+| v0.3.21 | 链接预检与失败归档机制 |
+
+---
+
 ## 浏览知识库
 
 ### 在线访问
