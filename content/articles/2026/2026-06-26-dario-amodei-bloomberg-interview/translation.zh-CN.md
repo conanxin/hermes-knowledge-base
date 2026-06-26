@@ -71,7 +71,7 @@ Dario 的开场用"相对论飞船"做类比：
 
 Dario 把自己比作 **Leo Szilard**（第一个想到链式反应的人），而不是 Oppenheimer：
 
-> "我最有认同感的 figure 是 Leo Szilard——最先想到 chain reaction 的人。我的看法是：我们不可能靠一些 larger-than-life 的 personality 挺过去——那种试图做所有事情 center 的 figure。这里需要 balance of power——有很多 powerful 的 actor 有自己的 interest。唯一让它对所有人都好的方式是，everywhere 都有 checks and balances。所以某种意义上，我实际上把 Oppenheimer 视为一个 failure case——what should not happen。"
+> "我最有认同感的 figure 是 Leo Szilard——最先想到 chain reaction 的人。我的看法是：我们不可能靠一些 larger-than-life 的 personality 挺过去——那种试图做所有事情 center 的 figure。这里需要**权力制衡**——有很多 powerful 的 actor 有自己的 interest。唯一让它对所有人都好的方式是，everywhere 都有**制衡机制**。所以某种意义上，我实际上把 Oppenheimer 视为一个 failure case——what should not happen。"
 
 **解读：** Dario 把自己定位为**"系统设计者"而非"AI 救世主"**。Oppenheimer 模式 = 个人英雄主义 + 中心化权威 + 事后问责；Szilard 模式 = 制度设计 + 多方制衡 + 预防性思考。
 
