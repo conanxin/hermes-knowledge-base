@@ -18,6 +18,11 @@
 - `PENDING_CDN_SYNC` 是合法 WARN,不判 FAIL
 - 详细的状态词、动作标签、生命周期定义、CDN 延迟规则、并发协议见 [REPORTING_TEMPLATE.md](REPORTING_TEMPLATE.md)
 
+**报告字段要求（v0.3.43+）**:
+- versioned task 报告应遵循 [docs/REPORTING_TEMPLATE.md](REPORTING_TEMPLATE.md) §13 覆盖率审计字段清单
+- 最终报告必须包含: commit / tag / tag deref / checks / git status
+- 如果 postflight 输出 warning,最终回复必须列出 warning
+
 ### 任务收尾 Postflight（v0.3.41+）
 
 **每个 versioned task 在 commit/tag 后推荐运行 postflight：**

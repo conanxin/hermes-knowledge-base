@@ -131,6 +131,11 @@ preflight → execution → checks → commit → tag → postflight
 
 postflight 不移动旧 tag。tag deref commit 必须记录。
 
+**报告模板要求（v0.3.43+）**:
+- tag deref commit 必须进入报告。
+- 从 v0.3.43 起，报告模板覆盖率是 versioned task 的 recommended practice。
+- 仍保持 WARN-only，不升级 FAIL gate。
+
 ## 新任务版本号选择
 
 1. **先运行** `python3 scripts/check_release_tags.py`

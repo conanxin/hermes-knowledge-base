@@ -46,6 +46,11 @@ python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name
 * 如果 WARNING，最终回复必须说明。
 * 不要因为 WARN-only 自行 force push / amend / reset。
 
+**报告模板要求（v0.3.43+）**:
+* 云端任务报告应遵循 [docs/REPORTING_TEMPLATE.md](REPORTING_TEMPLATE.md) §13 覆盖率审计字段清单。
+* postflight warning 不得隐藏。
+* report 缺字段时不要 amend 旧 commit，优先后续报告中记录。
+
 ### 禁止操作
 
 - **不得在 dirty tree 上执行** — 必须先 commit 或清理

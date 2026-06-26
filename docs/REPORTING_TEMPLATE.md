@@ -513,6 +513,72 @@ python3 scripts/check_task_postflight.py \
 
 ---
 
+## 13. 报告模板覆盖率审计（v0.3.43+）
+
+### Postflight Required Fields
+
+以下字段是 `check_task_postflight.py` 的 **required fields**，所有 versioned task 报告必须包含：
+
+| 字段 | 说明 | 示例位置 |
+|---|---|---|
+| `STATUS` | 任务状态词 | 报告开头 |
+| `commit` | commit hash | Git 段 |
+| `tag` | tag 名称 | Git 段 |
+| `check_kb.py` | check_kb.py 结果 | Checks 段 |
+| `check_pages_sync.py` | check_pages_sync.py 结果 | Checks 段 |
+| `git status` | git status 结果 | Git 段 |
+
+### Import Task Recommended Fields
+
+导入类任务报告推荐包含：
+
+| 字段 | 说明 |
+|---|---|
+| `source URL` | 原始文章 URL |
+| `content directory` | 内容目录路径 |
+| `GitHub Pages URL` | 生成的页面链接 |
+| `duplicate check` | 重复检测依据 |
+| `blocked check` | 不可访问检测依据 |
+
+### Feature Task Recommended Fields
+
+功能类任务报告推荐包含：
+
+| 字段 | 说明 |
+|---|---|
+| `modified files` | 修改的文件列表 |
+| `checks` | 检查脚本结果汇总 |
+| `tag deref` | tag deref commit |
+| `local smoke` | 本地冒烟测试结果 |
+| `online smoke` | 在线冒烟测试结果 |
+
+### Versioned Task Universal Recommended Fields
+
+所有 versioned task 报告推荐包含：
+
+| 字段 | 说明 |
+|---|---|
+| `tag object hash` | tag object SHA |
+| `tag deref commit` | tag 指向的 commit |
+| `HEAD = origin/main` | HEAD 与 origin/main 同步状态 |
+| `recommended next minor` | 推荐下一个版本号 |
+| `check_task_preflight.py` | preflight 结果 |
+| `check_task_postflight.py` | postflight 结果 |
+
+### 覆盖率审计历史
+
+| 版本 | 状态 | 缺失字段 |
+|---|---|---|
+| v0.3.38 | PASS_WITH_WARNINGS | check_kb.py, check_pages_sync.py, source URL, content directory, GitHub Pages URL, modified files, tag deref |
+| v0.3.39 | PASS_WITH_WARNINGS | check_kb.py, check_pages_sync.py, content directory, GitHub Pages URL, modified files, tag deref |
+| v0.3.40 | PASS_WITH_WARNINGS | check_kb.py, check_pages_sync.py, source URL, content directory, GitHub Pages URL, modified files, checks, tag deref |
+| v0.3.41 | **PASS** | 无 |
+| v0.3.42 | **PASS** | 无 |
+
+**结论**：从 v0.3.41 起，报告模板已完善，postflight 无 warning。
+
+---
+
 ## 11. 相关文档
 
 - **完整版**(KB 条目,含设计理念与范例回填):[2026-06-26-hermes-agent-task-report-template](https://conanxin.github.io/hermes-knowledge-base/items/2026-06-26-hermes-agent-task-report-template/)
@@ -524,6 +590,7 @@ python3 scripts/check_task_postflight.py \
 
 ## 12. 修订日志
 
-- **2026-06-27**:v1 初版。基于 task-report-template KB 条目的精简操作版
-- **2026-06-27**:v1.1 新增 §10 Postflight 检查章节(WARN-only 最小版)
-- v2 触发:KB 条目出 v2 / 反模式新增 / 协议步骤变化
+- **2026-06-27**: v1 初版。基于 task-report-template KB 条目的精简操作版
+- **2026-06-27**: v1.1 新增 §10 Postflight 检查章节(WARN-only 最小版)
+- **2026-06-27**: v1.2 新增 §13 报告模板覆盖率审计，完善 required/recommended 字段清单
+- v2 触发: KB 条目出 v2 / 反模式新增 / 协议步骤变化
