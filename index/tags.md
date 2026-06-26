@@ -8,6 +8,10 @@
 
 - The 100 greatest songs of the 1960s
 
+## 18th century literature
+
+- A Modest Proposal
+
 ## 1960s
 
 - The 100 greatest songs of the 1960s
@@ -19,6 +23,10 @@
 ## 421.news
 
 - The People Are Never Right
+
+## A Modest Proposal
+
+- A Modest Proposal
 
 ## AGI 时间表
 
@@ -367,6 +375,10 @@
 
 - Owning Our Words: Sounding the Depths of Language
 
+## Irish history
+
+- A Modest Proposal
+
 ## J.D. Vance
 
 - The People Are Never Right
@@ -394,6 +406,10 @@
 ## Johnny Cash
 
 - The 100 greatest songs of the 1960s
+
+## Jonathan Swift
+
+- A Modest Proposal
 
 ## Joni Mitchell
 
@@ -619,6 +635,10 @@
 ## Pluribus
 
 - Ken Liu on AI and Freedom
+
+## Project Gutenberg
+
+- A Modest Proposal
 
 ## Prompt
 
@@ -886,6 +906,10 @@
 ## china
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
+
+## classic essay
+
+- A Modest Proposal
 
 ## code-intelligence
 
@@ -1192,9 +1216,17 @@
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
 
+## political satire
+
+- A Modest Proposal
+
 ## political_economy
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
+
+## poverty
+
+- A Modest Proposal
 
 ## preflight
 
@@ -1262,6 +1294,10 @@
 
 - Session Guard Phase 1: Pre-Request Sanitizer
 
+## satire
+
+- A Modest Proposal
+
 ## science_fiction
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
@@ -1290,6 +1326,10 @@
 ## smooth exponential
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
+## social commentary
+
+- A Modest Proposal
 
 ## soul
 

@@ -1389,6 +1389,50 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-youtube-link-preflight-failure-archive"
   },
   {
+    "title": "A Modest Proposal",
+    "title_zh": "一个温和的建议",
+    "type": "essay",
+    "path": "content/articles/2026/2026-06-27-swift-modest-proposal",
+    "author": "Jonathan Swift",
+    "source_url": "https://www.gutenberg.org/files/1080/1080-h/1080-h.htm",
+    "source_site": "Project Gutenberg",
+    "language": "en",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "1729-01-01",
+    "captured_date": "2026-06-27",
+    "topics": [
+      "satire",
+      "social criticism",
+      "Irish poverty",
+      "British colonialism",
+      "political essay"
+    ],
+    "tags": [
+      "Jonathan Swift",
+      "A Modest Proposal",
+      "satire",
+      "18th century literature",
+      "Irish history",
+      "social commentary",
+      "Project Gutenberg",
+      "classic essay",
+      "political satire",
+      "poverty"
+    ],
+    "word_count": {
+      "source": 3500,
+      "translation": 3200
+    },
+    "content_kind": "essay",
+    "import_method": "short_command_preflight_e2e_regression",
+    "import_version": "v0.3.39",
+    "updated_date": "2026-06-27",
+    "slug": "2026-06-27-swift-modest-proposal",
+    "detail_url": "items/2026-06-27-swift-modest-proposal/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-27-swift-modest-proposal"
+  },
+  {
     "title": "ArXiv AI Agents 论文列表",
     "title_zh": "ArXiv AI Agents 相关论文",
     "type": "resource_collection",

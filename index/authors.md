@@ -88,6 +88,10 @@
 
 - The Old World Is Dying
 
+## Jonathan Swift
+
+- A Modest Proposal
+
 ## Juan Ruocco
 
 - The People Are Never Right
