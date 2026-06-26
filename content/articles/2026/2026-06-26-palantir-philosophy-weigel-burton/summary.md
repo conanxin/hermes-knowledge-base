@@ -183,7 +183,7 @@ Palantir 不是一个普通的科技公司。它是**特定思想传统的政治
 
 ---
 
-**报告路径**：`/home/ubuntu/.openclaw/workspace/outputs/youtube-video-brief/20260615-palantir-philosophy-weigel-burton/summary-post.zh.md`
+**处理说明**：本文档由 YouTube 视频知识包自动生成，包含深度分析、来源、笔记、字幕翻译与知识卡片。
 
 **字数**：约 3200 字  
 **阅读时长**：12-15 分钟  

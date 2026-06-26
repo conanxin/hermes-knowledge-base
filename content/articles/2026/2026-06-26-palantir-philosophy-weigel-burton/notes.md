@@ -449,4 +449,4 @@ Anthony Burton
 
 ---
 
-**报告路径**：`/home/ubuntu/.openclaw/workspace/outputs/youtube-video-brief/20260615-palantir-philosophy-weigel-burton/notes.md`
+**处理说明**：本文档由 YouTube 视频知识包自动生成，包含深度分析、来源、笔记、字幕翻译与知识卡片。
