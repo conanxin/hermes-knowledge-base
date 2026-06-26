@@ -77,6 +77,14 @@ SUSPICIOUS_PATTERN = re.compile(r'[a-zA-Z]{2,}(?:\s+[a-zA-Z]{2,}){2,}')
 MIN_SUSPICIOUS_LEN = 15
 
 
+def strip_html_comments(text):
+    """剥离 HTML 注释块（<!-- ... -->），包括单行和多行。
+    HTML comments are source/build annotations, not user-visible translation text.
+    它们包含 import metadata、translation notes、build hints 等，不应被当作翻译残留。
+    """
+    return re.sub(r'<!--.*?-->', ' ', text, flags=re.DOTALL)
+
+
 def is_allowed(text):
     """检查文本是否匹配允许的模式"""
     for pattern in ALLOWED_PATTERNS:
@@ -97,6 +105,9 @@ def check_translation_residue():
 
         with open(trans_file, "r", encoding="utf-8") as f:
             content = f.read()
+
+        # 剥离 HTML 注释（v0.3.49）：注释内是 source/build metadata，不是用户可见译文
+        content = strip_html_comments(content)
 
         # 移除 Markdown 语法
         clean = re.sub(r'[#*_`\[\]\(\)]', ' ', content)
