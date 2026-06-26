@@ -18,16 +18,32 @@
 - `PENDING_CDN_SYNC` 是合法 WARN,不判 FAIL
 - 详细的状态词、动作标签、生命周期定义、CDN 延迟规则、并发协议见 [REPORTING_TEMPLATE.md](REPORTING_TEMPLATE.md)
 
-### 可选命令:Postflight 检查(`scripts/check_task_postflight.py`)
+### 任务收尾 Postflight（v0.3.41+）
 
-完成报告后,可用 [scripts/check_task_postflight.py](../scripts/check_task_postflight.py) **机器验证**报告是否对齐所选 profile。**目前是 WARN-only,不是强制门禁**,不接入 preflight / update_site / CI / pre-push hook。
+**每个 versioned task 在 commit/tag 后推荐运行 postflight：**
+
+```bash
+python3 scripts/check_task_postflight.py \
+    --report reports/<task_report>.md \
+    --tag v0.3.N-task-name \
+    --expect-clean \
+    --expect-head-origin
+```
+
+**说明：**
+- v0.3.41 起 postflight 是 **WARN-only**，不作为 FAIL gate。
+- 有 warning 时不要假装 PASS，必须写入最终报告。
+- tag missing、report 缺字段、dirty tree 都应记录。
+- 当前不强制阻断后续任务，但推荐在报告中说明。
+
+**Legacy profile-based 检查（仍支持）：**
 
 ```bash
 # 完整任务报告(模板 3 写入并发布)
 python3 scripts/check_task_postflight.py \
     --report-file reports/<task>.md \
     --profile publish
-
+```
 # 旧版 v0.3.x 7 段约束报告(legacy 豁免)
 python3 scripts/check_task_postflight.py \
     --report-file reports/<task>_v0338_20260626.md \

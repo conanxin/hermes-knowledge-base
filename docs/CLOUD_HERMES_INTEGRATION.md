@@ -39,7 +39,14 @@ python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name
 | **PASS_WITH_WARNINGS** | 仅当 warning 为已知非阻断项时可继续 |
 | **FAIL** | **立即停止**，不得继续 |
 
-### 5. 禁止操作
+### 云端 Hermes 收尾规则（v0.3.41+）
+
+* commit + push + tag 后运行 postflight。
+* 记录 postflight 输出。
+* 如果 WARNING，最终回复必须说明。
+* 不要因为 WARN-only 自行 force push / amend / reset。
+
+### 禁止操作
 
 - **不得在 dirty tree 上执行** — 必须先 commit 或清理
 - **不得在 tag 已存在时继续** — 必须选择新的版本号

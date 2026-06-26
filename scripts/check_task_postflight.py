@@ -522,24 +522,308 @@ def run_check(report_path: Path, profile: str, strict: bool) -> dict:
     }
 
 
+# ---------------------------------------------------------------------------
+# Git state checks (for --expect-clean / --expect-head-origin)
+# ---------------------------------------------------------------------------
+
+import subprocess as sp
+
+
+def _git_rev_parse(what: str) -> str | None:
+    try:
+        return sp.check_output(
+            ["git", "rev-parse", what], text=True, stderr=sp.DEVNULL
+        ).strip()
+    except sp.CalledProcessError:
+        return None
+
+
+def _git_status_short() -> str:
+    try:
+        return sp.check_output(
+            ["git", "status", "--short"], text=True, stderr=sp.DEVNULL
+        ).strip()
+    except sp.CalledProcessError:
+        return ""
+
+
+def _git_tag_exists(tag: str) -> bool:
+    try:
+        sp.check_output(["git", "tag", "--list", tag], text=True, stderr=sp.DEVNULL)
+        return tag in sp.check_output(
+            ["git", "tag", "--list", tag], text=True, stderr=sp.DEVNULL
+        ).strip()
+    except sp.CalledProcessError:
+        return False
+
+
+def _git_remote_tag_exists(tag: str) -> bool:
+    try:
+        output = sp.check_output(
+            ["git", "ls-remote", "--tags", "origin", tag + "*"],
+            text=True,
+            stderr=sp.DEVNULL,
+        ).strip()
+        return bool(output)
+    except sp.CalledProcessError:
+        return False
+
+
+def _git_tag_deref(tag: str) -> str | None:
+    try:
+        return sp.check_output(
+            ["git", "rev-parse", tag + "^{}"], text=True, stderr=sp.DEVNULL
+        ).strip()
+    except sp.CalledProcessError:
+        return None
+
+
+def run_git_checks(
+    expect_clean: bool,
+    expect_head_origin: bool,
+    tag: str | None,
+    commit: str | None,
+) -> tuple[list, list, list]:
+    """Run git state checks, return (checks, warnings, errors)."""
+    checks: list = []
+    warnings: list = []
+    errors: list = []
+
+    # Git repo check
+    head = _git_rev_parse("HEAD")
+    checks.append(("git_repo", "PASS" if head else "FAIL"))
+    if not head:
+        errors.append("ERROR: not a git repo or HEAD unreadable")
+        return checks, warnings, errors
+
+    # Working tree check
+    status = _git_status_short()
+    is_clean = not status
+    checks.append(("git_status", "PASS" if is_clean else "DIRTY"))
+    if expect_clean and not is_clean:
+        warnings.append(f"WARN: working tree not clean:\n{status}")
+    elif not is_clean:
+        warnings.append(f"WARN: working tree not clean (expected)")
+
+    # HEAD / origin/main check
+    origin_main = _git_rev_parse("origin/main")
+    checks.append(("origin_main", "PASS" if origin_main else "MISSING"))
+    if origin_main:
+        head_matches = head == origin_main
+        checks.append(("head_sync", "PASS" if head_matches else "MISMATCH"))
+        if expect_head_origin and not head_matches:
+            warnings.append(
+                f"WARN: HEAD ({head[:8]}) != origin/main ({origin_main[:8]})"
+            )
+        elif not head_matches:
+            warnings.append(
+                f"WARN: HEAD ({head[:8]}) != origin/main ({origin_main[:8]})"
+            )
+    else:
+        if expect_head_origin:
+            warnings.append("WARN: origin/main not found")
+
+    # Tag check
+    if tag:
+        local_exists = _git_tag_exists(tag)
+        remote_exists = _git_remote_tag_exists(tag)
+        deref = _git_tag_deref(tag)
+        checks.append(("tag_local", "PASS" if local_exists else "MISSING"))
+        checks.append(("tag_remote", "PASS" if remote_exists else "MISSING"))
+        checks.append(("tag_deref", "PASS" if deref else "MISSING"))
+        if not local_exists:
+            warnings.append(f"WARN: local tag '{tag}' not found")
+        if not remote_exists:
+            warnings.append(f"WARN: remote tag '{tag}' not found")
+        if deref and commit:
+            deref_matches = deref == commit
+            checks.append(("tag_commit_match", "PASS" if deref_matches else "MISMATCH"))
+            if not deref_matches:
+                warnings.append(
+                    f"WARN: tag deref ({deref[:8]}) != expected commit ({commit[:8]})"
+                )
+        elif not deref:
+            warnings.append(f"WARN: tag '{tag}' deref failed")
+
+    return checks, warnings, errors
+
+
+# ---------------------------------------------------------------------------
+# Report field checks (for --report)
+# ---------------------------------------------------------------------------
+
+REPORT_REQUIRED_FIELDS = (
+    "STATUS",
+    "commit",
+    "tag",
+    "check_kb.py",
+    "check_pages_sync.py",
+    "git status",
+)
+
+REPORT_IMPORT_RECOMMENDED_FIELDS = (
+    "source URL",
+    "content directory",
+    "GitHub Pages URL",
+)
+
+REPORT_FEATURE_RECOMMENDED_FIELDS = (
+    "modified files",
+    "checks",
+    "tag deref",
+)
+
+
+def run_report_checks(report_path: Path) -> tuple[list, list, list]:
+    """Check report file for required/recommended fields."""
+    checks: list = []
+    warnings: list = []
+    errors: list = []
+
+    if not report_path.exists():
+        checks.append(("report_exists", "MISSING"))
+        warnings.append(f"WARN: report file does not exist: {report_path}")
+        return checks, warnings, errors
+
+    checks.append(("report_exists", "PASS"))
+
+    try:
+        text = report_path.read_text(encoding="utf-8")
+    except Exception as exc:
+        checks.append(("report_readable", "FAIL"))
+        errors.append(f"ERROR: cannot read report: {exc}")
+        return checks, warnings, errors
+
+    checks.append(("report_readable", "PASS"))
+
+    text_lc = text.lower()
+
+    # Check required fields
+    missing_required = []
+    for field in REPORT_REQUIRED_FIELDS:
+        if field.lower() in text_lc:
+            checks.append((f"report_field_{field}", "PASS"))
+        else:
+            checks.append((f"report_field_{field}", "MISSING"))
+            missing_required.append(field)
+
+    if missing_required:
+        warnings.append(
+            f"WARN: report missing required fields: {', '.join(missing_required)}"
+        )
+
+    # Check recommended fields (import)
+    missing_import = []
+    for field in REPORT_IMPORT_RECOMMENDED_FIELDS:
+        if field.lower() in text_lc:
+            checks.append((f"report_field_{field}", "PASS"))
+        else:
+            checks.append((f"report_field_{field}", "OPTIONAL"))
+            missing_import.append(field)
+
+    if missing_import:
+        warnings.append(
+            f"WARN: report missing recommended import fields: {', '.join(missing_import)}"
+        )
+
+    # Check recommended fields (feature)
+    missing_feature = []
+    for field in REPORT_FEATURE_RECOMMENDED_FIELDS:
+        if field.lower() in text_lc:
+            checks.append((f"report_field_{field}", "PASS"))
+        else:
+            checks.append((f"report_field_{field}", "OPTIONAL"))
+            missing_feature.append(field)
+
+    if missing_feature:
+        warnings.append(
+            f"WARN: report missing recommended feature fields: {', '.join(missing_feature)}"
+        )
+
+    return checks, warnings, errors
+
+
+def _output_text_v2(result: dict) -> None:
+    print(f"STATUS: {result['status']}")
+    print(f"warnings: {result['warnings_count']}")
+    print()
+    print("Checks:")
+    for name, status in result["checks"]:
+        print(f"  {name}: {status}")
+    print()
+    if result["warnings"]:
+        print("Warnings:")
+        for w in result["warnings"]:
+            print(f"  - {w}")
+        print()
+    if result["errors"]:
+        print("Errors:")
+        for e in result["errors"]:
+            print(f"  - {e}")
+        print()
+    print("Git state:")
+    print(f"  HEAD: {result.get('head', 'N/A')}")
+    print(f"  origin/main: {result.get('origin_main', 'N/A')}")
+    print(f"  working tree: {'clean' if result.get('git_clean') else 'dirty'}")
+    print()
+    print("Report:")
+    print(f"  path: {result.get('report_path', 'N/A')}")
+    print(f"  exists: {result.get('report_exists', 'N/A')}")
+    print()
+    print("Tag:")
+    print(f"  tag: {result.get('tag', 'N/A')}")
+    print(f"  deref: {result.get('tag_deref', 'N/A')}")
+    print()
+    print("Recommended action:")
+    print(f"  {result.get('recommended_action', 'Review warnings above')}")
+
+
+def _output_json_v2(result: dict) -> None:
+    print(json.dumps(result, indent=2, ensure_ascii=False))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Task postflight checker (WARN-only by default).",
     )
+    # Legacy profile-based args
     parser.add_argument(
         "--report-file",
-        help="Path to the task report file. REQUIRED. The script does NOT scan reports/ on its own.",
+        help="Path to the task report file (legacy, use --report instead).",
     )
     parser.add_argument(
         "--profile",
         default="auto",
         choices=("readonly", "write_local", "publish", "article_import", "versioned", "auto"),
-        help="Report profile to check against (default: auto-detect from filename/heading).",
+        help="Report profile to check against (default: auto-detect).",
     )
     parser.add_argument(
         "--strict",
         action="store_true",
         help="Treat missing required segments as FAIL (non-zero exit). Default is WARN-only.",
+    )
+    # New v0.3.41 args
+    parser.add_argument(
+        "--report",
+        help="Path to the task report file (v0.3.41+).",
+    )
+    parser.add_argument(
+        "--tag",
+        help="Tag name to verify (v0.3.41+).",
+    )
+    parser.add_argument(
+        "--commit",
+        help="Expected commit hash for tag deref (v0.3.41+).",
+    )
+    parser.add_argument(
+        "--expect-clean",
+        action="store_true",
+        help="Warn if working tree is not clean (v0.3.41+).",
+    )
+    parser.add_argument(
+        "--expect-head-origin",
+        action="store_true",
+        help="Warn if HEAD != origin/main (v0.3.41+).",
     )
     parser.add_argument(
         "--json",
@@ -548,8 +832,10 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    if not args.report_file:
-        msg = "ERROR: --report-file is required. The script does not scan reports/ on its own."
+    # Determine report path (prefer --report over --report-file)
+    report_path_str = args.report or args.report_file
+    if not report_path_str:
+        msg = "ERROR: --report is required. The script does not scan reports/ on its own."
         if args.json:
             print(json.dumps({"status": "FAIL", "errors": [msg]}, indent=2))
         else:
@@ -557,28 +843,64 @@ def main() -> int:
             parser.print_usage(sys.stderr)
         return 1
 
-    report_path = Path(args.report_file).resolve()
-    try:
-        text_preview = report_path.read_text(encoding="utf-8", errors="replace")
-    except FileNotFoundError:
-        msg = f"ERROR: report file not found: {report_path}"
-        if args.json:
-            print(json.dumps({"status": "FAIL", "errors": [msg]}, indent=2))
-        else:
-            print(msg, file=sys.stderr)
-        return 1
+    report_path = Path(report_path_str).resolve()
 
-    profile = args.profile
-    if profile == "auto":
-        profile = auto_detect_profile(report_path, text_preview)
+    # Run git state checks
+    git_checks, git_warnings, git_errors = run_git_checks(
+        expect_clean=args.expect_clean,
+        expect_head_origin=args.expect_head_origin,
+        tag=args.tag,
+        commit=args.commit,
+    )
 
-    result = run_check(report_path, profile, args.strict)
-    if args.json:
-        _output_json(result)
+    # Run report checks
+    report_checks, report_warnings, report_errors = run_report_checks(report_path)
+
+    # Combine all checks
+    all_checks = git_checks + report_checks
+    all_warnings = git_warnings + report_warnings
+    all_errors = git_errors + report_errors
+
+    # Determine status
+    if all_errors:
+        status = "FAIL"
+    elif all_warnings:
+        status = "PASS_WITH_WARNINGS"
     else:
-        _output_text(result)
+        status = "PASS"
 
-    if result["status"] == "FAIL":
+    # Build result
+    head = _git_rev_parse("HEAD")
+    origin_main = _git_rev_parse("origin/main")
+    tag_deref = _git_tag_deref(args.tag) if args.tag else None
+
+    result = {
+        "status": status,
+        "warnings_count": len(all_warnings),
+        "checks": all_checks,
+        "warnings": all_warnings,
+        "errors": all_errors,
+        "head": head,
+        "origin_main": origin_main,
+        "git_clean": not _git_status_short(),
+        "report_path": str(report_path),
+        "report_exists": report_path.exists(),
+        "tag": args.tag,
+        "tag_deref": tag_deref,
+        "recommended_action": (
+            "Review warnings above and consider fixing before next task"
+            if all_warnings
+            else "All checks passed, no action needed"
+        ),
+    }
+
+    if args.json:
+        _output_json_v2(result)
+    else:
+        _output_text_v2(result)
+
+    # WARN-only: only fail on errors, not warnings
+    if all_errors:
         return 1
     return 0
 

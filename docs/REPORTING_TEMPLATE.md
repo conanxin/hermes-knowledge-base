@@ -489,7 +489,27 @@ python3 scripts/check_task_postflight.py \
 - **不**修改历史 reports/
 - **不**修改 `check_kb.py` / `check_task_preflight.py`
 
-Postflight 是**可选检查工具**,不是强制门禁。未来如要升级为门禁,需先观察 1-2 周 WARN 比例再决定,详见 §11。
+Postflight 是**可选检查工具**,不是强制门禁。未来如要升级为门禁,需先观察 3-5 个任务 WARN 比例再决定,详见 §11。
+
+---
+
+## 10. Postflight 检查（v0.3.41+）
+
+每个 versioned task 在 commit/tag 后推荐运行 postflight：
+
+```bash
+python3 scripts/check_task_postflight.py \
+    --report reports/<task>.md \
+    --tag v0.3.N-task-name \
+    --expect-clean \
+    --expect-head-origin
+```
+
+**说明：**
+- postflight 是 **WARN-only**，不作为 FAIL gate。
+- 检查 report 是否包含关键字段、tag 是否正确、git 状态是否 clean。
+- 有 warning 时必须在最终回复中说明。
+- 推荐观察 3-5 个任务后再考虑是否升级 FAIL gate。
 
 ---
 

@@ -120,6 +120,17 @@ python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name
 | **PASS_WITH_WARNINGS** | 仅当 warning 为已知非阻断项（如 v0.3.36 known duplicate）时可继续 |
 | **FAIL** | **立即停止**，不得继续 |
 
+## Versioned Task 完整流程（v0.3.41+）
+
+```
+preflight → execution → checks → commit → tag → postflight
+```
+
+- **preflight**: `python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name`
+- **postflight**: `python3 scripts/check_task_postflight.py --report reports/<task>.md --tag v0.3.N-task-name --expect-clean --expect-head-origin`
+
+postflight 不移动旧 tag。tag deref commit 必须记录。
+
 ## 新任务版本号选择
 
 1. **先运行** `python3 scripts/check_release_tags.py`
