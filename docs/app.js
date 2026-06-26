@@ -144,4 +144,40 @@ function escapeAttr(s) {
 
 document.getElementById('search').addEventListener('input', renderRecords);
 
+// ============================================================
+// Music Track Players (v0.3.19 music-track-links)
+// Lazy-load iframes only on click — never auto-load 50 iframes
+// on the same page. Click handler is attached via event delegation
+// so it works for both .track-play-button (verified) and is a no-op
+// for cards that only show a search link (no embed).
+// ============================================================
+function initTrackPlayers() {
+  const buttons = document.querySelectorAll('.track-play-button');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const url = btn.getAttribute('data-embed-url');
+      if (!url) return;
+      const wrapper = btn.closest('.track-actions');
+      if (!wrapper) return;
+      // Replace the button with an iframe on first click.
+      const iframe = document.createElement('iframe');
+      iframe.src = url;
+      iframe.className = 'track-embed';
+      iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('loading', 'lazy');
+      iframe.setAttribute('title', btn.getAttribute('data-track-title') || 'track player');
+      wrapper.innerHTML = '';
+      wrapper.appendChild(iframe);
+    });
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initTrackPlayers);
+} else {
+  initTrackPlayers();
+}
+
 loadData();

@@ -203,12 +203,24 @@ def _slugify(text: str, used_ids: set[str]) -> str:
     return s
 
 
-def render_markdown(md: str) -> Tuple[str, List[Tuple[int, str, str]]]:
+def render_markdown(
+    md: str,
+    track_cards: Optional[Dict[int, str]] = None,
+    track_card_context: str = "",
+) -> Tuple[str, List[Tuple[int, str, str]]]:
     """Convert a Markdown string to HTML, returning (html, toc).
 
     `toc` is a list of `(level, text, id)` tuples for h2/h3 headings —
     level 2 and 3 only. Headings get stable id attributes so they can be
     linked to from the page TOC.
+
+    `track_cards` (optional): dict mapping rank (int) → pre-rendered HTML
+    string. When an H2 heading's text matches "#NNN. ..." where NNN is
+    in track_cards, the corresponding HTML is inserted immediately after
+    the H2. This is the music-track feature for listicle articles.
+
+    `track_card_context` (optional): a string class-name suffix used to
+    namespace the inserted cards (e.g. "track-card--in-translation").
     """
     if not md:
         return "", []
@@ -263,6 +275,15 @@ def render_markdown(md: str) -> Tuple[str, List[Tuple[int, str, str]]]:
             out.append(
                 f'<h{level} id="{heading_id}">{_apply_inline(raw_text)}</h{level}>'
             )
+            # Music-track feature: if H2 starts with a recognized rank
+            # and we have a card for it, insert after the H2.
+            if track_cards and level == 2:
+                rank_m = re.match(r"^#?(\d+)\.", raw_text)
+                if rank_m:
+                    rank = int(rank_m.group(1))
+                    card_html = track_cards.get(rank)
+                    if card_html:
+                        out.append(card_html)
             i += 1
             continue
 
@@ -458,7 +479,7 @@ def _safe_load_yaml(path: Path) -> Dict[str, Any]:
 def load_record_body(record: Dict[str, Any], content_root: Path) -> Dict[str, Any]:
     """Load metadata + type-specific body files for a record.
 
-    Returns dict with keys: metadata, sections, missing_sections
+    Returns dict with keys: metadata, sections, missing_sections, tracks_data
     """
     record_path = content_root / record["path"]
     meta: Dict[str, Any] = {}
@@ -486,12 +507,246 @@ def load_record_body(record: Dict[str, Any], content_root: Path) -> Dict[str, An
     else:
         missing.append("notes")
 
+    # Optional tracks.yaml (music-track feature for listicle articles).
+    tracks_data: Dict[str, Any] = {}
+    tracks_path = record_path / "tracks.yaml"
+    if tracks_path.exists():
+        tracks_data = _load_tracks_yaml(tracks_path)
+
     return {
         "metadata": meta,
         "sections": sections,
         "missing": missing,
         "type": record_type,
+        "tracks_data": tracks_data,
     }
+
+
+def _load_tracks_yaml(path: Path) -> Dict[str, Any]:
+    """Load tracks.yaml using PyYAML if available, else the fallback parser.
+
+    Mirrors the parser in scripts/check_tracks.py. Kept here so
+    generate_item_pages.py has no import-cycle with check_tracks.
+    """
+    if not path.exists():
+        return {}
+    try:
+        import yaml  # type: ignore
+        with path.open("r", encoding="utf-8") as f:
+            return yaml.safe_load(f) or {}
+    except ImportError:
+        pass
+    return _parse_tracks_yaml_fallback(path)
+
+
+def _parse_tracks_yaml_fallback(path: Path) -> Dict[str, Any]:
+    """Focused YAML-ish parser for the tracks.yaml shape used in this repo."""
+    text = path.read_text(encoding="utf-8")
+    lines = text.splitlines()
+
+    root: Dict[str, Any] = {}
+    block_key: Optional[str] = None
+    block_indent: Optional[int] = None
+    block_lines: List[str] = []
+    pending_list_key: Optional[str] = None
+    list_items: List[Any] = []
+    current_item: Optional[Dict[str, Any]] = None
+
+    def _strip_quotes(s: str):
+        if len(s) >= 2 and ((s[0] == '"' and s[-1] == '"') or (s[0] == "'" and s[-1] == "'")):
+            return s[1:-1]
+        if s == "" or s == "~" or s.lower() == "null":
+            return ""
+        if re.match(r"^-?\d+$", s):
+            return int(s)
+        return s
+
+    def finalize_block() -> None:
+        nonlocal block_key, block_indent, block_lines
+        if block_key is not None:
+            root[block_key] = "\n".join(block_lines).rstrip()
+        block_key = None
+        block_indent = None
+        block_lines = []
+
+    def finalize_list() -> None:
+        nonlocal pending_list_key, list_items, current_item
+        if current_item is not None and pending_list_key is not None:
+            list_items.append(current_item)
+            current_item = None
+        if pending_list_key is not None:
+            root[pending_list_key] = list_items
+        pending_list_key = None
+        list_items = []
+
+    for raw in lines:
+        if "#" in raw:
+            in_str = None
+            cleaned = []
+            for ch in raw:
+                if in_str:
+                    cleaned.append(ch)
+                    if ch == in_str:
+                        in_str = None
+                elif ch in ('"', "'"):
+                    in_str = ch
+                    cleaned.append(ch)
+                elif ch == "#":
+                    break
+                else:
+                    cleaned.append(ch)
+            line = "".join(cleaned).rstrip()
+        else:
+            line = raw.rstrip()
+
+        if not line.strip():
+            continue
+
+        indent = len(line) - len(line.lstrip(" "))
+        stripped = line.strip()
+
+        if block_key is not None and indent > (block_indent or 0) and not stripped.startswith("-"):
+            block_lines.append(stripped)
+            continue
+
+        if block_key is not None and (indent <= (block_indent or 0) or stripped.startswith("-")):
+            finalize_block()
+
+        if indent == 0:
+            m = re.match(r"^([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(.*)$", line)
+            if m:
+                key, value = m.group(1), m.group(2).strip()
+                finalize_list()
+                if value == "" or value == "~" or value.lower() == "null":
+                    pending_list_key = key
+                    list_items = []
+                    current_item = None
+                elif value == "|":
+                    block_key = key
+                    block_indent = 0
+                    block_lines = []
+                elif value.startswith("[") and value.endswith("]"):
+                    root[key] = [
+                        _strip_quotes(x.strip())
+                        for x in value[1:-1].split(",")
+                        if x.strip()
+                    ]
+                else:
+                    root[key] = _strip_quotes(value)
+                continue
+
+        if indent == 2 and stripped.startswith("- "):
+            if pending_list_key is None:
+                continue
+            if current_item is not None:
+                list_items.append(current_item)
+            current_item = {}
+            rest = stripped[2:].strip()
+            sub = re.match(r"^([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(.*)$", rest)
+            if sub:
+                k, v = sub.group(1), sub.group(2).strip()
+                current_item[k] = _strip_quotes(v)
+            continue
+
+        if indent == 4 and current_item is not None:
+            m = re.match(r"^([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(.*)$", line)
+            if m:
+                k, v = m.group(1), m.group(2).strip()
+                current_item[k] = _strip_quotes(v)
+                continue
+
+    finalize_block()
+    finalize_list()
+    return root
+
+
+def _build_track_cards(
+    tracks: List[Dict[str, Any]],
+) -> Dict[int, str]:
+    """Render a dict[rank] -> track-card HTML for all tracks.
+
+    Returns a dict so render_markdown can look up cards by rank number.
+    Cards are not embedded with iframes by default — the embed_url is
+    stored as a data attribute and rendered on click via site/app.js.
+    """
+    cards: Dict[int, str] = {}
+    for t in tracks:
+        if not isinstance(t, dict):
+            continue
+        rank = t.get("rank")
+        if not isinstance(rank, int):
+            continue
+        artist = html.escape(str(t.get("artist") or ""))
+        title = html.escape(str(t.get("title") or ""))
+        year = html.escape(str(t.get("year") or ""))
+        conf = str(t.get("confidence") or "needs_verification")
+        embed_url = str(t.get("youtube_embed_url") or "")
+        youtube_url = str(t.get("youtube_url") or "")
+        spotify_url = str(t.get("spotify_url") or "")
+        apple_url = str(t.get("apple_music_url") or "")
+        search_url = str(t.get("search_url") or "")
+
+        # External action links (rendered only if URL is present).
+        actions: List[str] = []
+        if youtube_url:
+            actions.append(
+                f'<a class="track-link track-link-youtube" href="{html.escape(youtube_url, quote=True)}" '
+                f'target="_blank" rel="noopener">YouTube ↗</a>'
+            )
+        if spotify_url:
+            actions.append(
+                f'<a class="track-link track-link-spotify" href="{html.escape(spotify_url, quote=True)}" '
+                f'target="_blank" rel="noopener">Spotify ↗</a>'
+            )
+        if apple_url:
+            actions.append(
+                f'<a class="track-link track-link-apple" href="{html.escape(apple_url, quote=True)}" '
+                f'target="_blank" rel="noopener">Apple Music ↗</a>'
+            )
+        if search_url and not (youtube_url or spotify_url or apple_url):
+            actions.append(
+                f'<a class="track-link track-link-search" href="{html.escape(search_url, quote=True)}" '
+                f'target="_blank" rel="noopener">查找版本 ↗</a>'
+            )
+
+        # Play button (only when embed_url is present).
+        play_btn = ""
+        if embed_url:
+            play_btn = (
+                f'<button type="button" class="track-play-button" '
+                f'data-embed-url="{html.escape(embed_url, quote=True)}" '
+                f'aria-label="播放 {title}">▶ 播放</button>'
+            )
+
+        # Confidence badge.
+        conf_label = {
+            "verified": "verified",
+            "needs_verification": "待验证",
+            "search_only": "搜索链接",
+        }.get(conf, conf)
+        conf_class = (
+            "track-confidence-verified" if conf == "verified"
+            else "track-confidence-needs-verification"
+        )
+
+        card = (
+            f'<div class="track-card" data-rank="{rank}">'
+            f'<div class="track-meta">'
+            f'<span class="track-artist">{artist}</span>'
+            f'<span class="track-year"> · {year}</span>'
+            f'</div>'
+            f'<div class="track-title">{title}</div>'
+            f'<div class="track-actions">'
+            f'{play_btn}'
+            f'{"".join(actions)}'
+            f'</div>'
+            f'<div class="track-confidence {conf_class}">'
+            f'链接置信度: {html.escape(conf_label)}'
+            f'</div>'
+            f'</div>'
+        )
+        cards[rank] = card
+    return cards
 
 
 # ---------------------------------------------------------------------------
@@ -708,6 +963,7 @@ def _build_sections_html(
     sections: Dict[str, str],
     missing: List[str],
     record_type: str,
+    track_cards: Optional[Dict[int, str]] = None,
 ) -> Tuple[str, List[Tuple[int, str, str]]]:
     """Render all body sections, accumulating a page TOC.
 
@@ -716,6 +972,11 @@ def _build_sections_html(
     `source` for note/project). Other sections (notes, source as
     secondary) do NOT contribute to the TOC to keep it focused on the
     main content.
+
+    `track_cards` (optional): when provided, cards are inserted into
+    H2 headings that match "#NNN. ..." pattern. Only the primary body
+    section receives track cards (avoids duplication if the same
+    article is rendered multiple times across sections).
 
     Returns (sections_html, page_toc).
     """
@@ -727,7 +988,9 @@ def _build_sections_html(
     for key in SECTION_ORDER:
         if key in sections:
             body_md = sections[key]
-            body_html, section_toc = render_markdown(body_md)
+            # Only the primary section gets track cards.
+            cards_for_this = track_cards if key == primary_key else None
+            body_html, section_toc = render_markdown(body_md, track_cards=cards_for_this)
             if key == primary_key:
                 page_toc.extend(section_toc)
             tag = ""
@@ -784,8 +1047,15 @@ def render_record_page(record: Dict[str, Any], body: Dict[str, Any]) -> str:
     meta_rows = _build_metadata_rows(meta)
     meta_section = TEMPLATE_METADATA_GRID.format(rows=meta_rows) if meta_rows else ""
 
+    # Music-track cards (only if tracks.yaml present).
+    track_cards: Optional[Dict[int, str]] = None
+    tracks_data = body.get("tracks_data") or {}
+    if isinstance(tracks_data, dict) and isinstance(tracks_data.get("tracks"), list):
+        track_cards = _build_track_cards(tracks_data["tracks"])
+
     sections_html, page_toc = _build_sections_html(
-        body["sections"], body["missing"], record_type
+        body["sections"], body["missing"], record_type,
+        track_cards=track_cards,
     )
     toc_html = _build_toc_html(page_toc)
 

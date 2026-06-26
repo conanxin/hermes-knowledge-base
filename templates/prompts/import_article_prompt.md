@@ -162,6 +162,23 @@ if is_project_route and "/hermes-knowledge-base/items/" in output_url and "同�
 
 **历史案例**：2026-06-26 Paste「100 greatest songs of the 1960s」(commit `725b7a9`) 因 web_extract 截断导致 11 首歌 H2 错位 + #75 缺失 + #74 凭空捏造,后续通过 source 重提取修复,教训固化到 LISTICLE_IMPORT_RULES.md。
 
+## 🎵 音乐/影视/书目 listicle 的 track/film/book links（v0.3.19+）
+
+当 listicle 每条目对应可播放/可定位实体（歌曲、影片、书目），需要给条目挂链接时，**优先级**：
+
+1. **数据与翻译分离** — 链接元数据放 `<article-slug>/tracks.yaml`（或 `films.yaml` / `books.yaml`），**不要**硬编码进 `translation.zh-CN.md`。
+2. **yaml schema 必填字段** — `rank`（与 H2 编号对齐）/ `artist` / `title` / `year` / `youtube_url` / `youtube_embed_url` / `spotify_url` / `apple_music_url` / `search_url` / `confidence` / `note`。
+3. **confidence 字段值**：
+   - `verified` — 高置信可播放（YouTube embed / Spotify URI 已人工核对）
+   - `needs_verification` — metadata 已抓但 URL 未人工核对
+   - `search_only` — 无可信 URL，只给 search 链接
+4. **禁用** — 任何未经验证的 YouTube embed / Spotify URI（防 cover、live、reaction video 误填）。
+5. **generator 集成** — `scripts/generate_item_pages.py` 检测 `<article-slug>/tracks.yaml` 存在时自动在每个对应 H2 后插入 track-card（50 卡片懒加载）。无需手写 HTML。
+6. **不存音频** — KB 仓库只放元数据 + 嵌入 URL，不下载 mp3 / m4a / flac。
+7. **质量门禁** — 跑 `python3 scripts/check_tracks.py` 校验 yaml 结构和 confidence 字段。
+
+**历史案例**：2026-06-26 Paste「100 greatest songs of the 1960s」实施 v0.3.19-music-track-links，50 首全部 `confidence=needs_verification` + Google site-restricted search_url，0 个假 embed，0 个需要重翻 translation。
+
 ## 禁止事项
 
 - 不要修改 Hermes 源码

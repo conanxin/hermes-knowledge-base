@@ -110,6 +110,21 @@
 
 **历史案例**：2026-06-26 Paste「100 greatest songs of the 1960s」(commit `725b7a9`) 翻译过程曾因截断导致 #76-#66 共 11 首歌 H2 错位 + #75 缺失 + #74 凭空捏造,后续通过 source 重提取与 patch 修复,经验固化到 LISTICLE_IMPORT_RULES.md。
 
+### 🎵 音乐/影视/书目 listicle 的 track/film/book links（v0.3.19+ 新增，2026-06-26）
+
+当 listicle 里的每条目是**可播放/可定位**的实体（歌曲 / 影片 / 书目），需要给条目挂上链接时，**必须**按以下规则。**完整规范**：[docs/MUSIC_ARTICLE_RULES.md](MUSIC_ARTICLE_RULES.md)。
+
+**6 条核心约束**（细节见链接）：
+
+1. **数据与翻译分离** — 链接元数据放 `<article-slug>/tracks.yaml`（或 `films.yaml` / `books.yaml`），**不要**硬编码进 `translation.zh-CN.md`。这样未来批量补全链接不用重翻。
+2. **confidence 字段分级** — `verified`（高置信可播放）/ `needs_verification`（已抓 metadata 但 URL 未人工核对）/ `search_only`（无可信 URL，只给 search 链接）。**禁止** 填未经验证的 YouTube embed / Spotify URI。
+3. **detail page 由 generator 注入 track-card** — `scripts/generate_item_pages.py` 检测到 `tracks.yaml` 存在时在每个对应 H2 后插入 track-card。无需手写 HTML。
+4. **不存音频文件** — KB 仓库只放元数据 + 嵌入 URL，不下载 mp3 / m4a / flac。
+5. **懒加载 iframe** — 详情页 50 个 track-card 同时存在时，必须在点击「▶️ 播放」按钮后才创建 iframe，绝不一次加载 50 个。
+6. **不影响其他文章** — track-card 注入分支只在 `tracks.yaml` 存在时触发；其他 36 个非音乐 listicle 页面零变化。
+
+**历史案例**：2026-06-26 Paste「100 greatest songs of the 1960s」实施 v0.3.19-music-track-links（commit 见后续 tag），50 首 track-card 全部 `confidence=needs_verification` + Google site-restricted search_url，0 个假 embed。后续人工补全 verified URL 后只需改 yaml，不动翻译与样式。
+
 ### 导入后自动执行的质量检查
 
 每篇文章导入完成后，Hermes 会自动运行：
