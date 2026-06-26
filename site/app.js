@@ -3,7 +3,19 @@ const GITHUB_REPO = 'https://github.com/conanxin/hermes-knowledge-base/tree/main
 let allRecords = [];
 let currentFilter = 'all';
 
+// v0.3.22: only run SPA home-page bootstrap when the page actually has
+// the home-page containers. Item detail pages (and other static pages) now
+// load ../../app.js too, so the previous top-level loadData() call would
+// 404 + null-reference on missing #search/#stats/#filters/#records.
+const IS_HOME_PAGE = !!(
+  document.getElementById('search') &&
+  document.getElementById('records') &&
+  document.getElementById('stats') &&
+  document.getElementById('filters')
+);
+
 async function loadData() {
+  if (!IS_HOME_PAGE) return;  // no-op on non-home pages
   const res = await fetch('data/catalog.json');
   allRecords = await res.json();
   // Sort by updated_date descending
@@ -142,7 +154,10 @@ function escapeAttr(s) {
   return escapeHtml(s).replace(/`/g, '&#96;');
 }
 
-document.getElementById('search').addEventListener('input', renderRecords);
+// v0.3.22: home-page search input binding only on home page.
+if (IS_HOME_PAGE) {
+  document.getElementById('search').addEventListener('input', renderRecords);
+}
 
 // ============================================================
 // Music Track Players (v0.3.19 music-track-links)
@@ -154,6 +169,9 @@ document.getElementById('search').addEventListener('input', renderRecords);
 function initTrackPlayers() {
   const buttons = document.querySelectorAll('.track-play-button');
   buttons.forEach((btn) => {
+    // v0.3.22: if already replaced with an iframe, skip (prevent duplicate
+    // iframes if the user re-clicks the wrapper area after first click).
+    if (btn.dataset.replaced === '1') return;
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const url = btn.getAttribute('data-embed-url');
@@ -170,6 +188,7 @@ function initTrackPlayers() {
       iframe.setAttribute('title', btn.getAttribute('data-track-title') || 'track player');
       wrapper.innerHTML = '';
       wrapper.appendChild(iframe);
+      btn.dataset.replaced = '1';
     });
   });
 }

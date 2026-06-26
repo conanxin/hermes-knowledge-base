@@ -822,6 +822,7 @@ TEMPLATE_FOOTER = """
 <footer>
 <p><a href="{up}">hermes-knowledge-base</a> · 站内详情页</p>
 </footer>
+<script src="../../app.js" defer></script>
 <script>
 (function() {{
   const btn = document.getElementById('copy-path-btn');
