@@ -35,6 +35,7 @@
 
 ## AI UX
 
+- Hermes Agent UI Self-Audit v1
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 - The Shape of AI
 
@@ -73,6 +74,7 @@
 
 ## Agent UI
 
+- Hermes Agent UI Self-Audit v1
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 
 ## Agentic UX
@@ -315,6 +317,7 @@
 
 ## Hermes
 
+- Hermes Agent UI Self-Audit v1
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 
 ## Hermes Agent
@@ -551,6 +554,10 @@
 
 - How to Earn a Billion Dollars
 
+## P0/P1/P2
+
+- Hermes Agent UI Self-Audit v1
+
 ## Palantir
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
@@ -647,6 +654,7 @@
 ## Shape of AI
 
 - The Layers of AI experience
+- Hermes Agent UI Self-Audit v1
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 - The Shape of AI
 
@@ -731,6 +739,10 @@
 ## Tyler Cowen
 
 - An "infovore" shares his chats
+
+## UI audit
+
+- Hermes Agent UI Self-Audit v1
 
 ## Unqualified Reservations
 
@@ -1370,6 +1382,7 @@
 
 ## 产品设计
 
+- Hermes Agent UI Self-Audit v1
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 
 ## 亿万富翁
@@ -1743,6 +1756,10 @@
 ## 自我认知
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
+
+## 自检
+
+- Hermes Agent UI Self-Audit v1
 
 ## 自检表
 

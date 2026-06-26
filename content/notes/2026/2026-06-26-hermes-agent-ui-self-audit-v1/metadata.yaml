@@ -1,0 +1,37 @@
+title: "Hermes Agent UI Self-Audit v1"
+title_zh: "Hermes Agent UI 第一轮自检审计"
+source_url: "https://www.shapeof.ai/"
+source_site: "shapeof.ai"
+author: "Conan Xin"
+published_date: "2026-06-26"
+captured_date: "2026-06-26"
+language: "zh-CN"
+translation_language: null
+status: "active"
+type: "note"
+category: "audit"
+source_type: "derived"
+topics:
+  - "Hermes Agent"
+  - "Agent UI"
+  - "UI 审计"
+  - "Shape of AI"
+  - "AI UX"
+  - "自检审计"
+  - "6 层模型"
+tags:
+  - "Hermes"
+  - "Agent UI"
+  - "UI audit"
+  - "Shape of AI"
+  - "AI UX"
+  - "自检"
+  - "产品设计"
+  - "P0/P1/P2"
+word_count:
+  source: 5738
+based_on:
+  - "2026-06-26-hermes-agent-ui-shape-of-ai-checklist"
+  - "2026-06-26-shape-of-ai-ux-patterns"
+  - "2026-06-26-emilycampbell-layers-of-ai-experience"
+path: "content/notes/2026/2026-06-26-hermes-agent-ui-self-audit-v1/"

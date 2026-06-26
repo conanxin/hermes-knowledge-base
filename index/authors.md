@@ -38,6 +38,7 @@
 
 ## Conan Xin
 
+- Hermes Agent UI Self-Audit v1
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 
 ## Dario Amodei / Emily Chang

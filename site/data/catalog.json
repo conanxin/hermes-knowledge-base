@@ -1752,6 +1752,53 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/legacy-knowledge/2026-04-07-wiki-vs-rag-analysis"
   },
   {
+    "title": "Hermes Agent UI Self-Audit v1",
+    "title_zh": "Hermes Agent UI 第一轮自检审计",
+    "type": "note",
+    "path": "content/notes/2026/2026-06-26-hermes-agent-ui-self-audit-v1",
+    "author": "Conan Xin",
+    "source_url": "https://www.shapeof.ai/",
+    "source_site": "shapeof.ai",
+    "language": "zh-CN",
+    "translation_language": null,
+    "status": "active",
+    "published_date": "2026-06-26",
+    "captured_date": "2026-06-26",
+    "topics": [
+      "Hermes Agent",
+      "Agent UI",
+      "UI 审计",
+      "Shape of AI",
+      "AI UX",
+      "自检审计",
+      "6 层模型"
+    ],
+    "tags": [
+      "Hermes",
+      "Agent UI",
+      "UI audit",
+      "Shape of AI",
+      "AI UX",
+      "自检",
+      "产品设计",
+      "P0/P1/P2"
+    ],
+    "word_count": {
+      "source": 5738
+    },
+    "based_on": [
+      "2026-06-26-hermes-agent-ui-shape-of-ai-checklist",
+      "2026-06-26-shape-of-ai-ux-patterns",
+      "2026-06-26-emilycampbell-layers-of-ai-experience"
+    ],
+    "category": "audit",
+    "source_type": "derived",
+    "updated_date": "2026-06-26",
+    "slug": "2026-06-26-hermes-agent-ui-self-audit-v1",
+    "detail_url": "items/2026-06-26-hermes-agent-ui-self-audit-v1/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/notes/2026/2026-06-26-hermes-agent-ui-self-audit-v1"
+  },
+  {
     "title": "Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)",
     "title_zh": "Hermes Agent UI 自检表",
     "type": "note",

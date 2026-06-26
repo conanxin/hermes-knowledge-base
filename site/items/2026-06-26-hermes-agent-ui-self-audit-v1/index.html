@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Agent UI 第一轮自检审计 · hermes-knowledge-base</title>
+<meta name="description" content="Hermes Agent UI 第一轮自检审计 — Conan Xin">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="detail-page" id="top">
+<header class="detail-header">
+<a class="back-link" href="../../">← 返回首页</a>
+</header>
+<main class="detail-main">
+<article class="detail-article">
+<div class="detail-title-block">
+<span class="type-badge note">note</span>
+<h1 class="detail-title">Hermes Agent UI 第一轮自检审计</h1>
+<p class="detail-title-en">Hermes Agent UI Self-Audit v1</p>
+</div>
+
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#派生关系">派生关系</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#启发式审计-vs-实证审计">启发式审计 vs. 实证审计</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#审计方法">审计方法</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#1-起点">1. 起点</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#2-归类">2. 归类</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-类各自的当前判断-缺口-改进-优先级4-列输出">3. 7 类各自的&quot;当前判断 / 缺口 / 改进 / 优先级&quot;4 列输出</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#4-p0p1p2-汇总">4. P0/P1/P2 汇总</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#5-第一轮建议">5. 第一轮建议</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#6-6-层映射">6. 6 层映射</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#7-实施路线">7. 实施路线</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#不复制的源内容">不复制的源内容</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#维护约定">维护约定</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#更新频率">更新频率</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#与-checklist-的差异">与 checklist 的差异</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#与项目记忆的关联">与项目记忆的关联</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#已知限制">已知限制</a></li>
+</ol>
+</nav>
+
+<section class="detail-meta">
+<div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">note</div></div>
+<div class="meta-row"><div class="meta-label">作者</div><div class="meta-value">Conan Xin</div></div>
+<div class="meta-row"><div class="meta-label">来源</div><div class="meta-value">shapeof.ai</div></div>
+<div class="meta-row"><div class="meta-label">发布日期</div><div class="meta-value">2026-06-26</div></div>
+<div class="meta-row"><div class="meta-label">采集日期</div><div class="meta-value">2026-06-26</div></div>
+<div class="meta-row"><div class="meta-label">标签</div><div class="meta-value meta-tags"><span class="chip">Hermes</span><span class="chip">Agent UI</span><span class="chip">UI audit</span><span class="chip">Shape of AI</span><span class="chip">AI UX</span><span class="chip">自检</span><span class="chip">产品设计</span><span class="chip">P0/P1/P2</span></div></div>
+<div class="meta-row"><div class="meta-label">主题</div><div class="meta-value meta-tags"><span class="chip">Hermes Agent</span><span class="chip">Agent UI</span><span class="chip">UI 审计</span><span class="chip">Shape of AI</span><span class="chip">AI UX</span><span class="chip">自检审计</span><span class="chip">6 层模型</span></div></div>
+</section>
+
+<section class="detail-section" id="section-summary">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">摘要</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="hermes-agent-ui-第一轮自检审计摘要">Hermes Agent UI 第一轮自检审计：摘要</h1>
+<h2 id="是什么">是什么</h2>
+<p><strong>Hermes Agent UI Self-Audit v1</strong> 是对刚完成的 <a href="2026-06-26-hermes-agent-ui-shape-of-ai-checklist" target="_blank" rel="noopener">Hermes Agent UI 自检表</a> 的<strong>第一轮审计应用</strong>。本审计以启发式判断（heuristic audit）为主，基于：</p>
+<ul><li>仓库中已有的 Hermes Agent 工具记忆（MEDIA 协议、<code>/skill</code> 体系、sub-agent 模式）</li><li>自检表 v1 中已经标注的"已具备 / 部分具备 / 未评估"状态</li><li>项目维护者对系统行为的认知（Conan Xin）</li></ul>
+<p><strong>明确声明</strong>：这不是一次实际运行的系统行为审计（heuristic ≠ empirical）。所有判断在源代码层未做穷举验证。所有"已具备"判断需要后续由实际复现实验 / 代码 grep / 用户访谈确认。</p>
+<h2 id="审计目标">审计目标</h2>
+<ol><li><strong>把 37 个模式按"现状 / 缺口 / 改进 / 优先级"4 列归类</strong>，形成可执行的 v1 改进路线</li><li><strong>汇总 P0/P1/P2 行动项</strong>，让维护者能直接据此开 PR</li><li><strong>输出一份"先做无代码流程规范 → 报告模板 → UI 增强"的三阶段路线</strong>，避免过早做 UI 投入</li><li><strong>暴露 6 层 AI Experience 模型中的最大空白</strong>，作为长期演进方向</li></ol>
+<h2 id="关键发现概览">关键发现概览</h2>
+<h3 id="现状基于自检表-v1-的状态统计">现状（基于自检表 v1 的状态统计）</h3>
+<table class="md-table"><thead><tr><th>状态</th><th>数量</th><th>比例</th></tr></thead><tbody><tr><td>已具备</td><td>12</td><td>32%</td></tr><tr><td>部分具备</td><td>4</td><td>11%</td></tr><tr><td>需改进</td><td>1</td><td>3%</td></tr><tr><td>未评估</td><td>20</td><td>54%</td></tr></tbody></table>
+<blockquote><p>"未评估"占多数不是缺陷信号 — 它是诚实标签。本审计的另一个价值是把 20 个"未评估"项收敛到更明确的"待评估"清单。</p></blockquote>
+<h3 id="7-类整体判断">7 类整体判断</h3>
+<table class="md-table"><thead><tr><th>类别</th><th>当前判断</th><th>整体优先级</th></tr></thead><tbody><tr><td>Wayfinders</td><td>能力侧已具备（5/6 已具备），但"Workspaces"未对用户显式</td><td>P1（Workspaces 显式化）</td></tr><tr><td>Inputs</td><td>主路径（Slash / @ mention / Connectors）已具备，多模态（Voice / Camera / Drag）未做 UX</td><td>P1（Camera / Prompt library 入口）</td></tr><tr><td>Tuners</td><td>全部 6 项"未评估" — 调节器是<strong>最大空白</strong></td><td>P1（至少做 Format selector）</td></tr><tr><td>Governors</td><td>Stop / Error handling 已具备；Undo / Edit prompt / Branching / Version history / Feedback loop 大部分未做</td><td><strong>P0（Undo / Edit prompt 是中断链路的关键）</strong></td></tr><tr><td>Trust builders</td><td>Confidence score / Source citation / Human review 大部分未做；这是<strong>最大的 P0 风险面</strong></td><td><strong>P0</strong></td></tr><tr><td>Identifiers</td><td>5/6 已具备（AI avatar、Content labeling、Status indicator、Typing indicator、Progress bar）</td><td>P2（仅 Sound cue 缺失）</td></tr><tr><td>UILibrary</td><td>部分具备（无统一库）</td><td>P2</td></tr></tbody></table>
+<h3 id="p0-行动项必须马上推进5-条">P0 行动项（必须马上推进，5 条）</h3>
+<ol><li><strong>Status indicator 三态化</strong>：从"思考中 / 已完成"二态改为"思考中 / 执行中 / 已完成"三态</li><li><strong>Stop 链路口径明确</strong>：用户 <code>/stop</code> 必须级联到所有 sub-agent；当前在主 agent 层中断，子 agent 不一定停</li><li><strong>Inline Action 加"预览 / 已生效"标签</strong>：避免"建议"被误以为是"已执行"</li><li><strong>Source citation 三件套</strong>：URL + 置信度 + 最后验证时间三者必须同时出现，缺一不可</li><li><strong>Long task 进度显式化</strong>：所有 &gt;2 步的任务必须在消息中显示阶段名（不是只显示百分比）</li></ol>
+<h3 id="6-层模型中的最大空白">6 层模型中的最大空白</h3>
+<table class="md-table"><thead><tr><th>6 层</th><th>覆盖度判断</th><th>主要缺口</th></tr></thead><tbody><tr><td>Model</td><td>不适用</td><td>—</td></tr><tr><td>Prompt</td><td><strong>14%</strong></td><td>调节器全部 6 项只有 1 项半具备</td></tr><tr><td>Interface</td><td>49%（高）</td><td>Wayfinders / Identifiers 主体已具备，Workspaces 缺</td></tr><tr><td>Workflow</td><td>22%</td><td>Stop 链路、Undo、Edit prompt、Version history 全缺</td></tr><tr><td>System</td><td>27%</td><td>Trust builders 大部分缺，Source citation 不规范</td></tr><tr><td>Emergence</td><td><strong>27% 但弱</strong></td><td>跨 agent 标识、长期记忆、delegation 全缺</td></tr></tbody></table>
+<p><strong>核心判断</strong>：Hermes Agent 在"用户能看到什么"上做得不错（Interface 49%），但在"系统是否可信"（System 27%）、"任务能否精细控制"（Workflow 22%）、"输出能否精细调节"（Prompt 14%）三个层面都有显著空白。</p>
+<h2 id="三阶段实施路线">三阶段实施路线</h2>
+<h3 id="阶段-1无代码流程规范0-2-周">阶段 1：无代码流程规范（0-2 周）</h3>
+<ul><li>输出"P0 行动项 5 条"对应的话术模板（在 prompt 阶段就显式包含三态进度 / Stop 提示 / Source 标注）</li><li>不写代码，只改 prompt / 工具描述 / 报告模板</li><li>目标是<strong>让用户在不感知代码变化的情况下看到 UX 改进</strong></li></ul>
+<h3 id="阶段-2报告模板2-6-周">阶段 2：报告模板（2-6 周）</h3>
+<ul><li>在 update_site / patch / push 类操作后强制产出"做了什么 / 证据是什么 / live 状态"三段式报告</li><li>报告作为回复消息的固定结构（不是隐藏在 logs 里）</li><li>目标是把"Trust builders"中"Source citation / Human review / Explanation"三个 P0 项<strong>通过模板化降低边际成本</strong></li></ul>
+<h3 id="阶段-3ui-dashboard6-周以后">阶段 3：UI / Dashboard（6 周以后）</h3>
+<ul><li>真正的 UI 增强（按钮、进度条组件、撤销按钮等）</li><li>只有在阶段 1 + 2 的反馈证明 P0 项仍有 UX gap 时才投入</li><li>避免过早做 UI — 流程和模板先收敛需求</li></ul>
+<h2 id="不做什么">不做什么</h2>
+<ul><li><strong>不修改任何代码 / 脚本 / 模板</strong>：本条目是诊断 + 路线，不带任何 patch</li><li><strong>不修改自检表原条目</strong>：<code>2026-06-26-hermes-agent-ui-shape-of-ai-checklist</code> 保持原状</li><li><strong>不假装已实际跑过 Hermes</strong>：所有"已具备"判断都标注为启发式，需要后续验证</li><li><strong>不做 P0 项的具体实现</strong>：每个 P0 项给出"应该做什么"，不给"具体怎么改代码"</li></ul>
+<h2 id="派生关系">派生关系</h2>
+<ul><li>上游：<code>2026-06-26-hermes-agent-ui-shape-of-ai-checklist</code> (自检表 v1)</li><li>上游：<code>2026-06-26-shape-of-ai-ux-patterns</code> (Shape of AI 资源条目)</li><li>上游：<code>2026-06-26-emilycampbell-layers-of-ai-experience</code> (6 层 AI Experience 模型)</li><li>平行：未来 <code>v2 / v3</code> 审计轮次</li></ul>
+<h2 id="何时做-v2">何时做 v2</h2>
+<p>满足以下任一条件时做 v2:</p>
+<ol><li>v1 中 5 条 P0 全部落地完成</li><li>阶段 1+2 完成后有了真实用户反馈</li><li>自检表 v1 的 20 个"未评估"项中超过半数被评估</li><li>Shape of AI 站点新增 / 删减模式</li></ol>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-source">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">原文 / 源文本</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="hermes-agent-ui-第一轮自检审计来源与方法">Hermes Agent UI 第一轮自检审计：来源与方法</h1>
+<h2 id="派生关系">派生关系</h2>
+<p>本条目是<strong>第二轮派生</strong>：</p>
+<pre><code>2026-06-26-shape-of-ai-ux-patterns  (resource_collection, 原始)
+    └── 2026-06-26-hermes-agent-ui-shape-of-ai-checklist  (note, 自检表 v1)
+            └── 2026-06-26-hermes-agent-ui-self-audit-v1   (note, 本审计 — 第三层派生)</code></pre>
+<p><code>based_on</code> 字段同时列出 3 个上游，是为了让任何一层的搜索 / 引用都能找到本条目。</p>
+<h2 id="启发式审计-vs-实证审计">启发式审计 vs. 实证审计</h2>
+<p><strong>本审计 = 启发式（heuristic）</strong>。具体含义：</p>
+<table class="md-table"><thead><tr><th>维度</th><th>启发式审计（本条目）</th><th>实证审计（未做）</th></tr></thead><tbody><tr><td>数据来源</td><td>项目维护者记忆、checklist 状态、源代码印象</td><td>实际运行日志、用户访谈、A/B 测试、UX 录像</td></tr><tr><td>"已具备"判定</td><td>"我记得代码里有这功能"</td><td>复现实验能跑通</td></tr><tr><td>时间投入</td><td>1-2 小时</td><td>数天到数周</td></tr><tr><td>可信度</td><td>中（启发式偏差不可避免）</td><td>高</td></tr><tr><td>适合阶段</td><td>早期、需求不明、需要快速收敛</td><td>中后期、需要决策依据</td></tr></tbody></table>
+<p><strong>本审计明确承认的启发式偏差</strong>：</p>
+<ul><li>维护者对自己维护的系统<strong>过度乐观</strong>：可能高估"已具备"项</li><li>容易把"工具层支持"误判为"UX 层完成"：例如 <code>vision_analyze</code> 工具存在 ≠ 用户能用拖拽图片输入</li><li>优先级判断受最近记忆影响：最近修复的 bug 容易被认为"还需要加强"</li><li>6 层模型中的"Emergence"层最容易被低估：因为它是涌现能力，不是显式功能</li></ul>
+<p><strong>修正偏差的机制</strong>（建议在 v2 实施）：</p>
+<ol><li>对每条 P0 / P1 项做"复现实验"：用一个真实任务走完该 UX 路径并截图</li><li>对每条"已具备"项做"反例测试"：故意构造不满足该模式的场景，看是否真的失败</li><li>邀请 1-2 个外部用户做 5 分钟走查，记录他们卡在哪里</li><li>比对 4 周前后的同一类问题回复：是否有退化</li></ol>
+<h2 id="审计方法">审计方法</h2>
+<h3 id="1-起点">1. 起点</h3>
+<p>直接读取 <code>2026-06-26-hermes-agent-ui-shape-of-ai-checklist/notes.md</code> 中 7 类共 37 个模式的"自检问题 / Agent 场景 / 状态 / 优先级"四列。状态列已经是"启发式判断的最小单元"，审计在此之上做归类。</p>
+<h3 id="2-归类">2. 归类</h3>
+<p>把 37 项按类别（7 类）+ 状态（已具备 / 部分具备 / 需改进 / 未评估）+ 优先级（P0 / P1 / P2）做交叉统计：</p>
+<ul><li>统计"已具备"比例反映<strong>横向覆盖度</strong></li><li>统计 P0 数量反映<strong>紧急程度</strong></li><li>归类"主要缺口"和"推荐改进"反映<strong>可操作性</strong></li></ul>
+<h3 id="3-7-类各自的当前判断-缺口-改进-优先级4-列输出">3. 7 类各自的"当前判断 / 缺口 / 改进 / 优先级"4 列输出</h3>
+<p>每类一个 H3 章节，固定 4 段式结构（见 <code>notes.md</code>）。这样读者可以<strong>跳读</strong>而不会丢上下文。</p>
+<h3 id="4-p0p1p2-汇总">4. P0/P1/P2 汇总</h3>
+<p>汇总表（notes.md 第二节）从两个角度排序：</p>
+<ul><li><strong>按"对用户可见的破坏性"</strong>（Stop / Source / Status 三态）排 P0</li><li><strong>按"实施成本"</strong>排 P1（不点名"代码量"，只点"复杂度"）</li></ul>
+<p>P2 不给细节，列名 + 一句话理由。</p>
+<h3 id="5-第一轮建议">5. 第一轮建议</h3>
+<p>5 个主题：状态可见性、长任务进度、中断链路、动作区分、证据展示。每个主题对应 1 个 P0 行动项 + 1-2 个 P1 配套项。</p>
+<h3 id="6-6-层映射">6. 6 层映射</h3>
+<p>复用 checklist 的 6 层映射，<strong>不重新做</strong>。本审计在该映射上加入"覆盖度判断"列（覆盖度数字从 checklist 继承）。</p>
+<h3 id="7-实施路线">7. 实施路线</h3>
+<p>按"先无代码 → 再报告 → 最后 UI"的顺序，理由是：</p>
+<ul><li><strong>无代码阶段</strong>最便宜：改 prompt / 话术 / 工具描述就能影响 UX</li><li><strong>报告模板</strong>次之：把"做了什么 / 证据"作为固定结构输出，能在不写 UI 的情况下满足 Source citation / Explanation 两个 P0 项</li><li><strong>UI / Dashboard</strong>最贵：按钮、组件、状态机都需要测试覆盖 + 跨平台适配</li></ul>
+<p><strong>反例</strong>：如果一上来就做 UI 组件库，会遇到"需求还没收敛就先实现"的陷阱 — 当 P0 项的话术和模板已经够用时，UI 投入的边际效用很低。</p>
+<h2 id="不复制的源内容">不复制的源内容</h2>
+<ul><li>不复制 Shape of AI 网站内容（与 checklist 一致）</li><li>不复制 The Layers of AI Experience 全文翻译</li><li>不复制 checklist 的 37 个模式定义（直接 <code>based_on</code> 引用）</li><li>不重复 checklist 已有表格：6 层映射直接 <code>基于 checklist</code> 注明，不重复单元格</li></ul>
+<h2 id="维护约定">维护约定</h2>
+<h3 id="更新频率">更新频率</h3>
+<ul><li><strong>v1（本条目）</strong>：2026-06-26 初版</li><li><strong>v2</strong>：见 summary.md "何时做 v2" 章节的 4 个触发条件</li><li><strong>不要做月度更新</strong>：v1 → v2 之间不应有中间版本，避免审计口径漂移</li></ul>
+<h3 id="与-checklist-的差异">与 checklist 的差异</h3>
+<table class="md-table"><thead><tr><th>维度</th><th>checklist</th><th>审计 (本条目)</th></tr></thead><tbody><tr><td>形式</td><td>37 个模式各 5 行</td><td>7 类 + P0/P1/P2 汇总 + 路线</td></tr><tr><td>时间</td><td>静态（"盘点现状"）</td><td>动态（"建议改进 + 何时再做"）</td></tr><tr><td>状态</td><td>模式级（每个模式一行）</td><td>类别级（每类一个当前判断）</td></tr><tr><td>优先级</td><td>模式级 P0/P1/P2</td><td>全局 P0 行动项 5 条 + P1 / P2 数量</td></tr><tr><td>输出</td><td>诊断</td><td>诊断 + 路线 + 实施建议</td></tr><tr><td>更新</td><td>月度</td><td>触发式（v1 → v2）</td></tr></tbody></table>
+<h3 id="与项目记忆的关联">与项目记忆的关联</h3>
+<p>本审计的"已具备"判断依赖的项目记忆：</p>
+<ul><li><strong>MEDIA 协议</strong>：Telegram / Slack 消息中可附带本地文件路径，自动上传为媒体</li><li><strong><code>/skill</code> 命令体系</strong>：通过 <code>skill_view(name)</code> 加载 skill，引导 skill 行为</li><li><strong>sub-agent 隔离</strong>：<code>hermes-agent-spawning</code> / <code>delegate_task</code> / <code>ConPort</code> 提供独立 cwd 和工具集</li><li><strong>session DB 持久化</strong>：所有 session 持久化到 SQLite，可回看</li><li><strong>Cronjob + Webhook</strong> 异步触发：支持定时任务</li><li><strong>多平台 home channel</strong>：Telegram / Discord / 飞书 / iMessage 等可同时作为目标</li></ul>
+<p>如果项目记忆本身有误（例如某功能其实已下线），审计结论需要修正。这正是建议 v2 做"复现实验"的原因。</p>
+<h2 id="已知限制">已知限制</h2>
+<ol><li><strong>没有用户访谈</strong>：所有"用户能否..."类判断都是维护者代理</li><li><strong>没有跨平台对比</strong>：Telegram / Discord / Slack 的 UX 差异被合并</li><li><strong>没有量化指标</strong>：覆盖度 49% / 22% 是相对数字，不是真实 KPI</li><li><strong>没有 A/B 实验</strong>：所有改进建议都是单点</li><li><strong>审计者单一</strong>：只有一个维护者视角，没有第二人 review</li></ol>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-notes">
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">笔记</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="hermes-agent-ui-第一轮自检审计v1">Hermes Agent UI 第一轮自检审计（v1）</h1>
+<blockquote><p><strong>基础</strong>：<a href="2026-06-26-hermes-agent-ui-shape-of-ai-checklist" target="_blank" rel="noopener">Hermes Agent UI 自检表 v1</a>（37 个模式 + 6 层映射） <strong>性质</strong>：启发式审计（heuristic audit），非实证审计 <strong>数据来源</strong>：项目记忆 + 自检表 v1 状态列 + 维护者认知 <strong>信任等级</strong>：中。所有"已具备"判断需在 v2 用复现实验验证 <strong>基线日期</strong>：2026-06-26</p></blockquote>
+<hr>
+<h2 id="审计方法与边界">审计方法与边界</h2>
+<p><strong>本审计的 4 个边界</strong>：</p>
+<ol><li><strong>不修改任何代码 / 脚本 / 模板</strong> — 本条目是诊断 + 路线，不带 patch</li><li><strong>不修改自检表原条目</strong> — checklist 保持原状</li><li><strong>不假装已实际跑过 Hermes</strong> — 所有"已具备"判断都标注为启发式</li><li><strong>不做 P0 项的具体实现</strong> — 每个 P0 项给"应该做什么"，不给"具体怎么改代码"</li></ol>
+<p><strong>审计循环</strong>：每类 4 段式输出（<strong>当前判断</strong> / <strong>主要缺口</strong> / <strong>推荐改进</strong> / <strong>优先级</strong>），便于跳读。</p>
+<hr>
+<h2 id="一wayfinders导航指引审计">一、Wayfinders（导航指引）审计</h2>
+<h3 id="当前判断">当前判断</h3>
+<p>Wayfinders 是 Hermes Agent <strong>覆盖度最高</strong>的类别之一。Source citation、Chained action、Inline Action、Connectors、@ mention 5 项已具备，仅 Example gallery / Workspaces 处于"未评估"或"需改进"。</p>
+<blockquote><p>数据基础：checklist v1 中 6/6 状态分布 = 已具备 5 / 需改进 1 / 未评估 0（实际 Example gallery 在 v1 标"未评估"，Workspaces 标"需改进"）</p></blockquote>
+<p>能力侧"做什么、当前在哪、怎么连外部"已成熟。问题是<strong>首次使用引导（onboarding）</strong>和<strong>复杂任务的空间感（workspace 概念）</strong>。</p>
+<h3 id="主要缺口">主要缺口</h3>
+<ol><li><strong>缺少"第一次启动"案例展示</strong> — 新用户面对 30+ skill 时不知道从哪里开始</li><li><strong>Workspaces 对用户不可见</strong> — sub-agent 隔离目录在底层存在，但用户在主对话中看不到"我为你创建了 workspace X"</li><li><strong>Follow up 偏隐式</strong> — chat 上下文延续是模型自发行为，没有显式"下一步"按钮</li></ol>
+<h3 id="推荐改进">推荐改进</h3>
+<table class="md-table"><thead><tr><th>改进项</th><th>实施成本</th><th>价值</th></tr></thead><tbody><tr><td>首次启动推送 3-5 个 <code>/skill</code> 例子</td><td>低（prompt 模板）</td><td>高（onboarding 转化率）</td></tr><tr><td>sub-agent 创建时显式提示 "正在 workspace X 中执行..."</td><td>中（sub-agent 模板改）</td><td>中（信任建立）</td></tr><tr><td>Follow up 加 "继续 / 展开" 按钮</td><td>高（前端组件）</td><td>中（依赖具体平台）</td></tr></tbody></table>
+<h3 id="优先级">优先级</h3>
+<p><strong>P1</strong> — 整体不是阻断性问题，但 Example gallery 是 onboarding 漏斗的关键节点，建议先做。</p>
+<hr>
+<h2 id="二inputs输入方式审计">二、Inputs（输入方式）审计</h2>
+<h3 id="当前判断-2">当前判断</h3>
+<p>主路径（Slash command / @ mention / Connectors）已具备，但<strong>多模态（Voice / Camera / Drag and drop）和 Prompt library</strong> 几乎全部未做 UX 化。工具层有（如 <code>vision_analyze</code>），但<strong>用户入口不显眼</strong>。</p>
+<blockquote><p>数据基础：checklist v1 中 6/6 状态 = 已具备 3（@ mention、Slash command、Camera input 工具层）/ 未评估 3（Voice / Drag and drop / Prompt library）</p></blockquote>
+<h3 id="主要缺口-2">主要缺口</h3>
+<ol><li><strong>Voice / Drag and drop 无 UX 入口</strong> — 工具不支持，或支持但用户找不到</li><li><strong>Camera input 是"工具可达但 UX 不可达"</strong> — <code>vision_analyze</code> 在，但用户不知道可以发图</li><li><strong>Prompt library 完全空白</strong> — 没有"工作流模板"概念</li></ol>
+<h3 id="推荐改进-2">推荐改进</h3>
+<table class="md-table"><thead><tr><th>改进项</th><th>实施成本</th><th>价值</th></tr></thead><tbody><tr><td>在所有 home channel 入口处放"发图 / 发语音"提示</td><td>低</td><td>中</td></tr><tr><td>Prompt library 起步版：3 个工作流模板（研究 / 复盘 / 翻译）</td><td>中</td><td>高（复用率）</td></tr><tr><td>Drag and drop 文档化（Telegram / Slack 已有原生支持）</td><td>低</td><td>中</td></tr></tbody></table>
+<h3 id="优先级-2">优先级</h3>
+<p><strong>P1</strong> — Camera / Prompt library 是 P1；Voice / Drag 推到 P2。</p>
+<hr>
+<h2 id="三tuners调节器审计">三、Tuners（调节器）审计</h2>
+<h3 id="当前判断-3">当前判断</h3>
+<p><strong>Tuners 是 Hermes Agent 当前最大的空白</strong>。6/6 全部"未评估" — 既没有 Temperature slider、Length control，也没有 Tone selector、Persona picker、Format selector、Regenerate。</p>
+<blockquote><p>含义：用户对输出风格、长度、语气、格式的精细控制权基本为零，只能通过每次写 prompt 来"间接调节"。</p></blockquote>
+<h3 id="主要缺口-3">主要缺口</h3>
+<ol><li><strong>没有"模式切换"概念</strong> — 用户无法在"严谨"和"创意"之间切换</li><li><strong>没有长度预设</strong> — <code>/brief</code> / <code>/detail</code> 不存在</li><li><strong>没有格式预设</strong> — 用户每次要重新指定"用表格 / 用列表 / 用 markdown"</li><li><strong>没有 regenerate</strong> — 不满意只能"再发一次"，模型随机性导致结果不可预测</li></ol>
+<h3 id="推荐改进-3">推荐改进</h3>
+<table class="md-table"><thead><tr><th>改进项</th><th>实施成本</th><th>价值</th></tr></thead><tbody><tr><td>Format selector 起步：3 个预设（list / paragraph / table）</td><td>中</td><td>高（最高频调节需求）</td></tr><tr><td>Length control：<code>/brief</code> / <code>/detail</code> / <code>/long</code> 三个预设</td><td>低</td><td>高</td></tr><tr><td>Regenerate：用户按 "↻ 重新生成" 按钮</td><td>中</td><td>中</td></tr><tr><td>Temperature slider 推迟到 v2</td><td>高（需要 UI）</td><td>中</td></tr><tr><td>Tone / Persona 推迟到 v2 或更后</td><td>高</td><td>低（个人 agent 不强需要）</td></tr></tbody></table>
+<h3 id="优先级-3">优先级</h3>
+<p><strong>P1</strong> — Format selector + Length control + Regenerate 是 P1 的核心（实施成本可控，价值高）。Temperature / Tone / Persona 推迟到 P2。</p>
+<hr>
+<h2 id="四governors控制机制审计">四、Governors（控制机制）审计</h2>
+<h3 id="当前判断-4">当前判断</h3>
+<p><strong>Governors 是 P0 风险面</strong>。Stop button / Error handling 已具备，但 Undo / Edit prompt / Branching / Version history / Feedback loop 大部分未做。Version history 部分具备（session DB 有，但 UX 不显式）。</p>
+<blockquote><p>关键问题：用户<strong>能停下但不能撤销</strong>。这是中断链路的关键缺口。</p></blockquote>
+<h3 id="主要缺口-4">主要缺口</h3>
+<ol><li><strong>没有 Undo</strong> — 写错文件 / 发错消息后无法回退</li><li><strong>没有 Edit prompt</strong> — 任务执行中无法修改 prompt 重新规划</li><li><strong>没有 Version history UX</strong> — session DB 有但用户不知道</li><li><strong>没有 Feedback loop</strong> — 👍/👎 反馈没有 UX 入口</li><li><strong>没有 Branching</strong> — 想从某个节点分叉探索但没工具</li></ol>
+<h3 id="推荐改进-4">推荐改进</h3>
+<table class="md-table"><thead><tr><th>改进项</th><th>实施成本</th><th>价值</th></tr></thead><tbody><tr><td>Undo：每个生成动作后跟"↶ 撤销"按钮</td><td>中</td><td>极高（破坏性操作安全网）</td></tr><tr><td>Edit prompt：在任务执行中显示"修改 prompt"入口</td><td>中</td><td>高</td></tr><tr><td>Version history 暴露给用户："查看本次 session 所有动作"</td><td>中</td><td>高（debug + 信任）</td></tr><tr><td>Feedback loop：<code>👍 / 👎</code> 显式反馈</td><td>低</td><td>中</td></tr><tr><td>Branching 推迟到 v3</td><td>高</td><td>中</td></tr></tbody></table>
+<h3 id="优先级-4">优先级</h3>
+<p><strong>P0</strong> — Undo 是 P0 的核心（破坏性操作安全网是上线前提）。Edit prompt 和 Version history 是 P1。Feedback loop 是 P1。Branching 是 P2。</p>
+<hr>
+<h2 id="五trust-builders信任构建审计">五、Trust builders（信任构建）审计</h2>
+<h3 id="当前判断-5">当前判断</h3>
+<p><strong>Trust builders 是 P0 风险面的最大一块</strong>。仅 Error handling 已具备；Confidence score / Source citation / Human review / Transparency toggle 全部未做或部分做；Explanation 部分具备（隐式推理存在，无显式 toggle）。</p>
+<blockquote><p>关键问题：用户<strong>看到结果但无法判断结果可不可信</strong>。这是 AI 产品最严重的 UX 失败模式之一。</p></blockquote>
+<h3 id="主要缺口-5">主要缺口</h3>
+<ol><li><strong>没有 Confidence score</strong> — 用户无法知道 AI 的"把握度"</li><li><strong>Source citation 不规范</strong> — 工具层有，但 UX 不一致</li><li><strong>没有 Human review 标记</strong> — 自动化操作没有"请人工确认"环节</li><li><strong>Transparency toggle 缺失</strong> — 推理过程不可见也不可隐藏</li><li><strong>Explanation 隐式</strong> — 用户要主动问"为什么"才知道</li></ol>
+<h3 id="推荐改进-5">推荐改进</h3>
+<table class="md-table"><thead><tr><th>改进项</th><th>实施成本</th><th>价值</th></tr></thead><tbody><tr><td>Source citation 三件套：URL + 置信度 + 最后验证时间</td><td>中</td><td>极高（事实类回答可信度）</td></tr><tr><td>Human review：自动邮件 / 支付类操作强制二次确认</td><td>中</td><td>极高（防止误操作）</td></tr><tr><td>Confidence score：在事实类回答旁显式标注</td><td>中</td><td>高</td></tr><tr><td>Transparency toggle：默认开，可关</td><td>低</td><td>中</td></tr><tr><td>Explanation：每个回复末尾加"推理依据" 1-2 句</td><td>低</td><td>中</td></tr></tbody></table>
+<h3 id="优先级-5">优先级</h3>
+<p><strong>P0</strong> — Source citation 三件套 + Human review 强制确认是 P0 的核心。Confidence score 是 P1（实施成本中等）。Transparency / Explanation 是 P1-P2。</p>
+<hr>
+<h2 id="六identifiers标识符审计">六、Identifiers（标识符）审计</h2>
+<h3 id="当前判断-6">当前判断</h3>
+<p><strong>Identifiers 是 Hermes Agent 第二高覆盖度的类别</strong>。5/6 已具备（AI avatar、Content labeling、Status indicator、Typing indicator、Progress bar），仅 Sound cue 缺失。</p>
+<blockquote><p>标识符已经做得不错，主要工作是把"三态 Status indicator"补全。</p></blockquote>
+<h3 id="主要缺口-6">主要缺口</h3>
+<ol><li><strong>Status indicator 是二态</strong> — 当前"思考中 / 已完成"，缺"执行中"</li><li><strong>没有 Sound cue</strong> — 任务完成时无声反馈</li><li><strong>AI avatar 跨平台一致性未验证</strong> — 不同 home channel 可能不一致</li></ol>
+<h3 id="推荐改进-6">推荐改进</h3>
+<table class="md-table"><thead><tr><th>改进项</th><th>实施成本</th><th>价值</th></tr></thead><tbody><tr><td>Status indicator 三态化：思考中 / 执行中 / 已完成</td><td>低</td><td>极高（长任务可观测性）</td></tr><tr><td>跨平台 avatar 一致性验证</td><td>低</td><td>中</td></tr><tr><td>Sound cue 推迟到 v2</td><td>中</td><td>低（个人 agent 场景不强需要）</td></tr></tbody></table>
+<h3 id="优先级-6">优先级</h3>
+<p><strong>P0（局部）</strong> — Status indicator 三态化是 P0，因为它直接影响长任务可观测性。其他项 P2。</p>
+<hr>
+<h2 id="七uilibraryui-组件库审计">七、UILibrary（UI 组件库）审计</h2>
+<h3 id="当前判断-7">当前判断</h3>
+<p>UILibrary 在 Hermes Agent 中<strong>部分具备</strong> — Telegram / Discord / Slack 各自的 markdown 渲染存在，但没有跨平台统一组件库。</p>
+<blockquote><p>这是一个<strong>长期投资</strong>类项目，不在 P0/P1 范围。</p></blockquote>
+<h3 id="主要缺口-7">主要缺口</h3>
+<ol><li><strong>没有跨平台统一组件库</strong> — 每个 home channel 各自实现</li><li><strong>按钮 / 卡片 / 引用块等组件不统一</strong> — 同一概念在不同平台长相不同</li><li><strong>没有"组件文档"</strong> — 设计者和实现者之间没有共同词汇</li></ol>
+<h3 id="推荐改进-7">推荐改进</h3>
+<table class="md-table"><thead><tr><th>改进项</th><th>实施成本</th><th>价值</th></tr></thead><tbody><tr><td>抽出"组件词汇表"文档：3-5 个核心组件 + 跨平台映射</td><td>中</td><td>中（长期价值）</td></tr><tr><td>推迟实际 UI 组件库投入</td><td>—</td><td>—</td></tr></tbody></table>
+<h3 id="优先级-7">优先级</h3>
+<p><strong>P2</strong> — 长期增强，不在 v1 / v2 优先级。</p>
+<hr>
+<h2 id="p0-p1-p2-行动项汇总">P0 / P1 / P2 行动项汇总</h2>
+<h3 id="p05-条必须马上推进">P0（5 条，必须马上推进）</h3>
+<table class="md-table"><thead><tr><th>#</th><th>行动项</th><th>类别</th><th>实施成本</th></tr></thead><tbody><tr><td>1</td><td>Status indicator 三态化（思考中 / 执行中 / 已完成）</td><td>Identifiers</td><td>低</td></tr><tr><td>2</td><td>Stop 链路口径明确（级联到 sub-agent）</td><td>Governors</td><td>中</td></tr><tr><td>3</td><td>Inline Action 加"预览 / 已生效"标签</td><td>Wayfinders</td><td>中</td></tr><tr><td>4</td><td>Source citation 三件套（URL + 置信度 + 验证时间）</td><td>Trust builders</td><td>中</td></tr><tr><td>5</td><td>Long task 阶段名显式化（不是只显示百分比）</td><td>Identifiers</td><td>低</td></tr></tbody></table>
+<p><strong>P0 选择的 3 条原则</strong>：</p>
+<ol><li><strong>对用户破坏性最大</strong>（Stop 链路、Inline Action 误判、Source 不可信）</li><li><strong>实施成本低</strong>（Status 三态、Long task 阶段名都是 prompt 层可改）</li><li><strong>不依赖 UI 改造</strong>（避免过早做组件库投入）</li></ol>
+<h3 id="p17-条下一轮推进">P1（7 条，下一轮推进）</h3>
+<table class="md-table"><thead><tr><th>#</th><th>行动项</th><th>类别</th><th>实施成本</th></tr></thead><tbody><tr><td>1</td><td>Undo（每个生成动作后跟"↶ 撤销"）</td><td>Governors</td><td>中</td></tr><tr><td>2</td><td>Edit prompt（任务执行中可修改 prompt）</td><td>Governors</td><td>中</td></tr><tr><td>3</td><td>Version history 暴露给用户</td><td>Governors</td><td>中</td></tr><tr><td>4</td><td>Feedback loop（👍/👎 显式反馈）</td><td>Governors</td><td>低</td></tr><tr><td>5</td><td>Format selector 起步版（list / paragraph / table）</td><td>Tuners</td><td>中</td></tr><tr><td>6</td><td>Length control（<code>/brief</code> / <code>/detail</code> / <code>/long</code>）</td><td>Tuners</td><td>低</td></tr><tr><td>7</td><td>Human review（自动邮件 / 支付类操作强制确认）</td><td>Trust builders</td><td>中</td></tr><tr><td>8</td><td>Confidence score（事实类回答旁标注）</td><td>Trust builders</td><td>中</td></tr><tr><td>9</td><td>Example gallery 首次启动推送</td><td>Wayfinders</td><td>低</td></tr><tr><td>10</td><td>Prompt library 起步版（3 个工作流模板）</td><td>Inputs</td><td>中</td></tr><tr><td>11</td><td>Workspaces 对用户显式化</td><td>Wayfinders</td><td>中</td></tr><tr><td>12</td><td>Camera input UX 入口显眼化</td><td>Inputs</td><td>低</td></tr></tbody></table>
+<blockquote><p>P1 实际候选 12 条，按"实施成本 / 价值比"选了 7 条作为下一轮重点。其它 5 条可在 P1 末或 P2 初推进。</p></blockquote>
+<h3 id="p2长期增强项4-条">P2（长期增强项，4 条）</h3>
+<table class="md-table"><thead><tr><th>#</th><th>行动项</th><th>类别</th></tr></thead><tbody><tr><td>1</td><td>Regenerate（↻ 重新生成）</td><td>Tuners</td></tr><tr><td>2</td><td>Temperature slider</td><td>Tuners</td></tr><tr><td>3</td><td>Transparency toggle（默认开可关）</td><td>Trust builders</td></tr><tr><td>4</td><td>Sound cue</td><td>Identifiers</td></tr><tr><td>5</td><td>UILibrary 跨平台统一组件库</td><td>UILibrary</td></tr><tr><td>6</td><td>Branching（节点分叉探索）</td><td>Governors</td></tr><tr><td>7</td><td>Tone selector / Persona picker</td><td>Tuners</td></tr><tr><td>8</td><td>Voice / Drag and drop 入口</td><td>Inputs</td></tr></tbody></table>
+<blockquote><p>P2 候选 8 条，按"价值递减 / 成本递增"排序。</p></blockquote>
+<hr>
+<h2 id="第一轮建议5-个主题">第一轮建议（5 个主题）</h2>
+<h3 id="主题-1agent-当前状态可见性">主题 1：Agent 当前状态可见性</h3>
+<ul><li><strong>核心问题</strong>：用户不知道 AI 在做什么 / 做到哪了 / 还要多久</li><li><strong>P0 行动项</strong>：Status indicator 三态化（详见汇总表 #1）</li><li><strong>P1 配套</strong>：Long task 阶段名显式化</li><li><strong>为什么优先</strong>：状态不可见是 AI 产品<strong>最普遍</strong>的 UX 失败模式。Telegram typing bubble 解决"是否在线"，但解决不了"在做什么"。</li></ul>
+<h3 id="主题-2长任务进度和阶段提示">主题 2：长任务进度和阶段提示</h3>
+<ul><li><strong>核心问题</strong>：单步任务用户能容忍"思考中"，但 5 步任务只显示"思考中"会让人焦虑</li><li><strong>P0 行动项</strong>：Long task 阶段名显式化（详见汇总表 #5）</li><li><strong>P1 配套</strong>：Format selector 让用户控制进度显示格式</li><li><strong>设计原则</strong>：阶段名优于百分比。"提取 → 翻译 → 校对" 比 "进度 60%" 更有信息量</li></ul>
+<h3 id="主题-3用户中断-撤销-回退">主题 3：用户中断 / 撤销 / 回退</h3>
+<ul><li><strong>核心问题</strong>：用户能停下但不能撤销；这是破坏性操作的安全网缺口</li><li><strong>P0 行动项</strong>：Stop 链路口径明确（详见汇总表 #2）</li><li><strong>P1 配套</strong>：Undo、Edit prompt、Version history</li><li><strong>设计原则</strong>：所有"已执行"动作都要有"撤销"路径。所有"已发送"内容都要能"回看"。</li></ul>
+<h3 id="主题-4执行动作与建议草稿的区分">主题 4：执行动作与建议草稿的区分</h3>
+<ul><li><strong>核心问题</strong>：AI 输出"建议"和"已执行"语义模糊，用户容易把草稿当结果</li><li><strong>P0 行动项</strong>：Inline Action 加"预览 / 已生效"标签（详见汇总表 #3）</li><li><strong>P1 配套</strong>：Human review 强制确认</li><li><strong>设计原则</strong>：草稿和已执行必须<strong>视觉上不同</strong>。建议和动作必须<strong>结构上分离</strong>。</li></ul>
+<h3 id="主题-5证据来源日志commitlive-状态的展示">主题 5：证据、来源、日志、commit、live 状态的展示</h3>
+<ul><li><strong>核心问题</strong>：用户看不到"为什么 AI 这样回答"、"这个改动是否真的应用了"、"现在 live 状态如何"</li><li><strong>P0 行动项</strong>：Source citation 三件套（详见汇总表 #4）</li><li><strong>P1 配套</strong>：Confidence score、Explanation</li><li><strong>设计原则</strong>：每次自动化输出都要带"证据" + "状态" + "可验证链接"。三件套缺一不可。</li></ul>
+<h3 id="主题-6额外多-agent-并发写入时的状态提示">主题 6（额外）：多 agent 并发写入时的状态提示</h3>
+<ul><li><strong>核心问题</strong>：sub-agent 并发时用户不知道谁在写、写了什么、会不会冲突</li><li><strong>现状</strong>：未做</li><li><strong>P1 候选</strong>：在 P1 末或 P2 初推进</li><li><strong>设计原则</strong>：sub-agent 写入应当有<strong>显式前缀或 tag</strong>，让用户能区分"哪个 agent 写了这行"。</li></ul>
+<hr>
+<h2 id="与-6-层-ai-experience-的对应关系">与 6 层 AI Experience 的对应关系</h2>
+<blockquote><p>复用 checklist v1 的 6 层映射（Model / Prompt / Interface / Workflow / System / Emergence），不重新做。</p></blockquote>
+<table class="md-table"><thead><tr><th>6 层</th><th>覆盖度（来自 checklist v1）</th><th>v1 审计判断</th><th>主要 P0 / P1 行动项</th></tr></thead><tbody><tr><td><strong>Model</strong></td><td>—</td><td>不适用</td><td>—</td></tr><tr><td><strong>Prompt</strong></td><td>14%（5/37 = 14%）</td><td>Tuners 全部"未评估" — 调节器几乎为零</td><td>P1: Format selector、Length control、Prompt library</td></tr><tr><td><strong>Interface</strong></td><td>49%（18/37 = 49%）</td><td>主体已具备，Workspaces 缺显式</td><td>P1: Example gallery、Workspaces 显式化</td></tr><tr><td><strong>Workflow</strong></td><td>22%（8/37 = 22%）</td><td>Stop 链路、Undo、Edit prompt 全缺</td><td><strong>P0: Stop 链路口径明确、Long task 阶段名；P1: Undo、Edit prompt、Version history、Feedback loop</strong></td></tr><tr><td><strong>System</strong></td><td>27%（10/37 = 27%）</td><td>Trust builders 大部分缺，Source 不规范</td><td><strong>P0: Source citation 三件套、Human review；P1: Confidence score</strong></td></tr><tr><td><strong>Emergence</strong></td><td>27%（10/37 = 27%）</td><td>跨 agent 标识、长期记忆、delegation 全缺</td><td>P2: 跨平台 avatar 一致性、UILibrary 统一</td></tr></tbody></table>
+<h3 id="6-层视角的判断">6 层视角的判断</h3>
+<ul><li><strong>Interface 做得最好</strong>（49%）— Wayfinders / Identifiers / 部分 Inputs 都已具备</li><li><strong>Workflow 最弱</strong>（22%）— 控制类功能（Undo / Edit / Branching / Version / Feedback）几乎全缺</li><li><strong>System 第二弱</strong>（27%）— Trust builders 是最大缺口</li><li><strong>Prompt 形式上低</strong>（14%）但<strong>实质影响最大</strong> — 因为用户每次都在用 prompt 调节</li></ul>
+<p><strong>v1 重点推进方向</strong>：Workflow + System 是 P0 行动项的主要来源，Prompt 是 P1 重点。</p>
+<hr>
+<h2 id="下一步实施路线">下一步实施路线</h2>
+<h3 id="阶段-1无代码流程规范0-2-周">阶段 1：无代码流程规范（0-2 周）</h3>
+<p><strong>目标</strong>：在不写代码的情况下让用户感知到 UX 改进。</p>
+<p><strong>做法</strong>：</p>
+<ol><li><strong>Status indicator 三态化</strong>：改 system prompt 让模型在长任务中显式输出"执行中: 提取 → 翻译 → 校对"阶段</li><li><strong>Long task 阶段名显式化</strong>：同 1，作为 prompt 模板固化</li><li><strong>Source citation 三件套</strong>：在 web_search / patch / push 类操作的 system prompt 中要求"每次回复带 URL + 置信度 + 验证时间"</li></ol>
+<p><strong>不做</strong>：</p>
+<ul><li>不写新工具</li><li>不改 home channel 行为</li><li>不引入 UI 组件</li></ul>
+<p><strong>验证</strong>：</p>
+<ul><li>跑 10 个长任务，记录是否能看到三态进度</li><li>跑 5 个 web_search 类任务，记录 Source citation 三件套是否齐全</li><li>用户反馈：阶段名是否更清晰</li></ul>
+<h3 id="阶段-2报告模板2-6-周">阶段 2：报告模板（2-6 周）</h3>
+<p><strong>目标</strong>：把"做了什么 / 证据是什么 / live 状态"作为固定结构输出。</p>
+<p><strong>做法</strong>：</p>
+<ol><li><strong>设计"操作报告"标准模板</strong>：</li></ol>
+<ul><li>标题：操作类型 + 目标</li><li>中段：分步执行结果（每步：做了什么、结果、证据）</li><li>末段：live 状态验证（链接、截图、curl 输出）</li></ul>
+<ol><li><strong>在 update_site / patch / push 类工具后强制使用该模板</strong></li><li><strong>把"Trust builders"中"Source citation / Human review / Explanation"三项通过模板化降低边际成本</strong></li></ol>
+<p><strong>不做</strong>：</p>
+<ul><li>不做 UI 组件</li><li>不引入新工具</li><li>不动 home channel 行为</li></ul>
+<p><strong>验证</strong>：</p>
+<ul><li>抽样 20 个 patch / push 操作，看报告是否齐全</li><li>用户反馈：报告是否让"操作可验证"</li></ul>
+<h3 id="阶段-3ui-dashboard6-周以后">阶段 3：UI / Dashboard（6 周以后）</h3>
+<p><strong>目标</strong>：在前两阶段反馈证明 P0 仍有 UX gap 时才投入。</p>
+<p><strong>做法</strong>：</p>
+<ol><li>真实按钮 / 进度条组件</li><li>跨平台统一组件库（UILibrary）</li><li>Undo / Regenerate 等需要 UI 的 P1 项</li></ol>
+<p><strong>不做（除非必要）</strong>：</p>
+<ul><li>不做"为做而做"的 UI 改造</li><li>不引入前端框架</li><li>不重写 home channel 集成</li></ul>
+<p><strong>启动条件</strong>（任一满足才进入阶段 3）：</p>
+<ul><li>阶段 1 + 2 完成后用户反馈"P0 项仍有 UX gap"</li><li>Tuners 调节器需要 UI 才有效（Temperature slider）</li><li>跨平台一致性出现严重问题</li></ul>
+<p><strong>反例警告</strong>：</p>
+<blockquote><p>如果阶段 1 后用户已经满意，阶段 3 不应启动。流程和模板<strong>永远优于</strong> UI — UI 改起来贵，prompt 改起来便宜。</p></blockquote>
+<hr>
+<h2 id="何时做-v2">何时做 v2</h2>
+<p>满足以下任一条件时做 v2（本审计的下一轮）：</p>
+<ol><li>v1 中 5 条 P0 全部落地完成</li><li>阶段 1+2 完成后有了真实用户反馈</li><li>自检表 v1 的 20 个"未评估"项中超过半数被评估</li><li>Shape of AI 站点新增 / 删减模式</li></ol>
+<p>v1 → v2 之间不应有中间版本（避免审计口径漂移）。</p>
+<hr>
+<h2 id="变更日志">变更日志</h2>
+<ul><li><strong>2026-06-26</strong>：v1 初版。7 类审计 + P0/P1/P2 汇总 + 5 主题建议 + 6 层映射 + 3 阶段实施路线</li><li><strong>v2 触发</strong>：见上节 4 个条件</li></ul>
+</div>
+</details>
+</section>
+
+<nav class="detail-actions">
+<a class="action-link source-link" href="https://www.shapeof.ai/" target="_blank" rel="noopener">原文链接 ↗</a>
+<a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/notes/2026/2026-06-26-hermes-agent-ui-self-audit-v1" target="_blank" rel="noopener">GitHub 文件夹 →</a>
+<button class="action-btn" id="copy-path-btn" data-path="content/notes/2026/2026-06-26-hermes-agent-ui-self-audit-v1">复制 path</button>
+<span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
+</nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
+
+</article>
+</main>
+<footer>
+<p><a href="../../">hermes-knowledge-base</a> · 站内详情页</p>
+</footer>
+<script src="../../app.js" defer></script>
+<script>
+(function() {
+  const btn = document.getElementById('copy-path-btn');
+  const fb = document.getElementById('copy-feedback');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      const path = btn.getAttribute('data-path') || '';
+      const done = function() {
+        if (fb) {
+          fb.textContent = '已复制: ' + path;
+          setTimeout(function() { fb.textContent = ''; }, 2500);
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(path).then(done, function() {
+          // Fallback for non-secure contexts.
+          const ta = document.createElement('textarea');
+          ta.value = path;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); done(); } catch (e) {}
+          document.body.removeChild(ta);
+        });
+      }
+    });
+  }
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {
+    const onScroll = function() {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+</body>
+</html>
