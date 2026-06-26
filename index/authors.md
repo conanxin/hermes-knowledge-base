@@ -45,6 +45,10 @@
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
+## Emily Campbell
+
+- The Layers of AI experience
+
 ## Erik Hoel
 
 - Don't dethrone consciousness!

@@ -23,6 +23,7 @@
 - YouTube Video Brief Workflow
 - An "infovore" shares his chats
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+- The Layers of AI experience
 - How AI Will Change Us
 - The 100 greatest songs of the 1960s
 - 一键把 YouTube 视频加入知识库

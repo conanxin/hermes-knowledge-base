@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 体验的层次：在表面之下做设计 · hermes-knowledge-base</title>
+<meta name="description" content="AI 体验的层次：在表面之下做设计 — Emily Campbell">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="detail-page" id="top">
+<header class="detail-header">
+<a class="back-link" href="../../">← 返回首页</a>
+</header>
+<main class="detail-main">
+<article class="detail-article">
+<div class="detail-title-block">
+<span class="type-badge article">article</span>
+<h1 class="detail-title">AI 体验的层次：在表面之下做设计</h1>
+<p class="detail-title-en">The Layers of AI experience</p>
+</div>
+
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+<li class="toc-item toc-level-3"><a class="toc-link" href="#ai-体验的层次aiux">AI 体验的层次（AIUX）</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#既往即序章">既往即序章</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#决定论式的设计">决定论式的设计</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#预期式设计">预期式设计</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#概率式设计与-ai-体验">概率式设计与 AI 体验</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#我们需要全栈设计师">我们需要全栈设计师</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#ai-ux-的层次">AI UX 的层次</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#用户界面层">用户界面层</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#上下文层">上下文层</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#驾驭层">驾驭层</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#模型层">模型层</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#治理层">治理层</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#涌现">涌现</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#这对设计意味着什么">这对设计意味着什么</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#脚注">脚注</a></li>
+</ol>
+</nav>
+
+<section class="detail-meta">
+<div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">article</div></div>
+<div class="meta-row"><div class="meta-label">作者</div><div class="meta-value">Emily Campbell</div></div>
+<div class="meta-row"><div class="meta-label">来源</div><div class="meta-value">emilycampbell.co</div></div>
+<div class="meta-row"><div class="meta-label">发布日期</div><div class="meta-value">2026-06-03</div></div>
+<div class="meta-row"><div class="meta-label">采集日期</div><div class="meta-value">2026-06-26</div></div>
+<div class="meta-row"><div class="meta-label">标签</div><div class="meta-value meta-tags"><span class="chip">Emily Campbell</span><span class="chip">HackerRank</span><span class="chip">Shape of AI</span><span class="chip">Jesse James Garrett</span><span class="chip">Elements of User Experience</span><span class="chip">Jamie Mill</span><span class="chip">Elements of Product Design</span><span class="chip">Donella Meadows</span><span class="chip">杠杆点</span><span class="chip">驾驭层</span><span class="chip">Context Rot</span><span class="chip">Agentic UX</span><span class="chip">OpenAI Goblins</span><span class="chip">渐进式自主</span></div></div>
+<div class="meta-row"><div class="meta-label">主题</div><div class="meta-value meta-tags"><span class="chip">AI 产品设计</span><span class="chip">AIUX</span><span class="chip">概率式设计</span><span class="chip">设计史</span><span class="chip">全栈式设计师</span><span class="chip">涌现</span><span class="chip">上下文工程</span></div></div>
+</section>
+
+<section class="detail-section" id="section-summary">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">摘要</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="摘要ai-体验的层次">摘要：AI 体验的层次</h1>
+<h2 id="核心论点">核心论点</h2>
+<p>生成式 AI 让数字产品从"决定论式"的设计范式跃迁为"概率论式"——设计师无法再为每一种输出状态预先规定 UI 路径，而是要像系统设计者那样，理解并操作<strong>界面之下</strong>的多个相互依赖的层次。本文是 Emily Campbell 提出的 <strong>AIUX 6 层模型</strong>的一次完整阐述，作者将其与 Jesse James Garrett（2000）的 <em>Elements of User Experience</em> 以及 Jamie Mill（2021）的 <em>Elements of Product Design</em> 接续成"决定论 → 预期式 → 概率式"的三阶段设计史脉络。</p>
+<p><strong>一句话总结</strong>：AI 产品是"多层次概率系统"，设计师的职责从控制单层 UI 扩展到对模型 / 驾驭层 / 上下文 / 治理 / 涌现的"全栈式影响力"。</p>
+<h2 id="6-层模型一览">6 层模型一览</h2>
+<table class="md-table"><thead><tr><th>层级</th><th>英文</th><th>设计者关心的问题</th><th>关键张力</th></tr></thead><tbody><tr><td>用户界面层</td><td>User Interface</td><td>何时从"指令"过渡到"监督"</td><td>渐进式自主 vs. 用户掌控感</td></tr><tr><td>上下文层</td><td>Context</td><td>显式输入 vs. 推断输入；保留 vs. 丢弃</td><td>Context rot vs. 个性化深度</td></tr><tr><td>驾驭层</td><td>Harness</td><td>连接器 / 工具 / 技能 / 智能体的权限与编排</td><td>自主性 vs. 风险；粒度 vs. 信任</td></tr><tr><td>模型层</td><td>Model</td><td>训练、能力、行为三维度</td><td>推理深度 vs. 延迟；通用 vs. 垂直</td></tr><tr><td>治理层</td><td>Governance</td><td>规则 / 标准 / 偏好三类外部约束</td><td>合规 vs. 品牌个性；Anthropic vs. OpenAI 的可见差异</td></tr><tr><td>涌现</td><td>Emergence</td><td>可观测性 / 可解释性 / 来源追溯</td><td>不可消除的变异性是特征而非 bug</td></tr></tbody></table>
+<h2 id="历史脉络关键对比表">历史脉络（关键对比表）</h2>
+<table class="md-table"><thead><tr><th>阶段</th><th>代表人物 / 文献</th><th>设计关注范围</th><th>核心隐喻</th></tr></thead><tbody><tr><td>决定论式设计</td><td>Jesse James Garrett, <em>The Elements of User Experience</em> (2000)</td><td>5 个相互依存的层面（产品策略 → 视觉设计）</td><td>设计师是"意图编排者"</td></tr><tr><td>预期式设计</td><td>Jamie Mill, <em>The Elements of Product Design</em> (2021)</td><td>解空间 + 问题空间 + 真实世界</td><td>设计师是"结果促成者"</td></tr><tr><td>概率式设计</td><td>Emily Campbell, 本文</td><td>6 层 AIUX + 模型 + 治理 + 涌现</td><td>设计师是"杠杆点操作者"（Donella Meadows）</td></tr></tbody></table>
+<h2 id="三个关键概念区分">三个关键概念区分</h2>
+<ol><li><strong>方向（direction） vs. 监督（oversight）</strong> — 同一界面在不同生命周期阶段承担不同职能。早期需要用户"指挥"模型，后期界面退化为"监督面板"。</li><li><strong>显式上下文 vs. 推断上下文</strong> — 显式由用户主动提供（目标、顾虑、导入数据），推断由系统从行为模式、集成系统、历史交互中自动生成。地图揭示式类比。</li><li><strong>连接器 / 工具 / 技能 / 智能体</strong> — 驾驭层内部的四要素层级，定义数据访问（连接器）→ 动作权限（工具）→ 知识注入（技能）→ 自主编排（智能体）的递进结构。</li></ol>
+<h2 id="关键引文">关键引文</h2>
+<blockquote><p>"The user experience development process is all about ensuring that no aspect of the user's experience with your site happens without your conscious, explicit intent." — Jesse James Garrett, <em>The Elements of User Experience</em></p></blockquote>
+<blockquote><p>"Spare me the 'design is dead' takes. Design is more important than ever."</p></blockquote>
+<blockquote><p>"AI asks designers to go one layer deeper again: into the model, the harness, the context, the policies, and the emergent behaviors that produce the experience before it ever reaches the interface."</p></blockquote>
+<blockquote><p>"随机性是这些体验的必要组成部分，事实上是特性而非 bug：不确定性正是生成式系统价值的一部分。"</p></blockquote>
+<blockquote><p>"That makes emergence distinct from the other layers. It is not something designers configure directly. It is something they design around, monitor for, and respond to as the system encounters conditions the team could not fully predict."</p></blockquote>
+<h2 id="一句话总结">一句话总结</h2>
+<blockquote><p>AI 产品是概率性多层次系统；设计师的角色正在从"控制表层 UI"演化为"对 6 层全栈拥有足够语言能力去影响、缓解与接受其影响"——既非"设计已死"，也非"设计师必须变 ML 工程师"，而是需要<strong>多语境的"全栈式设计语言能力"</strong>。</p></blockquote>
+<h2 id="延伸阅读">延伸阅读</h2>
+<ul><li><strong>Jesse James Garrett</strong>, <em>The Elements of User Experience</em> (2000) — http://www.jjg.net/elements/</li><li><strong>Jamie Mill</strong>, <em>The Elements of Product Design</em> (2021) — https://jamiemill.com/blog/2021-07-10-elements-of-product-design/</li><li><strong>Donella Meadows</strong>, <em>Leverage Points: Places to Intervene in a System</em> — https://donellameadows.org/archives/leverage-points-places-to-intervene-in-a-system/</li><li><strong>John Maeda</strong>, <em>2017 Design in Tech Report</em> — https://designintech.report/wp-content/uploads/2017/03/dit-2017-1-0-7-compressed.pdf</li><li><strong>Liu et al.</strong>, <em>Lost in the Middle: How Language Models Use Long Contexts</em> (Stanford, 2023) — https://cs.stanford.edu/~nfliu/papers/lost-in-the-middle.arxiv2023.pdf</li><li><strong>Understanding AI</strong>, <em>Context Rot: The Emerging Challenge</em> — https://www.understandingai.org/p/context-rot-the-emerging-challenge</li><li><strong>OpenAI</strong>, <em>Where the Goblins Came From</em> (goblins / GPT-5.5 incident) — https://openai.com/index/where-the-goblins-came-from/</li><li><strong>Emily Campbell</strong> 维护的 <strong>Shape of AI</strong>（AI 交互模式库）— https://www.shapeof.ai/</li></ul>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-translation">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">中文翻译</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<hr>
+<p>title: "The Layers of AI experience" title_zh: "AI 体验的层次：在表面之下做设计" source_url: "https://emilycampbell.co/writing/layers-of-ai-experience" source_site: "emilycampbell.co" author: "Emily Campbell" published_date: "2026-06-03" captured_date: "2026-06-26" language: "en" translation_language: "zh-CN" status: "translated" type: "article"</p>
+<hr>
+<h1 id="ai-体验的层次在表面之下做设计">AI 体验的层次：在表面之下做设计</h1>
+<p><em>在表面之下做设计</em></p>
+<p><em>约 21 分钟阅读</em></p>
+<p>很难想象，ChatGPT 面向公众发布至今只有三年半的时间。我们对这种生成式材料的理解——它如何融入任务与用户旅程、如何改变我们构建的产品以及为谁而建——仍然处于非常早期的阶段。</p>
+<p>但有一件事是清晰的：我们正迎来设计角色的复兴，以及设计影响力施展拳脚的新机遇。</p>
+<p>生成式 AI 走入数字产品，彻底颠覆了上一个设计时代所依赖的交互范式。优秀的 AI 产品是多维的。对其中任何一处的细微调整，都可能对整体产生不成比例的影响。</p>
+<h3 id="ai-体验的层次aiux">AI 体验的层次（AIUX）</h3>
+<p><em>下面的模型探讨了设计如何分别影响这些层次，以及它们如何共同塑造最终产品的体验。</em></p>
+<ol><li><strong>用户界面</strong>——人们指导与监督 AI 行为的地方</li><li><strong>上下文</strong>——系统对用户的了解与推断</li><li><strong>驾驭</strong>——决定模型能够访问、使用和执行什么的结构</li><li><strong>模型</strong>——影响模型自身推理方式的训练、能力与行为</li><li><strong>治理</strong>——为 AI 设定参数边界的规则、标准与偏好</li><li><strong>涌现</strong>——在使用中显现的差异与未知行为</li></ol>
+<p>请放过我，不要再写"设计已死"这类论调。设计比以往任何时候都更重要。然而，我们角色与工作的形态正在演化，就像过去每一次技术变革一样——以应对新媒介所带来的新挑战与新机遇。</p>
+<h2 id="既往即序章">既往即序章</h2>
+<p><em>将设计视为多层次领域，这一概念并不新鲜。真正在变化的，是系统整体的复杂度，以及设计能够施加影响的深度。</em></p>
+<h3 id="决定论式的设计">决定论式的设计</h3>
+<p>在早期 Web 时代，工作常常按角色切分。视觉设计师负责网站 UI；信息架构师负责站点导航与结构；业务方负责需求定义；等等。这种划分反映了产品开发的瀑布式流程，也常常导致各专业只优化自身关注的那一环，而忽视了产品作为整体所应带来的结果。</p>
+<p>2000 年，Jesse James Garrett 发表了他那篇具有开创意义的文章 <em><a href="http://www.jjg.net/elements/" target="_blank" rel="noopener">The Elements of User Experience</a></em>，提出了另一种模型。他探讨了网站实际上由多个层面构成，每个层面都彼此依赖。例如，导航反映了产品策略，而界面层出现的可用性问题可能暴露出底层架构的薄弱。</p>
+<p>短视的局部优化终究会伤害用户体验。Garrett 主张，设计师需要理解由系统整体所生成的体验，而不是将责任或影响力局限在自己直接控制的层次上：</p>
+<blockquote><p>用户体验开发过程，归根结底是为了确保用户与你的网站交互的每一个环节，都不脱离你清醒而 <em><strong>显式</strong></em> 的意图。这意味着要预想到用户可能采取的每一种行动的每一种可能性，并理解他们在整个过程中的每一步所抱有的预期。</p>
+<p>—— Jesse James Garrett，《The Elements of User Experience》</p></blockquote>
+<p>其结果是一种高度决定论式的设计模型：团队需要理解用户目标，梳理用户旅程，并在所有五个层面之间协调决策，以有意识地塑造最终产品。</p>
+<h3 id="预期式设计">预期式设计</h3>
+<p><em>Jesse James Garrett，《<a href="http://www.jjg.net/elements/" target="_blank" rel="noopener">The Elements of User Experience</a>》(2000)</em></p>
+<p>二十年后，Jamie Mill 以 <em><a href="https://jamiemill.com/blog/2021-07-10-elements-of-product-design/" target="_blank" rel="noopener">The Elements of Product Design</a></em> 重新检视了这一框架。</p>
+<p>随着产品变得更加算法化、更加适应用户的数据与行为，要为每一种可能的使用场景做设计变得愈发困难。</p>
+<p>Mill 的更新版本拓宽了镜头，纳入了更多塑造用户体验的影响因素。在产品本身的"解决方案空间"——也是 Garrett 最初关注的对象——之外，Mill 还把"问题空间"也纳入考量：在那里，通过研究方法揭示用户的需求与行为；以及"真实世界"——它涵盖了影响产品被理解与被使用的约束条件、激励机制与既有心智模型。</p>
+<p>这一新解读反映了我们对设计角色及其参与者理解的演进。Mill 意识到，影响人们如何使用并如何评价一款产品的诸多维度，往往由设计团队之外的决策所主导；因此，产品设计必须涵盖更广义的"所有权"边界。</p>
+<p>由此，产品设计被呈现为一种更显式地以结果为导向、而非严格决定论的工作。设计的工作不再是单纯地定义最终交付物，而是要预期其周围那些较难预测的条件，并推动一个能为用户带来更好结果的过程。</p>
+<p>Garrett 与 Mill 共同的贡献在于，他们让"好设计是多维的"这件事变得可感可触。Garrett 让我们看到，设计师需要把视野延伸到他们所直接控制的那一层之外；Mill 则把这种责任进一步推到了产品之外，揭示了体验设计同时也受用户的上下文、产品的领域以及它所运行于其中的更宏大系统所塑造。</p>
+<h3 id="概率式设计与-ai-体验">概率式设计与 AI 体验</h3>
+<p><em>Jamie Mill，《<a href="https://jamiemill.com/blog/2021-07-10-elements-of-product-design/" target="_blank" rel="noopener">The Elements of Product Design</a>》，对 Garrett 模型的重新诠释，使其适配更宽广的产品设计视角</em></p>
+<p>随着生成式 AI 的到来，产品系统变得更为复杂。从某些方面看，这是算法式产品的延伸——后者已经引入了动态化、个性化的体验。但在 AI 系统中，制造变数的不再只是算法；底层模型本身就是概率性的，它所产生出的行为与涌现模式，往往无法被化约为显式的规则、状态或预定义的路径。</p>
+<p>其结果是，这些产品里的每一次交互，都可能携带来自模型本身、其训练数据、其可用工具，以及任何被引入交互的外部上下文的决策痕迹、偏见、引用与依赖。</p>
+<p>我们无法通过界面直接控制每一种结果，但我们可以设计塑造模型生成结果的条件。从这个意义上说，设计的工作不再是像 Garrett 模型所倡导的那样去穷举每一个预期的状态，而更接近系统设计——去识别并操控那些隐藏在表面之下的<a href="https://donellameadows.org/archives/leverage-points-places-to-intervene-in-a-system/" target="_blank" rel="noopener">系统中的 leverage points</a><sup>[1]</sup>。</p>
+<h3 id="我们需要全栈设计师">我们需要全栈设计师</h3>
+<p>我并非在使用这个词的工程学传统含义。设计师并不需要成为机器学习工程师、政策专家或模型研究者，才能构建有效的 AI 产品。这句话的意思是，我们需要成为"多语言者"——能够流畅地讨论界面之下每一层次是如何影响用户体验的，以及在必要时如何介入。</p>
+<p>Garrett 呼吁设计师把目光投向他所直接控制的表面层之外。Mill 呼吁设计师把目光投向产品之外，去审视那些塑造了产品被理解与被使用方式的种种条件。AI 则要求设计师再深入一层：进入模型、驾驭、上下文、政策，以及那些在体验抵达界面之前就已然塑造出结果的行为与涌现现象。</p>
+<p><em>Emily Campbell，《<a href="/layers-of-ai-experience.pdf" target="_blank" rel="noopener">The Layers of AI Experience</a>》，作者所提出的概率式设计模型</em></p>
+<h2 id="ai-ux-的层次">AI UX 的层次</h2>
+<p>AI 体验由一组高度相互依赖的层次构成，它们共同塑造着产品的行为方式。随着用户与系统交互的推进，每一层都可能在形态与功能上发生改变。早期，交互严重依赖用户的直接指令；而随着时间推移，系统开始接管——凭借其对问题上下文的理解来管理用户需求，独立运行，受到驾驭层与治理模型的约束，并接受用户的监督。</p>
+<p>通过理解每个组件如何影响最终体验，设计师可以更准确地定位干预点，使其在传递价值、满足人的需求，以及让系统变得更易理解、更可问责、更安全方面，发挥最大的效用。</p>
+<h3 id="用户界面层">用户界面层</h3>
+<p>AI 设计的讨论仍然显著偏重于"表面"——探讨聊天界面的动力学，以及那些把生成式交互与既有启发式、既有范式连接起来的熟悉与新颖的模式。</p>
+<p>这并不令人意外。界面是大多数人第一次接触 AI 的地方，而生成式系统通常需要用户先给出输入，交互才能开始。</p>
+<p>用户界面并不会消失，但它的角色会随着用户深入会话而改变——从驱动交互转向支撑系统。随着智能体式系统、可穿戴设备以及其他非传统产品的崛起，我们很可能会看到界面的功能与形态继续演化。</p>
+<p>在用户旅程的早期，AI 需要来自人的 <em><strong>方向</strong></em>，以引导其目标、约束条件以及其他指令。用户可能通过<a href="https://www.shapeof.ai/patterns/chained-action?utm_source=emilycampbell.co" target="_blank" rel="noopener">工作流</a>、<a href="https://www.shapeof.ai/patterns/inline-action?utm_source=emilycampbell.co" target="_blank" rel="noopener">内联操作</a>、<a href="https://www.shapeof.ai/patterns/connectors?utm_source=emilycampbell.co" target="_blank" rel="noopener">连接服务</a>以及其他输入来提供这些指令。</p>
+<p>我们习惯把这些叫做"提示"，但提示其实只是指示模型的众多表面之一。内联操作、环境式轻推、用户自定义的工作流，构成了更丰富的备选方案。严格依赖提示的产品，其参与度存在天花板——因为每轮都去写长篇、具体且富含上下文的指令，既低效又令人烦躁。</p>
+<p>无论如何，我们都期望 AI 产品能随着时间推移逐步建立关于我们的上下文，从而主动预判我们的需要，而不是被动等待我们告知。模型越能准确把握用户意图，系统就越快成为一种"增强型工具"。一旦这个表层之下的子系统运行良好，模型就可以更自主地行动，界面的目的也就会偏向 <em><strong>监督</strong></em>——让用户能够管理与编排模型，而无需持续介入。</p>
+<p>传统系统会把引导与早期交互的重点放在帮助用户"学习产品"上，随着旅程推进再通过渐进式披露逐步引入更高级的功能；而在 AI 产品中，引导看起来更像是"系统在学会如何解读用户"，而不是"用户在学会如何使用系统"。系统对人的理解越深，界面上需要呈现的复杂度就越低。我们正在走向"渐进式自主"。</p>
+<p>这就是为什么关于 AI 界面的讨论，无法被简化为"聊天到底是不是一个好的锚定表面"这样的争论。合适的界面，取决于围绕交互的上下文——比如用户对该领域的熟悉程度、AI 对用户的了解程度、情境的敏感度，以及系统对其回答的自信程度。</p>
+<p>随着这些上下文的变化，界面也可能需要随之演化——哪怕是同样的触点。对同一个用户而言，相同的任务在早期可能需要直接的指令；一旦系统赢得了用户的信任，它最终或许可以由一个被评估机制守护的自主后台流程来承接。</p>
+<p>聊天在这种情境下依然可以是一个有效的表面，不应被轻视，但它不是一个稳定的状态。界面或许会越来越像"仪表盘"——允许直接输入，但不强制要求直接输入。</p>
+<p>因此，界面设计正在变得越来越少地关注"为某个用例选择一种单一模式"，越来越多地关注"在用户与模型之间关系的某一特定状态下，匹配合适的表面"。在幕后，设计师还需要考虑智能体用于共享交互的产物、用于追踪模型准确性并标记问题的评估工具，以及用户查看与调整记忆、技能与指令的表面。</p>
+<h3 id="上下文层">上下文层</h3>
+<p>在任何 AI 界面的下方，是为模型提供线索的上下文——关于用户意图、需要、约束条件与所处生态系统的线索。</p>
+<p>一个构建良好的上下文，能让 AI 体验不必在每次用户求助时都从零开始。它引导系统去引用关于用户的那些重要信息、任务的细节，以及任何相关的环境条件——而无需用户反复重申。我们通过"上下文工程"来有意识地设计它：决定哪些信息应该被收集，或在不同交互之间被传递。</p>
+<p>从这个意义上说，这一层是 AI 驱动体验的引擎。</p>
+<p>在早期交互中，用户通过 <em><strong>显式</strong></em> 输入帮助模型建立对他们的理解——比如对自身目标与关切的描述，或者导入的第三方内容与数据。几乎与此同时，系统开始从该用户的行为模式、已集成的系统、历史交互与内容中生成 <em><strong>推断</strong></em> 出来的上下文，由此构成一个可工作的上下文层的基础，用于解读未来的请求。</p>
+<p>可以把它想象成在电子游戏中缓慢展开一张地图。一开始，大部分地形是隐藏的；随着你穿行其间，地图逐渐显露其地貌、建筑、危险与边界——你会越走越觉得它有用。</p>
+<p>上下文的工作方式与此类似：随着系统逐渐了解用户如何工作、关心什么，以及他们偏好系统以何种方式与他们交互，这一表面会逐步显形，AI 也就能更主动地工作，而无需持续接收用户的直接输入——体验会变得越来越自适应、越来越个性化。</p>
+<p>例如，一个智能体应该了解到：我更愿意把某些会议安排在周四下午，通常应该邀请 John 参加，给高管的草稿我偏好更短一些，而一次客户支持的升级处理，则应当比一次常规状态更新更加谨慎。</p>
+<p>但系统需要帮助，才能知道哪些上下文值得保留、哪些应当丢弃。太多的上下文——无论来自过长的上下文窗口还是臃肿的内存文件——会迅速消耗 token 预算，并可能<a href="https://cs.stanford.edu/~nfliu/papers/lost-in-the-middle.arxiv2023.pdf" target="_blank" rel="noopener">降低生成质量</a>，这种失败通常被称为 <em>context rot</em>（上下文腐化）。上下文过少或缺乏维护，则会让系统变得不一致、不可预测，或严重依赖用户的持续介入。</p>
+<p>两种情况都不好，而当系统记住了它本不该记住的个人细节、遗忘了它本应知道的事情，或在用户/会话之间错误地延续了不该延续的上下文时，问题就会变得更为严重。</p>
+<p>随着智能体在驱动工作流、代表用户与数据及内容交互中扮演更为主动的角色，这一问题也变得更具影响。设计师也需要为"智能体的体验"做设计：智能体如何接收上下文、如何管理目标、何时与用户协作，以及其行为需要被回溯到何种可见程度。</p>
+<p>因此，UI 层与上下文层必须以紧密的协同来设计——既要为人考虑，也要为 AI 智能体考虑——考虑它们各自如何与用户交互、如何彼此交互，以及它们的独立工作流如何在用户旅程中彼此交汇。</p>
+<h3 id="驾驭层">驾驭层</h3>
+<p>随着体验越来越走向"无头化"，更多产品的工作从可见的界面迁移到具备上下文感知能力的、自主的后台流程中。因此，AI 系统需要在模型周围设置一个"操作层"，用于处理信息并在既定约束内协调它们的行动。它充当了模型的"驾驭"——使模型能够独立完成任务，同时受到权限与用户偏好的约束，以保障安全与更可预期的结果。</p>
+<p>乍看之下，这一层似乎属于开发体验或应用架构的范畴，但模型驾驭正在越来越多地成为用户体验的一部分。它决定了系统能知道什么、能做什么、行为的一致性如何，以及用户对自主化工作的掌控程度。</p>
+<p>在实践中，这正是"能聊天的 AI"与"真正作为协作者而运转的 AI"之间的差异——后者能够查找与管理数据、起草回复、路由信息，并以某个目标为导向协调行动。</p>
+<p>驾驭并没有单一固定的形态。它可以相当简单——只编排单个智能体的工作流；也可以是更复杂的智能体编排——驾驭内部的一个中央智能体部署并监督多个子智能体的工作，以完成单一结果。在这两种情况下，系统都由多个组件构成，被设计为能够协调能力、管理依赖，并组织工作在整个 AI 系统中的流转。</p>
+<p><em><strong>连接器</strong></em> 决定模型的访问规则。人们需要知道：系统被允许在何种情境与条件下查看与操作哪些数据；他们也需要能够观察随时间变化的访问模式，并在需要时修改规则。这可以沿用我们熟悉的权限模式——麦克风、相机、位置、通讯录——在请求权限时清楚地说明访问的理由。</p>
+<p>然而，连接器也带来了新的 UX 顾虑：访问第三方系统会改变模型的上下文，将外部内容与数据带入交互，而其方式往往是用户未曾预期的。设计师需要让这些关系变得可见，使用户不仅能理解"连接了什么"，也能理解这些连接如何影响输出与持续的行为。</p>
+<p><em><strong>工具</strong></em> 决定 AI 能在其可访问的数据与上下文中执行哪些动作。这些动作可能包括读写邮件、更新记录，或触发某个工作流。如果工具的权限过于宽松，模型可能采取带来意外后果的行动，而用户可能要等到事后才会发现；反之，如果权限过严，智能体就很难在缺少持续用户介入的情况下完成高级能力。这在用户旅程早期或许是有用的，但随着时间推移，可能导致用户对性能的期待落空。</p>
+<p>工具使用的灵活度，影响着用户愿意赋予或期待模型多少自主性——这直接关系到系统通过更进阶的使用所能交付的结果质量。设计师需要构建产品系统，使工具的使用与所处情境及风险相匹配——在时间维度上校准自主性，并以一种能促成参与而非不信任的方式，把更进阶的功能呈现出来。</p>
+<p><em><strong>技能</strong></em> 为模型提供可复用的工作知识，例如处理信息的方法与规则、所需的格式与标准，以及整体的任务指令。设计师可以协助决定哪些技能应当开箱即用，在功能性与可理解性之间取得平衡。通过梳理支撑 AI 交互的旅程与服务，设计师也能帮助决定何时引入新的技能，以及如何教会用户自行构建技能——以使用户理解其下游影响。</p>
+<p>由于技能对模型的行为与输出具有"自带主张"的影响，设计师应确保用户能够看到并控制哪些技能是激活的、它们内置了哪些假设，以及它们可能如何影响模型的结果。优雅地实现时，技能可以让用户感到被赋权、感到掌控；否则，它们会变得令人困惑甚至令人生畏——尤其对那些尚未足够了解模型、不懂得如何管理它的早期用户而言。</p>
+<p><em><strong>智能体</strong></em> 是把技能、工具与数据访问结合在一起的自治系统，被指向特定目标，以不断增强的独立性与协调性产出结果。它们在"被委派责任"的循环中工作，承接那些跨越单次交互或孤立能力的任务。"智能体式 UX"正在自身成为一个新兴学科，因为这些系统常常涉及多个协调流程在不同自主层次上运行，由此带来了编排、监督与涌现行为方面的新挑战。</p>
+<p>这种自主性的提升，正是上下文层与 UI 层发生变化的底层动因：用户体验从"为单个模型下达指令"转向"监督智能体式系统"。一段良好的智能体体验，能让自主化的工作感觉是被精心编排的——用户可以观察并在必要时打断模型，而不必事无巨细地管理每一步。设计师需要考虑的，不仅包括用户如何定义目标与约束，还包括智能体如何协调行动、管理目标，以及在多个表面之间保持一致。</p>
+<p>连接器、工具、技能与智能体合在一起，构成了 AI 系统的"操作表面"。它们定义了人的意图与机器执行之间的边界。</p>
+<h3 id="模型层">模型层</h3>
+<p>当大多数人听到"模型"这个词时，他们通常想到的是那些我们熟悉的旗舰系统——GPT、Claude、Gemini、Grok，等等。对一个普通用户而言，这些系统看起来或许可以互换，但 AI 模型的世界远比这更广——涵盖大模型与小模型；通用模型与垂直模型；开源模型与闭源模型。</p>
+<p>对设计师而言，关键在于：这些差异并非任意或仅是技术性的。每一个模型都会把自身的特征带入最终产品——比如语气或人格的差异、对风险或模糊性的容忍度、整体可靠性，以及其他在特定情境下可能有利或有弊的特质。这些差异既存在于不同实验室与供应商之间，也存在于同一家公司出品的不同模型之间。</p>
+<p>模型首先反映的是它们的 <em><strong>训练</strong></em>——包括数据、调优、学习到的权重，以及塑造其"性格"所用的强化方法。这进而影响了它默认知道的内容、在不同情境与上下文中的反应方式、所回避的事物，以及带入每一次交互的假设。一个被训练为"聚焦推理"的模型，对于低风险、追求速度、延迟敏感的场景是糟糕的解决方案；同样地，一个更快的模型或许能带来更流畅的体验，但在细微之处与可靠性上可能有所损失。理解这些差异，能帮助设计师预判：在选定的模型下，最终体验将如何发生偏移。</p>
+<p>每个模型的训练也影响着它的 <em><strong>能力</strong></em>——即它被专门设计用来完成的事情。取决于它是如何被构建的，一个模型或许擅长推理或速度；或许在某些任务上表现更佳——比如写作、编码、工具使用、多模态理解；也因此，可能与不同的工具与领域形成更好的搭配。设计师可以影响"任务设计"——决定哪些工作应当被委派给模型、哪些应留在用户手中、界面如何收窄任务范围以让模型表现得更好。</p>
+<p>一个强大的模型，如果其能力与用户的具体需求不匹配，仍然可能是糟糕的选择。是否以及如何向用户提供模型委派上的选择，是用户体验中一个敏感的维度。期望用户对模型版图拥有广博理解才能得到好的结果，并不现实；但预设的模式和其他参数可以通过界面把这一层控制"藏"在用户感知之下。</p>
+<p>另一种做法是：通过预先定义这些权衡来设计模型的 <em><strong>行为</strong></em>。一个推理模型可以被配置为接受不同强度的"思考深度"，根据场景在深度与准确性之间与延迟及成本做交换。又或者，一个创作型模型可以被设置为接受不同长度的生成轮数——较少的轮数可以启用"草稿模式"，让用户能够反复迭代的同时控制 token 消耗。延迟、啰嗦程度、自信度、拒绝模式、创造性、一致性、推理深度——这些都是可以被调校的行为，共同构成了产品在"被使用"中的那种独特质感。</p>
+<p>由于模型是 AI 产品的首要材料，设计师需要对它们的属性有足够的熟稔度，才能就其权衡进行推理。他们并不需要亲自训练模型，但对模型行为的理解越深，就越能针对不同任务驾驭它们，并确保产品发挥其长处、约束其风险。</p>
+<h3 id="治理层">治理层</h3>
+<p>前四层描述的是 AI 体验是如何被"组合"出来的。位于下方的治理层与涌现层，则把视角从组合切换到运行。它们往往并不由产品团队所拥有，但会直接影响 AI 产品被部署与被使用的条件。</p>
+<p>政策、法规、标准与偏好，都是可以直接或间接治理用户体验的外部力量的例子。每一层都会以某种方式被它们影响——从影响上下文存储的数据保留偏好；到反映在模型行为中的公司哲学；再到决定团队"什么算可接受表现"的标准。</p>
+<p>因此，治理不能被视作与产品彼此独立——即便它许多底层的决策位于法务、合规、安全或高管层。这些决策的每一种特定组合，都可能让两个使用同一模型的人获得截然不同的体验。</p>
+<p>试想一款使用 Anthropic 模型的产品，对比一款使用 OpenAI 模型的产品。两家公司在模型设计与训练、以及安全方面做出了不同的选择。这些选择会以交互模式的形式呈现在产品中：系统愿意回答什么、它显得多么谨慎、何时会拒绝、如何解释其边界、产品团队对行为的掌控程度有多大。</p>
+<p>设计师不能把这些约束视为"任意附加"。它们在塑造产品，也塑造着它与每一个触点的交互。例如，一个会拒绝执行某些动作的模型，本身就是一种交互；这与一个"急于行动"的模型形成了对照。</p>
+<p>需要被纳入考量的最严苛约束是 <em><strong>规则</strong></em>——它包括显式的政策、法律与限制，产品必须遵守。规则定义了系统的边界，界定了产品不能做或必须做的事——比如在何时披露信息、何时请求许可，以及在何处必须停下。</p>
+<p>约束力稍弱的是 <em><strong>标准</strong></em>，它定义了"理想的行为与结果"。这些标准把诸如准确性、公平性、可达性、安全性等原则，翻译成系统可以被设计、被评估时所对照的判据。客户可能在合同层面强制执行这些标准；但即便没有成为硬性规则，它们依然是调优模型、驾驭层与产品的有效框架。</p>
+<p>最后，虽然不具备强制力，但 <em><strong>偏好</strong></em> 产生出种种门槛与激励，长远地塑造着模型与训练系统的行为。当 Sam Altman 公开宣布 GPT-4o 已变得"<a href="https://x.com/sama/status/1916625892123742290" target="_blank" rel="noopener">过于奉承且令人厌烦</a>"，并表示公司正在优先调整时，他实际上是在回应一个落差：模型被调校出来的人格，与众多用户期望从它那里得到的东西之间出现了错配。在更小的尺度上，用户对模型语气与措辞的偏好、对已保存的记忆与自主性设置，都会影响系统在该产品体验中的行为方式。</p>
+<p>设计师既可以通过服务与政策设计，或直接的倡导，直接影响治理；也可以通过激发他人的偏好来间接地施加影响。品牌与传播设计尤其是一种有效工具，能够放大不同的偏好与法规如何在 AI 产品内部引出不同的结果。</p>
+<p>至少，设计师需要理解他们所处的治理框架——这往往要求在产品本身上设计出不同的"首次使用" UX、不同的偏好设置、不同的预期，以及不同的交互方式。</p>
+<h3 id="涌现">涌现</h3>
+<p>最后，AI 体验还受到<a href="https://en.wikipedia.org/wiki/Emergence" target="_blank" rel="noopener">涌现</a>的影响——当概率系统运行于真实世界上下文时，所浮现出的那些意料之外的行为。</p>
+<p>说白了：关于这些模型，我们"不知道的"以及"不知道自己不知道的"，要远多于我们能够自信解释的部分。要基于它们、与之一起构建产品，理解它们的行为是必要前提。但我们常常要等到真正把它们用起来，才知道它们能做什么——而到了那时，意外行为可能已经在我们客户的使用中发生了。</p>
+<p>模型在不同会话、不同上下文、不同用户、不同工具版本、不同权限等条件下，行为都会有所不同。这种差异在被有意识地使用时可以是一种优势。在创作类工具中，差异性让系统能够生成供探索的替代路径，或打破一个开始显得陈旧的锚点。</p>
+<p>与此同时，差异也让 AI 产品更难调试。某次奇怪的生成结果，可能源自模型的训练、其驾驭层、外部来源或上下文，也可能只是交互本身所走的路径。设计师与产品团队可能会求助于评估（evals）、追踪（traces）以及其他可观测性工具，以判断行为漂移源自何处，以及驾驭层需要在何处做出调整。但即便如此，我们也不太可能在短期内完全解开这些内部运作机制。</p>
+<p>当模型发展出来源不明或间接的行为时，事情就变得更加诡异——比如<a href="https://openai.com/index/where-the-goblins-came-from/" target="_blank" rel="noopener">OpenAI 的"地精"事件</a><sup>[2]</sup>。一项针对"极客气格"常见套路的、看似微小的人格训练激励，最终以一种更广泛的方式显现出来：模型们开始在与该话题完全无关的场合里提到"goblins"。</p>
+<p>虽然这件事本身颇具喜感，但它也揭示了一个事实：模型层面上的微小变化，可能以团队无法预见、无法提前应对的方式，级联放大为可见的产品行为。其他例子还包括：模型在复杂任务上表现良好，却在更简单的任务上表现糟糕；又或者模型似乎会因为<a href="https://x.com/jameygannon/status/2061549531393646608" target="_blank" rel="noopener">随机的 token 而"卡壳"</a><sup>[3]</sup>。</p>
+<p>随机性是这些体验中不可或缺的一部分，事实上它是一个特性而非 bug：不确定性，正是生成式系统价值的一部分。设计的目标并不是消除差异或未知行为，而是设计出能最大限度地减小或缓解这些影响的条件，并让它们更易于被观察、诊断，以及（在可能时）得到修正。</p>
+<p>一些第一性原则可以指导这项工作。可观测性（Observability）帮助团队看到系统在做什么、行为如何；可解释性（Interpretability）帮助人们理解系统为何看起来走的是某一条路径；可溯源性（Provenance）则帮助团队从一次生成结果倒推回去，识别它是如何形成的。</p>
+<p>正因如此，涌现有别于其他层次。它不是设计师可以直接配置的对象，而是他们围绕其进行设计、对其进行监控，并在系统遇到团队无法完全预测的条件时予以回应的对象。</p>
+<h2 id="这对设计意味着什么">这对设计意味着什么</h2>
+<p>展望未来，期望不应该落在"每个设计师都横跨所有层次"上。全栈式 AI 设计师需要对所有输入体验的"上游"具备通识——这样他们才能施加影响、缓解影响，或承接这些上游工作对最终体验所带来的冲击。</p>
+<p>在 <a href="https://designintech.report/wp-content/uploads/2017/03/dit-2017-1-0-7-compressed.pdf" target="_blank" rel="noopener">2017 Design in Tech Report</a>中，John Maeda 捕捉到了"设计师变得更加技术化"这一趋势；但与此同时，他也保留了"传统设计"的价值。这些角色是互补的，而不是彼此竞争的。</p>
+<p><em>John Maeda，<a href="https://designintech.report/wp-content/uploads/2017/03/dit-2017-1-0-7-compressed.pdf" target="_blank" rel="noopener">2017 Design in Tech Report</a></em></p>
+<p>技术型设计师更可能聚焦于模型层、驾驭层与上下文层；这一角色的内涵远不止"设计工程师"。另一些设计师可能更进一步深入技术栈——正如我们或将看到，专门面向设计的新职位在政策制定与涌现研究中浮现（这些角色在今天已存在，比如冠以"业务设计师"的头衔，但在行业内尚未形成足够大的规模）。当然，经典的设计工作仍会继续存在，但其工作流、工具与产出形态将持续演化。</p>
+<p><em>在本系列的第二部分中，我将更深入地探讨这一设计角色演进的趋势，它与跨越数十年、关于"设计影响力"的研究之间的关联，以及我们该如何为自身工作的未来做好准备。</em></p>
+<p>⁂ Emily</p>
+<p><em>This content is 100% written by me, and <a href="https://www.pangram.com/history/b8695b1c-5241-455d-b60b-3626235aa103" target="_blank" rel="noopener">verified by Pangram</a>. GPT 5.5 was leveraged to confirm that my definitions and descriptions were accurate to updated standards and understanding.</em></p>
+<hr>
+<h2 id="脚注">脚注</h2>
+<p><sup>[1]</sup>: 在这个意义上，AI 设计与"系统思考"（Systems Thinking）有许多共通之处：既然无法进行直接控制，我们便需要先把"力"乘以"杠杆"——首先研究系统，找出我们努力的杠杆可以被施加在最有效位置上的地方。</p>
+<p><sup>[2]</sup>: OpenAI 识别出 GPT-5.5 表现出一种"对地精隐喻的奇特偏爱"，这看起来是创建默认"极客"声音（用户可选择作为默认人格）时所使用训练数据留下的遗存。</p>
+<p><sup>[3]</sup>: 该例展示了 AI 应用 Poke 在对话过程中向用户发送随机、难以理解的消息。另有一例，Google 的 AI 搜索结果曾在搜索纽约市天文馆放映时间时，返回了三页的单词"there"（且仅有这一个词）。</p>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-source">
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">原文 / 源文本</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<hr>
+<p>title: "The Layers of AI experience" source_url: "https://emilycampbell.co/writing/layers-of-ai-experience" author: "Emily Campbell" published_date: "2026-06-03"</p>
+<hr>
+<h1 id="the-layers-of-ai-experience">The Layers of AI experience</h1>
+<p><em>Designing beneath the surface</em></p>
+<p><em>21 MIN READ</em></p>
+<p>It's hard to imagine that it has been only 3 ½ years since ChatGPT was released to the public. We're still so early in the process of understanding how this generative material works, how it incorporates into tasks and journeys, and how it changes what we build and for whom.</p>
+<p>What is clear though, is we are entering a renaissance of new design roles and opportunities for design influence.</p>
+<p>The introduction of generative AI into digital products has upended the interaction model that anchored much of the previous era of design. Great AI products are multi-dimensional. Small changes to one can have an outsized impact on the whole.</p>
+<h3 id="the-layers-of-aiux">The Layers of AIUX</h3>
+<p><em>The model below explores how design can influence each of these layers individually, and how they work together to collectively shape the final product's experience.</em></p>
+<ol><li><strong>User interfaces</strong> — Where people direct and oversee the AI's behavior</li><li><strong>Context</strong> — What the system knows and infers about the user</li><li><strong>Harness</strong> — Structure that determines what the model can access, use, and do</li><li><strong>Model</strong> — Training, capabilities, and behavior that shape how the model itself reasons</li><li><strong>Governance</strong> — Rules, standards, or preferences that set the AI's parameters</li><li><strong>Emergence</strong> — Variance and unknown behavior, revealed through use</li></ol>
+<p>Spare me the "design is dead" takes. Design is more important than ever. However, the form of our roles and work is evolving, just as it has before, to meet the new challenges and opportunities presented by our changing medium.</p>
+<h2 id="past-is-prologue">Past is prologue</h2>
+<p><em>The concept of design as a multi-layered domain is not new. What is changing is how complex the system is as a whole, and how deep into the system design can influence.</em></p>
+<h3 id="deterministic-design">Deterministic design</h3>
+<p>In the early web, work was often segmented by role. Visual designers owned website UIs; information architects owned site navigation and structure; business stakeholders owned requirements; etc. This reflected the waterfall nature of product development, and often led to workflows where each discipline optimized for their own area of focus rather than the outcomes of the product as a whole.</p>
+<p>In 2000, Jesse James Garrett published his seminal essay, <em><a href="http://www.jjg.net/elements/" target="_blank" rel="noopener">The Elements of User Experience</a></em>, describing an alternative model. He explored how websites were actually composed of multiple planes, each dependent on the others. For example, navigation reflected product strategy, while usability issues in the interface might reveal weaknesses in the underlying architecture.</p>
+<p>Myopic optimization ultimately harmed the user experience. Garrett argued that designers needed to understand the experience produced by the system as a whole, rather than limiting their responsibility or influence to the layer they directly controlled:</p>
+<blockquote><p>The user experience development process is all about ensuring that no aspect of the user's experience with your site happens without your conscious, explicit intent. This means taking into account every possibility of every action the user is likely to take and understanding the user's expectations at every step of the way through that process</p>
+<p>— Jesse James Garrett, <em>The Elements of User Experience</em></p></blockquote>
+<p>The result was a highly deterministic model of design, where the team was responsible for understanding the user's goals, mapping their journeys, and coordinating decisions across all five planes in order to intentionally shape the final product.</p>
+<h3 id="anticipatory-design">Anticipatory design</h3>
+<p><em>Jesse James Garrett, <a href="http://www.jjg.net/elements/" target="_blank" rel="noopener">The Elements of User Experience</a> (2000)</em></p>
+<p>Twenty years later, Jamie Mill revisited this framework as <em><a href="https://jamiemill.com/blog/2021-07-10-elements-of-product-design/" target="_blank" rel="noopener">The Elements of Product Design</a></em>.</p>
+<p>As products became more algorithmic and adaptive to user data and behavior, it became more difficult to design for every possible use case.</p>
+<p>Mill's updated model applied a wider lens and considered the many influences that shape the user experience. Beyond the "solution space" of the product itself, Garrett's original focus, Mill also considered the "problem space", where discovery practices reveal user needs and behavior, as well as "the real world," accounting for constraints, incentives, and existing mental models that shape how the product is understood and used.</p>
+<p>This new interpretation reflected an evolution in how we understood the role of design, and who participates in it. Mill recognized that many of the facets that influence how people use and value a product are managed by decisions made outside of the design team, and that product design therefore needed to account for a wider domain of ownership.</p>
+<p>This presents product design as more explicitly outcome-oriented than strictly deterministic. The work of design is not merely to define the final delivery, but to anticipate the less predictable conditions around it and facilitate a process that leads to better outcomes for users.</p>
+<p>The contribution of both Garrett and Mill is that they made the dimensionality of good design tangible. Garrett showed that designers needed to extend their focus beyond the layer of the product they controlled. Mill extended that responsibility beyond the product itself, showing that experience design is also shaped by the user's context, the product's domain, and the broader system in which it operates.</p>
+<h3 id="probabilistic-design-and-ai-experience">Probabilistic design and AI experience</h3>
+<p><em>Jamie Mill, <a href="https://jamiemill.com/blog/2021-07-10-elements-of-product-design/" target="_blank" rel="noopener">The Elements of Product Design</a>, reinterpreting Garrett's model to fit the wider lens of Product Design</em></p>
+<p>With the advent of generative AI, product systems have become more complex. In some ways, this is an extension of algorithmic products, which already introduced dynamic, personalized experiences. But with AI systems it is no longer only the algorithm that introduces variability; the underlying model itself is probabilistic, creating behaviors and emergent patterns that cannot always be reduced to explicit rules, states, or predefined paths.</p>
+<p>As a result, every interaction within these products may include traces of decisions, biases, references, and dependencies from the model, its training data, and its available tools, plus any outside context introduced into the interaction.</p>
+<p>We cannot control for every outcome directly through the interface, but we can design the conditions that shape a model's generation. In that regard, the work of design looks less like specifying every expected state, as Garrett's model encouraged, and instead closer resembles system design, identifying and manipulating the <a href="https://donellameadows.org/archives/leverage-points-places-to-intervene-in-a-system/" target="_blank" rel="noopener">leverage points in a system</a><sup>[1]</sup> that exist in the layers below the surface.</p>
+<h3 id="we-need-full-stack-designers">We need full-stack designers</h3>
+<p>I do not mean that term in the traditional, engineering sense. Designers don't need to be machine learning engineers, policy experts, or model researchers to build effective AI products. It does mean we need to be multilingual, able to fluently discuss how each layer beneath the interface impacts the user experience, and how to intervene when necessary.</p>
+<p>Garrett asked designers to look beyond the surface layer they controlled. Mill asked designers to look beyond the product and into the conditions that shaped how it was understood and used. AI asks designers to go one layer deeper again: into the model, the harness, the context, the policies, and the emergent behaviors that produce the experience before it ever reaches the interface.</p>
+<p><em>Emily Campbell, <a href="/layers-of-ai-experience.pdf" target="_blank" rel="noopener">The Layers of AI Experience</a>, the author's model for probabilistic design</em></p>
+<h2 id="the-layers-of-ai-ux">The layers of AI UX</h2>
+<p>AI experience is composed of a set of highly interdependent layers that collectively shape how a product behaves. As the user interacts with the system, each layer may change in form and purpose. Early on, interactions depend heavily on direct instruction from the user. Over time, however, the system takes over, managing the user's needs through its context of the problem, running independent, constrained by its harness, governing model, and user oversight.</p>
+<p>By understanding how each component influences the end experience, designers can better locate where interventions will be most effective at delivering value, supporting human needs, and making the system more legible, accountable, and safe.</p>
+<h3 id="the-user-interface-layer">The User Interface layer</h3>
+<p>AI design discourse is still heavily weighted toward the surface, exploring the dynamics of chat interfaces along with familiar and novel patterns that connect generative interactions with heuristics and paradigms.</p>
+<p>This isn't surprising. The interface is where most people first encounter AI, and generative systems often require an initial input before an interaction can begin.</p>
+<p>User interfaces are not going to disappear, but their role changes the deeper into a session a user progresses, supporting the system rather than driving it. It's likely we'll see their function and form continue to evolve with the rise of agentic systems, wearables, and other non-traditional products.</p>
+<p>Early in the user journey, AI requires <em><strong>direction</strong></em> from people, guiding its goals, constraints, and other instructions. Users may provide this through, <a href="https://www.shapeof.ai/patterns/chained-action?utm_source=emilycampbell.co" target="_blank" rel="noopener">workflows</a>, <a href="https://www.shapeof.ai/patterns/inline-action?utm_source=emilycampbell.co" target="_blank" rel="noopener">inline actions</a>, <a href="https://www.shapeof.ai/patterns/connectors?utm_source=emilycampbell.co" target="_blank" rel="noopener">connected services</a>, and other inputs.</p>
+<p>We've taken to calling these prompts, but prompting is really only one surface for instructing the model. Inline actions, ambient nudges, and user-defined workflows offer a palette of alternatives. A product that relies strictly on prompts has a ceiling for engagement, since it's inefficient (and annoying) to write long, specific, context-rich instructions with every turn.</p>
+<p>In any case, we expect AI products to build context about us over time so they can anticipate our needs rather than wait to be told. The faster a model accurately grasps the user's intent, the faster the system becomes an augmenting utility. When this sub-surface system is working well, the model can act with more autonomy, and the purpose of the interface leans toward <em><strong>oversight</strong></em>, allowing the user to manage and orchestrate the model without requiring constant intervention.</p>
+<p>While traditional systems focus onboarding and early interactions on helping the user learn the product, introducing more advanced features through progressive disclosure as the journey progresses, onboarding into AI products looks less like people learning how to use the system, and more like the system learning how to interpret the user. The better the system's understanding of the person, the less complication needs to appear in the interface. We're moving towards progressive autonomy.</p>
+<p>This is why the debate about AI interfaces cannot be reduced to whether chat is a good or bad surface to anchor on. The right interface depends on the context surrounding the interaction, like how familiar the user is with the domain, how much the AI knows about them, how sensitive the situation is, and how much confidence the system has in its response.</p>
+<p>As that context changes, the interface may need to evolve as well, even for similar touchpoints. The same task for the same user might require direct instruction early on, but eventually could be served through an autonomous backend process guarded by evals once the system had earned the user's trust.</p>
+<p>Chat can still be an effective surface for this, and should not be discounted, but it's not a stable state. Interfaces may instead begin to resemble instrument panels, allowing direct inputs but not requiring it.</p>
+<p>Interface design is therefore becoming less about choosing a single pattern for the use case and more about matching the surface to the state of the relationship between the user and the model at any given time. Behind the scenes, designers need to consider the artifacts an agent may use for shared interactions; the evaluation tools that track the model's accuracy and flag issues; and the surfaces where people can view and adjust memory, skills, and instructions.</p>
+<h3 id="the-context-layer">The Context layer</h3>
+<p>Below any AI interface sits the context that provides the model with clues about the user's intent, needs, constraints, and ecosystem.</p>
+<p>A well-constructed context keeps an AI experience from having to start cold every time a person asks for help. It guides the system to reference what matters about the user, details about their task, plus any surrounding conditions without forcing the person to repeat themselves. We design it deliberately through context engineering, which helps determine what information should be collected or passed through across interactions.</p>
+<p>In that sense, this layer operates as the engine for an AI-powered experience.</p>
+<p>In early interactions, the user helps the model establish an understanding of them through <em><strong>explicit</strong></em> inputs, like descriptions of their goals and concerns, or through imported third-party content and data. Almost immediately, the system begins to generate <em><strong>inferred</strong></em> context from the person's behavioral patterns, integrated systems, historical interactions, and content, forming the foundation of a working context layer that it can use to interpret future requests.</p>
+<p>Picture this like slowly exploring a map in a video game. At first most of the terrain is hidden, but as you move through it, the map begins to reveal its topography, its buildings, hazards, and boundaries, becoming more useful as you go.</p>
+<p>Context works similarly, as the system learns how the user works and what they care about, plus how they prefer the system to interact with them. Gradually, as this surface reveals itself, the AI is able to work more proactively with less direct input from the user, reducing the need for constant instruction as the experience becomes more adaptive and personalized.</p>
+<p>An agent should learn, for example, that I prefer certain meetings on Thursday afternoons, that John should usually be invited, that I like shorter drafts for executives, or that a support escalation should be handled with more caution than a routine status update.</p>
+<p>But a system needs help knowing what context to keep and what to discard. Too much context, through long context windows and bloated memory files, burns through token budgets and can <a href="https://cs.stanford.edu/~nfliu/papers/lost-in-the-middle.arxiv2023.pdf" target="_blank" rel="noopener">degrade results</a>, a failure commonly called <a href="https://www.understandingai.org/p/context-rot-the-emerging-challenge" target="_blank" rel="noopener"><em>context rot</em></a>. Too little or unmaintained context allows the system to become inconsistent, unpredictable, or dependent on constant user intervention.</p>
+<p>Neither situation is good, and both become more serious when the system remembers personal details it should not have, forgets things it should know, or carries forward the wrong context from a user or session.</p>
+<p>This problem becomes more consequential as agents take a more active role in driving workflows and interacting with data and content on a person's behalf. Designers need to consider the agent's experience as well: how it receives context, how it manages goals, when it collaborates with the user, and how visible its actions need to be for review.</p>
+<p>The UI and Context layers therefore need to be designed in tight harmony, with consideration for both people and AI agents, how they interact with the user and each other, and how their individual workflows intersect across journeys.</p>
+<h3 id="the-harness-layer">The Harness layer</h3>
+<p>As experiences become more headless, more of the product's work moves out of the visible interface and into context-aware, autonomous background processes. AI systems therefore require an operational layer around the model for processing information and coordinating their actions within defined constraints. This serves as the model's harness, enabling it to complete tasks independently while remaining governed by permissions and user preferences that promote security and more predictable outcomes.</p>
+<p>It may seem like this layer is the domain of developer experience or application architecture, but model harnesses are increasingly part of the user experience as well. They shape what the system can know, what it can do, how consistently it behaves, and how much control users have over autonomous work.</p>
+<p>In practice, this is the difference between an AI that you can chat with and one that operates as a true collaborator by finding and managing data, drafting responses, routing information, and coordinating actions in pursuit of a goal.</p>
+<p>There's no singular form that a harness might take. It can be relatively simple, orchestrating a single agent's workflows. Or it can manage a more complex agentive orchestration, where a central agent within the harness deploys and oversees the work of multiple sub-agents in pursuit of a single outcome. In either case, the system is composed of multiple components, designed to coordinate capabilities, manage dependencies, and structure how work moves through the broader AI system.</p>
+<p><em><strong>Connectors</strong></em> determine access rules for the model. People need visibility into what data the system has permission to view and manipulate, in what context, and under what conditions. They also need ways to observe access patterns over time and modify rules when needed. This can follow familiar permission patterns for microphone, camera, location, or contacts, where the reason for access is clear when the permission is requested.</p>
+<p>However, connectors also introduce new UX concerns because access to third-party systems changes the model's context, bringing external content and data into interactions in ways people may not expect. Designers need to make these relationships visible so people understand not only what is connected, but how those connections shape outputs and ongoing behavior.</p>
+<p><em><strong>Tools</strong></em> determine what actions AI can take within the data and context it has access to. These might include reading and writing emails, updating records, or triggering a workflow. If tool permissions are too loose, models can take actions that lead to unintended consequences downstream, which the user may not discover until after the fact. Conversely, if permissions are too restricted, it's difficult for the agent to perform advanced capabilities without constant user intervention. This may be useful early in the user journey, but over time may lead to missed expectations of performance.</p>
+<p>The flexibility of tool use affects how much independence the user grants or expects from the model, which directly impacts the quality of outcomes the system can deliver through advanced use. Designers need to construct the product system so tool use is appropriate to the context and risk of the situation where it's called, calibrating autonomy over time, and surfacing more advanced functionality in a way that leads to engagement instead of mistrust.</p>
+<p><em><strong>Skills</strong></em> provide models with reusable working knowledge, such as methods and rules for processing information, required formats and criteria, and overall task instructions. Designers may help determine which skills should be available out of the box, balancing functionality with comprehension. By mapping the journeys and services that underpin the AI interaction, designers can also help determine when to introduce new skills, and how to teach users to construct their own so they understand the downstream effects.</p>
+<p>Since skills have an opinionated impact on the model's behavior and output, designers should ensure users have visibility and control over which skills are active, what assumptions they contain, and how they are likely to affect the model's results. When implemented gracefully, skills can help users feel empowered and in control. Otherwise, they can become confusing or overwhelming, particularly to earlier users who haven't learned the model well enough to understand how to manage it.</p>
+<p><em><strong>Agents</strong></em> are autonomous systems that combine skills, tools, and data access, pointed at specific goals to produce outcomes with increasing independence and coordination. They work within loops of delegated responsibility, taking on tasks that extend beyond single interactions or isolated capabilities. Agentic UX is emerging as a discipline in itself because these systems often involve multiple coordinated processes operating across layers of autonomy, introducing new challenges around orchestration, oversight, and emergent behavior.</p>
+<p>This increase in autonomy underpins the changes at the context and UI layers, as the user experience shifts from directing actions for a single model to supervising agentic systems. A good agent experience makes autonomous work feel orchestrated, allowing users to observe and interrupt the model when needed without requiring them to micromanage every step. Designers need to consider not only how users define goals and constraints, but also how agents coordinate actions, manage objectives, and maintain alignment across multiple surfaces.</p>
+<p>Together, connectors, tools, skills, and agents form the operational surface of AI systems. They define the boundary between human intent and machine execution.</p>
+<h3 id="the-model-layer">The Model layer</h3>
+<p>When most people hear the word <em>model</em>, they typically think about recognizable flagship systems like GPT, Claude, Gemini, Grok, and others. To a lay user, these systems may appear interchangeable, but the landscape of AI models is far broader, covering small and large models; general-purpose or vertical; and open and proprietary options.</p>
+<p>For designers, the point is that these differences aren't arbitrary or only technical. Each model carries distinct characteristics into the end product, like changes in tone or personality, tolerances for risk or ambiguity, general reliability, and other traits that could be good or bad depending on the circumstances. These differences persist across labs and providers, and between different models produced by the same entity.</p>
+<p>Models are first and foremost a reflection of their <em><strong>training</strong></em>, including the data, tuning, learned weights, and reinforcement methods used to shape their character. This in turn impacts what it knows by default, how it responds in different situations and contexts, what it avoids, and which assumptions it carries into each interaction. A model trained to focus on reasoning is a poor solution for fast-moving, low-risk environments where latency is costly, just as a faster model may produce a more fluid experience, but with less nuance or reliability. Understanding these differences helps designers anticipate how the end experience will shift depending on the model selected.</p>
+<p>The training of each model also impacts its <em><strong>capabilities</strong></em>, which define what a model is specifically designed to do. Depending on how it was built, a model may excel at reasoning or speed; it may perform better on certain tasks like writing, coding, tool use, or multimodal understanding; and it may therefore work better in conjunction with different tools and domains than others. Designers can influence task design, which determines the work that should be delegated to the model, what should stay with the user, and how the interface can narrow the task so the model can perform well.</p>
+<p>A powerful model can still be a poor fit for a user's specific need if its capabilities don't match. Determining whether and how to offer users choices around model delegation is a sensitive aspect of the user experience. It's not reasonable to expect users to have a broad understanding of the model landscape in order to get good results, but pre-set modes and other parameters can disguise this level of control through the interface.</p>
+<p>Alternatively, model <em><strong>behavior</strong></em> can be designed by defining these tradeoffs up front. A reasoning model can be configured to accept different effort levels, swapping depth and accuracy against latency and cost depending on the circumstances. Or, a creative model can be programmed to accept a different number of turns in its generation, where a smaller number might enable draft mode, giving users the ability to iterate while managing token spend. Latency, verbosity, confidence, refusal patterns, creativity, consistency, and reasoning depth are behaviors that can be tuned, contributing to the distinct feel of the product in use.</p>
+<p>Because models are the primary material of AI products, designers require enough fluency around their attributes to reason about their tradeoffs. They do not need to train the models themselves, but the better they understand how models behave, the more effectively they can harness them for different tasks and ensure the product leverages their strengths and constrains their risks.</p>
+<h3 id="the-governance-layer">The Governance layer</h3>
+<p>The first four layers describe how AI experiences are composed. The lower layers of governance and emergence shift the frame from composition to operation. These are often not owned by the product team, but they directly affect the conditions in which AI products are deployed and used.</p>
+<p>Policies, regulations, standards, and preferences are all examples of outside forces that directly or indirectly govern the user experience. Each layer is affected in some form, from data retention preferences that impact context storage; to a company's philosophy reflecting in model behavior; to standards that determine what the team evaluates to be acceptable performance.</p>
+<p>As a result, governance cannot be treated as separate from the product, even if many of its underlying decisions live in legal, compliance, security, or executive decision-making. Every distinct combination of these decisions can produce meaningfully different experiences for two people using the same model.</p>
+<p>Consider a product that uses a model from Anthropic versus OpenAI. Each company makes different choices about model design and training, as well as safety. Those choices show up in the product as interaction patterns: what the system will answer, how cautious it feels, when it refuses, how it explains boundaries, and how much control product teams have over behavior.</p>
+<p>Designers cannot treat these constraints as arbitrary. They shape the product and its interactions with every touchpoint. For example, a model that refuses to take certain action is an interaction, compared with a model that is eager to act.</p>
+<p>The hardest constraints that need to be accounted for are <em><strong>rules</strong></em>, which include explicit policies, laws, and restrictions that the product must respect. Rules define the boundaries of the system and shape what the product cannot do or must do, like when to disclose information or ask for permission, and where it has to stop.</p>
+<p>Less severely enforced are <em><strong>standards</strong></em>, which define optimal behavior and outcomes. These translate principles like accuracy, fairness, accessibility, safety, and more into criteria that the system can be designed and evaluated against. Customers may enforce standards contractually, but even when they are not hard rules, they provide a useful framework for tuning the model, harness, and product.</p>
+<p>Finally, while unenforceable, <em><strong>preferences</strong></em> generate gates and incentives that shift the behavior of models and training systems over time. When Sam Altman publicly announced that GPT-4o had become "<a href="https://x.com/sama/status/1916625892123742290" target="_blank" rel="noopener">too sycophant-y and annoying</a>" and that the company was prioritizing adjustments, he was responding to a mismatch between the model's tuned personality and what many users wanted from it. At a smaller scale, a user's preferences for a model's voice and tone, or its saved memories and autonomy settings will affect how the system behaves within the product experience.</p>
+<p>Designers can influence governance directly through service and policy design or direct advocacy, or indirectly by inspiring the preferences of others. Brand and communication design is a particularly effective tool for amplifying how different preferences and regulations may result in different outcomes within AI products.</p>
+<p>At a minimum, designers need to understand the governance framework they are operating in, which may require different first-time UX, preferences, expectations, and interactions through the use of the product itself.</p>
+<h3 id="emergence">Emergence</h3>
+<p>Finally, AI experiences are affected by <a href="https://en.wikipedia.org/wiki/Emergence" target="_blank" rel="noopener">emergence</a>, the unexpected behaviors that arise when probabilistic systems operate in real-world contexts.</p>
+<p>Plainly speaking, there is more we don't know about these models, and more we don't know that we don't know, than what we can confidently explain. Understanding their behavior is necessary to build for and with them. But we often don't know what they are capable of until we put them into play, at which point the unexpected behavior may already have played out in our customer's use of it.</p>
+<p>Models behave differently across sessions and contexts, as well as across users, tools versions, permissions, and more. This variance can be a strength when used intentionally. In creative tools, for example, variation allows the system to generate alternative paths for exploration, or break out of an anchor that is running stale.</p>
+<p>At the same time, variance makes AI products harder to debug. A weird generation could be the result of the model's training, its harness, outside sources or context, or simply the path the interaction took. Designers and product teams may turn to tools like evals, traces, and other observability tools to understand where the behavior drift is originating from and where the harness needs adjustment. But even then, we are not likely to fully dissect these inner workings any time soon.</p>
+<p>This gets stranger when models develop behavior with unclear or indirect origins, like <a href="https://openai.com/index/where-the-goblins-came-from/" target="_blank" rel="noopener">OpenAI's "goblins" incident</a>.<sup>[2]</sup> A small personality-training incentive around common tropes related to geeky personalities eventually showed up in a broader pattern of models mentioning goblins in completely irrelevant moments.</p>
+<p>While funny, this also revealed how small changes at the model level can cascade into visible product behavior in ways teams can't anticipate or proactively respond to. Other examples are cases where models tend to do well on complex tasks but more poorly on simpler ones, or when models seem to <a href="https://x.com/jameygannon/status/2061549531393646608" target="_blank" rel="noopener">glitch out</a> from random tokens.<sup>[3]</sup></p>
+<p>Randomness is a necessary part of these experiences, and in fact is a feature and not a bug: uncertainty is part of what gives generative systems their value. The goal of design is not to eliminate variance or unknown behaviors, but rather to design the conditions that either minimize or mitigate these effects, and make them easier to observe, diagnose, and correct where possible.</p>
+<p>A few first principles can guide this work. Observability helps teams see what the system is doing and how it's behaving. Interpretability helps people understand why the system appears to be following a particular path. Provenance helps teams work backward from a generation to identify how it was formed.</p>
+<p>That makes emergence distinct from the other layers. It is not something designers configure directly. It is something they design around, monitor for, and respond to as the system encounters conditions the team could not fully predict.</p>
+<h2 id="what-this-means-for-design">What this means for design</h2>
+<p>The expectation going forward should not be that every designer works across every layer. Full-stack AI designers need to have a general fluency across all inputs into the experience, so they can influence, mitigate, or receive the impacts that upstream work has on the end experience.</p>
+<p>In his <a href="https://designintech.report/wp-content/uploads/2017/03/dit-2017-1-0-7-compressed.pdf" target="_blank" rel="noopener">2017 Design in Tech Report</a>, John Maeda caught onto the trend of designers becoming more technical, but at the same time, he captured the value of traditional design. These roles are complementary, not competitive.</p>
+<p><em>John Maeda, <a href="https://designintech.report/wp-content/uploads/2017/03/dit-2017-1-0-7-compressed.pdf" target="_blank" rel="noopener">2017 Design in Tech Report</a></em></p>
+<p>Technical designers are more likely to focus on the Model, Harness, and Context levels, and the role is more than just "design engineer". Other designers may focus further down the stack, as we might see design-specific titles pop up in policy making and emergent research (these roles exist today, under titles like "business designer", but have not reached critical mass within the industry). And of course, classical design will remain, but its workflows, tools, and outputs will evolve.</p>
+<p><em>In part 2 of this series, I'll explore this trend in design roles in more depth, how it relates to research around the influence of design spanning decades, and how we can prepare ourselves for the future of our work.</em></p>
+<p>⁂ Emily</p>
+<p><em>This content is 100% written by me, and <a href="https://www.pangram.com/history/b8695b1c-5241-455d-b60b-3626235aa103" target="_blank" rel="noopener">verified by Pangram</a>. GPT 5.5 was leveraged to confirm that my definitions and descriptions were accurate to updated standards and understanding.</em></p>
+<hr>
+<h2 id="footnotes">Footnotes</h2>
+<p><sup>[1]</sup>: In this way, AI design shares much in common with Systems Thinking, recognizing that the lack of direct control requires us instead to multiply our force and influence by first studying the system to determine where the leverage of our effort can be applied to the greatest effect.</p>
+<p><sup>[2]</sup>: OpenAI identified that GPT-5.5 expressed an "odd affinity for goblin metaphors," seemingly a relic from the training data used to create the default "geeky" voice that users could choose from as the default persona.</p>
+<p><sup>[3]</sup>: This example shows the AI app Poke sending random, unintelligible messages to a user in the flow of a conversation. Separately, Google AI results once returned 3 pages of the word "there" (and only that word) while searching for showtimes at the New York City planetarium.</p>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-notes">
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">笔记</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="个人笔记">个人笔记</h1>
+<h2 id="接受">接受</h2>
+<p><strong>最核心的接受点是"决定论 → 概率式"范式跃迁这一框架本身。</strong> 我以前零散地思考过 AI 产品的层次问题（模型、上下文、提示词、UI），但从未把它们组织成一个清晰的 6 层结构、并放到 Garrett → Mill → Campbell 的设计史脉络里。Emily Campbell 的厉害之处在于她把"涌现（Emergence）"显式地列为第 6 层——很多讨论 AI 设计的文章都回避这一点，把它当成"非设计问题"或"工程问题"，但她坚持认为：涌现是产品体验的一部分，设计师需要为之设计、监测、响应。这一立场我完全接受。</p>
+<p><strong>第二点接受：渐进式自主（progressive autonomy）取代渐进式信息披露（progressive disclosure）。</strong> 传统产品的 onboarding 假设"用户不懂产品 → 慢慢揭示功能"，但 AI 产品的 onboarding 反过来——"系统不懂用户 → 慢慢学习如何理解用户"。这个视角的翻转非常有解释力，能解释为什么 ChatGPT 早期那种"先教你怎么写 prompt"的 UX 范式正在快速过时。</p>
+<p><strong>第三点接受：治理层（Governance）应该被产品团队正视。</strong> 我以前觉得"Anthropic vs. OpenAI 的安全策略差异"是供应商问题，设计师管不了。但 Emily 的论证让我意识到——一个拒绝回答 X 的模型本身就是一个交互模式，用户能感受到"这家产品更谨慎 / 那家更开放"的差异。设计师至少要为这种差异设计相应的提示与 fallback，而不是假装模型是黑盒。</p>
+<h2 id="反思">反思</h2>
+<p><strong>我自己做 AI 产品时最薄弱的层是驾驭层（Harness）。</strong> 我习惯性地把工具调用、权限、技能、智能体编排都丢给"工程实现"去管，但 Emily 明确指出这些是 UX 的一部分——用户需要看到"系统连了什么、有什么权限、能用什么工具"。我之前为 Hermes 设计 connector / tool 授权时确实让用户能"看到连接了什么"，但没有系统性地想清楚"用户应如何观察 access patterns over time"以及"在什么时点该引入更细粒度的权限"。</p>
+<p><strong>关于涌现的反思——我倾向于低估"小改动级联为大后果"的风险。</strong> OpenAI goblins 那个案例（一个针对"geeky persona"的小训练激励，最终让模型在无关场景里反复出现 goblin 隐喻）是一个深刻的提醒：在概率系统里，你训练时关注的东西会以你预测不到的方式渗入推理。我做 agent prompt / skill 设计时，常常只考虑"这会不会让模型在目标场景里表现更好"，没有充分考虑"这会以什么方式渗入到非目标场景"。下次做 skill 调整前，我应该专门为"副作用"留一轮评估。</p>
+<p><strong>关于 Chat 是否是好界面——我之前过于偏向"非 chat 化"的判断。</strong> Emily 的论证让我看到，chat 之所以流行不是因为它"是最优解"，而是因为它能在一个表面上同时承载"早期直接指令"和"后期监督"两种状态。当系统对用户和任务理解还不够时，chat 是合理的；但当系统已经"earned the user's trust"后，chat 会退化为"instrument panel"。我以前过早地否定 chat，是因为我在评估的总是"成熟期"的 AI，而忽略了"导入期"的 chat 确实有不可替代性。</p>
+<h2 id="联想">联想</h2>
+<p><strong>Emily 的 6 层模型与 OpenClaw/Hermes 的 provider-routing 抽象有结构上的相似性。</strong> 我自己的 Hermes Agent 实际上就在做"对用户可见的层（UI/Telegram）+ 上下文注入层（memory palace）+ provider-routing（harness 的一种） + 不同 LLM provider（model） + provider 政策差异（governance）"的分层。但我没有把"涌现"显式列为第 6 层。<strong>我应该在 Hermes 的 next major version 里引入一个 "emergence monitor" 子系统</strong>，对每个任务跟踪"用户预期 vs. 实际产出"的偏差，作为涌现层的可观测性。</p>
+<p><strong>6 层模型与 OSI 7 层模型、TCP/IP 4 层模型有异曲同工之妙。</strong> 互联网协议分层是"每层只关心相邻层、对自己之上的层提供契约"。AIUX 6 层模型虽然不是严格的"协议栈"，但也有相似的"上游决策会影响下游体验"的瀑布特性（注意 Emily 强调"small changes to one can have an outsized impact on the whole"——正是杠杆点的语言）。我可以用这张表去做 Hermes Agent 的"影响传导图"，让每个 layer owner 看到自己的改动会如何被其他层放大或缩小。</p>
+<p><strong>6 层与"全栈设计师（full-stack designer）"的争论。</strong> Emily 澄清了"全栈"不是"什么都得会"——她要的是"多语境的对话能力"（multilingual）而非"全栈工程能力"。这与 John Maeda 2017 <em>Design in Tech Report</em> 里区分"计算型设计师 / 传统型设计师"的二分法一致。我应该把这个澄清写进 Hermes 团队的设计 hiring 标准里——"我们不要求设计师会训练模型，但要求他们能跟 ML 工程师讨论 context rot 的工程原因"。</p>
+<p><strong>与中文 AI 设计圈（少数派、知乎、即刻）的对照。</strong> 国内设计圈讨论 AI UX 时多停留在"prompt 怎么写 / agent 怎么编排"这种执行层细节，缺少像 Emily 这样的"层级化、系统性"框架。少数派上能看到一些"AI 写作工具横评"类文章，但缺少一个把产品体验拆成 6 层、让团队能用同一张图讨论"我们这版改的是哪一层、影响会传到哪些层"的工具。<strong>这是一个内容输出的机会</strong>——可以基于本文写一篇中文版"AI 产品体验 6 层图谱"（附团队协作模板），发到少数派 / 公众号。</p>
+<h2 id="行动">行动</h2>
+<ol><li><strong>本周内</strong>：把 Emily 的 6 层模型打印出来贴到工作区，next 一次产品 review 时用它去定位"我们这次的改动属于哪一层、可能级联到哪些层"。把"涌现"层显式列进 review checklist。</li><li><strong>本月内</strong>：在 Hermes Agent 的 dev 文档里加一页"全栈式 AI 设计语言能力自检"，列出 6 层每层至少需要能问 / 能答的几个关键问题（参考 Emily 给的"杠杆点"逻辑）。</li><li><strong>下个季度</strong>：写一篇中文"AI 产品体验的 6 层图谱"——基于本文 + 我自己的 Hermes 实践，发到少数派或公众号。视觉上用 Emily 那张图的简化版（标注"中文化：conanxin"），但内容加一层"团队如何使用这张图对齐讨论"的实践部分。</li><li><strong>长期</strong>：在 Hermes 的 monitoring 里加一个"涌现层"——记录每次 agent 行为与用户预期的偏差，跨 session 聚合。这对应 Emily 说的"Provenance helps teams work backward from a generation to identify how it was formed"。</li><li><strong>跨议题对照</strong>：把本文加入"AI 设计"主题的延伸阅读。同一作者 Emily Campbell 的 <em>Shape of AI</em>（https://www.shapeof.ai/）也值得单独立一个项目类型条目——它是她维护的 AI 交互模式库，模式分类本身就是"AIUX 6 层模型"的应用实例。</li></ol>
+<h2 id="引用此文的其他思考者-作品">引用此文的其他思考者 / 作品</h2>
+<ul><li><strong>Jesse James Garrett</strong> — <em>The Elements of User Experience</em> (2000)，AIUX 决定论时代的奠基文献。</li><li><strong>Jamie Mill</strong> — <em>Elements of Product Design</em> (2021)，把 Garrett 模型扩展到"问题空间 + 真实世界"。</li><li><strong>Donella Meadows</strong> — <em>Leverage Points</em>，AIUX 6 层模型背后的系统思维隐喻直接来源。</li><li><strong>John Maeda</strong> — <em>2017 Design in Tech Report</em>，"设计师变技术化 vs. 传统设计价值"二元论。</li><li><strong>L. M. Sacasas</strong> — <em>The Convivial Society</em>，语言衰退与 AI 时代的"语言机器"批评（与本文主题相关但视角不同，已入库：<code>2026-06-24-theconvivialsociety-owning-our-words</code>）。</li><li><strong>Shape of AI</strong> — Emily Campbell 自己维护的 AI 交互模式库，6 层模型的具体应用示例。</li><li>**OpenAI *Where the Goblins Came From*** — 涌现层的经典案例（goblins 事件）。</li></ul>
+</div>
+</details>
+</section>
+
+<nav class="detail-actions">
+<a class="action-link source-link" href="https://emilycampbell.co/writing/layers-of-ai-experience" target="_blank" rel="noopener">原文链接 ↗</a>
+<a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-emilycampbell-layers-of-ai-experience" target="_blank" rel="noopener">GitHub 文件夹 →</a>
+<button class="action-btn" id="copy-path-btn" data-path="content/articles/2026/2026-06-26-emilycampbell-layers-of-ai-experience">复制 path</button>
+<span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
+</nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
+
+</article>
+</main>
+<footer>
+<p><a href="../../">hermes-knowledge-base</a> · 站内详情页</p>
+</footer>
+<script src="../../app.js" defer></script>
+<script>
+(function() {
+  const btn = document.getElementById('copy-path-btn');
+  const fb = document.getElementById('copy-feedback');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      const path = btn.getAttribute('data-path') || '';
+      const done = function() {
+        if (fb) {
+          fb.textContent = '已复制: ' + path;
+          setTimeout(function() { fb.textContent = ''; }, 2500);
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(path).then(done, function() {
+          // Fallback for non-secure contexts.
+          const ta = document.createElement('textarea');
+          ta.value = path;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); done(); } catch (e) {}
+          document.body.removeChild(ta);
+        });
+      }
+    });
+  }
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {
+    const onScroll = function() {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+</body>
+</html>

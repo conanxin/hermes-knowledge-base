@@ -1036,6 +1036,53 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-dario-amodei-bloomberg-interview"
   },
   {
+    "title": "The Layers of AI experience",
+    "title_zh": "AI 体验的层次：在表面之下做设计",
+    "type": "article",
+    "path": "content/articles/2026/2026-06-26-emilycampbell-layers-of-ai-experience",
+    "author": "Emily Campbell",
+    "source_url": "https://emilycampbell.co/writing/layers-of-ai-experience",
+    "source_site": "emilycampbell.co",
+    "language": "en",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "2026-06-03",
+    "captured_date": "2026-06-26",
+    "topics": [
+      "AI 产品设计",
+      "AIUX",
+      "概率式设计",
+      "设计史",
+      "全栈式设计师",
+      "涌现",
+      "上下文工程"
+    ],
+    "tags": [
+      "Emily Campbell",
+      "HackerRank",
+      "Shape of AI",
+      "Jesse James Garrett",
+      "Elements of User Experience",
+      "Jamie Mill",
+      "Elements of Product Design",
+      "Donella Meadows",
+      "杠杆点",
+      "驾驭层",
+      "Context Rot",
+      "Agentic UX",
+      "OpenAI Goblins",
+      "渐进式自主"
+    ],
+    "word_count": {
+      "source": 5378,
+      "translation": 8640
+    },
+    "updated_date": "2026-06-26",
+    "slug": "2026-06-26-emilycampbell-layers-of-ai-experience",
+    "detail_url": "items/2026-06-26-emilycampbell-layers-of-ai-experience/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-emilycampbell-layers-of-ai-experience"
+  },
+  {
     "title": "How AI Will Change Us",
     "title_zh": "AI 将如何改变我们",
     "type": "article",

@@ -61,6 +61,10 @@
 
 - Nia Docs — 把整个 Web 变成文件系统
 
+## Agentic UX
+
+- The Layers of AI experience
+
 ## Airbnb
 
 - How to Earn a Billion Dollars
@@ -149,6 +153,10 @@
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
 
+## Context Rot
+
+- The Layers of AI experience
+
 ## Conversations with Tyler
 
 - An "infovore" shares his chats
@@ -189,13 +197,29 @@
 
 - Nia Docs — 把整个 Web 变成文件系统
 
+## Donella Meadows
+
+- The Layers of AI experience
+
 ## E.T.
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
+## Elements of Product Design
+
+- The Layers of AI experience
+
+## Elements of User Experience
+
+- The Layers of AI experience
+
 ## Elvis Presley
 
 - The 100 greatest songs of the 1960s
+
+## Emily Campbell
+
+- The Layers of AI experience
 
 ## Emily Chang
 
@@ -258,6 +282,10 @@
 
 - AI 没有意识，但它正在成为我们的无意识
 
+## HackerRank
+
+- The Layers of AI experience
+
 ## Henri Bortoft
 
 - We May Be Entering A Second Axial Age
@@ -298,9 +326,17 @@
 
 - 日本铁路如何在分裂中保持统一
 
+## Jamie Mill
+
+- The Layers of AI experience
+
 ## Jaws
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
+
+## Jesse James Garrett
+
+- The Layers of AI experience
 
 ## John Lasseter
 
@@ -464,6 +500,10 @@
 - Sign of the future: GPT-5.5
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 
+## OpenAI Goblins
+
+- The Layers of AI experience
+
 ## Orwell
 
 - Ken Liu on AI and Freedom
@@ -566,6 +606,10 @@
 ## Serge Gainsbourg
 
 - The 100 greatest songs of the 1960s
+
+## Shape of AI
+
+- The Layers of AI experience
 
 ## Sibelius
 
@@ -1471,6 +1515,10 @@
 
 - Ken Liu on AI and Freedom
 
+## 杠杆点
+
+- The Layers of AI experience
+
 ## 架构对比
 
 - Wiki 代替 RAG 的可行性评估
@@ -1494,6 +1542,10 @@
 ## 海底总动员
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
+## 渐进式自主
+
+- The Layers of AI experience
 
 ## 灵感
 
@@ -1687,6 +1739,10 @@
 
 - AI 没有意识，但它正在成为我们的无意识
 - Ken Liu on AI and Freedom
+
+## 驾驭层
+
+- The Layers of AI experience
 
 ## 麦克卢汉
 
