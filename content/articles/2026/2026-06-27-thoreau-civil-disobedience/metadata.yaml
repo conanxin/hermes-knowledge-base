@@ -1,0 +1,38 @@
+title: "On the Duty of Civil Disobedience"
+title_zh: "论公民不服从"
+author: "Henry David Thoreau"
+source_url: "https://www.gutenberg.org/files/71/71-h/71-h.htm"
+source_site: "Project Gutenberg"
+published_date: "1849-01-01"
+type: "essay"
+language: "en"
+translation_language: "zh-CN"
+tags:
+  - philosophy
+  - politics
+  - civil disobedience
+  - ethics
+  - American literature
+  - Thoreau
+  - 梭罗
+  - 公民不服从
+  - 政治哲学
+  - 伦理学
+  - 美国文学
+topics:
+  - 政府与个人的关系
+  - 良心的义务
+  - 非暴力抵抗
+  - 奴隶制批判
+  - 墨西哥战争
+word_count:
+  source: 1500
+  translation: 1500
+captured_date: "2026-06-27"
+status: "published"
+summary: "Thoreau's classic essay arguing that citizens have a moral duty to resist unjust government, based on conscience rather than majority rule."
+summary_zh: "梭罗的经典散文，论证公民有道德义务抵抗不公正的政府，基于良心而非多数统治。"
+import_date: "2026-06-27"
+import_version: "v0.3.45-real-article-import-template-validation"
+kb_entry_id: "2026-06-27-thoreau-civil-disobedience"
+slug: "thoreau-civil-disobedience"

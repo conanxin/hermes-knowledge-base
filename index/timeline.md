@@ -30,6 +30,7 @@
 - 一键把 YouTube 视频加入知识库
 - 先预检，再解读 YouTube 视频
 - A Modest Proposal
+- On the Duty of Civil Disobedience
 - Hermes Agent Task Report Template
 - Hermes Agent UI P0 Implementation Spec
 - Hermes Agent UI Self-Audit v1

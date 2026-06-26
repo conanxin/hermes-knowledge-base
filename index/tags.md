@@ -113,6 +113,10 @@
 
 - Ken Liu on AI and Freedom
 
+## American literature
+
+- On the Duty of Civil Disobedience
+
 ## Amit Shekhar
 
 - Transformer 解码机制解析
@@ -748,6 +752,10 @@
 
 - We May Be Entering A Second Axial Age
 
+## Thoreau
+
+- On the Duty of Civil Disobedience
+
 ## Tina Turner
 
 - The 100 greatest songs of the 1960s
@@ -920,6 +928,10 @@
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
 
+## civil disobedience
+
+- On the Duty of Civil Disobedience
+
 ## classic essay
 
 - A Modest Proposal
@@ -1004,6 +1016,10 @@
 ## essay
 
 - The Old World Is Dying
+
+## ethics
+
+- On the Duty of Civil Disobedience
 
 ## failure-archive
 
@@ -1217,6 +1233,10 @@
 
 - The Old World Is Dying
 
+## philosophy
+
+- On the Duty of Civil Disobedience
+
 ## pixar
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
@@ -1236,6 +1256,10 @@
 ## political_economy
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
+
+## politics
+
+- On the Duty of Civil Disobedience
 
 ## poverty
 
@@ -1466,6 +1490,10 @@
 
 - Your AI Is Not a Tool
 
+## 伦理学
+
+- On the Duty of Civil Disobedience
+
 ## 元认知
 
 - Don't dethrone consciousness!
@@ -1473,6 +1501,10 @@
 ## 公共语言
 
 - Owning Our Words: Sounding the Depths of Language
+
+## 公民不服从
+
+- On the Duty of Civil Disobedience
 
 ## 公民会议
 
@@ -1634,6 +1666,10 @@
 
 - Sign of the future: GPT-5.5
 
+## 政治哲学
+
+- On the Duty of Civil Disobedience
+
 ## 政治讽刺
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
@@ -1689,6 +1725,10 @@
 ## 标志设计
 
 - 日本铁路如何在分裂中保持统一
+
+## 梭罗
+
+- On the Duty of Civil Disobedience
 
 ## 模仿欲望
 
@@ -1816,6 +1856,10 @@
 ## 绩效
 
 - Superlinear Returns
+
+## 美国文学
+
+- On the Duty of Civil Disobedience
 
 ## 翻译
 

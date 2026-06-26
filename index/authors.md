@@ -73,6 +73,10 @@
 
 - How Reverse Game Theory Could Solve The Housing Shortage
 
+## Henry David Thoreau
+
+- On the Duty of Civil Disobedience
+
 ## Hermes Agent
 
 - ArXiv LLM Systems 论文列表
