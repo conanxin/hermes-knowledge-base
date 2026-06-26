@@ -1211,3 +1211,108 @@ body.detail-page {
   .track-actions { gap: 6px; }
   .track-play-button, .track-link { padding: 6px 8px; font-size: 0.82rem; }
 }
+
+/* ====================================================================
+   v0.3.28: Playable track filter bar + status classes
+   - Sits above the first track-card on detail pages with a tracks.yaml.
+   - .track-card gets an explicit data-track-status + class so the
+     filter can show/hide without disturbing other markup.
+   - All selectors here only apply on detail pages that emit the
+     filter bar (other pages do not include #track-filter-bar, so the
+     filter JS in app.js is a no-op for them).
+   ==================================================================== */
+.track-filter-bar {
+  margin: 18px 0 14px;
+  padding: 12px 14px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-button);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  font-size: 0.88rem;
+}
+
+.track-filter-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+}
+
+.track-filter-summary strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.track-filter-summary .track-filter-playable-pct {
+  color: #065f46;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.track-filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.track-filter-button {
+  appearance: none;
+  border: 1px solid var(--color-border);
+  background: var(--color-accent-bg);
+  color: var(--color-text-primary);
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  border-radius: var(--radius-button);
+  cursor: pointer;
+  line-height: 1.3;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.track-filter-button:hover {
+  background: var(--color-surface);
+}
+
+.track-filter-button:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+.track-filter-button.active {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  border-color: var(--color-accent);
+}
+
+/* Status classes are added in addition to .track-card, so the existing
+   .track-card visual treatment is preserved and only the filter logic
+   uses these classes to hide / show cards. */
+.track-card.is-playable {
+  border-left-color: #065f46;
+}
+
+.track-card.needs-verification {
+  /* Slightly muted to visually distinguish from verified cards. The
+     border-left color is intentionally kept the same as .track-card
+     so verified-style accent is reserved for the play button. */
+  opacity: 0.92;
+}
+
+.track-card.needs-verification .track-confidence {
+  color: var(--color-text-secondary);
+}
+
+.track-card.is-hidden {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .track-filter-bar { flex-direction: column; align-items: flex-start; }
+  .track-filter-buttons { margin-left: 0; }
+}

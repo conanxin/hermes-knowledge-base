@@ -660,6 +660,53 @@ def _parse_tracks_yaml_fallback(path: Path) -> Dict[str, Any]:
     return root
 
 
+def _build_track_filter_bar(tracks: List[Dict[str, Any]]) -> str:
+    """Render the playable-track filter bar shown above the first track-card.
+
+    The bar carries a summary (total / playable / needs-verification / %)
+    plus three filter buttons (All / Playable only / Needs verification only).
+    Status classes on individual .track-card elements drive the show/hide
+    logic in site/app.js. This bar is only inserted on detail pages whose
+    record has a tracks.yaml; pages without tracks never see it.
+
+    Returns an empty string when there are no tracks (defensive — should
+    not be reachable in practice because the caller guards on tracks_data).
+    """
+    valid_tracks = [t for t in tracks if isinstance(t, dict)]
+    if not valid_tracks:
+        return ""
+    total = len(valid_tracks)
+    playable = sum(1 for t in valid_tracks if t.get("confidence") == "verified")
+    pending = total - playable
+    pct = int(round((playable / total) * 100)) if total else 0
+    return (
+        '<div class="track-filter-bar" id="track-filter-bar" '
+        'data-total="' + str(total) + '" '
+        'data-playable="' + str(playable) + '" '
+        'data-pending="' + str(pending) + '">'
+        '<div class="track-filter-summary">'
+        '<span>总曲目: <strong>' + str(total) + '</strong></span>'
+        '<span>可播放: <strong>' + str(playable) + '</strong>'
+        '<span class="track-filter-playable-pct">(' + str(pct) + '%)</span>'
+        '</span>'
+        '<span>待验证: <strong>' + str(pending) + '</strong></span>'
+        '</div>'
+        '<div class="track-filter-buttons" role="group" '
+        'aria-label="曲目筛选">'
+        '<button type="button" class="track-filter-button active" '
+        'data-filter="all" aria-pressed="true">'
+        '全部曲目 (' + str(total) + ')</button>'
+        '<button type="button" class="track-filter-button" '
+        'data-filter="playable" aria-pressed="false">'
+        '仅可播放 (' + str(playable) + ')</button>'
+        '<button type="button" class="track-filter-button" '
+        'data-filter="pending" aria-pressed="false">'
+        '仅待验证 (' + str(pending) + ')</button>'
+        '</div>'
+        '</div>'
+    )
+
+
 def _build_track_cards(
     tracks: List[Dict[str, Any]],
 ) -> Dict[int, str]:
@@ -668,6 +715,11 @@ def _build_track_cards(
     Returns a dict so render_markdown can look up cards by rank number.
     Cards are not embedded with iframes by default — the embed_url is
     stored as a data attribute and rendered on click via site/app.js.
+
+    Each card carries `data-track-status="verified"` or
+    `data-track-status="needs_verification"` plus the corresponding
+    `.is-playable` / `.needs-verification` class so the v0.3.28 filter
+    can show/hide without touching other markup.
     """
     cards: Dict[int, str] = {}
     for t in tracks:
@@ -680,6 +732,9 @@ def _build_track_cards(
         title = html.escape(str(t.get("title") or ""))
         year = html.escape(str(t.get("year") or ""))
         conf = str(t.get("confidence") or "needs_verification")
+        is_verified = conf == "verified"
+        status_attr = "verified" if is_verified else "needs_verification"
+        status_class = "is-playable" if is_verified else "needs-verification"
         embed_url = str(t.get("youtube_embed_url") or "")
         youtube_url = str(t.get("youtube_url") or "")
         spotify_url = str(t.get("spotify_url") or "")
@@ -730,7 +785,8 @@ def _build_track_cards(
         )
 
         card = (
-            f'<div class="track-card" data-rank="{rank}">'
+            f'<div class="track-card {status_class}" data-rank="{rank}" '
+            f'data-track-status="{status_attr}">'
             f'<div class="track-meta">'
             f'<span class="track-artist">{artist}</span>'
             f'<span class="track-year"> · {year}</span>'
@@ -1050,9 +1106,14 @@ def render_record_page(record: Dict[str, Any], body: Dict[str, Any]) -> str:
 
     # Music-track cards (only if tracks.yaml present).
     track_cards: Optional[Dict[int, str]] = None
+    track_filter_bar: str = ""
     tracks_data = body.get("tracks_data") or {}
     if isinstance(tracks_data, dict) and isinstance(tracks_data.get("tracks"), list):
         track_cards = _build_track_cards(tracks_data["tracks"])
+        # v0.3.28: only insert filter bar if there are actual track-cards to
+        # filter. The bar is placed at the top of the music section so
+        # users can see the playable/pending split before scrolling.
+        track_filter_bar = _build_track_filter_bar(tracks_data["tracks"])
 
     sections_html, page_toc = _build_sections_html(
         body["sections"], body["missing"], record_type,
@@ -1067,7 +1128,10 @@ def render_record_page(record: Dict[str, Any], body: Dict[str, Any]) -> str:
     )
 
     footer = TEMPLATE_FOOTER.format(up="../../")
-    return head + toc_html + meta_section + sections_html + actions + footer
+    # The filter bar is placed right before the body sections so it sits
+    # at the top of the music content. If there are no tracks, the
+    # bar is the empty string and renders as nothing.
+    return head + toc_html + meta_section + track_filter_bar + sections_html + actions + footer
 
 
 def generate_item_pages() -> int:

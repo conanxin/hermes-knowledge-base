@@ -194,9 +194,68 @@ function initTrackPlayers() {
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initTrackPlayers);
+  document.addEventListener('DOMContentLoaded', () => {
+    initTrackPlayers();
+    initTrackFilter();
+  });
 } else {
   initTrackPlayers();
+  initTrackFilter();
+}
+
+// ============================================================
+// v0.3.28: Playable track filter
+// Shows / hides .track-card elements based on the active filter
+// button. Safety: if no #track-filter-bar exists on the page
+// (e.g. non-music detail pages, homepage), this is a strict no-op
+// and does not bind any listeners. Lazy-load iframe logic
+// (initTrackPlayers) is unaffected — when a hidden card is shown
+// again later, its .track-play-button is still bound and works.
+// ============================================================
+function initTrackFilter() {
+  const bar = document.getElementById('track-filter-bar');
+  if (!bar) return;  // no-op on pages without the filter bar
+
+  const buttons = bar.querySelectorAll('.track-filter-button');
+  if (!buttons.length) return;
+
+  // Scope to the closest .detail-article container so we never touch
+  // track-cards from other detail sections embedded in the same DOM.
+  const scope = bar.closest('.detail-article') || document;
+  const cards = scope.querySelectorAll('.track-card');
+
+  function applyFilter(filter) {
+    cards.forEach((card) => {
+      const status = card.getAttribute('data-track-status');
+      let visible = true;
+      if (filter === 'playable') {
+        visible = status === 'verified';
+      } else if (filter === 'pending') {
+        visible = status !== 'verified';
+      } else {
+        visible = true;
+      }
+      if (visible) {
+        card.classList.remove('is-hidden');
+      } else {
+        card.classList.add('is-hidden');
+      }
+    });
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const filter = btn.getAttribute('data-filter') || 'all';
+      // Update button visual + aria state.
+      buttons.forEach((b) => {
+        const isActive = b === btn;
+        b.classList.toggle('active', isActive);
+        b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+      applyFilter(filter);
+    });
+  });
 }
 
 loadData();
