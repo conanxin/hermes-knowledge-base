@@ -1919,5 +1919,48 @@
     "slug": "2026-05-18-hydro0x01-security-audit",
     "detail_url": "items/2026-05-18-hydro0x01-security-audit/",
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/projects/2026-05-18-hydro0x01-security-audit"
+  },
+  {
+    "title": "The Shape of AI",
+    "title_zh": "Shape of AI：AI 交互模式库",
+    "type": "resource_collection",
+    "path": "content/resource_collections/2026-06-26-shape-of-ai-ux-patterns",
+    "author": "Emily Campbell",
+    "source_url": "https://www.shapeof.ai/",
+    "source_site": "shapeof.ai",
+    "language": "en",
+    "translation_language": null,
+    "status": "collected",
+    "published_date": "",
+    "captured_date": "2026-06-26",
+    "item_count": 42,
+    "topics": [
+      "AI UX",
+      "交互设计",
+      "模式库",
+      "AI 产品"
+    ],
+    "tags": [
+      "Shape of AI",
+      "Emily Campbell",
+      "AI UX",
+      "交互模式",
+      "Wayfinders",
+      "Inputs",
+      "Tuners",
+      "Governors",
+      "Trust builders",
+      "Identifiers"
+    ],
+    "word_count": {
+      "source": 135
+    },
+    "slug": "2026-06-26-shape-of-ai-ux-patterns",
+    "author_zh": "Emily Campbell",
+    "category": "reference",
+    "source_type": "website",
+    "updated_date": "2026-06-26",
+    "detail_url": "items/2026-06-26-shape-of-ai-ux-patterns/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/resource_collections/2026-06-26-shape-of-ai-ux-patterns"
   }
 ]

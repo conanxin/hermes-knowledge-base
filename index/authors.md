@@ -48,6 +48,7 @@
 ## Emily Campbell
 
 - The Layers of AI experience
+- The Shape of AI
 
 ## Erik Hoel
 

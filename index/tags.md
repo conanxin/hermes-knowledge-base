@@ -33,6 +33,10 @@
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
 - 灵感资源库
 
+## AI UX
+
+- The Shape of AI
+
 ## AI governance
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
@@ -228,6 +232,7 @@
 ## Emily Campbell
 
 - The Layers of AI experience
+- The Shape of AI
 
 ## Emily Chang
 
@@ -286,6 +291,10 @@
 
 - We May Be Entering A Second Axial Age
 
+## Governors
+
+- The Shape of AI
+
 ## Gregory Ulmer
 
 - AI 没有意识，但它正在成为我们的无意识
@@ -314,6 +323,10 @@
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
 
+## Identifiers
+
+- The Shape of AI
+
 ## Ilya Prigogine
 
 - We May Be Entering A Second Axial Age
@@ -321,6 +334,10 @@
 ## Indiana Jones
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
+
+## Inputs
+
+- The Shape of AI
 
 ## Iris Murdoch
 
@@ -620,6 +637,7 @@
 ## Shape of AI
 
 - The Layers of AI experience
+- The Shape of AI
 
 ## Sibelius
 
@@ -683,6 +701,14 @@
 
 - Transformer 解码机制解析
 
+## Trust builders
+
+- The Shape of AI
+
+## Tuners
+
+- The Shape of AI
+
 ## Tutorial
 
 - Transformer 解码机制解析
@@ -706,6 +732,10 @@
 ## Walt Whitman
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
+
+## Wayfinders
+
+- The Shape of AI
 
 ## Wayne Shorter
 
@@ -1321,6 +1351,10 @@
 ## 云资本主义
 
 - The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
+
+## 交互模式
+
+- The Shape of AI
 
 ## 亿万富翁
 

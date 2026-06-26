@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shape of AI：AI 交互模式库 · hermes-knowledge-base</title>
+<meta name="description" content="Shape of AI：AI 交互模式库 — Emily Campbell">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="detail-page" id="top">
+<header class="detail-header">
+<a class="back-link" href="../../">← 返回首页</a>
+</header>
+<main class="detail-main">
+<article class="detail-article">
+<div class="detail-title-block">
+<span class="type-badge resource_collection">collection</span>
+<h1 class="detail-title">Shape of AI：AI 交互模式库</h1>
+<p class="detail-title-en">The Shape of AI</p>
+</div>
+
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#一wayfinders导航指引">一、Wayfinders（导航指引）</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#二inputs输入方式">二、Inputs（输入方式）</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#三tuners调节器">三、Tuners（调节器）</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#四governors控制机制">四、Governors（控制机制）</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#五trust-builders信任构建">五、Trust builders（信任构建）</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#六identifiers标识符">六、Identifiers（标识符）</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#七uilibraryui-组件库">七、UILibrary（UI 组件库）</a></li>
+</ol>
+</nav>
+
+<section class="detail-meta">
+<div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">resource_collection</div></div>
+<div class="meta-row"><div class="meta-label">作者</div><div class="meta-value">Emily Campbell</div></div>
+<div class="meta-row"><div class="meta-label">来源</div><div class="meta-value">shapeof.ai</div></div>
+<div class="meta-row"><div class="meta-label">采集日期</div><div class="meta-value">2026-06-26</div></div>
+<div class="meta-row"><div class="meta-label">标签</div><div class="meta-value meta-tags"><span class="chip">Shape of AI</span><span class="chip">Emily Campbell</span><span class="chip">AI UX</span><span class="chip">交互模式</span><span class="chip">Wayfinders</span><span class="chip">Inputs</span><span class="chip">Tuners</span><span class="chip">Governors</span><span class="chip">Trust builders</span><span class="chip">Identifiers</span></div></div>
+<div class="meta-row"><div class="meta-label">主题</div><div class="meta-value meta-tags"><span class="chip">AI UX</span><span class="chip">交互设计</span><span class="chip">模式库</span><span class="chip">AI 产品</span></div></div>
+</section>
+
+<section class="detail-section" id="section-summary">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">摘要</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="shape-of-ai-概述">Shape of AI 概述</h1>
+<h2 id="这是什么">这是什么</h2>
+<p><strong>Shape of AI</strong>（https://www.shapeof.ai/）是 Emily Campbell 维护的一个 AI 产品交互模式分类库。它将当前 AI 产品界面中反复出现的设计模式归纳为 6 大类、42 个具体模式，为 AI 产品设计师和开发者提供参考词汇表。</p>
+<p>与一次性文章不同，Shape of AI 是一个<strong>持续维护的 living reference</strong>，会随 AI 产品形态的演进而更新。</p>
+<hr>
+<h2 id="为什么重要">为什么重要</h2>
+<p>AI 产品的交互设计仍处于早期探索阶段。设计师和开发者经常面临以下问题：</p>
+<ul><li>用户不知道 AI 能做什么（能力边界模糊）</li><li>AI 输出不可控，用户缺乏调节手段</li><li>用户不信任 AI 的结果（黑箱问题）</li><li>多步骤 AI 工作流缺乏清晰的进度反馈</li></ul>
+<p>Shape of AI 提供了一套<strong>共享的设计语言</strong>——当团队讨论"我们需要一个 Temperature slider"或"这里应该用 Chained action"时，大家指向的是同一个已定义的模式，而不是各自想象。</p>
+<hr>
+<h2 id="与-the-layers-of-ai-experience-的关系">与 "The Layers of AI Experience" 的关系</h2>
+<p>Emily Campbell 在 <a href="https://emilycampbell.co/writing/layers-of-ai-experience" target="_blank" rel="noopener">The Layers of AI Experience</a> 中提出了 AI 体验的 6 层模型：</p>
+<ol><li><strong>Interface</strong>（界面层）</li><li><strong>Interaction</strong>（交互层）</li><li><strong>Conversation</strong>（对话层）</li><li><strong>Collaboration</strong>（协作层）</li><li><strong>Delegation</strong>（委托层）</li><li><strong>Companionship</strong>（陪伴层）</li></ol>
+<p>Shape of AI 的模式库主要服务于<strong>第 1-2 层</strong>（Interface + Interaction），解决的是"用户如何与 AI 产品进行具体交互"的问题。6 层模型提供了宏观框架，Shape of AI 提供了微观工具箱——两者互为补充。</p>
+<p>在 Emily 的原文中，Shape of AI 被描述为"同一作者的 AI 交互模式库，6 层模型的具体应用示例"。</p>
+<hr>
+<h2 id="6-大类模式解决的问题">6 大类模式解决的问题</h2>
+<table class="md-table"><thead><tr><th>类别</th><th>核心问题</th><th>典型场景</th></tr></thead><tbody><tr><td><strong>Wayfinders</strong></td><td>用户不知道 AI 能做什么</td><td>首次使用、探索新功能</td></tr><tr><td><strong>Inputs</strong></td><td>用户不知道如何高效地向 AI 表达需求</td><td>多模态输入、快捷指令</td></tr><tr><td><strong>Tuners</strong></td><td>用户对 AI 输出不满意但不知如何调整</td><td>语气、长度、风格控制</td></tr><tr><td><strong>Governors</strong></td><td>用户担心 AI 失控或犯错</td><td>中断、撤销、版本回溯</td></tr><tr><td><strong>Trust builders</strong></td><td>用户不信任 AI 的输出</td><td>来源标注、置信度、解释</td></tr><tr><td><strong>Identifiers</strong></td><td>用户无法区分 AI 状态或内容</td><td>状态指示、AI 身份标识</td></tr></tbody></table>
+<hr>
+<h2 id="使用建议">使用建议</h2>
+<ul><li><strong>产品自检</strong>：在 AI 功能设计评审时，对照 42 个模式检查是否覆盖了关键交互场景</li><li><strong>竞品分析</strong>：分析其他 AI 产品使用了哪些模式，识别设计差距</li><li><strong>团队对齐</strong>：用模式名称统一团队内部对交互设计的讨论语言</li><li><strong>渐进采用</strong>：不需要一次性实现所有模式，按产品阶段优先解决当前最突出的交互问题</li></ul>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-collection">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">资源集合</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="shape-of-aiai-交互模式库">Shape of AI：AI 交互模式库</h1>
+<blockquote><p>原站：https://www.shapeof.ai/ 作者：Emily Campbell 性质：AI 产品交互模式分类参考库</p></blockquote>
+<hr>
+<h2 id="一wayfinders导航指引">一、Wayfinders（导航指引）</h2>
+<p>帮助用户理解 AI 能做什么、当前处于什么状态。</p>
+<table class="md-table"><thead><tr><th>Pattern</th><th>说明</th><th>链接</th></tr></thead><tbody><tr><td><strong>Example gallery</strong></td><td>用示例展示 AI 的能力边界</td><td><a href="https://www.shapeof.ai/patterns/example-gallery" target="_blank" rel="noopener">shapeof.ai/patterns/example-gallery</a></td></tr><tr><td><strong>Follow up</strong></td><td>在 AI 回复后提供后续问题建议</td><td><a href="https://www.shapeof.ai/patterns/follow-up" target="_blank" rel="noopener">shapeof.ai/patterns/follow-up</a></td></tr><tr><td><strong>Chained action</strong></td><td>将多步骤任务串联，减少用户认知负担</td><td><a href="https://www.shapeof.ai/patterns/chained-action" target="_blank" rel="noopener">shapeof.ai/patterns/chained-action</a></td></tr><tr><td><strong>Inline Action</strong></td><td>在内容中直接嵌入可执行操作</td><td><a href="https://www.shapeof.ai/patterns/inline-action" target="_blank" rel="noopener">shapeof.ai/patterns/inline-action</a></td></tr><tr><td><strong>Connectors</strong></td><td>连接不同 AI 功能或外部系统的桥梁</td><td><a href="https://www.shapeof.ai/patterns/connectors" target="_blank" rel="noopener">shapeof.ai/patterns/connectors</a></td></tr><tr><td><strong>Workspaces</strong></td><td>为复杂任务提供专用工作空间</td><td><a href="https://www.shapeof.ai/patterns/workspaces" target="_blank" rel="noopener">shapeof.ai/patterns/workspaces</a></td></tr></tbody></table>
+<hr>
+<h2 id="二inputs输入方式">二、Inputs（输入方式）</h2>
+<p>让用户以自然、高效的方式向 AI 提供信息。</p>
+<table class="md-table"><thead><tr><th>Pattern</th><th>说明</th><th>链接</th></tr></thead><tbody><tr><td><strong>Voice input</strong></td><td>语音作为 AI 交互的主要输入方式</td><td><a href="https://www.shapeof.ai/patterns/voice-input" target="_blank" rel="noopener">shapeof.ai/patterns/voice-input</a></td></tr><tr><td><strong>Camera input</strong></td><td>通过摄像头捕获视觉信息供 AI 处理</td><td><a href="https://www.shapeof.ai/patterns/camera-input" target="_blank" rel="noopener">shapeof.ai/patterns/camera-input</a></td></tr><tr><td><strong>Drag and drop</strong></td><td>拖拽文件或内容到 AI 界面</td><td><a href="https://www.shapeof.ai/patterns/drag-and-drop" target="_blank" rel="noopener">shapeof.ai/patterns/drag-and-drop</a></td></tr><tr><td><strong>@ mention</strong></td><td>通过 @ 提及激活特定 AI 功能或上下文</td><td><a href="https://www.shapeof.ai/patterns/mention" target="_blank" rel="noopener">shapeof.ai/patterns/mention</a></td></tr><tr><td><strong>Slash command</strong></td><td>通过 / 命令快速调用 AI 功能</td><td><a href="https://www.shapeof.ai/patterns/slash-command" target="_blank" rel="noopener">shapeof.ai/patterns/slash-command</a></td></tr><tr><td><strong>Prompt library</strong></td><td>提供预设提示词模板供用户选择</td><td><a href="https://www.shapeof.ai/patterns/prompt-library" target="_blank" rel="noopener">shapeof.ai/patterns/prompt-library</a></td></tr></tbody></table>
+<hr>
+<h2 id="三tuners调节器">三、Tuners（调节器）</h2>
+<p>让用户控制 AI 输出的风格、长度、语气等参数。</p>
+<table class="md-table"><thead><tr><th>Pattern</th><th>说明</th><th>链接</th></tr></thead><tbody><tr><td><strong>Temperature slider</strong></td><td>调节 AI 输出的创造性/确定性平衡</td><td><a href="https://www.shapeof.ai/patterns/temperature-slider" target="_blank" rel="noopener">shapeof.ai/patterns/temperature-slider</a></td></tr><tr><td><strong>Length control</strong></td><td>控制输出内容的长度</td><td><a href="https://www.shapeof.ai/patterns/length-control" target="_blank" rel="noopener">shapeof.ai/patterns/length-control</a></td></tr><tr><td><strong>Tone selector</strong></td><td>选择 AI 回复的语气风格</td><td><a href="https://www.shapeof.ai/patterns/tone-selector" target="_blank" rel="noopener">shapeof.ai/patterns/tone-selector</a></td></tr><tr><td><strong>Persona picker</strong></td><td>选择 AI 扮演的角色或人格</td><td><a href="https://www.shapeof.ai/patterns/persona-picker" target="_blank" rel="noopener">shapeof.ai/patterns/persona-picker</a></td></tr><tr><td><strong>Format selector</strong></td><td>选择输出格式（列表、段落、表格等）</td><td><a href="https://www.shapeof.ai/patterns/format-selector" target="_blank" rel="noopener">shapeof.ai/patterns/format-selector</a></td></tr><tr><td><strong>Regenerate</strong></td><td>重新生成不同版本的输出</td><td><a href="https://www.shapeof.ai/patterns/regenerate" target="_blank" rel="noopener">shapeof.ai/patterns/regenerate</a></td></tr></tbody></table>
+<hr>
+<h2 id="四governors控制机制">四、Governors（控制机制）</h2>
+<p>确保 AI 行为符合用户预期和安全边界。</p>
+<table class="md-table"><thead><tr><th>Pattern</th><th>说明</th><th>链接</th></tr></thead><tbody><tr><td><strong>Stop button</strong></td><td>随时中断 AI 生成过程</td><td><a href="https://www.shapeof.ai/patterns/stop-button" target="_blank" rel="noopener">shapeof.ai/patterns/stop-button</a></td></tr><tr><td><strong>Undo</strong></td><td>撤销 AI 的最近一次操作</td><td><a href="https://www.shapeof.ai/patterns/undo" target="_blank" rel="noopener">shapeof.ai/patterns/undo</a></td></tr><tr><td><strong>Edit prompt</strong></td><td>允许用户修改已发送的提示词</td><td><a href="https://www.shapeof.ai/patterns/edit-prompt" target="_blank" rel="noopener">shapeof.ai/patterns/edit-prompt</a></td></tr><tr><td><strong>Branching</strong></td><td>从某个节点分叉探索不同路径</td><td><a href="https://www.shapeof.ai/patterns/branching" target="_blank" rel="noopener">shapeof.ai/patterns/branching</a></td></tr><tr><td><strong>Version history</strong></td><td>保存和回溯 AI 交互的不同版本</td><td><a href="https://www.shapeof.ai/patterns/version-history" target="_blank" rel="noopener">shapeof.ai/patterns/version-history</a></td></tr><tr><td><strong>Feedback loop</strong></td><td>让用户对 AI 输出进行反馈以改进后续结果</td><td><a href="https://www.shapeof.ai/patterns/feedback-loop" target="_blank" rel="noopener">shapeof.ai/patterns/feedback-loop</a></td></tr></tbody></table>
+<hr>
+<h2 id="五trust-builders信任构建">五、Trust builders（信任构建）</h2>
+<p>增强用户对 AI 系统的信任感。</p>
+<table class="md-table"><thead><tr><th>Pattern</th><th>说明</th><th>链接</th></tr></thead><tbody><tr><td><strong>Confidence score</strong></td><td>显示 AI 对其输出的置信度</td><td><a href="https://www.shapeof.ai/patterns/confidence-score" target="_blank" rel="noopener">shapeof.ai/patterns/confidence-score</a></td></tr><tr><td><strong>Source citation</strong></td><td>标注信息来源，便于用户验证</td><td><a href="https://www.shapeof.ai/patterns/source-citation" target="_blank" rel="noopener">shapeof.ai/patterns/source-citation</a></td></tr><tr><td><strong>Explanation</strong></td><td>解释 AI 为什么给出某个答案</td><td><a href="https://www.shapeof.ai/patterns/explanation" target="_blank" rel="noopener">shapeof.ai/patterns/explanation</a></td></tr><tr><td><strong>Human review</strong></td><td>标记需要人工审核的内容</td><td><a href="https://www.shapeof.ai/patterns/human-review" target="_blank" rel="noopener">shapeof.ai/patterns/human-review</a></td></tr><tr><td><strong>Transparency toggle</strong></td><td>切换显示 AI 的推理过程</td><td><a href="https://www.shapeof.ai/patterns/transparency-toggle" target="_blank" rel="noopener">shapeof.ai/patterns/transparency-toggle</a></td></tr><tr><td><strong>Error handling</strong></td><td>优雅地处理 AI 失败或不确定的情况</td><td><a href="https://www.shapeof.ai/patterns/error-handling" target="_blank" rel="noopener">shapeof.ai/patterns/error-handling</a></td></tr></tbody></table>
+<hr>
+<h2 id="六identifiers标识符">六、Identifiers（标识符）</h2>
+<p>帮助用户识别和区分不同的 AI 实体或内容。</p>
+<table class="md-table"><thead><tr><th>Pattern</th><th>说明</th><th>链接</th></tr></thead><tbody><tr><td><strong>AI avatar</strong></td><td>为 AI 助手设计可识别的视觉形象</td><td><a href="https://www.shapeof.ai/patterns/ai-avatar" target="_blank" rel="noopener">shapeof.ai/patterns/ai-avatar</a></td></tr><tr><td><strong>Content labeling</strong></td><td>明确标注内容由 AI 生成</td><td><a href="https://www.shapeof.ai/patterns/content-labeling" target="_blank" rel="noopener">shapeof.ai/patterns/content-labeling</a></td></tr><tr><td><strong>Status indicator</strong></td><td>显示 AI 当前状态（思考中、已完成等）</td><td><a href="https://www.shapeof.ai/patterns/status-indicator" target="_blank" rel="noopener">shapeof.ai/patterns/status-indicator</a></td></tr><tr><td><strong>Typing indicator</strong></td><td>显示 AI 正在输入的动画反馈</td><td><a href="https://www.shapeof.ai/patterns/typing-indicator" target="_blank" rel="noopener">shapeof.ai/patterns/typing-indicator</a></td></tr><tr><td><strong>Sound cue</strong></td><td>用声音提示 AI 状态变化</td><td><a href="https://www.shapeof.ai/patterns/sound-cue" target="_blank" rel="noopener">shapeof.ai/patterns/sound-cue</a></td></tr><tr><td><strong>Progress bar</strong></td><td>显示长时间任务的进度</td><td><a href="https://www.shapeof.ai/patterns/progress-bar" target="_blank" rel="noopener">shapeof.ai/patterns/progress-bar</a></td></tr></tbody></table>
+<hr>
+<h2 id="七uilibraryui-组件库">七、UILibrary（UI 组件库）</h2>
+<p>Shape of AI 还提供可直接使用的 UI 组件参考。</p>
+<table class="md-table"><thead><tr><th>组件</th><th>说明</th><th>链接</th></tr></thead><tbody><tr><td><strong>UI Components</strong></td><td>可复用的 AI 交互界面组件</td><td><a href="https://www.shapeof.ai/uilibrary" target="_blank" rel="noopener">shapeof.ai/uilibrary</a></td></tr></tbody></table>
+<hr>
+<p><strong>总计：42 个模式</strong>（6 大类 × 6 个 + 1 个 UI Library）</p>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-notes">
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">笔记</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="shape-of-ai-笔记">Shape of AI 笔记</h1>
+<h2 id="与-hermes-agent-的关联">与 Hermes Agent 的关联</h2>
+<p>Hermes Agent 作为 AI 助手产品，可以从 Shape of AI 的模式库中直接借鉴以下设计：</p>
+<h3 id="已实现的模式">已实现的模式</h3>
+<table class="md-table"><thead><tr><th>模式</th><th>Hermes 中的体现</th></tr></thead><tbody><tr><td><strong>Follow up</strong></td><td>对话中的上下文延续和建议</td></tr><tr><td><strong>Chained action</strong></td><td>多步骤任务执行（如：搜索→提取→总结）</td></tr><tr><td><strong>Inline Action</strong></td><td>消息中的可点击操作（如：MEDIA 链接、代码执行）</td></tr><tr><td><strong>Connectors</strong></td><td>与外部工具集成（terminal、browser、web_search）</td></tr><tr><td><strong>@ mention</strong></td><td>技能调用（如 <code>/skill</code> 命令）</td></tr><tr><td><strong>Slash command</strong></td><td>斜杠命令系统</td></tr><tr><td><strong>Typing indicator</strong></td><td>生成回复时的状态提示</td></tr><tr><td><strong>Progress bar</strong></td><td>长时间任务的状态反馈</td></tr></tbody></table>
+<h3 id="可改进的模式">可改进的模式</h3>
+<table class="md-table"><thead><tr><th>模式</th><th>改进机会</th></tr></thead><tbody><tr><td><strong>Example gallery</strong></td><td>在首次使用时展示 Hermes 的能力示例</td></tr><tr><td><strong>Temperature slider</strong></td><td>允许用户调节回复的创造性/确定性</td></tr><tr><td><strong>Persona picker</strong></td><td>切换不同专业领域的回复风格</td></tr><tr><td><strong>Confidence score</strong></td><td>对不确定的信息标注置信度</td></tr><tr><td><strong>Source citation</strong></td><td>对 web_search 结果标注来源</td></tr><tr><td><strong>Explanation</strong></td><td>解释为什么给出某个建议</td></tr><tr><td><strong>Version history</strong></td><td>保存和回溯对话的不同版本</td></tr><tr><td><strong>Branching</strong></td><td>从某个回复分叉探索不同路径</td></tr></tbody></table>
+<hr>
+<h2 id="与-6-层-ai-experience-模型的对照">与 6 层 AI Experience 模型的对照</h2>
+<table class="md-table"><thead><tr><th>6 层模型</th><th>Shape of AI 模式</th><th>Hermes 现状</th></tr></thead><tbody><tr><td>Interface</td><td>Wayfinders, Inputs</td><td>✅ 基本覆盖</td></tr><tr><td>Interaction</td><td>Tuners, Governors</td><td>⚠️ 部分覆盖</td></tr><tr><td>Conversation</td><td>Trust builders</td><td>⚠️ 可加强</td></tr><tr><td>Collaboration</td><td>Identifiers</td><td>✅ 基本覆盖</td></tr><tr><td>Delegation</td><td>—</td><td>需设计委托边界</td></tr><tr><td>Companionship</td><td>—</td><td>长期记忆和个性化</td></tr></tbody></table>
+<hr>
+<h2 id="产品自检表">产品自检表</h2>
+<p>基于 Shape of AI 的 42 个模式，可以构建一个 AI 产品交互设计自检表：</p>
+<h3 id="wayfinders-检查">Wayfinders 检查</h3>
+<ul><li>[ ] 用户首次使用时是否知道 AI 能做什么？</li><li>[ ] 是否提供了示例展示能力边界？</li><li>[ ] 复杂任务是否有步骤引导？</li></ul>
+<h3 id="inputs-检查">Inputs 检查</h3>
+<ul><li>[ ] 是否支持多种输入方式（文本、语音、文件）？</li><li>[ ] 是否有快捷指令或命令系统？</li><li>[ ] 是否提供提示词模板？</li></ul>
+<h3 id="tuners-检查">Tuners 检查</h3>
+<ul><li>[ ] 用户能否控制输出风格？</li><li>[ ] 用户能否控制输出长度？</li><li>[ ] 不满意时能否重新生成？</li></ul>
+<h3 id="governors-检查">Governors 检查</h3>
+<ul><li>[ ] 用户能否随时中断 AI？</li><li>[ ] 能否撤销操作？</li><li>[ ] 是否有版本历史？</li></ul>
+<h3 id="trust-builders-检查">Trust builders 检查</h3>
+<ul><li>[ ] 是否标注信息来源？</li><li>[ ] 是否解释推理过程？</li><li>[ ] 是否显示置信度？</li></ul>
+<h3 id="identifiers-检查">Identifiers 检查</h3>
+<ul><li>[ ] AI 状态是否清晰？</li><li>[ ] 内容是否标注 AI 生成？</li><li>[ ] 进度是否可见？</li></ul>
+<hr>
+<h2 id="后续行动">后续行动</h2>
+<ol><li><strong>定期回顾</strong>：每季度对照 Shape of AI 检查 Hermes 的交互设计覆盖度</li><li><strong>模式实验</strong>：选择 2-3 个高价值模式（如 Confidence score、Source citation）进行原型实验</li><li><strong>团队对齐</strong>：在 AI 产品设计讨论中引入 Shape of AI 的术语体系</li><li><strong>跟踪更新</strong>：关注 shapeof.ai 的新模式发布，及时更新本条目</li></ol>
+</div>
+</details>
+</section>
+
+<nav class="detail-actions">
+<a class="action-link source-link" href="https://www.shapeof.ai/" target="_blank" rel="noopener">原文链接 ↗</a>
+<a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/resource_collections/2026-06-26-shape-of-ai-ux-patterns" target="_blank" rel="noopener">GitHub 文件夹 →</a>
+<button class="action-btn" id="copy-path-btn" data-path="content/resource_collections/2026-06-26-shape-of-ai-ux-patterns">复制 path</button>
+<span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
+</nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
+
+</article>
+</main>
+<footer>
+<p><a href="../../">hermes-knowledge-base</a> · 站内详情页</p>
+</footer>
+<script src="../../app.js" defer></script>
+<script>
+(function() {
+  const btn = document.getElementById('copy-path-btn');
+  const fb = document.getElementById('copy-feedback');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      const path = btn.getAttribute('data-path') || '';
+      const done = function() {
+        if (fb) {
+          fb.textContent = '已复制: ' + path;
+          setTimeout(function() { fb.textContent = ''; }, 2500);
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(path).then(done, function() {
+          // Fallback for non-secure contexts.
+          const ta = document.createElement('textarea');
+          ta.value = path;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); done(); } catch (e) {}
+          document.body.removeChild(ta);
+        });
+      }
+    });
+  }
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {
+    const onScroll = function() {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+</body>
+</html>
