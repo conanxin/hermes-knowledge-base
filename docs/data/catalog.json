@@ -748,13 +748,16 @@
     "word_count": {
       "source": 102,
       "translation": 4672,
-      "transcript": 4813
+      "transcript": 3286
     },
     "author_zh": "康纳·奥布莱恩",
     "category": "video",
     "content_kind": "speech_transcript",
     "related_project_note": "",
     "related_project_url": "",
+    "source_metrics": {
+      "original_transcript_words": 4813
+    },
     "source_type": "youtube",
     "updated_date": "2026-06-25",
     "slug": "2026-06-25-conan-harvard-commencement-2026",
