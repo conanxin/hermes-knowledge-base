@@ -660,6 +660,48 @@ def _parse_tracks_yaml_fallback(path: Path) -> Dict[str, Any]:
     return root
 
 
+def _build_track_coverage_summary(tracks: List[Dict[str, Any]]) -> str:
+    """v0.3.29: One-line coverage banner above the filter bar.
+
+    Renders "33 / 50 首可播放 · 17 首待验证 · 可播放率 66%" with a short
+    note explaining the source quality. Numbers are derived at build time
+    from tracks.yaml. Only invoked on detail pages with a tracks.yaml.
+    Returns "" defensively when tracks is empty.
+    """
+    valid_tracks = [t for t in tracks if isinstance(t, dict)]
+    if not valid_tracks:
+        return ""
+    total = len(valid_tracks)
+    playable = sum(1 for t in valid_tracks if t.get("confidence") == "verified")
+    pending = total - playable
+    pct = int(round((playable / total) * 100)) if total else 0
+    return (
+        '<div class="track-coverage-summary" id="track-coverage-summary" '
+        'data-total="' + str(total) + '" '
+        'data-playable="' + str(playable) + '" '
+        'data-pending="' + str(pending) + '">'
+        '<div class="track-coverage-line">'
+        '<span class="track-coverage-label">音乐播放覆盖</span>'
+        '<span class="track-coverage-stat">'
+        '<strong>' + str(playable) + ' / ' + str(total) + '</strong> 首可播放'
+        '</span>'
+        '<span class="track-coverage-sep">·</span>'
+        '<span class="track-coverage-stat">'
+        '<strong>' + str(pending) + '</strong> 首待验证'
+        '</span>'
+        '<span class="track-coverage-sep">·</span>'
+        '<span class="track-coverage-stat">'
+        '可播放率 <strong>' + str(pct) + '%</strong>'
+        '</span>'
+        '</div>'
+        '<div class="track-coverage-note">'
+        '可播放曲目使用高置信来源（官方频道 / Topic 频道 / VEVO / 厂牌授权频道）。'
+        '待验证曲目保留搜索链接，不显示假播放按钮。'
+        '</div>'
+        '</div>'
+    )
+
+
 def _build_track_filter_bar(tracks: List[Dict[str, Any]]) -> str:
     """Render the playable-track filter bar shown above the first track-card.
 
@@ -1107,6 +1149,7 @@ def render_record_page(record: Dict[str, Any], body: Dict[str, Any]) -> str:
     # Music-track cards (only if tracks.yaml present).
     track_cards: Optional[Dict[int, str]] = None
     track_filter_bar: str = ""
+    track_coverage_summary: str = ""
     tracks_data = body.get("tracks_data") or {}
     if isinstance(tracks_data, dict) and isinstance(tracks_data.get("tracks"), list):
         track_cards = _build_track_cards(tracks_data["tracks"])
@@ -1114,6 +1157,9 @@ def render_record_page(record: Dict[str, Any], body: Dict[str, Any]) -> str:
         # filter. The bar is placed at the top of the music section so
         # users can see the playable/pending split before scrolling.
         track_filter_bar = _build_track_filter_bar(tracks_data["tracks"])
+        # v0.3.29: coverage-summary banner sits above the filter bar,
+        # giving readers a one-line "how playable is this article?" view.
+        track_coverage_summary = _build_track_coverage_summary(tracks_data["tracks"])
 
     sections_html, page_toc = _build_sections_html(
         body["sections"], body["missing"], record_type,
@@ -1128,10 +1174,9 @@ def render_record_page(record: Dict[str, Any], body: Dict[str, Any]) -> str:
     )
 
     footer = TEMPLATE_FOOTER.format(up="../../")
-    # The filter bar is placed right before the body sections so it sits
-    # at the top of the music content. If there are no tracks, the
-    # bar is the empty string and renders as nothing.
-    return head + toc_html + meta_section + track_filter_bar + sections_html + actions + footer
+    # The coverage summary (v0.3.29) sits above the filter bar (v0.3.28)
+    # which sits above the body sections. If no tracks, both render as "".
+    return head + toc_html + meta_section + track_coverage_summary + track_filter_bar + sections_html + actions + footer
 
 
 def generate_item_pages() -> int:

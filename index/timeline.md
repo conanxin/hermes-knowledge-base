@@ -25,6 +25,7 @@
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 - The Layers of AI experience
 - How AI Will Change Us
+- The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
 - The 100 greatest songs of the 1960s
 - 一键把 YouTube 视频加入知识库
 - 先预检，再解读 YouTube 视频

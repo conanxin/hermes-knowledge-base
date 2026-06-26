@@ -69,3 +69,17 @@ translation_notes: |
   这是音乐目录型长名单文章的必然产物：50 首歌名 + 50+ 艺人名 + 30+ 专辑名
   全部为不可译专名（保留为英文）。无真正漏译段。
   详见 reports/paste_1960s_listicle_quality_fix_20260626.md §6.
+
+# Music playback enrichment (v0.3.29: surfaced as a coverage summary banner)
+# Numbers derived from tracks.yaml at metadata-write time and re-derived by
+# check_kb.py / check_tracks.py at integrity-check time.
+# status values: not_started | partial_verified | fully_verified
+music_enrichment:
+  enabled: true
+  total_tracks: 50
+  verified_tracks: 33
+  pending_tracks: 17
+  verified_rate: "66%"
+  playable_filter: true
+  last_verified_version: "v0.3.29-music-coverage-summary"
+  status: "partial_verified"

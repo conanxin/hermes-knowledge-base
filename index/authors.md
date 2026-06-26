@@ -102,6 +102,10 @@
 
 - The 100 greatest songs of the 1960s
 
+## Moira Weigel / Anthony Burton / Alexis Papazoglou
+
+- The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
+
 ## NousResearch
 
 - Hermes Agent Self-Evolution

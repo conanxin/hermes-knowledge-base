@@ -1312,7 +1312,58 @@ body.detail-page {
   display: none;
 }
 
+/* ====================================================================
+   v0.3.29: Music playback coverage summary banner
+   - Static "33 / 50 首可播放 · 17 首待验证 · 可播放率 66%" banner.
+   - Status pill, not a CTA. No filter button duplication.
+   - Only matches elements from _build_track_coverage_summary, which
+     only fires on detail pages with a tracks.yaml.
+   ==================================================================== */
+.track-coverage-summary {
+  margin: 16px 0 8px;
+  padding: 12px 16px;
+  background: var(--color-accent-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-button);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.track-coverage-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  color: var(--color-text-secondary);
+}
+
+.track-coverage-label {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-right: 4px;
+}
+
+.track-coverage-stat strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.track-coverage-sep {
+  color: var(--color-text-meta);
+  user-select: none;
+}
+
+.track-coverage-note {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: var(--color-text-meta);
+  line-height: 1.5;
+}
+
 @media (max-width: 480px) {
+  .track-coverage-summary { padding: 10px 12px; font-size: 0.85rem; }
+  .track-coverage-line { gap: 4px 8px; }
+  .track-coverage-note { font-size: 0.78rem; }
   .track-filter-bar { flex-direction: column; align-items: flex-start; }
   .track-filter-buttons { margin-left: 0; }
 }

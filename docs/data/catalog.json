@@ -1133,6 +1133,59 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-noema-how-ai-will-change-us"
   },
   {
+    "title": "The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou",
+    "title_zh": "Palantir 背后的哲学：Moira Weigel 与 Anthony Burton 对谈",
+    "type": "video",
+    "path": "content/articles/2026/2026-06-26-palantir-philosophy-weigel-burton",
+    "author": "Moira Weigel / Anthony Burton / Alexis Papazoglou",
+    "source_url": "https://youtu.be/0gCCDonmzUE",
+    "source_site": "The Philosopher / YouTube",
+    "language": "en",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "2026-06-15",
+    "captured_date": "2026-06-26",
+    "topics": [
+      "Palantir",
+      "技术哲学",
+      "监视资本主义",
+      "法兰克福学派",
+      "Peter Thiel",
+      "Alex Karp",
+      "技术-法西斯主义",
+      "第一性原理",
+      "模仿欲望",
+      "反动现代主义",
+      "AI 民族主义",
+      "云资本主义"
+    ],
+    "tags": [
+      "Palantir",
+      "技术哲学",
+      "监视资本主义",
+      "法兰克福学派",
+      "Peter Thiel",
+      "Alex Karp",
+      "技术-法西斯主义",
+      "第一性原理",
+      "模仿欲望",
+      "反动现代主义",
+      "AI 民族主义",
+      "云资本主义"
+    ],
+    "word_count": {
+      "source": 54272,
+      "translation": 14500
+    },
+    "author_zh": "Moira Weigel / Anthony Burton / Alexis Papazoglou",
+    "category": "video",
+    "source_type": "youtube",
+    "updated_date": "2026-06-26",
+    "slug": "2026-06-26-palantir-philosophy-weigel-burton",
+    "detail_url": "items/2026-06-26-palantir-philosophy-weigel-burton/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-palantir-philosophy-weigel-burton"
+  },
+  {
     "title": "The 100 greatest songs of the 1960s",
     "title_zh": "1960 年代最伟大的 100 首歌（#100–#51）",
     "type": "article",
@@ -1192,6 +1245,16 @@
     },
     "coverage_scope": "rank_100_to_51_only",
     "is_partial_series": true,
+    "music_enrichment": {
+      "enabled": true,
+      "total_tracks": 50,
+      "verified_tracks": 33,
+      "pending_tracks": 17,
+      "verified_rate": "66%",
+      "playable_filter": true,
+      "last_verified_version": "v0.3.29-music-coverage-summary",
+      "status": "partial_verified"
+    },
     "series_info": {
       "total_parts": 3,
       "this_part": 1,
@@ -1202,7 +1265,7 @@
       "remaining_range": "rank_50_to_1",
       "remaining_note": "原榜单的 #50-#1 部分分布在 Paste 的后续页面；本条目不涵盖。"
     },
-    "translation_notes": "check_translation_residue.py returned suspicious_count=85 (KB 最高).\n这是音乐目录型长名单文章的必然产物：50 首歌名 + 50+ 艺人名 + 30+ 专辑名\n全部为不可译专名（保留为英文）。无真正漏译段。\n详见 reports/paste_1960s_listicle_quality_fix_20260626.md §6.",
+    "translation_notes": "check_translation_residue.py returned suspicious_count=85 (KB 最高).\n这是音乐目录型长名单文章的必然产物：50 首歌名 + 50+ 艺人名 + 30+ 专辑名\n全部为不可译专名（保留为英文）。无真正漏译段。\n详见 reports/paste_1960s_listicle_quality_fix_20260626.md §6.\n",
     "updated_date": "2026-06-26",
     "slug": "2026-06-26-paste-greatest-songs-1960s",
     "detail_url": "items/2026-06-26-paste-greatest-songs-1960s/",

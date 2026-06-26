@@ -49,6 +49,10 @@
 
 - Owning Our Words: Sounding the Depths of Language
 
+## AI 民族主义
+
+- The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
+
 ## AI 进度
 
 - Sign of the future: GPT-5.5
@@ -68,6 +72,10 @@
 ## Airbnb
 
 - How to Earn a Billion Dollars
+
+## Alex Karp
+
+- The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
 
 ## Algerian rai
 
@@ -519,6 +527,7 @@
 ## Palantir
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+- The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
 
 ## Paste Magazine
 
@@ -544,6 +553,7 @@
 ## Peter Thiel
 
 - The People Are Never Right
+- The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
 
 ## Pink Floyd
 
@@ -1308,6 +1318,10 @@
 
 - Karpathy Second Brain 实现指南
 
+## 云资本主义
+
+- The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
+
 ## 亿万富翁
 
 - How to Earn a Billion Dollars
@@ -1359,6 +1373,10 @@
 ## 动画
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
+## 反动现代主义
+
+- The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
 
 ## 口述史
 
@@ -1445,6 +1463,10 @@
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
 
+## 技术-法西斯主义
+
+- The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
+
 ## 技术中立性
 
 - Your AI Is Not a Tool
@@ -1453,6 +1475,7 @@
 
 - AI 没有意识，但它正在成为我们的无意识
 - Ken Liu on AI and Freedom
+- The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
 
 ## 技术评估
 
@@ -1527,6 +1550,10 @@
 
 - 日本铁路如何在分裂中保持统一
 
+## 模仿欲望
+
+- The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
+
 ## 欺骗
 
 - How to Earn a Billion Dollars
@@ -1538,6 +1565,10 @@
 ## 汉娜·阿伦特
 
 - AI 没有意识，但它正在成为我们的无意识
+
+## 法兰克福学派
+
+- The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
 
 ## 海底总动员
 
@@ -1575,6 +1606,10 @@
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
+## 监视资本主义
+
+- The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
+
 ## 知识卡片
 
 - YouTube Video Brief Workflow
@@ -1609,6 +1644,10 @@
 ## 笔记系统
 
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
+
+## 第一性原理
+
+- The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
 
 ## 第四人称认知
 
