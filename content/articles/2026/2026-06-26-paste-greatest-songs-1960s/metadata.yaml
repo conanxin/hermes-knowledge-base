@@ -70,10 +70,10 @@ translation_notes: |
   全部为不可译专名（保留为英文）。无真正漏译段。
   详见 reports/paste_1960s_listicle_quality_fix_20260626.md §6.
 
-# Music playback enrichment (v0.3.29: surfaced as a coverage summary banner)
+# Music playback enrichment (v0.3.35: final summary with streaming links)
 # Numbers derived from tracks.yaml at metadata-write time and re-derived by
 # check_kb.py / check_tracks.py at integrity-check time.
-# status values: not_started | partial_verified | fully_verified
+# status values: not_started | partial_verified | fully_verified | stage_complete_partial_verified
 music_enrichment:
   enabled: true
   total_tracks: 50
@@ -81,5 +81,14 @@ music_enrichment:
   pending_tracks: 12
   verified_rate: "76%"
   playable_filter: true
-  last_verified_version: "v0.3.32-final-candidate-sweep-and-coverage-sync"
-  status: "partial_verified"
+  youtube_play_buttons: 38
+  search_links: 50
+  streaming_linked_tracks: 4
+  spotify_links: 3
+  apple_music_links: 3
+  candidate_tracks: 0
+  spotify_or_apple_preferred_tracks: 0
+  defer_tracks: 7
+  manual_research_tracks: 1
+  last_verified_version: "v0.3.35-music-enrichment-final-summary"
+  status: "stage_complete_partial_verified"

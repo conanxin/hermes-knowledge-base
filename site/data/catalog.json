@@ -1257,8 +1257,17 @@
       "pending_tracks": 12,
       "verified_rate": "76%",
       "playable_filter": true,
-      "last_verified_version": "v0.3.32-final-candidate-sweep-and-coverage-sync",
-      "status": "partial_verified"
+      "youtube_play_buttons": 38,
+      "search_links": 50,
+      "streaming_linked_tracks": 4,
+      "spotify_links": 3,
+      "apple_music_links": 3,
+      "candidate_tracks": 0,
+      "spotify_or_apple_preferred_tracks": 0,
+      "defer_tracks": 7,
+      "manual_research_tracks": 1,
+      "last_verified_version": "v0.3.35-music-enrichment-final-summary",
+      "status": "stage_complete_partial_verified"
     },
     "series_info": {
       "total_parts": 3,

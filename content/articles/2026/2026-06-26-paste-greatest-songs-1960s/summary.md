@@ -7,19 +7,27 @@
 
 ## 播放增强状态
 
-本词条已为 50 首歌生成音乐播放卡片,数据来自 `tracks.yaml`(v0.3.32 同步):
+本词条已为 50 首歌生成音乐播放卡片,数据来自 `tracks.yaml`(v0.3.35 同步):
 
 - **总曲目**:50 首
-- **可直接播放**:38 首(官方频道 / Topic 频道 / VEVO / 厂牌授权频道,均为高置信来源)
+- **站内可播放**:38 首(使用高置信 YouTube 官方频道 / Topic 频道 / VEVO / 厂牌授权频道)
+- **外部流媒体补充**:4 首(Spotify / Apple Music 外链)
 - **待验证链接**:12 首
 - **可播放率**:76%
 - **支持筛选**:全部曲目 / 仅可播放 / 仅待验证(页面顶部三按钮)
+- **全部曲目均保留搜索入口**
 
 **说明**:
 - 本词条遵循「**宁可待验证,不错链**」原则 — 已链接的 38 首均经人工 oEmbed 验证,12 首未找到高置信来源的曲目**不显示假播放按钮**,只显示 Google 站内搜索链接,留给读者自选。
+- 4 首无法找到高置信 YouTube 来源的曲目,补充了 Spotify / Apple Music 外部流媒体链接,作为替代播放入口。
 - 数字与 `metadata.yaml::music_enrichment` 字段一一对应,与页面顶部的「音乐播放覆盖」摘要同步。
-- 完整验证记录见 `reports/music_embed_enrichment_batch{1..7}_20260626.md`、`reports/music_coverage_summary_v0329_20260626.md`、`reports/music_remaining_track_audit_20260626.md`、`reports/music_candidate_embed_enrichment_v0331_20260626.md` 及本报告。
-- 详情页 music_enrichment.last_verified_version = v0.3.32-final-candidate-sweep-and-coverage-sync。
+- 完整验证记录见 `reports/music_embed_enrichment_batch{1..7}_20260626.md`、`reports/music_coverage_summary_v0329_20260626.md`、`reports/music_remaining_track_audit_20260626.md`、`reports/music_candidate_embed_enrichment_v0331_20260626.md`、`reports/music_streaming_link_rendering_pilot_v0333_20260626.md`、`reports/music_streaming_link_batch_v0334_20260626.md` 及本报告。
+- 详情页 music_enrichment.last_verified_version = v0.3.35-music-enrichment-final-summary。
+
+**剩余待验证曲目**:
+- 7 首已标记为长期 defer(YouTube 无官方来源,版权限制或平台独占)
+- 1 首需要人工研究(复杂版权/版本问题)
+- 候选池与 Spotify / Apple Music 优先池已清空
 
 ## 一句话总结
 
