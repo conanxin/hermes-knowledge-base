@@ -18,6 +18,31 @@
 - `PENDING_CDN_SYNC` 是合法 WARN,不判 FAIL
 - 详细的状态词、动作标签、生命周期定义、CDN 延迟规则、并发协议见 [REPORTING_TEMPLATE.md](REPORTING_TEMPLATE.md)
 
+### 可选命令:Postflight 检查(`scripts/check_task_postflight.py`)
+
+完成报告后,可用 [scripts/check_task_postflight.py](../scripts/check_task_postflight.py) **机器验证**报告是否对齐所选 profile。**目前是 WARN-only,不是强制门禁**,不接入 preflight / update_site / CI / pre-push hook。
+
+```bash
+# 完整任务报告(模板 3 写入并发布)
+python3 scripts/check_task_postflight.py \
+    --report-file reports/<task>.md \
+    --profile publish
+
+# 旧版 v0.3.x 7 段约束报告(legacy 豁免)
+python3 scripts/check_task_postflight.py \
+    --report-file reports/<task>_v0338_20260626.md \
+    --profile versioned
+
+# 自动推断 profile + JSON 输出(供 agent 解析)
+python3 scripts/check_task_postflight.py \
+    --report-file reports/<task>.md \
+    --profile auto --json
+```
+
+**Profile 选错会怎样**:用 `--profile auto` 即可,脚本从文件名 + 标题启发式推断。如显式选错(比如把 v0.3.x 7 段报告当 publish 跑),脚本会因缺必填段返回 WARN(默认)或 FAIL(`--strict`),不修改任何文件。
+
+**它不是强制门禁,除非未来另行启用 `--strict`**:默认 WARN-only 行为(任何 WARN 不阻断),只在显式 `--strict` 时返回非 0。完整规则见 [REPORTING_TEMPLATE.md §10](REPORTING_TEMPLATE.md)。
+
 ---
 
 ## 任务启动前 Preflight

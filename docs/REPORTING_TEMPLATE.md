@@ -409,7 +409,91 @@ versioned task 可**同时产出 2 份报告**,或把 7 段约束报告作为 9 
 
 ---
 
-## 9. 相关文档
+## 10. Postflight 检查(`scripts/check_task_postflight.py`)
+
+`scripts/check_task_postflight.py` 是本模板的**机器验证脚本**,用于在任务结束后检查报告文件是否对齐所选 profile。**当前是 WARN-only**,不阻断任务,只在传 `--strict` 时才返回非 0。
+
+### 9.1 与 preflight 的边界
+
+| 维度 | `check_task_preflight.py` | `check_task_postflight.py` |
+|---|---|---|
+| 触发时间 | 任务开始前 (T0) | 任务完成后 (T1) |
+| 输入 | git 状态 / tag / check 脚本存在 | 报告文件 + profile |
+| 关注 | "约束是否就绪" | "报告是否对齐" |
+| 失败语义 | 阻止任务开始 | WARN-only(默认)或 FAIL(显式 `--strict`) |
+| 默认行为 | 强制门禁 | 可选工具,默认不扫描 reports/ |
+
+两者**不能混用**:preflight 不应承担报告检查(语义错位),postflight 不应承担仓库状态检查(超出其职责)。
+
+### 9.2 CLI
+
+```bash
+# 最小用法
+python3 scripts/check_task_postflight.py \
+    --report-file reports/<task>.md \
+    --profile publish
+
+# 自动推断 profile
+python3 scripts/check_task_postflight.py \
+    --report-file reports/<task>.md \
+    --profile auto
+
+# JSON 输出(供 CI / agent 解析)
+python3 scripts/check_task_postflight.py \
+    --report-file reports/<task>.md \
+    --profile auto --json
+
+# 显式 --strict:缺失必填段返回非 0 (FAIL)
+python3 scripts/check_task_postflight.py \
+    --report-file reports/<task>.md \
+    --profile publish --strict
+```
+
+### 9.3 Profile 选择
+
+| Profile | 适用报告 | 必填段 |
+|---|---|---|
+| `readonly` | 模板 1 (3 段) | STATUS, Scope, Evidence |
+| `write_local` | 模板 2 (5 段) | STATUS, Scope, Actions, Files changed, Evidence |
+| `publish` | 模板 3 (9 段) | STATUS, Scope, Actions, Files changed, Evidence, Checks, Known limitations, Next action + commit/push/live 引用 |
+| `article_import` | 旧 `article_import_*.md` | Summary, Pipeline execution, Files written, Quality checks, Final state (legacy 豁免) |
+| `versioned` | 旧 v0.3.x 7-段约束报告 | STATUS 顶部行 + 起始状态 + Check 结果 + Constraints Honored (legacy 豁免) |
+| `auto` | 启发式推断(从文件名 + 标题) | 同对应 profile |
+
+**auto 启发式**:
+- 文件名以 `article_import_` 开头 → `article_import`
+- 文件名含 `_v0` / `_v03` → `versioned`
+- 文本含 `live` + (`push` / `commit`) → `publish`
+- 文本含 `files changed` / `files written` → `write_local`
+- 其它 → `readonly`
+
+### 9.4 当前行为(WARN-only)
+
+**默认**:
+- 缺失必填段 → `STATUS: PASS_WITH_WARNINGS` + exit 0(不阻断)
+- 任何错误(文件不存在、profile 未知) → `STATUS: FAIL` + exit 1
+
+**显式 `--strict`**:
+- 缺失必填段 → `STATUS: FAIL` + exit 1
+
+**legacy 豁免**(v0.3.36/37/38 历史 reports):
+- `profile=article_import` / `profile=versioned` 即使配 `--strict` 也不会因缺段返回 FAIL(只 WARN)— 因为这些 profile 的"必填段"是软必填
+- `profile=publish` 即使配 `--strict` 仍会 FAIL(因为 publish 9 段是硬必填)
+
+### 9.5 不做的事
+
+- **不**扫描 `reports/` 全目录 — 必须显式传 `--report-file`
+- **不**接入 `update_site.py` hard-stop
+- **不**接入 CI / GitHub Actions
+- **不**接入 pre-push hook
+- **不**修改历史 reports/
+- **不**修改 `check_kb.py` / `check_task_preflight.py`
+
+Postflight 是**可选检查工具**,不是强制门禁。未来如要升级为门禁,需先观察 1-2 周 WARN 比例再决定,详见 §11。
+
+---
+
+## 11. 相关文档
 
 - **完整版**(KB 条目,含设计理念与范例回填):[2026-06-26-hermes-agent-task-report-template](https://conanxin.github.io/hermes-knowledge-base/items/2026-06-26-hermes-agent-task-report-template/)
 - **理论依据**(P0 Implementation Spec):[2026-06-26-hermes-agent-ui-p0-implementation-spec](https://conanxin.github.io/hermes-knowledge-base/items/2026-06-26-hermes-agent-ui-p0-implementation-spec/)
@@ -418,7 +502,8 @@ versioned task 可**同时产出 2 份报告**,或把 7 段约束报告作为 9 
 - **导入 prompt**:[templates/prompts/import_article_prompt.md](../templates/prompts/import_article_prompt.md)
 - **云端开工手册**:[docs/CLOUD_HERMES_INTEGRATION.md](CLOUD_HERMES_INTEGRATION.md)
 
-## 10. 修订日志
+## 12. 修订日志
 
 - **2026-06-27**:v1 初版。基于 task-report-template KB 条目的精简操作版
+- **2026-06-27**:v1.1 新增 §10 Postflight 检查章节(WARN-only 最小版)
 - v2 触发:KB 条目出 v2 / 反模式新增 / 协议步骤变化
