@@ -270,14 +270,14 @@ tracks:
   section_heading_translation: '## 87. The Angels：《My Boyfriend''s Back》（1963 年）'
   youtube_url: ''
   youtube_embed_url: ''
-  spotify_url: ''
-  apple_music_url: ''
+  spotify_url: 'https://open.spotify.com/track/5NiFSI8iIDtVm1NCwdYrHS'
+  apple_music_url: 'https://music.apple.com/us/album/my-boyfriends-back/1443938611'
   search_url: https://www.google.com/search?q=site:youtube.com+The+Angels+My+Boyfriend's+Back+1963+official
   confidence: needs_verification
-  note: ''
+  note: 'Spotify: Song page by The Angels, 1998 (UMG compilation). Apple Music: Album page by The Angels, 1998, POP, ℗ UMG Recordings. Both verified as official artist pages, not cover/live/fan upload. YouTube embed not available.'
   audit_status: spotify_or_apple_preferred
   audit_reason: 'The Angels - My Boyfriend''s Back: 1963 Smash/Motown。YouTube 上高置信官方少,主导为 fan/compilation upload。Spotify/Apple Music 因 UMG/Motown 完整曲库更可靠。'
-  next_action: 'v0.3.31: 优先在 Spotify (UMG) / Apple Music 上验证官方/厂牌 source URL;YouTube 侧仅作为最后 fallback'
+  next_action: 'v0.3.34: Spotify/Apple Music link batch completed'
 - rank: 86
   artist: Bill Evans & Jim Hall
   title: Darn That Dream
@@ -566,13 +566,13 @@ tracks:
   youtube_url: ''
   youtube_embed_url: ''
   spotify_url: ''
-  apple_music_url: ''
+  apple_music_url: 'https://music.apple.com/us/song/a-minha-menina/1443152710'
   search_url: https://www.google.com/search?q=site:youtube.com+Os+Mutantes+A+Minha+Menina+1968+official
   confidence: needs_verification
-  note: ''
+  note: 'Apple Music: Song page by Os Mutantes, 1968 album. Spotify track URL not found. Verified as official artist page, not cover/live/fan upload. YouTube embed not available.'
   audit_status: spotify_or_apple_preferred
   audit_reason: 'Os Mutantes - A Minha Menina: 1968 Polydor Brazil (UMG Brazil)。oEmbed 验证 2 个候选视频 (IB02v-IaW74, jCB5dOcmhaM) 均为 fan channel (RioRecords / uaifree),无官方 - Topic 频道。'
-  next_action: 'v0.3.31: 优先在 Spotify / Apple Music (UMG Brazil) 上验证官方曲库;YouTube 侧除非找到 Polydor/UMG Brazil 官方,否则不硬填 fan upload'
+  next_action: 'v0.3.34: Apple Music link added; Spotify not found'
 - rank: 71
   artist: Albert Ayler
   title: Ghosts
@@ -620,14 +620,14 @@ tracks:
   section_heading_translation: '## 69. Jacques Brel：《J''Arrive》（1968 年）'
   youtube_url: ''
   youtube_embed_url: ''
-  spotify_url: ''
+  spotify_url: 'https://open.spotify.com/track/2CD0a7xiFT3f60RqPAGGSF'
   apple_music_url: ''
   search_url: https://www.google.com/search?q=site:youtube.com+Jacques+Brel+J'Arrive+1968+official
   confidence: needs_verification
-  note: ''
+  note: 'Spotify: Song page by Jacques Brel, 1988 (compilation). Apple Music track URL not found. Verified as official artist page, not cover/live/fan upload. YouTube embed not available.'
   audit_status: spotify_or_apple_preferred
   audit_reason: 'Jacques Brel - J''Arrive: 1968 Barclay/Universal France。法语区经典,Spotify/Apple Music 完整曲库(因 UMG 收购 Barclay);YouTube 高置信官方少。'
-  next_action: 'v0.3.31: 优先 Spotify / Apple Music 验证官方曲库;YouTube 侧仅作为 fallback'
+  next_action: 'v0.3.34: Spotify link added; Apple Music not found'
 - rank: 68
   artist: Etta James
   title: At Last
