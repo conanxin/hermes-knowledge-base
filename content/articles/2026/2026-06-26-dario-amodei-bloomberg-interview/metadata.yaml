@@ -10,6 +10,8 @@ language: "en"
 translation_language: "zh-CN"
 status: "translated"
 type: "article"
+content_kind: "video_analysis"
+transcript_missing: true
 category: "video"
 source_type: "youtube"
 topics:
@@ -55,5 +57,9 @@ tags:
   - "出口管制"
   - "token tax"
 word_count:
-  source: 13786
-  translation: 26448
+  source: 211
+  translation: 3329
+source_metrics:
+  inferred_original_transcript_words: 13786
+  inferred_original_translation_chars: 26448
+  transcript_metrics_verified: false

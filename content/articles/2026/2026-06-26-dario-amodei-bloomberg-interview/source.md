@@ -22,11 +22,13 @@ Emily Chang sits down with Anthropic CEO Dario Amodei in a wide-ranging intervie
 
 1. **元数据提取**：yt-dlp 获取视频信息（标题、频道、时长、发布日期、video ID、字幕来源）
 2. **字幕提取**：yt-dlp 下载 en 自动字幕（1748 段）
-3. **字幕翻译**：AI 翻译为中文，保留时间戳（1748 段双语对照）
-4. **深度解读**：基于翻译字幕生成结构化分析（核心张力、关键概念、背景补充）
-5. **永久笔记**：提炼 7 条核心观点 + 5 段原文引用 + 3 个可迁移方法
-6. **知识卡片**：10 张可复用卡片（smooth exponential、race to the top、trust threshold、red lines、Szilard 模型、patch-and-defend、doom distortion、high-tech authoritarian、moat refactor、writing as thinking）
-7. **知识库入库**：整理为 metadata.yaml + summary.md + notes.md + source.md + translation.zh-CN.md
+4. **字幕翻译**：AI 翻译为中文，保留时间戳（1748 段双语对照）
+5. **深度解读**：基于翻译字幕生成结构化分析（核心张力、关键概念、背景补充）
+6. **永久笔记**：提炼 7 条核心观点 + 5 段原文引用 + 3 个可迁移方法
+7. **知识卡片**：10 张可复用卡片（smooth exponential、race to the top、trust threshold、red lines、Szilard 模型、patch-and-defend、doom distortion、high-tech authoritarian、moat refactor、writing as thinking）
+8. **知识库入库**：整理为 metadata.yaml + summary.md + notes.md + source.md + translation.zh-CN.md
+
+> **注意**：完整 1748 段双语对照字幕原计划写入 `transcript.bilingual.md`，但当前仓库未包含该文件。本条目保留视频元数据、结构化中文解读、summary 和 notes。
 
 ## 关联文档
 
