@@ -136,6 +136,22 @@ python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name
 ### 12. Commit & Push
 ### 13. 生成导入报告
 
+**按 [docs/REPORTING_TEMPLATE.md](../../docs/REPORTING_TEMPLATE.md) 输出任务报告**:
+
+| 情况 | 使用模板 | 必填段 |
+|---|---|---|
+| 已 commit/push 且检查了 live 页面 | **模板 3: 写入并发布任务报告模板** | 9 段(全部) |
+| 完成本地导入但**未** push | **模板 2: 写入但不发布任务报告模板** | 5 段 |
+| 仅抓取 / 评估,**未写文件** | **模板 1: 只读审计任务报告模板** | 3 段 |
+
+**硬性规则**:
+- 报告不能只写"导入完成",必须含 commit hash + check 输出 + live HTTP 状态 + CDN 同步状态
+- 涉及 push 的必须含 §7 Commit / Push / Live 段(commit SHA、push range、live catalog / item page HTTP、CDN 状态)
+- `PENDING_CDN_SYNC` 是合法状态,不算 FAIL,但必须标注
+- 详细的状态词、动作标签、CDN 规则见 [REPORTING_TEMPLATE.md](../../docs/REPORTING_TEMPLATE.md)
+
+**长名单文章特殊要求保留**(不替代):本节新增的"按模板输出"是**叠加**关系,长名单文章仍需在报告末尾加 `## Coverage scope` + `## Translation residue analysis` 段。
+
 ## 强制停止条件
 
 以下情况 Hermes 必须停止导入，向用户报告，不要强行入库：

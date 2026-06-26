@@ -77,9 +77,24 @@ git tag -a v0.3.N-task-name <commit> -m "Tag message"
 git push origin v0.3.N-task-name
 ```
 
-### 7. 相关文档
+### 7. 任务报告
+
+**所有云端 agent 任务完成后必须按 [docs/REPORTING_TEMPLATE.md](REPORTING_TEMPLATE.md) 输出报告。** 涉及 `git push` / `deploy` / `publish` / 跨 agent 共享写入的,必须使用"模板 3: 写入并发布任务报告模板"(9 段),并在报告中显式列出:
+
+- **commit** — 完整 SHA hash
+- **push range** — `git log origin/main..HEAD --oneline`(本次 push 含哪些 commit)
+- **check_kb.py** — 完整输出 PASS 行
+- **check_pages_sync.py** — 完整输出 PASS 行
+- **live catalog** — `curl https://conanxin.github.io/hermes-knowledge-base/data/catalog.json` 的 records 数量
+- **live item page** — `curl -I` 返回的 HTTP status
+- **CDN 状态** — synced (RESOLVED) / PENDING_CDN_SYNC(详细规则见 [REPORTING_TEMPLATE.md §6](REPORTING_TEMPLATE.md))
+
+`PENDING_CDN_SYNC` 不判 FAIL,但必须显式标注等待时间和轮询迭代。
+
+### 8. 相关文档
 
 - [docs/AGENT_COMMANDS.md](AGENT_COMMANDS.md) — Agent 命令参考
 - [docs/VERSIONING.md](VERSIONING.md) — 版本命名规则
+- [docs/REPORTING_TEMPLATE.md](REPORTING_TEMPLATE.md) — 任务报告模板(本规则的核心)
 - [scripts/check_task_preflight.py](../scripts/check_task_preflight.py) — Preflight 检查脚本
 - [scripts/check_release_tags.py](../scripts/check_release_tags.py) — Tag 卫生检查

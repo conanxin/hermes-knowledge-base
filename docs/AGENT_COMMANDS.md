@@ -1,5 +1,25 @@
 # Agent Commands
 
+## 任务报告
+
+**所有 agent 任务完成后必须按 [docs/REPORTING_TEMPLATE.md](REPORTING_TEMPLATE.md) 输出报告。** 三类任务对应三个模板:
+
+| 任务类型 | 模板 | 必填段数 |
+|---|---|---|
+| 只读审计 (read / search / grep / analyze) | 模板 1 | 3 段 |
+| 写入不发布 (write_file / patch / build_index) | 模板 2 | 5 段 |
+| 写入并发布 (git push / deploy / publish / 跨 agent 共享) | 模板 3 | 9 段 |
+
+**硬性规则**:
+- 任务结束**不能只写"完成了"**,必须有 §2 Scope + §3 Actions + §5 EVIDENCE 三段最低证据
+- 只读任务也要有 STATUS + Scope + EVIDENCE(模板 1)
+- 写本地文件但未 push 的,标模板 2
+- 涉及 `git push` / `deploy` / `publish` 的,标模板 3,且必须含 §7 Commit/Push/Live 段
+- `PENDING_CDN_SYNC` 是合法 WARN,不判 FAIL
+- 详细的状态词、动作标签、生命周期定义、CDN 延迟规则、并发协议见 [REPORTING_TEMPLATE.md](REPORTING_TEMPLATE.md)
+
+---
+
 ## 任务启动前 Preflight
 
 **所有任务开始前必须先运行 preflight 检查。**
