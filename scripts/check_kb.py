@@ -38,9 +38,17 @@ def is_empty(val):
     return False
 
 
+CJK_PATTERN = re.compile(r"[\u4e00-\u9fff]")
+# Anti-regression: warn when declared word_count.translation diverges from
+# the actual CJK character count in translation.zh-CN.md by more than 5%.
+# WARN-only — does not affect the PASS/FAIL gate. Set to 0.0 to disable.
+TRANSLATION_DELTA_WARN_THRESHOLD = 0.05
+
+
 def check_kb():
     """Check knowledge base integrity"""
     issues = []
+    warnings = []
     total = 0
     ok = 0
 
@@ -122,6 +130,28 @@ def check_kb():
                 if not isinstance(wc_trans, int) or wc_trans < 0:
                     issues.append(f"INVALID word_count.translation={wc_trans} in {rel_meta}")
 
+        # --- 6b. translation word_count vs actual CJK chars (anti-regression WARN) ---
+        # Only applies to article records that have a translation file. This catches
+        # the failure mode where a translator subagent reports a CJK count but the
+        # number isn't faithfully copied into metadata.yaml.
+        if item_type == "article" and isinstance(word_count, dict) and word_count.get("translation", 0) > 0:
+            trans_file = item_dir / "translation.zh-CN.md"
+            if trans_file.exists():
+                try:
+                    with open(trans_file, "r", encoding="utf-8") as tf:
+                        actual_cjk = len(CJK_PATTERN.findall(tf.read()))
+                except OSError:
+                    actual_cjk = 0
+                declared = word_count["translation"]
+                if actual_cjk > 0 and declared > 0:
+                    delta = abs(actual_cjk - declared) / declared
+                    if delta > TRANSLATION_DELTA_WARN_THRESHOLD:
+                        warnings.append(
+                            f"word_count.translation drift in {rel_meta}: "
+                            f"declared={declared}, actual_cjk={actual_cjk}, "
+                            f"delta={delta*100:.1f}% (>{TRANSLATION_DELTA_WARN_THRESHOLD*100:.0f}%)"
+                        )
+
         # --- 7. item_count rules (for resource_collection) ---
         if item_type == "resource_collection":
             item_count = data.get("item_count", 0)
@@ -166,7 +196,12 @@ def check_kb():
         return 1
     else:
         print("\nSTATUS: PASS")
-        return 0
+
+    if warnings:
+        print(f"\nWarnings ({len(warnings)}) — non-blocking:")
+        for w in warnings:
+            print(f"  - {w}")
+    return 0
 
 
 if __name__ == "__main__":
