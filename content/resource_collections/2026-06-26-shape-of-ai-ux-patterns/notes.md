@@ -47,7 +47,7 @@ Hermes Agent 作为 AI 助手产品，可以从 Shape of AI 的模式库中直�
 
 ## 产品自检表
 
-基于 Shape of AI 的 42 个模式，可以构建一个 AI 产品交互设计自检表：
+基于 Shape of AI 的 37 个模式，可以构建一个 AI 产品交互设计自检表：
 
 ### Wayfinders 检查
 - [ ] 用户首次使用时是否知道 AI 能做什么？
