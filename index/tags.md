@@ -4,6 +4,14 @@
 
 - An "infovore" shares his chats
 
+## 100-songs
+
+- The 100 greatest songs of the 1960s
+
+## 1960s
+
+- The 100 greatest songs of the 1960s
+
 ## 2026
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
@@ -157,6 +165,10 @@
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
+## Elvis Presley
+
+- The 100 greatest songs of the 1960s
+
 ## Erik Hoel
 
 - AI 没有意识，但它正在成为我们的无意识
@@ -165,6 +177,10 @@
 ## Ethan Mollick
 
 - Sign of the future: GPT-5.5
+
+## Etta James
+
+- The 100 greatest songs of the 1960s
 
 ## Filesystem
 
@@ -258,6 +274,14 @@
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
+## Johnny Cash
+
+- The 100 greatest songs of the 1960s
+
+## Joni Mitchell
+
+- The 100 greatest songs of the 1960s
+
 ## Josef Pieper
 
 - Owning Our Words: Sounding the Depths of Language
@@ -284,6 +308,10 @@
 
 - Ken Liu on AI and Freedom
 
+## King Crimson
+
+- The 100 greatest songs of the 1960s
+
 ## L. M. Sacasas
 
 - Owning Our Words: Sounding the Depths of Language
@@ -301,6 +329,10 @@
 ## Le Guin
 
 - Ken Liu on AI and Freedom
+
+## Led Zeppelin
+
+- The 100 greatest songs of the 1960s
 
 ## Luck
 
@@ -326,10 +358,22 @@
 
 - Owning Our Words: Sounding the Depths of Language
 
+## Marvin Gaye
+
+- The 100 greatest songs of the 1960s
+
 ## Mencius Moldbug
 
 - The People Are Never Right
 - The People Are Never Right
+
+## Merle Haggard
+
+- The 100 greatest songs of the 1960s
+
+## Motown
+
+- The 100 greatest songs of the 1960s
 
 ## Movie Brats
 
@@ -387,9 +431,17 @@
 
 - How to Earn a Billion Dollars
 
+## Paste Magazine
+
+- The 100 greatest songs of the 1960s
+
 ## Patchwork
 
 - The People Are Never Right
+
+## Patsy Cline
+
+- The 100 greatest songs of the 1960s
 
 ## Paul Graham
 
@@ -399,6 +451,10 @@
 ## Peter Thiel
 
 - The People Are Never Right
+
+## Pink Floyd
+
+- The 100 greatest songs of the 1960s
 
 ## Pivot
 
@@ -446,6 +502,10 @@
 
 - Hermes Agent Self-Evolution
 
+## Serge Gainsbourg
+
+- The 100 greatest songs of the 1960s
+
 ## Sibelius
 
 - An "infovore" shares his chats
@@ -476,9 +536,17 @@
 
 - Don't dethrone consciousness!
 
+## The Who
+
+- The 100 greatest songs of the 1960s
+
 ## Theory U
 
 - We May Be Entering A Second Axial Age
+
+## Tina Turner
+
+- The 100 greatest songs of the 1960s
 
 ## Tolkien
 
@@ -519,6 +587,10 @@
 ## Walt Whitman
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
+
+## Wayne Shorter
+
+- The 100 greatest songs of the 1960s
 
 ## Wendell Berry
 
@@ -591,6 +663,10 @@
 
 - Session Guard Phase 1: Pre-Request Sanitizer
 
+## avant-garde
+
+- The 100 greatest songs of the 1960s
+
 ## awesome-list
 
 - Awesome LLM Long Context 资源列表
@@ -639,6 +715,10 @@
 
 - How Reverse Game Theory Could Solve The Housing Shortage
 
+## country
+
+- The 100 greatest songs of the 1960s
+
 ## craft
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
@@ -651,6 +731,10 @@
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
 - The Old World Is Dying
+
+## decade-list
+
+- The 100 greatest songs of the 1960s
 
 ## defensive-programming
 
@@ -696,6 +780,10 @@
 
 - ArXiv AI Agents 论文列表
 
+## folk
+
+- The 100 greatest songs of the 1960s
+
 ## folk-bildung
 
 - We May Be Entering A Second Axial Age
@@ -723,6 +811,10 @@
 ## globalization
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
+
+## greatest-songs
+
+- The 100 greatest songs of the 1960s
 
 ## hacker-news
 
@@ -789,6 +881,10 @@
 ## jane_austen
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
+
+## jazz
+
+- The 100 greatest songs of the 1960s
 
 ## knowledge-base
 
@@ -897,6 +993,10 @@
 
 - Hydro0x01 Local Hermes Security Audit
 
+## psychedelic
+
+- The 100 greatest songs of the 1960s
+
 ## python
 
 - Session Guard Phase 1: Pre-Request Sanitizer
@@ -935,6 +1035,10 @@
 
 - How AI Will Change Us
 
+## rock
+
+- The 100 greatest songs of the 1960s
+
 ## sanitizer
 
 - Session Guard Phase 1: Pre-Request Sanitizer
@@ -963,6 +1067,10 @@
 ## session-guard
 
 - Session Guard Phase 1: Pre-Request Sanitizer
+
+## soul
+
+- The 100 greatest songs of the 1960s
 
 ## speech-generation
 

@@ -23,6 +23,7 @@
 - YouTube Video Brief Workflow
 - An "infovore" shares his chats
 - How AI Will Change Us
+- The 100 greatest songs of the 1960s
 - 一键把 YouTube 视频加入知识库
 
 ## 2026-05

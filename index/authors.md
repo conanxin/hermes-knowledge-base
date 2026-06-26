@@ -90,6 +90,10 @@
 
 - AI 没有意识，但它正在成为我们的无意识
 
+## Matt Mitchell (Paste staff and contributors: Mariam Abdel-Razek, Casey Epstein-Gross, Grant Sharples, Cassidy Sollazzo, Miranda Wollen, Elise Soutar, Nathan Stevens, Sam Rosenberg, Derrick Rossignol)
+
+- The 100 greatest songs of the 1960s
+
 ## NousResearch
 
 - Hermes Agent Self-Evolution
