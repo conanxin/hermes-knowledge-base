@@ -289,3 +289,52 @@ Adds a static music playback coverage summary:
 - ✅ per-file `git add` (no `git add -A` or `git add .`)
 - ✅ Local HTTP server (pid 2814083) stopped at end
 - ✅ All 5 hard-stop checks pass (translation residue WARNING is pre-existing, jasmi)
+
+---
+
+## 13. Post-push online smoke — actual run (separate report commit)
+
+After `git push origin main` (commit `8ec7377`) succeeded, waited ~90 seconds
+for the GitHub Pages CDN to settle, then ran `node /tmp/pup_online.cjs` against
+`https://conanxin.github.io/hermes-knowledge-base/items/2026-06-26-paste-greatest-songs-1960s/`
+via Puppeteer (launched with `--proxy-server=socks5://127.0.0.1:7898` because the
+direct connection was reset by the host's outbound filter; proxy curl was 200
+so proxy is correct).
+
+**Actual online test output (verbatim)**:
+
+```
+=== Online tests (CDN GitHub Pages) ===
+  PASS: Paste page 200
+  PASS: track-card = 50
+  PASS: play button = 33
+  PASS: search link = 17
+  PASS: verified cards = 33
+  PASS: needs cards = 17
+  PASS: track-coverage-summary = 1
+  PASS: track-filter-bar = 1
+  PASS: coverage has 33/50
+  PASS: coverage has 17
+  PASS: coverage has 66%
+  PASS: coverage has music label
+  PASS: note mentions 官方频道
+  PASS: note mentions 假播放按钮
+  PASS: coverage above filter bar
+  PASS: filter all = 50 visible
+  PASS: filter playable = 33 visible
+  PASS: filter pending = 17 visible
+  Play test: {"ok":true,"src":"https://www.youtube.com/embed/WnMiXsRtsfc"}
+  PASS: rank 75 play loads iframe
+  PASS: emilycampbell: 0 coverage-summary
+  PASS: emilycampbell: 0 track-card
+  PASS: home: 0 coverage-summary
+
+=== 22 pass / 0 fail ===
+```
+
+The single `console.error` was a `favicon.ico 404`, pre-existing across all KB
+pages and not related to v0.3.29.
+
+**Online smoke result: 22/22 PASS** ✅ (mirror of local suite, identical coverage
+text content, identical filter behaviour, identical lazy-load iframe for rank 75
+via `https://www.youtube.com/embed/WnMiXsRtsfc`).
