@@ -746,11 +746,13 @@
       "Toy Story 5"
     ],
     "word_count": {
-      "source": 4813,
-      "translation": 7074
+      "source": 102,
+      "translation": 4672,
+      "transcript": 4813
     },
     "author_zh": "康纳·奥布莱恩",
     "category": "video",
+    "content_kind": "speech_transcript",
     "related_project_note": "",
     "related_project_url": "",
     "source_type": "youtube",

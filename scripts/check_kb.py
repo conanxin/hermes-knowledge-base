@@ -131,9 +131,10 @@ def check_kb():
                     issues.append(f"INVALID word_count.translation={wc_trans} in {rel_meta}")
 
         # --- 6b. translation word_count vs actual CJK chars (anti-regression WARN) ---
-        # Only applies to article records that have a translation file. This catches
-        # the failure mode where a translator subagent reports a CJK count but the
-        # number isn't faithfully copied into metadata.yaml.
+        # Applies to ALL article records that have a translation file, regardless of
+        # content_kind. This catches the failure mode where a translator subagent
+        # reports a CJK count but the number isn't faithfully copied into metadata.yaml.
+        content_kind = data.get("content_kind", "")
         if item_type == "article" and isinstance(word_count, dict) and word_count.get("translation", 0) > 0:
             trans_file = item_dir / "translation.zh-CN.md"
             if trans_file.exists():
@@ -151,6 +152,40 @@ def check_kb():
                             f"declared={declared}, actual_cjk={actual_cjk}, "
                             f"delta={delta*100:.1f}% (>{TRANSLATION_DELTA_WARN_THRESHOLD*100:.0f}%)"
                         )
+
+        # --- 6c. transcript word_count drift for video/speech transcripts (WARN) ---
+        # For transcript-type records, check transcript.bilingual.md or transcript.source.md
+        # against word_count.transcript if present. Missing transcript file or missing
+        # word_count.transcript field both emit WARN (not FAIL).
+        if content_kind in ("video_transcript", "speech_transcript") and isinstance(word_count, dict):
+            declared_transcript = word_count.get("transcript")
+            if declared_transcript is not None:
+                # Try transcript.bilingual.md first, then transcript.source.md
+                transcript_file = item_dir / "transcript.bilingual.md"
+                if not transcript_file.exists():
+                    transcript_file = item_dir / "transcript.source.md"
+                if transcript_file.exists():
+                    try:
+                        with open(transcript_file, "r", encoding="utf-8") as tf:
+                            actual_transcript_words = len(re.findall(r"[a-zA-Z]+", tf.read()))
+                    except OSError:
+                        actual_transcript_words = 0
+                    if actual_transcript_words > 0 and declared_transcript > 0:
+                        delta = abs(actual_transcript_words - declared_transcript) / declared_transcript
+                        if delta > TRANSLATION_DELTA_WARN_THRESHOLD:
+                            warnings.append(
+                                f"word_count.transcript drift in {rel_meta}: "
+                                f"declared={declared_transcript}, actual={actual_transcript_words}, "
+                                f"delta={delta*100:.1f}% (>{TRANSLATION_DELTA_WARN_THRESHOLD*100:.0f}%)"
+                            )
+                else:
+                    warnings.append(
+                        f"word_count.transcript declared but no transcript file found in {rel_dir}"
+                    )
+            else:
+                warnings.append(
+                    f"content_kind='{content_kind}' but word_count.transcript missing in {rel_meta}"
+                )
 
         # --- 7. item_count rules (for resource_collection) ---
         if item_type == "resource_collection":

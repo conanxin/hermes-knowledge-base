@@ -10,6 +10,7 @@ language: "en"
 translation_language: "zh-CN"
 status: "translated"
 type: "article"
+content_kind: "speech_transcript"
 category: "video"
 source_type: "youtube"
 topics:
@@ -41,7 +42,8 @@ tags:
   - "Walt Whitman"
   - "Toy Story 5"
 word_count:
-  source: 4813
-  translation: 7074
+  source: 102
+  translation: 4672
+  transcript: 4813
 related_project_url: ""
 related_project_note: ""
