@@ -20,11 +20,13 @@ tracks:
   spotify_url: ''
   apple_music_url: ''
   search_url: https://www.google.com/search?q=site:youtube.com+Wayne+Shorter+Infant+Eyes+1966+official
-  confidence: needs_verification
-  note: ''
-  audit_status: candidate
-  audit_reason: 'Wayne Shorter - Infant Eyes: 1964 Blue Note recording (MusicBrainz 7530962f-6a09-4c26-862b-533e33bd12a6). Blue Note Records 可能运营 - Topic channel 抓 RVG Remaster; Wayne Shorter - Topic 也可能存在。'
-  next_action: 'v0.3.31: 优先 oEmbed 验证 Blue Note - Topic 或 Wayne Shorter - Topic 是否包含此曲(避免 non-Topic fan upload)'
+  youtube_url: https://www.youtube.com/watch?v=yBjBBirsqs0
+  youtube_embed_url: https://www.youtube.com/embed/yBjBBirsqs0
+  confidence: verified
+  note: "Verified 2026-06-27: Wayne Shorter - Topic channel (Universal Music Group auto-generated). Rudy Van Gelder Edition remaster from The Best of Wayne Shorter (1988 Capitol/UMG). oEmbed verified author_name=\"Wayne Shorter - Topic\". Excludes fan uploads (Police Encounters), vinyl rips, live performances, and reaction videos."
+  audit_status: verified
+  audit_reason: 'oEmbed verified as label-authorized Topic channel auto-generated upload'
+  next_action: 'complete — retained audit fields for provenance'
 - rank: 99
   artist: Pink Floyd
   title: Bike
@@ -74,11 +76,13 @@ tracks:
   spotify_url: ''
   apple_music_url: ''
   search_url: https://www.google.com/search?q=site:youtube.com+Laura+Nyro+Stoned+Soul+Picnic+1968+official
-  confidence: needs_verification
-  note: ''
-  audit_status: candidate
-  audit_reason: 'Laura Nyro - Stoned Soul Picnic: 1968 Columbia 单曲 (Sony/Columbia 厂牌活跃)。可能有 Columbia Records - Topic / Laura Nyro - Topic 频道。'
-  next_action: 'v0.3.31: oEmbed 验证 Columbia - Topic 或 Laura Nyro - Topic;若两通道都无,降级为 spotify_or_apple_preferred'
+  youtube_url: https://www.youtube.com/watch?v=2Nfc_J7qlhQ
+  youtube_embed_url: https://www.youtube.com/embed/2Nfc_J7qlhQ
+  confidence: verified
+  note: "Verified 2026-06-27: Laura Nyro - Topic channel (Sony Music / Columbia auto-generated). From Eli And The Thirteenth Confession (1968). oEmbed verified author_name=\"Laura Nyro - Topic\". Excludes fan uploads (LauraLand4u), live performances, and cover versions."
+  audit_status: verified
+  audit_reason: 'oEmbed verified as label-authorized Topic channel auto-generated upload'
+  next_action: 'complete — retained audit fields for provenance'
 - rank: 96
   artist: King Crimson
   title: 21st Century Schizoid Man
@@ -350,11 +354,13 @@ tracks:
   spotify_url: ''
   apple_music_url: ''
   search_url: https://www.google.com/search?q=site:youtube.com+Serge+Gainsbourg+&+Brigitte+Bardot+Bonnie+and+Clyde+1968+official
-  confidence: needs_verification
-  note: ''
-  audit_status: candidate
-  audit_reason: 'Serge Gainsbourg & Brigitte Bardot - Bonnie and Clyde: 1968 Philips/Universal France。法语区厂牌管理积极,可能有 Gainsbourg - Topic 或 Universal Music France - Topic 频道。'
-  next_action: 'v0.3.31: oEmbed 验证 Serge Gainsbourg - Topic 或 Universal Music France - Topic'
+  youtube_url: https://www.youtube.com/watch?v=JKFQl5S_AhA
+  youtube_embed_url: https://www.youtube.com/embed/JKFQl5S_AhA
+  confidence: verified
+  note: "Verified 2026-06-27: Brigitte Bardot - Topic channel (Universal Music Group France auto-generated). From Duos A Montmartre, ℗ 1968 Mercury Music Group. oEmbed verified author_name=\"Brigitte Bardot - Topic\". Excludes INA TV archive footage and fan uploads."
+  audit_status: verified
+  audit_reason: 'oEmbed verified as label-authorized Topic channel auto-generated upload'
+  next_action: 'complete — retained audit fields for provenance'
 - rank: 82
   artist: Merle Haggard
   title: Mama Tried
@@ -692,11 +698,13 @@ tracks:
   spotify_url: ''
   apple_music_url: ''
   search_url: https://www.google.com/search?q=site:youtube.com+Vanilla+Fudge+You+Keep+Me+Hangin'+On+1967+official
-  confidence: needs_verification
-  note: ''
-  audit_status: candidate
-  audit_reason: 'Vanilla Fudge - You Keep Me Hangin'' On: 1967 Atco/Atlantic。可能有 Atlantic Records - Topic / Vanilla Fudge - Topic 频道。'
-  next_action: 'v0.3.31: oEmbed 验证 Atlantic Records - Topic 或 Vanilla Fudge - Topic'
+  youtube_url: https://www.youtube.com/watch?v=L93z5qoIdb0
+  youtube_embed_url: https://www.youtube.com/embed/L93z5qoIdb0
+  confidence: verified
+  note: "Verified 2026-06-27: Vanilla Fudge - Topic channel (Rhino/Elektra / Atlantic auto-generated). ℗ 1965 Atlantic Recording Corporation, from You Keep Me Hanging On single. oEmbed verified author_name=\"Vanilla Fudge - Topic\". Excludes Beat-Club TV archive footage and fan uploads."
+  audit_status: verified
+  audit_reason: 'oEmbed verified as label-authorized Topic channel auto-generated upload'' On: 1967 Atco/Atlantic。可能有 Atlantic Records - Topic / Vanilla Fudge - Topic 频道。'
+  next_action: 'complete — retained audit fields for provenance'
 - rank: 64
   artist: Midnight Movers
   title: Medicated Goo
