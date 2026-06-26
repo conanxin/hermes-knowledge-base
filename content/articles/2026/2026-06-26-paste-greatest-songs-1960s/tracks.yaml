@@ -1,709 +1,710 @@
-article_slug: "2026-06-26-paste-greatest-songs-1960s"
-coverage_scope: "rank_100_to_51_only"
-source_article_url: "https://www.pastemagazine.com/music/best-songs/the-greatest-songs-of-the-1960s/"
+article_slug: 2026-06-26-paste-greatest-songs-1960s
+coverage_scope: rank_100_to_51_only
+source_article_url: https://www.pastemagazine.com/music/best-songs/the-greatest-songs-of-the-1960s/
 schema_version: 1
-notes: |
-  All 50 tracks are pre-verified canonical songs from source.md.
+notes: 'All 50 tracks are pre-verified canonical songs from source.md.
+
   confidence = needs_verification for all tracks.
 
+  '
 tracks:
-  - rank: 100
-    artist: "Wayne Shorter"
-    title: "Infant Eyes"
-    year: 1966
-    contributor: "Mariam Abdel-Razek"
-    section_heading_source: "## #100. Wayne Shorter: “Infant Eyes” (1966)"
-    section_heading_translation: "## 100. Wayne Shorter：《Infant Eyes》（1966 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Wayne+Shorter+Infant+Eyes+1966+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 99
-    artist: "Pink Floyd"
-    title: "Bike"
-    year: 1967
-    contributor: "Casey Epstein-Gross"
-    section_heading_source: "## #99. Pink Floyd: “Bike” (1967)"
-    section_heading_translation: "## 99. Pink Floyd：《Bike》（1967 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Pink+Floyd+Bike+1967+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 98
-    artist: "The Miracles"
-    title: "I Second That Emotion"
-    year: 1967
-    contributor: "Matt Mitchell"
-    section_heading_source: "## #98. The Miracles: “I Second That Emotion” (1967)"
-    section_heading_translation: "## 98. The Miracles：《I Second That Emotion》（1967 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+The+Miracles+I+Second+That+Emotion+1967+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 97
-    artist: "Laura Nyro"
-    title: "Stoned Soul Picnic"
-    year: 1968
-    contributor: "Mariam Abdel-Razek"
-    section_heading_source: "## #97. Laura Nyro: “Stoned Soul Picnic” (1968)"
-    section_heading_translation: "## 97. Laura Nyro：《Stoned Soul Picnic》（1968 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Laura+Nyro+Stoned+Soul+Picnic+1968+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 96
-    artist: "King Crimson"
-    title: "21st Century Schizoid Man"
-    year: 1969
-    contributor: "Casey Epstein-Gross"
-    section_heading_source: "## #96. King Crimson: “21st Century Schizoid Man” (1969)"
-    section_heading_translation: "## 96. King Crimson：《21st Century Schizoid Man》（1969 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+King+Crimson+21st+Century+Schizoid+Man+1969+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 95
-    artist: "Eric Dolphy"
-    title: "Hat and Beard"
-    year: 1964
-    contributor: "Grant Sharples"
-    section_heading_source: "## #95. Eric Dolphy: “Hat and Beard” (1964)"
-    section_heading_translation: "## 95. Eric Dolphy：《Hat and Beard》（1964 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Eric+Dolphy+Hat+and+Beard+1964+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 94
-    artist: "Blind Faith"
-    title: "Had to Cry Today"
-    year: 1969
-    contributor: "Cassidy Sollazzo"
-    section_heading_source: "## #94. Blind Faith: “Had to Cry Today” (1969)"
-    section_heading_translation: "## 94. Blind Faith：《Had to Cry Today》（1969 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Blind+Faith+Had+to+Cry+Today+1969+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 93
-    artist: "Ike & Tina Turner"
-    title: "River Deep – Mountain High"
-    year: 1969
-    contributor: "Miranda Wollen"
-    section_heading_source: "## #93. Ike & Tina Turner: “River Deep – Mountain High” (1969)"
-    section_heading_translation: "## 93. Ike & Tina Turner：《River Deep – Mountain High》（1969 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Ike+&+Tina+Turner+River+Deep+–+Mountain+High+1969+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 92
-    artist: "Donovan"
-    title: "Epistle to Dippy"
-    year: 1966
-    contributor: "Casey Epstein-Gross"
-    section_heading_source: "## #92. Donovan: “Epistle to Dippy” (1966)"
-    section_heading_translation: "## 92. Donovan：《Epistle to Dippy》（1966 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Donovan+Epistle+to+Dippy+1966+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 91
-    artist: "Scott Walker"
-    title: "The Seventh Seal"
-    year: 1969
-    contributor: "Elise Soutar"
-    section_heading_source: "## #91. Scott Walker: “The Seventh Seal” (1969)"
-    section_heading_translation: "## 91. Scott Walker：《The Seventh Seal》（1969 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Scott+Walker+The+Seventh+Seal+1969+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 90
-    artist: "Patsy Cline"
-    title: "She's Got You"
-    year: 1962
-    contributor: "Matt Mitchell"
-    section_heading_source: "## #90. Patsy Cline: “She's Got You” (1962)"
-    section_heading_translation: "## 90. Patsy Cline：《She's Got You》（1962 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Patsy+Cline+She's+Got+You+1962+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 89
-    artist: "The Four Tops"
-    title: "Reach Out, I'll Be There"
-    year: 1966
-    contributor: "Casey Epstein-Gross"
-    section_heading_source: "## #89. The Four Tops: “Reach Out, I'll Be There” (1966)"
-    section_heading_translation: "## 89. The Four Tops：《Reach Out, I'll Be There》（1966 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+The+Four+Tops+Reach+Out,+I'll+Be+There+1966+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 88
-    artist: "Buffalo Springfield"
-    title: "Broken Arrow"
-    year: 1967
-    contributor: "Matt Mitchell"
-    section_heading_source: "## #88. Buffalo Springfield: “Broken Arrow” (1967)"
-    section_heading_translation: "## 88. Buffalo Springfield：《Broken Arrow》（1967 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Buffalo+Springfield+Broken+Arrow+1967+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 87
-    artist: "The Angels"
-    title: "My Boyfriend's Back"
-    year: 1963
-    contributor: "Matt Mitchell"
-    section_heading_source: "## #87. The Angels: “My Boyfriend's Back” (1963)"
-    section_heading_translation: "## 87. The Angels：《My Boyfriend's Back》（1963 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+The+Angels+My+Boyfriend's+Back+1963+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 86
-    artist: "Bill Evans & Jim Hall"
-    title: "Darn That Dream"
-    year: 1962
-    contributor: "Nathan Stevens"
-    section_heading_source: "## #86. Bill Evans & Jim Hall: “Darn That Dream” (1962)"
-    section_heading_translation: "## 86. Bill Evans & Jim Hall：《Darn That Dream》（1962 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Bill+Evans+&+Jim+Hall+Darn+That+Dream+1962+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 85
-    artist: "The Zombies"
-    title: "Care of Cell 44"
-    year: 1968
-    contributor: "Sam Rosenberg"
-    section_heading_source: "## #85. The Zombies: “Care of Cell 44” (1968)"
-    section_heading_translation: "## 85. The Zombies：《Care of Cell 44》（1968 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+The+Zombies+Care+of+Cell+44+1968+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 84
-    artist: "James Brown"
-    title: "Papa's Got a Brand New Bag"
-    year: 1965
-    contributor: "Grant Sharples"
-    section_heading_source: "## #84. James Brown: “Papa's Got a Brand New Bag” (1965)"
-    section_heading_translation: "## 84. James Brown：《Papa's Got a Brand New Bag》（1965 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+James+Brown+Papa's+Got+a+Brand+New+Bag+1965+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 83
-    artist: "Serge Gainsbourg & Brigitte Bardot"
-    title: "Bonnie and Clyde"
-    year: 1968
-    contributor: "Matt Mitchell"
-    section_heading_source: "## #83. Serge Gainsbourg & Brigitte Bardot: “Bonnie and Clyde” (1968)"
-    section_heading_translation: "## 83. Serge Gainsbourg & Brigitte Bardot：《Bonnie and Clyde》（1968 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Serge+Gainsbourg+&+Brigitte+Bardot+Bonnie+and+Clyde+1968+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 82
-    artist: "Merle Haggard"
-    title: "Mama Tried"
-    year: 1968
-    contributor: "Derrick Rossignol"
-    section_heading_source: "## #82. Merle Haggard: “Mama Tried” (1968)"
-    section_heading_translation: "## 82. Merle Haggard：《Mama Tried》（1968 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Merle+Haggard+Mama+Tried+1968+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 81
-    artist: "The Tammys"
-    title: "Egyptian Shumba"
-    year: 1963
-    contributor: "Elise Soutar"
-    section_heading_source: "## #81. The Tammys: “Egyptian Shumba” (1963)"
-    section_heading_translation: "## 81. The Tammys：《Egyptian Shumba》（1963 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+The+Tammys+Egyptian+Shumba+1963+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 80
-    artist: "Love"
-    title: "The Red Telephone"
-    year: 1967
-    contributor: "Casey Epstein-Gross"
-    section_heading_source: "## #80. Love: “The Red Telephone” (1967)"
-    section_heading_translation: "## 80. Love：《The Red Telephone》（1967 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Love+The+Red+Telephone+1967+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 79
-    artist: "Archie Bell & The Drells"
-    title: "Tighten Up"
-    year: 1968
-    contributor: "Matt Mitchell"
-    section_heading_source: "## #79. Archie Bell & The Drells: “Tighten Up” (1968)"
-    section_heading_translation: "## 79. Archie Bell & The Drells：《Tighten Up》（1968 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Archie+Bell+&+The+Drells+Tighten+Up+1968+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 78
-    artist: "The Byrds"
-    title: "What's Happening?"
-    year: 1966
-    contributor: "Cassidy Sollazzo"
-    section_heading_source: "## #78. The Byrds: “What's Happening?” (1966)"
-    section_heading_translation: "## 78. The Byrds：《What's Happening?》（1966 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+The+Byrds+What's+Happening?+1966+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 77
-    artist: "Buffy Sainte-Marie"
-    title: "Adam"
-    year: 1967
-    contributor: "Casey Epstein-Gross"
-    section_heading_source: "## #77. Buffy Sainte-Marie: “Adam” (1967)"
-    section_heading_translation: "## 77. Buffy Sainte-Marie：《Adam》（1967 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Buffy+Sainte-Marie+Adam+1967+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 76
-    artist: "Roy Orbison"
-    title: "In Dreams"
-    year: 1962
-    contributor: "Matt Melis"
-    section_heading_source: "## #76. Roy Orbison: “In Dreams” (1962)"
-    section_heading_translation: "## 76. Roy Orbison：《In Dreams》（1962 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Roy+Orbison+In+Dreams+1962+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 75
-    artist: "Led Zeppelin"
-    title: "What Is and What Should Never Be"
-    year: 1969
-    contributor: "Casey Epstein-Gross"
-    section_heading_source: "## #75. Led Zeppelin: “What Is and What Should Never Be” (1969)"
-    section_heading_translation: "## 75. Led Zeppelin：《What Is and What Should Never Be》（1969 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Led+Zeppelin+What+Is+and+What+Should+Never+Be+1969+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 74
-    artist: "Johnny Cash"
-    title: "Ring of Fire"
-    year: 1963
-    contributor: "Casey Epstein-Gross"
-    section_heading_source: "## #74. Johnny Cash: “Ring of Fire” (1963)"
-    section_heading_translation: "## 74. Johnny Cash：《Ring of Fire》（1963 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Johnny+Cash+Ring+of+Fire+1963+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 73
-    artist: "Charles Mingus"
-    title: "Track B-Duet Solo Dancers"
-    year: 1963
-    contributor: "Grant Sharples"
-    section_heading_source: "## #73. Charles Mingus: “Track B-Duet Solo Dancers” (1963)"
-    section_heading_translation: "## 73. Charles Mingus：《Track B-Duet Solo Dancers》（1963 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Charles+Mingus+Track+B-Duet+Solo+Dancers+1963+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 72
-    artist: "Os Mutantes"
-    title: "A Minha Menina"
-    year: 1968
-    contributor: "Mariam Abdel-Razek"
-    section_heading_source: "## #72. Os Mutantes: “A Minha Menina” (1968)"
-    section_heading_translation: "## 72. Os Mutantes：《A Minha Menina》（1968 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Os+Mutantes+A+Minha+Menina+1968+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 71
-    artist: "Albert Ayler"
-    title: "Ghosts"
-    year: 1964
-    contributor: "Matt Mitchell"
-    section_heading_source: "## #71. Albert Ayler: “Ghosts” (1964)"
-    section_heading_translation: "## 71. Albert Ayler：《Ghosts》（1964 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Albert+Ayler+Ghosts+1964+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 70
-    artist: "Tommy James & The Shondells"
-    title: "Crimson and Clover"
-    year: 1969
-    contributor: "Matt Mitchell"
-    section_heading_source: "## #70. Tommy James & The Shondells: “Crimson and Clover” (1969)"
-    section_heading_translation: "## 70. Tommy James & The Shondells：《Crimson and Clover》（1969 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Tommy+James+&+The+Shondells+Crimson+and+Clover+1969+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 69
-    artist: "Jacques Brel"
-    title: "J'Arrive"
-    year: 1968
-    contributor: "Nathan Stevens"
-    section_heading_source: "## #69. Jacques Brel: “J'Arrive” (1968)"
-    section_heading_translation: "## 69. Jacques Brel：《J'Arrive》（1968 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Jacques+Brel+J'Arrive+1968+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 68
-    artist: "Etta James"
-    title: "At Last"
-    year: 1960
-    contributor: "Grant Sharples"
-    section_heading_source: "## #68. Etta James: “At Last” (1960)"
-    section_heading_translation: "## 68. Etta James：《At Last》（1960 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Etta+James+At+Last+1960+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 67
-    artist: "Joni Mitchell"
-    title: "Cactus Tree"
-    year: 1968
-    contributor: "Cassidy Sollazzo"
-    section_heading_source: "## #67. Joni Mitchell: “Cactus Tree” (1968)"
-    section_heading_translation: "## 67. Joni Mitchell：《Cactus Tree》（1968 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Joni+Mitchell+Cactus+Tree+1968+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 66
-    artist: "Herbie Hancock"
-    title: "Cantaloupe Island"
-    year: 1964
-    contributor: "Mariam Abdel-Razek"
-    section_heading_source: "## #66. Herbie Hancock: “Cantaloupe Island” (1964)"
-    section_heading_translation: "## 66. Herbie Hancock：《Cantaloupe Island》（1964 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Herbie+Hancock+Cantaloupe+Island+1964+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 65
-    artist: "Vanilla Fudge"
-    title: "You Keep Me Hangin' On"
-    year: 1967
-    contributor: "Matt Mitchell"
-    section_heading_source: "## #65. Vanilla Fudge: “You Keep Me Hangin' On” (1967)"
-    section_heading_translation: "## 65. Vanilla Fudge：《You Keep Me Hangin' On》（1967 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Vanilla+Fudge+You+Keep+Me+Hangin'+On+1967+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 64
-    artist: "Midnight Movers"
-    title: "Medicated Goo"
-    year: 1969
-    contributor: "Matt Mitchell"
-    section_heading_source: "## #64. Midnight Movers: “Medicated Goo” (1969)"
-    section_heading_translation: "## 64. Midnight Movers：《Medicated Goo》（1969 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Midnight+Movers+Medicated+Goo+1969+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 63
-    artist: "Loretta Lynn"
-    title: "Don't Come Home a Drinkin' (With Lovin' on Your Mind)"
-    year: 1967
-    contributor: "Derrick Rossignol"
-    section_heading_source: "## #63. Loretta Lynn: “Don't Come Home a Drinkin' (With Lovin' on Your Mind)” (1967)"
-    section_heading_translation: "## 63. Loretta Lynn：《Don't Come Home a Drinkin' (With Lovin' on Your Mind)》（1967 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Loretta+Lynn+Don't+Come+Home+a+Drinkin'+(With+Lovin'+on+Your+Mind)+1967+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 62
-    artist: "The Temptations"
-    title: "Ain't Too Proud to Beg"
-    year: 1966
-    contributor: "Elise Soutar"
-    section_heading_source: "## #62. The Temptations: “Ain't Too Proud to Beg” (1966)"
-    section_heading_translation: "## 62. The Temptations：《Ain't Too Proud to Beg》（1966 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+The+Temptations+Ain't+Too+Proud+to+Beg+1966+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 61
-    artist: "Captain Beefheart and His Magic Band"
-    title: "Moonlight on Vermont"
-    year: 1969
-    contributor: "Derrick Rossignol"
-    section_heading_source: "## #61. Captain Beefheart and His Magic Band: “Moonlight on Vermont” (1969)"
-    section_heading_translation: "## 61. Captain Beefheart and His Magic Band：《Moonlight on Vermont》（1969 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Captain+Beefheart+and+His+Magic+Band+Moonlight+on+Vermont+1969+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 60
-    artist: "The Chiffons"
-    title: "One Fine Day"
-    year: 1963
-    contributor: "Sam Rosenberg"
-    section_heading_source: "## #60. The Chiffons: “One Fine Day” (1963)"
-    section_heading_translation: "## 60. The Chiffons：《One Fine Day》（1963 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+The+Chiffons+One+Fine+Day+1963+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 59
-    artist: "Elvis Presley"
-    title: "Suspicious Minds"
-    year: 1969
-    contributor: "Elise Soutar"
-    section_heading_source: "## #59. Elvis Presley: “Suspicious Minds” (1969)"
-    section_heading_translation: "## 59. Elvis Presley：《Suspicious Minds》（1969 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Elvis+Presley+Suspicious+Minds+1969+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 58
-    artist: "The Cannonball Adderley Quintet"
-    title: "Mercy, Mercy, Mercy"
-    year: 1966
-    contributor: "Nathan Stevens"
-    section_heading_source: "## #58. The Cannonball Adderley Quintet: “Mercy, Mercy, Mercy” (1966)"
-    section_heading_translation: "## 58. The Cannonball Adderley Quintet：《Mercy, Mercy, Mercy》（1966 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+The+Cannonball+Adderley+Quintet+Mercy,+Mercy,+Mercy+1966+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 57
-    artist: "Marvin Gaye"
-    title: "I Heard It Through the Grapevine"
-    year: 1968
-    contributor: "Miranda Wollen"
-    section_heading_source: "## #57. Marvin Gaye: “I Heard It Through the Grapevine” (1968)"
-    section_heading_translation: "## 57. Marvin Gaye：《I Heard It Through the Grapevine》（1968 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Marvin+Gaye+I+Heard+It+Through+the+Grapevine+1968+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 56
-    artist: "Harry Nilsson"
-    title: "Everybody's Talkin'"
-    year: 1968
-    contributor: "Sam Rosenberg"
-    section_heading_source: "## #56. Harry Nilsson: “Everybody's Talkin'” (1968)"
-    section_heading_translation: "## 56. Harry Nilsson：《Everybody's Talkin'》（1968 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Harry+Nilsson+Everybody's+Talkin'+1968+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 55
-    artist: "Ketty Lester"
-    title: "Love Letters"
-    year: 1961
-    contributor: "Sam Rosenberg"
-    section_heading_source: "## #55. Ketty Lester: “Love Letters” (1961)"
-    section_heading_translation: "## 55. Ketty Lester：《Love Letters》（1961 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Ketty+Lester+Love+Letters+1961+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 54
-    artist: "The Sonics"
-    title: "Strychnine"
-    year: 1965
-    contributor: "Derrick Rossignol"
-    section_heading_source: "## #54. The Sonics: “Strychnine” (1965)"
-    section_heading_translation: "## 54. The Sonics：《Strychnine》（1965 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+The+Sonics+Strychnine+1965+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 53
-    artist: "Jorge Ben"
-    title: "Mas, que nada!"
-    year: 1963
-    contributor: "Sam Rosenberg"
-    section_heading_source: "## #53. Jorge Ben: “Mas, que nada!” (1963)"
-    section_heading_translation: "## 53. Jorge Ben：《Mas, que nada!》（1963 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Jorge+Ben+Mas,+que+nada!+1963+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 52
-    artist: "The Who"
-    title: "Anyway Anyhow Anywhere"
-    year: 1965
-    contributor: "Cassidy Sollazzo"
-    section_heading_source: "## #52. The Who: “Anyway Anyhow Anywhere” (1965)"
-    section_heading_translation: "## 52. The Who：《Anyway Anyhow Anywhere》（1965 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+The+Who+Anyway+Anyhow+Anywhere+1965+official"
-    confidence: "needs_verification"
-    note: ""
-  - rank: 51
-    artist: "Stan Getz & João Gilberto"
-    title: "The Girl From Ipanema"
-    year: 1964
-    contributor: "Miranda Wollen"
-    section_heading_source: "## #51. Stan Getz & João Gilberto: “The Girl From Ipanema” (1964)"
-    section_heading_translation: "## 51. Stan Getz & João Gilberto：《The Girl From Ipanema》（1964 年）"
-    youtube_url: ""
-    youtube_embed_url: ""
-    spotify_url: ""
-    apple_music_url: ""
-    search_url: "https://www.google.com/search?q=site:youtube.com+Stan+Getz+&+João+Gilberto+The+Girl+From+Ipanema+1964+official"
-    confidence: "needs_verification"
-    note: ""
+- rank: 100
+  artist: Wayne Shorter
+  title: Infant Eyes
+  year: 1966
+  contributor: Mariam Abdel-Razek
+  section_heading_source: '## #100. Wayne Shorter: “Infant Eyes” (1966)'
+  section_heading_translation: '## 100. Wayne Shorter：《Infant Eyes》（1966 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Wayne+Shorter+Infant+Eyes+1966+official
+  confidence: needs_verification
+  note: ''
+- rank: 99
+  artist: Pink Floyd
+  title: Bike
+  year: 1967
+  contributor: Casey Epstein-Gross
+  section_heading_source: '## #99. Pink Floyd: “Bike” (1967)'
+  section_heading_translation: '## 99. Pink Floyd：《Bike》（1967 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Pink+Floyd+Bike+1967+official
+  confidence: needs_verification
+  note: ''
+- rank: 98
+  artist: The Miracles
+  title: I Second That Emotion
+  year: 1967
+  contributor: Matt Mitchell
+  section_heading_source: '## #98. The Miracles: “I Second That Emotion” (1967)'
+  section_heading_translation: '## 98. The Miracles：《I Second That Emotion》（1967 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+The+Miracles+I+Second+That+Emotion+1967+official
+  confidence: needs_verification
+  note: ''
+- rank: 97
+  artist: Laura Nyro
+  title: Stoned Soul Picnic
+  year: 1968
+  contributor: Mariam Abdel-Razek
+  section_heading_source: '## #97. Laura Nyro: “Stoned Soul Picnic” (1968)'
+  section_heading_translation: '## 97. Laura Nyro：《Stoned Soul Picnic》（1968 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Laura+Nyro+Stoned+Soul+Picnic+1968+official
+  confidence: needs_verification
+  note: ''
+- rank: 96
+  artist: King Crimson
+  title: 21st Century Schizoid Man
+  year: 1969
+  contributor: Casey Epstein-Gross
+  section_heading_source: '## #96. King Crimson: “21st Century Schizoid Man” (1969)'
+  section_heading_translation: '## 96. King Crimson：《21st Century Schizoid Man》（1969 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+King+Crimson+21st+Century+Schizoid+Man+1969+official
+  confidence: needs_verification
+  note: ''
+- rank: 95
+  artist: Eric Dolphy
+  title: Hat and Beard
+  year: 1964
+  contributor: Grant Sharples
+  section_heading_source: '## #95. Eric Dolphy: “Hat and Beard” (1964)'
+  section_heading_translation: '## 95. Eric Dolphy：《Hat and Beard》（1964 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Eric+Dolphy+Hat+and+Beard+1964+official
+  confidence: needs_verification
+  note: ''
+- rank: 94
+  artist: Blind Faith
+  title: Had to Cry Today
+  year: 1969
+  contributor: Cassidy Sollazzo
+  section_heading_source: '## #94. Blind Faith: “Had to Cry Today” (1969)'
+  section_heading_translation: '## 94. Blind Faith：《Had to Cry Today》（1969 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Blind+Faith+Had+to+Cry+Today+1969+official
+  confidence: needs_verification
+  note: ''
+- rank: 93
+  artist: Ike & Tina Turner
+  title: River Deep – Mountain High
+  year: 1969
+  contributor: Miranda Wollen
+  section_heading_source: '## #93. Ike & Tina Turner: “River Deep – Mountain High” (1969)'
+  section_heading_translation: '## 93. Ike & Tina Turner：《River Deep – Mountain High》（1969 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Ike+&+Tina+Turner+River+Deep+–+Mountain+High+1969+official
+  confidence: needs_verification
+  note: ''
+- rank: 92
+  artist: Donovan
+  title: Epistle to Dippy
+  year: 1966
+  contributor: Casey Epstein-Gross
+  section_heading_source: '## #92. Donovan: “Epistle to Dippy” (1966)'
+  section_heading_translation: '## 92. Donovan：《Epistle to Dippy》（1966 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Donovan+Epistle+to+Dippy+1966+official
+  confidence: needs_verification
+  note: ''
+- rank: 91
+  artist: Scott Walker
+  title: The Seventh Seal
+  year: 1969
+  contributor: Elise Soutar
+  section_heading_source: '## #91. Scott Walker: “The Seventh Seal” (1969)'
+  section_heading_translation: '## 91. Scott Walker：《The Seventh Seal》（1969 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Scott+Walker+The+Seventh+Seal+1969+official
+  confidence: needs_verification
+  note: ''
+- rank: 90
+  artist: Patsy Cline
+  title: She's Got You
+  year: 1962
+  contributor: Matt Mitchell
+  section_heading_source: '## #90. Patsy Cline: “She''s Got You” (1962)'
+  section_heading_translation: '## 90. Patsy Cline：《She''s Got You》（1962 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Patsy+Cline+She's+Got+You+1962+official
+  confidence: needs_verification
+  note: ''
+- rank: 89
+  artist: The Four Tops
+  title: Reach Out, I'll Be There
+  year: 1966
+  contributor: Casey Epstein-Gross
+  section_heading_source: '## #89. The Four Tops: “Reach Out, I''ll Be There” (1966)'
+  section_heading_translation: '## 89. The Four Tops：《Reach Out, I''ll Be There》（1966 年）'
+  youtube_url: https://www.youtube.com/watch?v=17DpxQfSL_U
+  youtube_embed_url: https://www.youtube.com/embed/17DpxQfSL_U
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+The+Four+Tops+Reach+Out,+I'll+Be+There+1966+official
+  confidence: verified
+  note: 'Verified 2026-06-26: The Four Tops - Topic channel (YouTube auto-generated by UMG/Motown Content ID, label-authorized; 89.3K subs). 1966 Motown canonical recording from album "Reach Out". Not a cover/live/reaction/karaoke/lyric-video. Spotify/Apple Music URLs not verified in this pilot - left empty.'
+- rank: 88
+  artist: Buffalo Springfield
+  title: Broken Arrow
+  year: 1967
+  contributor: Matt Mitchell
+  section_heading_source: '## #88. Buffalo Springfield: “Broken Arrow” (1967)'
+  section_heading_translation: '## 88. Buffalo Springfield：《Broken Arrow》（1967 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Buffalo+Springfield+Broken+Arrow+1967+official
+  confidence: needs_verification
+  note: ''
+- rank: 87
+  artist: The Angels
+  title: My Boyfriend's Back
+  year: 1963
+  contributor: Matt Mitchell
+  section_heading_source: '## #87. The Angels: “My Boyfriend''s Back” (1963)'
+  section_heading_translation: '## 87. The Angels：《My Boyfriend''s Back》（1963 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+The+Angels+My+Boyfriend's+Back+1963+official
+  confidence: needs_verification
+  note: ''
+- rank: 86
+  artist: Bill Evans & Jim Hall
+  title: Darn That Dream
+  year: 1962
+  contributor: Nathan Stevens
+  section_heading_source: '## #86. Bill Evans & Jim Hall: “Darn That Dream” (1962)'
+  section_heading_translation: '## 86. Bill Evans & Jim Hall：《Darn That Dream》（1962 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Bill+Evans+&+Jim+Hall+Darn+That+Dream+1962+official
+  confidence: needs_verification
+  note: ''
+- rank: 85
+  artist: The Zombies
+  title: Care of Cell 44
+  year: 1968
+  contributor: Sam Rosenberg
+  section_heading_source: '## #85. The Zombies: “Care of Cell 44” (1968)'
+  section_heading_translation: '## 85. The Zombies：《Care of Cell 44》（1968 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+The+Zombies+Care+of+Cell+44+1968+official
+  confidence: needs_verification
+  note: ''
+- rank: 84
+  artist: James Brown
+  title: Papa's Got a Brand New Bag
+  year: 1965
+  contributor: Grant Sharples
+  section_heading_source: '## #84. James Brown: “Papa''s Got a Brand New Bag” (1965)'
+  section_heading_translation: '## 84. James Brown：《Papa''s Got a Brand New Bag》（1965 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+James+Brown+Papa's+Got+a+Brand+New+Bag+1965+official
+  confidence: needs_verification
+  note: ''
+- rank: 83
+  artist: Serge Gainsbourg & Brigitte Bardot
+  title: Bonnie and Clyde
+  year: 1968
+  contributor: Matt Mitchell
+  section_heading_source: '## #83. Serge Gainsbourg & Brigitte Bardot: “Bonnie and Clyde” (1968)'
+  section_heading_translation: '## 83. Serge Gainsbourg & Brigitte Bardot：《Bonnie and Clyde》（1968 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Serge+Gainsbourg+&+Brigitte+Bardot+Bonnie+and+Clyde+1968+official
+  confidence: needs_verification
+  note: ''
+- rank: 82
+  artist: Merle Haggard
+  title: Mama Tried
+  year: 1968
+  contributor: Derrick Rossignol
+  section_heading_source: '## #82. Merle Haggard: “Mama Tried” (1968)'
+  section_heading_translation: '## 82. Merle Haggard：《Mama Tried》（1968 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Merle+Haggard+Mama+Tried+1968+official
+  confidence: needs_verification
+  note: ''
+- rank: 81
+  artist: The Tammys
+  title: Egyptian Shumba
+  year: 1963
+  contributor: Elise Soutar
+  section_heading_source: '## #81. The Tammys: “Egyptian Shumba” (1963)'
+  section_heading_translation: '## 81. The Tammys：《Egyptian Shumba》（1963 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+The+Tammys+Egyptian+Shumba+1963+official
+  confidence: needs_verification
+  note: ''
+- rank: 80
+  artist: Love
+  title: The Red Telephone
+  year: 1967
+  contributor: Casey Epstein-Gross
+  section_heading_source: '## #80. Love: “The Red Telephone” (1967)'
+  section_heading_translation: '## 80. Love：《The Red Telephone》（1967 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Love+The+Red+Telephone+1967+official
+  confidence: needs_verification
+  note: ''
+- rank: 79
+  artist: Archie Bell & The Drells
+  title: Tighten Up
+  year: 1968
+  contributor: Matt Mitchell
+  section_heading_source: '## #79. Archie Bell & The Drells: “Tighten Up” (1968)'
+  section_heading_translation: '## 79. Archie Bell & The Drells：《Tighten Up》（1968 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Archie+Bell+&+The+Drells+Tighten+Up+1968+official
+  confidence: needs_verification
+  note: ''
+- rank: 78
+  artist: The Byrds
+  title: What's Happening?
+  year: 1966
+  contributor: Cassidy Sollazzo
+  section_heading_source: '## #78. The Byrds: “What''s Happening?” (1966)'
+  section_heading_translation: '## 78. The Byrds：《What''s Happening?》（1966 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+The+Byrds+What's+Happening?+1966+official
+  confidence: needs_verification
+  note: ''
+- rank: 77
+  artist: Buffy Sainte-Marie
+  title: Adam
+  year: 1967
+  contributor: Casey Epstein-Gross
+  section_heading_source: '## #77. Buffy Sainte-Marie: “Adam” (1967)'
+  section_heading_translation: '## 77. Buffy Sainte-Marie：《Adam》（1967 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Buffy+Sainte-Marie+Adam+1967+official
+  confidence: needs_verification
+  note: ''
+- rank: 76
+  artist: Roy Orbison
+  title: In Dreams
+  year: 1962
+  contributor: Matt Melis
+  section_heading_source: '## #76. Roy Orbison: “In Dreams” (1962)'
+  section_heading_translation: '## 76. Roy Orbison：《In Dreams》（1962 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Roy+Orbison+In+Dreams+1962+official
+  confidence: needs_verification
+  note: ''
+- rank: 75
+  artist: Led Zeppelin
+  title: What Is and What Should Never Be
+  year: 1969
+  contributor: Casey Epstein-Gross
+  section_heading_source: '## #75. Led Zeppelin: “What Is and What Should Never Be” (1969)'
+  section_heading_translation: '## 75. Led Zeppelin：《What Is and What Should Never Be》（1969 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Led+Zeppelin+What+Is+and+What+Should+Never+Be+1969+official
+  confidence: needs_verification
+  note: ''
+- rank: 74
+  artist: Johnny Cash
+  title: Ring of Fire
+  year: 1963
+  contributor: Casey Epstein-Gross
+  section_heading_source: '## #74. Johnny Cash: “Ring of Fire” (1963)'
+  section_heading_translation: '## 74. Johnny Cash：《Ring of Fire》（1963 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Johnny+Cash+Ring+of+Fire+1963+official
+  confidence: needs_verification
+  note: ''
+- rank: 73
+  artist: Charles Mingus
+  title: Track B-Duet Solo Dancers
+  year: 1963
+  contributor: Grant Sharples
+  section_heading_source: '## #73. Charles Mingus: “Track B-Duet Solo Dancers” (1963)'
+  section_heading_translation: '## 73. Charles Mingus：《Track B-Duet Solo Dancers》（1963 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Charles+Mingus+Track+B-Duet+Solo+Dancers+1963+official
+  confidence: needs_verification
+  note: ''
+- rank: 72
+  artist: Os Mutantes
+  title: A Minha Menina
+  year: 1968
+  contributor: Mariam Abdel-Razek
+  section_heading_source: '## #72. Os Mutantes: “A Minha Menina” (1968)'
+  section_heading_translation: '## 72. Os Mutantes：《A Minha Menina》（1968 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Os+Mutantes+A+Minha+Menina+1968+official
+  confidence: needs_verification
+  note: ''
+- rank: 71
+  artist: Albert Ayler
+  title: Ghosts
+  year: 1964
+  contributor: Matt Mitchell
+  section_heading_source: '## #71. Albert Ayler: “Ghosts” (1964)'
+  section_heading_translation: '## 71. Albert Ayler：《Ghosts》（1964 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Albert+Ayler+Ghosts+1964+official
+  confidence: needs_verification
+  note: ''
+- rank: 70
+  artist: Tommy James & The Shondells
+  title: Crimson and Clover
+  year: 1969
+  contributor: Matt Mitchell
+  section_heading_source: '## #70. Tommy James & The Shondells: “Crimson and Clover” (1969)'
+  section_heading_translation: '## 70. Tommy James & The Shondells：《Crimson and Clover》（1969 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Tommy+James+&+The+Shondells+Crimson+and+Clover+1969+official
+  confidence: needs_verification
+  note: ''
+- rank: 69
+  artist: Jacques Brel
+  title: J'Arrive
+  year: 1968
+  contributor: Nathan Stevens
+  section_heading_source: '## #69. Jacques Brel: “J''Arrive” (1968)'
+  section_heading_translation: '## 69. Jacques Brel：《J''Arrive》（1968 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Jacques+Brel+J'Arrive+1968+official
+  confidence: needs_verification
+  note: ''
+- rank: 68
+  artist: Etta James
+  title: At Last
+  year: 1960
+  contributor: Grant Sharples
+  section_heading_source: '## #68. Etta James: “At Last” (1960)'
+  section_heading_translation: '## 68. Etta James：《At Last》（1960 年）'
+  youtube_url: https://www.youtube.com/watch?v=1qJU8G7gR_g
+  youtube_embed_url: https://www.youtube.com/embed/1qJU8G7gR_g
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Etta+James+At+Last+1960+official
+  confidence: verified
+  note: 'Verified 2026-06-26: Etta James official YouTube channel (436K subscribers); 76M+ views; canonical 1960 Chess Records recording. Not a cover/live/reaction/karaoke version. Spotify/Apple Music URLs not verified in this pilot - left empty.'
+- rank: 67
+  artist: Joni Mitchell
+  title: Cactus Tree
+  year: 1968
+  contributor: Cassidy Sollazzo
+  section_heading_source: '## #67. Joni Mitchell: “Cactus Tree” (1968)'
+  section_heading_translation: '## 67. Joni Mitchell：《Cactus Tree》（1968 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Joni+Mitchell+Cactus+Tree+1968+official
+  confidence: needs_verification
+  note: ''
+- rank: 66
+  artist: Herbie Hancock
+  title: Cantaloupe Island
+  year: 1964
+  contributor: Mariam Abdel-Razek
+  section_heading_source: '## #66. Herbie Hancock: “Cantaloupe Island” (1964)'
+  section_heading_translation: '## 66. Herbie Hancock：《Cantaloupe Island》（1964 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Herbie+Hancock+Cantaloupe+Island+1964+official
+  confidence: needs_verification
+  note: ''
+- rank: 65
+  artist: Vanilla Fudge
+  title: You Keep Me Hangin' On
+  year: 1967
+  contributor: Matt Mitchell
+  section_heading_source: '## #65. Vanilla Fudge: “You Keep Me Hangin'' On” (1967)'
+  section_heading_translation: '## 65. Vanilla Fudge：《You Keep Me Hangin'' On》（1967 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Vanilla+Fudge+You+Keep+Me+Hangin'+On+1967+official
+  confidence: needs_verification
+  note: ''
+- rank: 64
+  artist: Midnight Movers
+  title: Medicated Goo
+  year: 1969
+  contributor: Matt Mitchell
+  section_heading_source: '## #64. Midnight Movers: “Medicated Goo” (1969)'
+  section_heading_translation: '## 64. Midnight Movers：《Medicated Goo》（1969 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Midnight+Movers+Medicated+Goo+1969+official
+  confidence: needs_verification
+  note: ''
+- rank: 63
+  artist: Loretta Lynn
+  title: Don't Come Home a Drinkin' (With Lovin' on Your Mind)
+  year: 1967
+  contributor: Derrick Rossignol
+  section_heading_source: '## #63. Loretta Lynn: “Don''t Come Home a Drinkin'' (With Lovin'' on Your Mind)” (1967)'
+  section_heading_translation: '## 63. Loretta Lynn：《Don''t Come Home a Drinkin'' (With Lovin'' on Your Mind)》（1967 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Loretta+Lynn+Don't+Come+Home+a+Drinkin'+(With+Lovin'+on+Your+Mind)+1967+official
+  confidence: needs_verification
+  note: ''
+- rank: 62
+  artist: The Temptations
+  title: Ain't Too Proud to Beg
+  year: 1966
+  contributor: Elise Soutar
+  section_heading_source: '## #62. The Temptations: “Ain''t Too Proud to Beg” (1966)'
+  section_heading_translation: '## 62. The Temptations：《Ain''t Too Proud to Beg》（1966 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+The+Temptations+Ain't+Too+Proud+to+Beg+1966+official
+  confidence: needs_verification
+  note: ''
+- rank: 61
+  artist: Captain Beefheart and His Magic Band
+  title: Moonlight on Vermont
+  year: 1969
+  contributor: Derrick Rossignol
+  section_heading_source: '## #61. Captain Beefheart and His Magic Band: “Moonlight on Vermont” (1969)'
+  section_heading_translation: '## 61. Captain Beefheart and His Magic Band：《Moonlight on Vermont》（1969 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Captain+Beefheart+and+His+Magic+Band+Moonlight+on+Vermont+1969+official
+  confidence: needs_verification
+  note: ''
+- rank: 60
+  artist: The Chiffons
+  title: One Fine Day
+  year: 1963
+  contributor: Sam Rosenberg
+  section_heading_source: '## #60. The Chiffons: “One Fine Day” (1963)'
+  section_heading_translation: '## 60. The Chiffons：《One Fine Day》（1963 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+The+Chiffons+One+Fine+Day+1963+official
+  confidence: needs_verification
+  note: ''
+- rank: 59
+  artist: Elvis Presley
+  title: Suspicious Minds
+  year: 1969
+  contributor: Elise Soutar
+  section_heading_source: '## #59. Elvis Presley: “Suspicious Minds” (1969)'
+  section_heading_translation: '## 59. Elvis Presley：《Suspicious Minds》（1969 年）'
+  youtube_url: https://www.youtube.com/watch?v=WrMGGouem3c
+  youtube_embed_url: https://www.youtube.com/embed/WrMGGouem3c
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Elvis+Presley+Suspicious+Minds+1969+official
+  confidence: verified
+  note: 'Verified 2026-06-26: Elvis Presley official YouTube channel (@elvispresley). Marked as "Official Music Video" in title; 1969 RCA Records canonical recording. Not a cover/live/reaction/karaoke. Spotify/Apple Music URLs not verified in this pilot - left empty.'
+- rank: 58
+  artist: The Cannonball Adderley Quintet
+  title: Mercy, Mercy, Mercy
+  year: 1966
+  contributor: Nathan Stevens
+  section_heading_source: '## #58. The Cannonball Adderley Quintet: “Mercy, Mercy, Mercy” (1966)'
+  section_heading_translation: '## 58. The Cannonball Adderley Quintet：《Mercy, Mercy, Mercy》（1966 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+The+Cannonball+Adderley+Quintet+Mercy,+Mercy,+Mercy+1966+official
+  confidence: needs_verification
+  note: ''
+- rank: 57
+  artist: Marvin Gaye
+  title: I Heard It Through the Grapevine
+  year: 1968
+  contributor: Miranda Wollen
+  section_heading_source: '## #57. Marvin Gaye: “I Heard It Through the Grapevine” (1968)'
+  section_heading_translation: '## 57. Marvin Gaye：《I Heard It Through the Grapevine》（1968 年）'
+  youtube_url: https://www.youtube.com/watch?v=kAPj9oP4q_w
+  youtube_embed_url: https://www.youtube.com/embed/kAPj9oP4q_w
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Marvin+Gaye+I+Heard+It+Through+the+Grapevine+1968+official
+  confidence: verified
+  note: 'Verified 2026-06-26: Marvin Gaye - Topic channel (YouTube auto-generated by UMG/Motown Content ID, label-authorized). 1968 Motown canonical recording (UMG Recordings, Inc). Not a cover/live/reaction/karaoke. Spotify/Apple Music URLs not verified in this pilot - left empty.'
+- rank: 56
+  artist: Harry Nilsson
+  title: Everybody's Talkin'
+  year: 1968
+  contributor: Sam Rosenberg
+  section_heading_source: '## #56. Harry Nilsson: “Everybody''s Talkin''” (1968)'
+  section_heading_translation: '## 56. Harry Nilsson：《Everybody''s Talkin''》（1968 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Harry+Nilsson+Everybody's+Talkin'+1968+official
+  confidence: needs_verification
+  note: ''
+- rank: 55
+  artist: Ketty Lester
+  title: Love Letters
+  year: 1961
+  contributor: Sam Rosenberg
+  section_heading_source: '## #55. Ketty Lester: “Love Letters” (1961)'
+  section_heading_translation: '## 55. Ketty Lester：《Love Letters》（1961 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Ketty+Lester+Love+Letters+1961+official
+  confidence: needs_verification
+  note: ''
+- rank: 54
+  artist: The Sonics
+  title: Strychnine
+  year: 1965
+  contributor: Derrick Rossignol
+  section_heading_source: '## #54. The Sonics: “Strychnine” (1965)'
+  section_heading_translation: '## 54. The Sonics：《Strychnine》（1965 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+The+Sonics+Strychnine+1965+official
+  confidence: needs_verification
+  note: ''
+- rank: 53
+  artist: Jorge Ben
+  title: Mas, que nada!
+  year: 1963
+  contributor: Sam Rosenberg
+  section_heading_source: '## #53. Jorge Ben: “Mas, que nada!” (1963)'
+  section_heading_translation: '## 53. Jorge Ben：《Mas, que nada!》（1963 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Jorge+Ben+Mas,+que+nada!+1963+official
+  confidence: needs_verification
+  note: ''
+- rank: 52
+  artist: The Who
+  title: Anyway Anyhow Anywhere
+  year: 1965
+  contributor: Cassidy Sollazzo
+  section_heading_source: '## #52. The Who: “Anyway Anyhow Anywhere” (1965)'
+  section_heading_translation: '## 52. The Who：《Anyway Anyhow Anywhere》（1965 年）'
+  youtube_url: ''
+  youtube_embed_url: ''
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+The+Who+Anyway+Anyhow+Anywhere+1965+official
+  confidence: needs_verification
+  note: ''
+- rank: 51
+  artist: Stan Getz & João Gilberto
+  title: The Girl From Ipanema
+  year: 1964
+  contributor: Miranda Wollen
+  section_heading_source: '## #51. Stan Getz & João Gilberto: “The Girl From Ipanema” (1964)'
+  section_heading_translation: '## 51. Stan Getz & João Gilberto：《The Girl From Ipanema》（1964 年）'
+  youtube_url: https://www.youtube.com/watch?v=s61-e29Vr6Q
+  youtube_embed_url: https://www.youtube.com/embed/s61-e29Vr6Q
+  spotify_url: ''
+  apple_music_url: ''
+  search_url: https://www.google.com/search?q=site:youtube.com+Stan+Getz+&+João+Gilberto+The+Girl+From+Ipanema+1964+official
+  confidence: verified
+  note: 'Verified 2026-06-26: Verve/UMe first-ever official music video (released July 22, 2020 by UMe + Verve Records for the Summer Samba! season). Canonical 1964 Getz/Gilberto album recording featuring Astrud Gilberto. Not a cover/live/reaction/karaoke. Spotify/Apple Music URLs not verified in this pilot - left empty.'

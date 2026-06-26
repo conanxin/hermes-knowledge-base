@@ -246,6 +246,23 @@ def validate_tracks_file(path: Path) -> list[str]:
         if search and not URL_PATTERN.match(search):
             issues.append(f"{label}: search_url is set but not a valid URL ({search[:60]!r})")
 
+        # v0.3.20: verified tracks must have at least one playable URL and a note.
+        if conf == "verified":
+            has_yt = bool(t.get("youtube_embed_url", "") or "")
+            has_spotify = bool(t.get("spotify_url", "") or "")
+            has_apple = bool(t.get("apple_music_url", "") or "")
+            if not (has_yt or has_spotify or has_apple):
+                issues.append(
+                    f"{label}: confidence=verified but no playable URL "
+                    f"(youtube_embed_url/spotify_url/apple_music_url all empty)"
+                )
+            note = (t.get("note", "") or "").strip()
+            if not note:
+                issues.append(
+                    f"{label}: confidence=verified but note is empty "
+                    f"(must document verification source per MUSIC_ARTICLE_RULES)"
+                )
+
     return issues
 
 
@@ -356,7 +373,7 @@ def main() -> int:
         if conf_counts.get("verified", 0) == 0:
             print("STATUS: WARNING — no tracks with confidence=verified; all require human URL review")
         else:
-            print("STATUS: PASS")
+            print("STATUS: PASS — verified tracks present, with_playable_urls checked")
     else:
         print("")
         print("STATUS: PASS")
