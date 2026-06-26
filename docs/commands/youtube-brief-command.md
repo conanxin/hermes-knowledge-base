@@ -33,12 +33,12 @@
 ## 输出目录规则
 
 ```
-~/.openclaw/workspace/outputs/youtube-video-brief/YYYYMMDD-video-title-slug/
+<youtube-video-brief-output>/YYYYMMDD-video-title-slug/
 ```
 
 **示例**:
 ```
-~/.openclaw/workspace/outputs/youtube-video-brief/20260625-conan-harvard-commencement-2026/
+<youtube-video-brief-output>/20260625-conan-harvard-commencement-2026/
 ```
 
 ---
@@ -73,7 +73,7 @@
 ## 成功案例路径
 
 ```
-~/.openclaw/workspace/outputs/youtube-video-brief/20260625-conan-harvard-commencement-2026/
+<youtube-video-brief-output>/20260625-conan-harvard-commencement-2026/
 ```
 
 **案例内容**: Conan O'Brien 哈佛大学 2026 毕业典礼演讲（24 分 53 秒）
@@ -107,8 +107,8 @@
 
 | 文档 | 路径 |
 |------|------|
-| 完整 Workflow 文档 | `~/.openclaw/workspace/docs/workflows/youtube-video-brief-workflow.md` |
-| 本命令说明 | `~/.openclaw/workspace/docs/commands/youtube-brief-command.md` |
+| 完整 Workflow 文档 | `docs/workflows/youtube-video-brief-workflow.md` |
+| 本命令说明 | `docs/commands/youtube-brief-command.md` |
 
 ---
 

@@ -211,7 +211,7 @@ git push origin HEAD
 
 ```
 请把这个 YouTube 视频解读产物加入知识库：
-~/.openclaw/workspace/outputs/youtube-video-brief/20260625-conan-harvard-commencement-2026/
+<youtube-video-brief-output>/20260625-conan-harvard-commencement-2026/
 ```
 
 ---
@@ -226,13 +226,13 @@ git push origin HEAD
 目标：把已经解读完成的 YouTube 视频知识包加入到 GitHub 知识库。
 
 视频解读产物目录：
-~/.openclaw/workspace/outputs/youtube-video-brief/20260625-conan-harvard-commencement-2026/
+<youtube-video-brief-output>/20260625-conan-harvard-commencement-2026/
 
 已有 OpenClaw workflow：
-~/.openclaw/workspace/docs/workflows/youtube-video-brief-workflow.md
+docs/workflows/youtube-video-brief-workflow.md
 
 已有快捷命令文档：
-~/.openclaw/workspace/docs/commands/youtube-brief-command.md
+docs/commands/youtube-brief-command.md
 
 Hermes Knowledge Base 仓库目录：~/hermes-knowledge-base
 GitHub repo：https://github.com/conanxin/hermes-knowledge-base
@@ -258,7 +258,7 @@ GitHub repo：https://github.com/conanxin/hermes-knowledge-base
 
 最终回复：
 OPENCLAW_STATUS: PASS 或 BLOCKED
-KB_REPO: /home/ubuntu/hermes-knowledge-base
+KB_REPO: ~/hermes-knowledge-base
 VIDEO_ENTRY: <视频知识库条目路径>
 WORKFLOW_ENTRY: <视频解读能力条目路径>
 WORKFLOW_DOC: <知识库内 workflow 文档路径>
@@ -283,7 +283,7 @@ PUSH: success 或 failed
 ## 后续可扩展方向
 
 ### 1. 自动检测最新产物
-- 自动扫描 `~/.openclaw/workspace/outputs/youtube-video-brief/` 目录
+- 自动扫描 `<youtube-video-brief-output>/` 目录
 - 检测尚未入库的新产物
 - 批量入库或提示用户确认
 

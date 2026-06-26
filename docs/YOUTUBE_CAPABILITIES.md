@@ -1,6 +1,6 @@
 # YouTube Capabilities
 
-> **版本**: v0.3.22
+> **版本**: v0.3.23
 > **创建时间**: 2026-06-26
 
 ---
@@ -238,7 +238,8 @@ User provides YouTube URL
 | v0.3.19 | `v0.3.19-youtube-one-click-kb-import` | One-click KB import command capability | fd24d5c |
 | v0.3.20 | `v0.3.20-youtube-kb-import-pilot` | First real-world video import pilot (Dario Amodei) | ae1458c |
 | v0.3.21 | `v0.3.21-youtube-preflight-failure-archive` | Link preflight and failure archive | 1b73df5 |
-| v0.3.22 | *(in progress)* | OSS exposure and documentation | — |
+| v0.3.22 | `v0.3.22-music-player-js-loader-fix` | Music player JS loader fix | 82fd039 |
+| v0.3.23 | `v0.3.23-youtube-capability-oss-exposure` | OSS exposure and documentation | bbb693c |
 
 ---
 

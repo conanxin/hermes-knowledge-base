@@ -19,7 +19,7 @@
 
 ```
 请把这个 YouTube 视频解读产物加入知识库：
-~/.openclaw/workspace/outputs/youtube-video-brief/20260625-conan-harvard-commencement-2026/
+<youtube-video-brief-output>/20260625-conan-harvard-commencement-2026/
 ```
 
 ---
@@ -28,7 +28,7 @@
 
 ```
 请按照 youtube-video-kb-import-workflow.md 把以下 YouTube 视频解读产物加入知识库：
-~/.openclaw/workspace/outputs/youtube-video-brief/20260625-conan-harvard-commencement-2026/
+<youtube-video-brief-output>/20260625-conan-harvard-commencement-2026/
 
 目标仓库：~/hermes-knowledge-base
 ```
@@ -161,15 +161,15 @@ content/articles/2026/2026-06-25-youtube-video-brief-workflow/
 ```
 # 最短调用
 请把这个 YouTube 视频解读产物加入知识库：
-~/.openclaw/workspace/outputs/youtube-video-brief/20260625-conan-harvard-commencement-2026/
+<youtube-video-brief-output>/20260625-conan-harvard-commencement-2026/
 
 # 标准调用
 请按照 youtube-video-kb-import-workflow.md 把以下产物加入知识库：
-~/.openclaw/workspace/outputs/youtube-video-brief/20260625-conan-harvard-commencement-2026/
+<youtube-video-brief-output>/20260625-conan-harvard-commencement-2026/
 
 # 指定仓库
 请把以下产物加入知识库：
-~/.openclaw/workspace/outputs/youtube-video-brief/20260625-conan-harvard-commencement-2026/
+<youtube-video-brief-output>/20260625-conan-harvard-commencement-2026/
 目标仓库：~/my-knowledge-base
 ```
 

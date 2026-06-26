@@ -3,7 +3,7 @@
 > **版本**: 1.0
 > **创建时间**: 2026-06-25
 > **来源**: 固化自 Conan O'Brien Harvard 2026 毕业演讲解读成功案例
-> **成功案例路径**: `~/.openclaw/workspace/outputs/youtube-video-brief/20260625-conan-harvard-commencement-2026/`
+> **成功案例路径**: `<youtube-video-brief-output>/20260625-conan-harvard-commencement-2026/`
 
 ---
 
@@ -177,7 +177,7 @@
 请对以下 YouTube 视频执行 YouTube Video Brief 工作流：
 https://youtu.be/VIDEO_ID
 
-输出目录：~/.openclaw/workspace/outputs/youtube-video-brief/
+输出目录：<youtube-video-brief-output>/
 ```
 
 ---
@@ -207,7 +207,7 @@ https://youtu.be/VIDEO_ID
 - 不要下载完整视频，除非字幕完全不可用且必须转写；如果需要转写，先标记为 BLOCKED，不要擅自跑重型 Whisper/音频转写。
 - 不要扩大任务范围到其他视频。
 
-输出目录：~/.openclaw/workspace/outputs/youtube-video-brief/
+输出目录：<youtube-video-brief-output>/
 请创建以日期和视频标题 slug 命名的子目录，例如：20260625-video-title-slug/
 
 需要生成以下文件：
@@ -237,7 +237,7 @@ FILES:
 ## 本次成功案例路径
 
 ```
-~/.openclaw/workspace/outputs/youtube-video-brief/20260625-conan-harvard-commencement-2026/
+<youtube-video-brief-output>/20260625-conan-harvard-commencement-2026/
 ```
 
 **案例内容**：Conan O'Brien 哈佛大学 2026 毕业典礼演讲（24 分 53 秒）
