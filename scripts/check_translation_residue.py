@@ -10,9 +10,35 @@
 import os
 import re
 from pathlib import Path
+import yaml
 
 BASE_DIR = Path(__file__).parent.parent
 CONTENT_DIR = BASE_DIR / "content"
+ALLOWLIST_FILE = BASE_DIR / "config" / "translation_residue_allowlist.yaml"
+
+# 加载 allowlist
+ALLOWLIST = []
+if ALLOWLIST_FILE.exists():
+    try:
+        with open(ALLOWLIST_FILE, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+            ALLOWLIST = data.get("allowed_residues", [])
+    except Exception:
+        ALLOWLIST = []
+
+def is_allowlisted(rel_path, text):
+    """检查文本是否在 allowlist 中"""
+    for entry in ALLOWLIST:
+        if entry.get("token") in text:
+            # 路径匹配：支持精确匹配或后缀匹配
+            entry_path = entry.get("path", "")
+            # 将 allowlist path 转为相对路径比较
+            entry_rel = Path(entry_path).relative_to(BASE_DIR) if entry_path.startswith(str(BASE_DIR)) else Path(entry_path)
+            check_rel = Path(rel_path)
+            # 比较目录或文件路径
+            if str(entry_rel) == str(check_rel) or str(entry_rel.parent) == str(check_rel) or str(entry_rel).startswith(str(check_rel)):
+                return True
+    return False
 
 # 允许保留的英文模式（不算严重问题）
 ALLOWED_PATTERNS = [
@@ -78,20 +104,26 @@ def check_translation_residue():
 
         # 查找可疑英文残留
         suspicious = []
+        allowlisted = []
         for match in SUSPICIOUS_PATTERN.finditer(clean):
             text = match.group()
             if len(text) >= MIN_SUSPICIOUS_LEN and not is_allowed(text):
-                suspicious.append(text)
+                if is_allowlisted(str(rel_path), text):
+                    allowlisted.append(text)
+                else:
+                    suspicious.append(text)
 
         # 去重并限制样例数量
         unique = list(dict.fromkeys(suspicious))[:5]
         count = len(suspicious)
 
-        if count > 0:
+        if count > 0 or allowlisted:
             warnings.append({
                 "path": str(rel_path),
                 "count": count,
-                "samples": unique
+                "samples": unique,
+                "allowlisted_count": len(allowlisted),
+                "allowlisted_samples": list(dict.fromkeys(allowlisted))[:3]
             })
 
     print(f"\n{'='*50}")
@@ -104,10 +136,19 @@ def check_translation_residue():
         print(f"\nWarnings ({len(warnings)}):")
         for w in warnings:
             print(f"\n  [{w['path']}]")
-            print(f"  suspicious_count: {w['count']}")
-            for sample in w['samples']:
-                print(f"    - {sample}")
-        print("\nSTATUS: WARNING — review samples above")
+            if w['count'] > 0:
+                print(f"  suspicious_count: {w['count']}")
+                for sample in w['samples']:
+                    print(f"    - {sample}")
+            if w.get('allowlisted_count', 0) > 0:
+                print(f"  allowlisted_count: {w['allowlisted_count']} (known non-blocker)")
+                for sample in w.get('allowlisted_samples', []):
+                    print(f"    ~ {sample}")
+        has_real_warnings = any(w['count'] > 0 for w in warnings)
+        if has_real_warnings:
+            print("\nSTATUS: WARNING — review samples above")
+        else:
+            print("\nSTATUS: PASS — only known non-blockers found")
         return 0  # 非零退出码表示失败，这里只做 warning
     else:
         print("\nSTATUS: PASS — no suspicious residue found")

@@ -1,0 +1,14 @@
+# Translation Residue Known Allowlist
+# v0.3.46 — 最小可审计 allowlist
+# 规则：
+#   - 只添加已审计的合理残留
+#   - 不得 blanket ignore 所有 email
+#   - 每个条目必须有 path + token + reason
+#   - 定期复核
+
+allowed_residues:
+  - path: "content/articles/2026/2026-06-25-jasmi-the-old-world-is-dying/translation.zh-CN.md"
+    token: "jaswsunny at gmail dot com"
+    kind: "email"
+    reason: "Author contact email retained in source text for citation traceability."
+    introduced_before: "v0.3.46"
