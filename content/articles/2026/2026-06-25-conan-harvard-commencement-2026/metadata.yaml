@@ -44,6 +44,8 @@ tags:
 word_count:
   source: 102
   translation: 4672
-  transcript: 4813
+  transcript: 3286
+source_metrics:
+  original_transcript_words: 4813
 related_project_url: ""
 related_project_note: ""
