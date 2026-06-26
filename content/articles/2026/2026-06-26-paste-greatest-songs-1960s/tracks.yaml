@@ -472,13 +472,22 @@ tracks:
     (1969)'
   section_heading_translation: '## 75. Led Zeppelin：《What Is and What Should Never
     Be》（1969 年）'
-  youtube_url: ''
-  youtube_embed_url: ''
+  youtube_url: https://www.youtube.com/watch?v=WnMiXsRtsfc
+  youtube_embed_url: https://www.youtube.com/embed/WnMiXsRtsfc
   spotify_url: ''
   apple_music_url: ''
   search_url: https://www.google.com/search?q=site:youtube.com+Led+Zeppelin+What+Is+and+What+Should+Never+Be+1969+official
-  confidence: needs_verification
-  note: ''
+  confidence: verified
+  note: 'Verified 2026-06-26: Led Zeppelin - Topic channel (YouTube auto-generated
+    by Atlantic Records Content ID; verified via oEmbed API returning author_name
+    "Led Zeppelin - Topic" with author_url https://www.youtube.com/channel/UCYtap7ujIPaxTS2iCDoMi3g).
+    Description confirms: "Provided to YouTube by Atlantic Records What Is and What
+    Should Never Be (Remaster) · Led Zeppelin Led Zeppelin II ℗ 2012 Atlantic Records
+    Guitar: Jimmy Page Prod". 1969 Atlantic Records canonical recording from album
+    Led Zeppelin II. The 2012 Remaster is the same 1969 studio recording with a
+    modern remaster applied - the original 1969 mix is the canonical version. Atlantic
+    Records (now part of Warner Music Group). Not a cover/live/reaction/karaoke.
+    Spotify/Apple Music URLs not verified in this batch - left empty.'
 - rank: 74
   artist: Johnny Cash
   title: Ring of Fire
