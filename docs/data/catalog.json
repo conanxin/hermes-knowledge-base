@@ -1248,11 +1248,11 @@
     "music_enrichment": {
       "enabled": true,
       "total_tracks": 50,
-      "verified_tracks": 33,
-      "pending_tracks": 17,
-      "verified_rate": "66%",
+      "verified_tracks": 38,
+      "pending_tracks": 12,
+      "verified_rate": "76%",
       "playable_filter": true,
-      "last_verified_version": "v0.3.29-music-coverage-summary",
+      "last_verified_version": "v0.3.32-final-candidate-sweep-and-coverage-sync",
       "status": "partial_verified"
     },
     "series_info": {

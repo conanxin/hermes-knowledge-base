@@ -549,11 +549,13 @@ tracks:
   spotify_url: ''
   apple_music_url: ''
   search_url: https://www.google.com/search?q=site:youtube.com+Charles+Mingus+Track+B-Duet+Solo+Dancers+1963+official
-  confidence: needs_verification
-  note: ''
-  audit_status: candidate
-  audit_reason: 'Charles Mingus - Track B-Duet Solo Dancers: 1963 Atlantic/Impulse!。Mingus 经典曲,可能有 Impulse Records - Topic / Charles Mingus - Topic 频道。'
-  next_action: 'v0.3.31: oEmbed 验证 Impulse Records - Topic 或 Charles Mingus - Topic'
+  youtube_url: https://www.youtube.com/watch?v=f9FzSSGTufQ
+  youtube_embed_url: https://www.youtube.com/embed/f9FzSSGTufQ
+  confidence: verified
+  note: "Verified 2026-06-27: Charles Mingus - Topic channel (Universal Music Group / The Verve Music Group auto-generated). From The Black Saint And The Sinner Lady, ℗ 1963 The Verve Music Group. oEmbed verified author_name=\"Charles Mingus - Topic\". Excludes fan uploads (chris chris) and vinyl rips."
+  audit_status: verified
+  audit_reason: 'oEmbed verified as label-authorized Topic channel auto-generated upload (UMG/The Verve Music Group)'
+  next_action: 'complete — verified in v0.3.32'
 - rank: 72
   artist: Os Mutantes
   title: A Minha Menina
@@ -782,10 +784,10 @@ tracks:
   apple_music_url: ''
   search_url: https://www.google.com/search?q=site:youtube.com+Captain+Beefheart+and+His+Magic+Band+Moonlight+on+Vermont+1969+official
   confidence: needs_verification
-  note: ''
-  audit_status: candidate
-  audit_reason: 'Captain Beefheart and His Magic Band - Moonlight on Vermont: 1969 Straight/Reprise (Warner Music)。可能有 Reprise Records - Topic / Warner Records - Topic / Captain Beefheart - Topic 频道。'
-  next_action: 'v0.3.31: oEmbed 验证 Reprise - Topic 或 Warner Records - Topic;注意避 live / tribute'
+  note: "Deferred 2026-06-27: No high-confidence studio-version source found. Only 1978 live recording exists on Captain Beefheart - Topic (Rhino/Warner), but Paste lists 1969 studio album Trout Mask Replica. Fan uploads (Revanlation, Dusty Records) and vinyl rips excluded. Reprise/Straight Records (original 1969 label) has no active Topic channel for this track."
+  audit_status: defer
+  audit_reason: 'No studio-version Topic channel found; only 1978 live and fan uploads available. Original 1969 Reprise/Straight label has no active YouTube presence for this track.'
+  next_action: 'permanent defer — no viable official source for 1969 studio version'
 - rank: 60
   artist: The Chiffons
   title: One Fine Day

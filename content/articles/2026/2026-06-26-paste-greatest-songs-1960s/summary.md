@@ -7,19 +7,19 @@
 
 ## 播放增强状态
 
-本词条已为 50 首歌生成音乐播放卡片,数据来自 `tracks.yaml`(v0.3.29 同步):
+本词条已为 50 首歌生成音乐播放卡片,数据来自 `tracks.yaml`(v0.3.32 同步):
 
 - **总曲目**:50 首
-- **可直接播放**:33 首(官方频道 / Topic 频道 / VEVO / 厂牌授权频道,均为高置信来源)
-- **待验证链接**:17 首
-- **可播放率**:66%
+- **可直接播放**:38 首(官方频道 / Topic 频道 / VEVO / 厂牌授权频道,均为高置信来源)
+- **待验证链接**:12 首
+- **可播放率**:76%
 - **支持筛选**:全部曲目 / 仅可播放 / 仅待验证(页面顶部三按钮)
 
 **说明**:
-- 本词条遵循「**宁可待验证,不错链**」原则 — 已链接的 33 首均经人工 oEmbed 验证,17 首未找到高置信来源的曲目**不显示假播放按钮**,只显示 Google 站内搜索链接,留给读者自选。
+- 本词条遵循「**宁可待验证,不错链**」原则 — 已链接的 38 首均经人工 oEmbed 验证,12 首未找到高置信来源的曲目**不显示假播放按钮**,只显示 Google 站内搜索链接,留给读者自选。
 - 数字与 `metadata.yaml::music_enrichment` 字段一一对应,与页面顶部的「音乐播放覆盖」摘要同步。
-- 完整验证记录见 `reports/music_embed_enrichment_batch{1..7}_20260626.md`。
-- 详情页 music_enrichment.last_verified_version = v0.3.29-music-coverage-summary。
+- 完整验证记录见 `reports/music_embed_enrichment_batch{1..7}_20260626.md`、`reports/music_coverage_summary_v0329_20260626.md`、`reports/music_remaining_track_audit_20260626.md`、`reports/music_candidate_embed_enrichment_v0331_20260626.md` 及本报告。
+- 详情页 music_enrichment.last_verified_version = v0.3.32-final-candidate-sweep-and-coverage-sync。
 
 ## 一句话总结
 
