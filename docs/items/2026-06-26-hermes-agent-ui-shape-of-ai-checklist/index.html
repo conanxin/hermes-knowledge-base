@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Agent UI 自检表 · hermes-knowledge-base</title>
+<meta name="description" content="Hermes Agent UI 自检表 — Conan Xin">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="detail-page" id="top">
+<header class="detail-header">
+<a class="back-link" href="../../">← 返回首页</a>
+</header>
+<main class="detail-main">
+<article class="detail-article">
+<div class="detail-title-block">
+<span class="type-badge note">note</span>
+<h1 class="detail-title">Hermes Agent UI 自检表</h1>
+<p class="detail-title-en">Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)</p>
+</div>
+
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#派生来源">派生来源</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#基于本仓库已有条目">基于本仓库已有条目</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#自检表的工程背景">自检表的工程背景</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#派生derived类型的设计取舍">派生（derived）类型的设计取舍</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#不复制的内容">不复制的内容</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#维护约定">维护约定</a></li>
+</ol>
+</nav>
+
+<section class="detail-meta">
+<div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">note</div></div>
+<div class="meta-row"><div class="meta-label">作者</div><div class="meta-value">Conan Xin</div></div>
+<div class="meta-row"><div class="meta-label">来源</div><div class="meta-value">shapeof.ai</div></div>
+<div class="meta-row"><div class="meta-label">发布日期</div><div class="meta-value">2026-06-26</div></div>
+<div class="meta-row"><div class="meta-label">采集日期</div><div class="meta-value">2026-06-26</div></div>
+<div class="meta-row"><div class="meta-label">标签</div><div class="meta-value meta-tags"><span class="chip">Hermes</span><span class="chip">Agent UI</span><span class="chip">Shape of AI</span><span class="chip">AI UX</span><span class="chip">自检表</span><span class="chip">产品设计</span><span class="chip">Agent</span><span class="chip">交互模式</span></div></div>
+<div class="meta-row"><div class="meta-label">主题</div><div class="meta-value meta-tags"><span class="chip">Hermes Agent</span><span class="chip">Agent UI</span><span class="chip">Shape of AI</span><span class="chip">AI UX</span><span class="chip">产品自检</span><span class="chip">交互模式</span><span class="chip">6 层模型</span></div></div>
+</section>
+
+<section class="detail-section" id="section-summary">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">摘要</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="hermes-agent-ui-自检表摘要">Hermes Agent UI 自检表：摘要</h1>
+<h2 id="这是什么">这是什么</h2>
+<p><strong>Hermes Agent UI 自检表</strong>是一份面向个人项目 Hermes Agent 的产品设计自检表，源自 <a href="https://www.shapeof.ai/" target="_blank" rel="noopener">The Shape of AI</a> 的 37 个 AI 交互模式（6 大类 × 6 + 1 个 UILibrary）以及 <a href="https://emilycampbell.co/writing/layers-of-ai-experience" target="_blank" rel="noopener">The Layers of AI Experience</a> 的 6 层 AI 体验模型。</p>
+<p>它的目标是把两个外部参考库<strong>翻译成可在 Hermes Agent 上直接打勾的 checklist</strong>：每个 Shape of AI 模式对应一条自检问题、一个 Agent 场景示例、一个当前状态（未评估 / 已具备 / 需改进 / 不适用）、一个优先级（P0 / P1 / P2）。</p>
+<h2 id="为什么需要它">为什么需要它</h2>
+<ul><li><strong>AI 产品交互设计仍处于早期</strong>：没有统一的设计语言，团队和个人都靠"感觉"。</li><li><strong>Shape of AI 提供了 37 个共享模式名</strong>：当说"我们需要一个 Temperature slider"时，团队和外部引用者指向的是同一个定义。</li><li><strong>Hermes Agent 已经实现了其中一部分</strong>（Follow up、Slash command、Connectors、Progress bar 等），但<strong>没有系统盘点过</strong>。自检表让"已具备 / 需改进 / 不适用"三类状态可比较、可追踪。</li><li><strong>6 层 AI Experience 模型</strong>（Interface / Interaction / Conversation / Collaboration / Delegation / Companionship）给 Hermes Agent 一个<strong>纵向</strong>视角：Shape of AI 主要覆盖前两层，自检表暴露了高层（Delegation / Companionship）的设计空白。</li></ul>
+<h2 id="与现有-hermes-工具的关联">与现有 Hermes 工具的关联</h2>
+<table class="md-table"><thead><tr><th>工具 / 能力</th><th>涉及的 Shape of AI 模式</th></tr></thead><tbody><tr><td>Slash command（<code>/skill</code>）</td><td>Slash command、@ mention</td></tr><tr><td>MEDIA 协议、Inline Action</td><td>Inline Action、Follow up</td></tr><tr><td>多步任务编排</td><td>Chained action、Progress bar、Stop button</td></tr><tr><td>OpenClaw 状态消息</td><td>Status indicator、Typing indicator</td></tr><tr><td>长期记忆 / 复盘</td><td>Version history、Branching、Feedback loop</td></tr><tr><td>ConPort / sub-agent</td><td>Connectors、Workspaces</td></tr></tbody></table>
+<h2 id="怎么用4-个使用时机">怎么用（4 个使用时机）</h2>
+<ol><li><strong>新功能设计前</strong>：对照对应类别的 checklist 评估；遗漏 P0 模式则不进入开发。</li><li><strong>发布前 review</strong>：过一遍"Trust builders"和"Identifiers"两类的全量 P0/P1 项。</li><li><strong>每月复盘</strong>：扫一遍所有"需改进"项，决定当月是否推进。</li><li><strong>跨 agent 协作时</strong>：用本表统一不同 agent（Hermes、OpenClaw、ConPort）对 UI 能力的描述。</li></ol>
+<h2 id="主要建议10-条详见-notesmd">主要建议（10 条，详见 notes.md）</h2>
+<ol><li>Agent 正在做什么要更可见（Status indicator、Typing indicator 应当区分"思考中 / 执行中 / 已完成"三态）。</li><li>用户可中断、撤销、回退（Stop button、Undo、Edit prompt 必须级联支持）。</li><li>每个自动化结果要有来源、状态、证据（Source citation、Confidence score、Human review 缺一不可）。</li><li>长任务需要进度与阶段提示（Progress bar、Chained action、Workspaces）。</li><li>需要区分草稿、建议、已执行动作（Inline Action、Regenerate、Feedback loop 应当带"预览 / 已生效"标签）。</li><li>默认开启透明推理（Transparency toggle），让用户决定是否隐藏。</li><li>失败处理要有兜底（Error handling、Status indicator、Confidence score 一起工作）。</li><li>输入方式要支持多模态（Voice、Camera、Drag and drop、Slash command、@ mention）。</li><li>输出调节器应该常驻可达（Tone selector、Length control、Temperature slider）。</li><li>标识符要稳定（AI avatar、Content labeling、Status indicator 跨会话一致）。</li></ol>
+<h2 id="已知空白6-层模型中尚未覆盖">已知空白（6 层模型中尚未覆盖）</h2>
+<table class="md-table"><thead><tr><th>6 层</th><th>覆盖情况</th><th>主要缺口</th></tr></thead><tbody><tr><td>Model</td><td>不适用</td><td>业务模型层，UX 模式不直接对应</td></tr><tr><td>Prompt</td><td>部分覆盖</td><td>缺少 Prompt library、Persona picker</td></tr><tr><td>Interface</td><td>高覆盖</td><td>Wayfinders、Inputs、Identifiers 大部分具备</td></tr><tr><td>Workflow</td><td>部分覆盖</td><td>Chained action 强、Workspaces 弱</td></tr><tr><td>System</td><td>部分覆盖</td><td>Trust builders 大部分具备、Confidence score 缺</td></tr><tr><td>Emergence</td><td>弱覆盖</td><td>长期记忆、Companionship、Delegation 设计空白</td></tr></tbody></table>
+<h2 id="基于">基于</h2>
+<ul><li><strong>Shape of AI</strong> (Emily Campbell, 2026) — 37 个 AI 交互模式，6 大类 + UILibrary</li><li><strong>The Layers of AI Experience</strong> (Emily Campbell, 2026) — 6 层 AI 体验模型</li><li><strong>Hermes Agent</strong> (Xin Conan, 2026-) — 本知识库对应的 agent 实现</li></ul>
+<h2 id="不做什么">不做什么</h2>
+<ul><li><strong>不复制 Shape of AI 网站内容</strong>：每个模式用 1-2 句话概括，加上自检问题、Agent 场景和状态/优先级。</li><li><strong>不实现任何模式</strong>：本表是诊断工具，不是开发任务清单。<code>已具备</code>项指 Hermes Agent 当前代码中已经覆盖；<code>需改进</code>项需要单独 PR。</li><li><strong>不评判 Shape of AI 模式的有效性</strong>：37 个模式都同等对待，由使用者在打勾时按场景判断。</li></ul>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-source">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">原文 / 源文本</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="hermes-agent-ui-自检表来源与参考">Hermes Agent UI 自检表：来源与参考</h1>
+<h2 id="派生来源">派生来源</h2>
+<p>本条目是<strong>派生内容（derived）</strong>，不是原始翻译。核心源材料：</p>
+<table class="md-table"><thead><tr><th>源</th><th>URL</th><th>用途</th></tr></thead><tbody><tr><td>The Shape of AI</td><td>https://www.shapeof.ai/</td><td>37 个 AI 交互模式的事实清单（6 大类 × 6 + 1 UILibrary）</td></tr><tr><td>The Layers of AI Experience</td><td>https://emilycampbell.co/writing/layers-of-ai-experience</td><td>6 层 AI 体验模型，用于纵向映射</td></tr><tr><td>Shape of AI 知识库条目</td><td><code>content/resource_collections/2026-06-26-shape-of-ai-ux-patterns/</code></td><td>本仓库内已导入的同源条目（中文版 collection / summary / notes / source）</td></tr></tbody></table>
+<h2 id="基于本仓库已有条目">基于本仓库已有条目</h2>
+<pre><code>2026-06-26-shape-of-ai-ux-patterns          (resource_collection)
+2026-06-26-emilycampbell-layers-of-ai-experience  (article)</code></pre>
+<p>自检表中的 37 个模式名、说明和分类直接来自这两个条目；本表的价值在于把它们<strong>结构化为可勾选 checklist</strong>，并叠加 6 层模型作为纵向参照。</p>
+<h2 id="自检表的工程背景">自检表的工程背景</h2>
+<p>Hermes Agent 是一个常驻、跨会话、可调用多种工具（terminal、browser、web_search、code_exec、delegate_task、cronjob、media 等）的 AI 助手。它不是单一产品而是一组 agent、subagent、sidecar 的集合（Hermes Agent、OpenClaw、ConPort 等）。这张自检表针对的是<strong>用户能直接看到的交互层</strong>——任何 agent 暴露给用户的命令、消息、UI 元素都应通过本表审视。</p>
+<h2 id="派生derived类型的设计取舍">派生（derived）类型的设计取舍</h2>
+<table class="md-table"><thead><tr><th>候选类型</th><th>优点</th><th>缺点</th><th>结论</th></tr></thead><tbody><tr><td><code>type: note</code></td><td>已有 4 文件结构；接受 summary + source + notes；最轻量</td><td>没有专门的"checklist"概念</td><td>✅ <strong>采用</strong></td></tr><tr><td><code>type: article</code></td><td>流量更大、容易被检索到</td><td>需要 <code>translation.zh-CN.md</code>，但本表本身就是中文原生，不是翻译</td><td>❌ 会与翻译语义混淆</td></tr><tr><td><code>type: project</code></td><td>适合有独立代码/产物</td><td>本表无独立代码，只是文档</td><td>❌ 类别不符</td></tr><tr><td><code>type: resource_collection</code></td><td>支持 <code>item_count</code>、支持 <code>collection.md</code> 表格</td><td>是资源清单类型，不是设计自检表</td><td>❌ 类别不符</td></tr></tbody></table>
+<p><strong>结论</strong>：<code>type: note</code> 是最兼容的最小类型。完整 checklist 放在 <code>notes.md</code>，因为 <code>checklist.md</code> 不在 <code>note</code> 的合法 body 列表中（见 <code>scripts/generate_item_pages.py: BODY_FILES_BY_TYPE</code>）。</p>
+<h2 id="不复制的内容">不复制的内容</h2>
+<ul><li>不复制 Shape of AI 的 37 个模式的原始英文说明</li><li>不复制 The Layers of AI Experience 的全文翻译</li><li>每个模式用 1-2 句中文概括 + 1 条自检问题 + 1 个 Agent 场景 + 1 个状态/优先级</li><li>总字数控制在 2400-3000 中文字</li></ul>
+<h2 id="维护约定">维护约定</h2>
+<ul><li><strong>每月复盘</strong>：根据 Hermes Agent 实际状态更新"已具备 / 需改进"项</li><li><strong>新增模式</strong>：当 Shape of AI 站点新增模式时，本表同步更新（保持 37 模式总量或更新计数）</li><li><strong>跨 agent 共享</strong>：OpenClaw、ConPort 的 UI 改进可引用本表 slug</li><li><strong>优先级变更</strong>：当某条 "P2 需改进" 项连续 3 个月未推进时，应评估是否降级或删除</li></ul>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-notes">
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">笔记</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="hermes-agent-ui-自检表">Hermes Agent UI 自检表</h1>
+<blockquote><p><strong>基础</strong>：The Shape of AI 的 37 个 AI 交互模式（6 大类 × 6 + 1 UILibrary） <strong>目的</strong>：把共享模式名转化为可勾选 checklist，盘点 Hermes Agent 当前覆盖度 <strong>状态约定</strong>：未评估 / 已具备 / 需改进 / 不适用 <strong>优先级约定</strong>：P0 = 不达不让上线 / P1 = 半年内推进 / P2 = 长期观察</p></blockquote>
+<hr>
+<h2 id="如何使用这张表">如何使用这张表</h2>
+<ol><li><strong>新功能设计前</strong>：先对照相关类别的 checklist，遗漏 P0 模式则不进入开发</li><li><strong>发布前 review</strong>：过一遍"Trust builders"和"Identifiers"两类的全量 P0/P1 项</li><li><strong>每月复盘</strong>：扫一遍所有"需改进"项，决定当月是否推进</li><li><strong>跨 agent 协作时</strong>：用本表统一 Hermes / OpenClaw / ConPort 对 UI 能力的描述</li></ol>
+<p><strong>打勾方式</strong>（建议）：在每行后面追加 <code>- [x]</code> 或 <code>- [ ]</code>（GitHub 友好），或复制到 Notion / 飞书表格。</p>
+<p><strong>优先级重新评估</strong>：当某条 P2 项 3 个月未推进时，应主动降级或删除，避免自检表本身变成噪声。</p>
+<hr>
+<h2 id="一wayfinders导航指引-6-个模式">一、Wayfinders（导航指引）— 6 个模式</h2>
+<p>帮助用户理解 AI 能做什么、当前处于什么状态。</p>
+<h3 id="11-example-gallery">1.1 Example gallery</h3>
+<ul><li><strong>自检问题</strong>：用户首次使用时，是否能看到 Hermes 能做什么的具体示例？</li><li><strong>Agent 场景</strong>：OpenClaw 启动时是否推送 3-5 个 <code>/skill</code> 例子？</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P1</li></ul>
+<h3 id="12-follow-up">1.2 Follow up</h3>
+<ul><li><strong>自检问题</strong>：AI 回复后是否提供后续问题建议？</li><li><strong>Agent 场景</strong>：Hermes 完成任务后是否提示"继续"或"展开"按钮？</li><li><strong>状态</strong>：已具备（chat 中已有延续上下文）</li><li><strong>优先级</strong>：P0</li></ul>
+<h3 id="13-chained-action">1.3 Chained action</h3>
+<ul><li><strong>自检问题</strong>：多步骤任务是否能串联执行并展示进度？</li><li><strong>Agent 场景</strong>：<code>/research</code> 触发 search → extract → summarize 三步流水线</li><li><strong>状态</strong>：已具备（多步任务编排已实现）</li><li><strong>优先级</strong>：P0</li></ul>
+<h3 id="14-inline-action">1.4 Inline Action</h3>
+<ul><li><strong>自检问题</strong>：在 AI 回复中是否能直接执行下一步操作？</li><li><strong>Agent 场景</strong>：MEDIA 协议、消息中可点击按钮</li><li><strong>状态</strong>：已具备（MEDIA / button 已部分支持）</li><li><strong>优先级</strong>：P0</li></ul>
+<h3 id="15-connectors">1.5 Connectors</h3>
+<ul><li><strong>自检问题</strong>：是否能连接外部工具或 AI 功能？</li><li><strong>Agent 场景</strong>：terminal / browser / web_search / code_exec / delegate_task / cronjob</li><li><strong>状态</strong>：已具备</li><li><strong>优先级</strong>：P0</li></ul>
+<h3 id="16-workspaces">1.6 Workspaces</h3>
+<ul><li><strong>自检问题</strong>：是否有为复杂任务提供的专用工作空间？</li><li><strong>Agent 场景</strong>：sub-agent 隔离目录（ConPort、hermes-agent-spawning）</li><li><strong>状态</strong>：需改进（用户视角的 workspace 概念未明示）</li><li><strong>优先级</strong>：P1</li></ul>
+<hr>
+<h2 id="二inputs输入方式-6-个模式">二、Inputs（输入方式）— 6 个模式</h2>
+<p>让用户以自然、高效的方式向 AI 提供信息。</p>
+<h3 id="21-voice-input">2.1 Voice input</h3>
+<ul><li><strong>自检问题</strong>：是否支持语音作为主要输入？</li><li><strong>Agent 场景</strong>：Telegram / 飞书语音消息转文本后作为 prompt</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P2</li></ul>
+<h3 id="22-camera-input">2.2 Camera input</h3>
+<ul><li><strong>自检问题</strong>：是否支持摄像头捕获视觉信息？</li><li><strong>Agent 场景</strong>：vision_analyze 工具已具备</li><li><strong>状态</strong>：已具备（工具层支持，但 UX 流不显式）</li><li><strong>优先级</strong>：P1</li></ul>
+<h3 id="23-drag-and-drop">2.3 Drag and drop</h3>
+<ul><li><strong>自检问题</strong>：用户能否拖拽文件到对话窗口？</li><li><strong>Agent 场景</strong>：Telegram 拖拽文件 → 自动上传 → 提取为 prompt 上下文</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P2</li></ul>
+<h3 id="24-mention">2.4 @ mention</h3>
+<ul><li><strong>自检问题</strong>：是否能通过 @ 激活特定 AI 功能或上下文？</li><li><strong>Agent 场景</strong>：<code>/skill</code> 命令、@ 子 agent 路由</li><li><strong>状态</strong>：已具备</li><li><strong>优先级</strong>：P0</li></ul>
+<h3 id="25-slash-command">2.5 Slash command</h3>
+<ul><li><strong>自检问题</strong>：是否能通过 / 命令快速调用功能？</li><li><strong>Agent 场景</strong>：<code>/research</code>、<code>/book</code>、<code>/mode</code></li><li><strong>状态</strong>：已具备</li><li><strong>优先级</strong>：P0</li></ul>
+<h3 id="26-prompt-library">2.6 Prompt library</h3>
+<ul><li><strong>自检问题</strong>：是否提供预设提示词模板供用户选择？</li><li><strong>Agent 场景</strong>：常用工作流模板（研究、复盘、翻译）一键加载</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P1</li></ul>
+<hr>
+<h2 id="三tuners调节器-6-个模式">三、Tuners（调节器）— 6 个模式</h2>
+<p>让用户控制 AI 输出的风格、长度、语气等参数。</p>
+<h3 id="31-temperature-slider">3.1 Temperature slider</h3>
+<ul><li><strong>自检问题</strong>：用户能否调节输出的创造性/确定性？</li><li><strong>Agent 场景</strong>：用户切换"严谨模式" vs "创意模式"</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P1</li></ul>
+<h3 id="32-length-control">3.2 Length control</h3>
+<ul><li><strong>自检问题</strong>：用户能否控制输出长度？</li><li><strong>Agent 场景</strong>：<code>/brief</code>、<code>/detail</code>、<code>/long</code></li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P1</li></ul>
+<h3 id="33-tone-selector">3.3 Tone selector</h3>
+<ul><li><strong>自检问题</strong>：用户能否选择回复语气？</li><li><strong>Agent 场景</strong>：在"正式 / 随意 / 学术 / 口语"之间切换</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P2</li></ul>
+<h3 id="34-persona-picker">3.4 Persona picker</h3>
+<ul><li><strong>自检问题</strong>：用户能否选择 AI 扮演的角色？</li><li><strong>Agent 场景</strong>：律师 / 工程师 / 设计师等 persona 预设</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P2</li></ul>
+<h3 id="35-format-selector">3.5 Format selector</h3>
+<ul><li><strong>自检问题</strong>：用户能否选择输出格式？</li><li><strong>Agent 场景</strong>：列表 / 段落 / 表格 / Markdown 之间切换</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P1</li></ul>
+<h3 id="36-regenerate">3.6 Regenerate</h3>
+<ul><li><strong>自检问题</strong>：不满意时能否重新生成？</li><li><strong>Agent 场景</strong>：用户按"重新生成"按钮得到不同版本</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P1</li></ul>
+<hr>
+<h2 id="四governors控制机制-6-个模式">四、Governors（控制机制）— 6 个模式</h2>
+<p>确保 AI 行为符合用户预期和安全边界。</p>
+<h3 id="41-stop-button">4.1 Stop button</h3>
+<ul><li><strong>自检问题</strong>：用户能否随时中断 AI 生成？</li><li><strong>Agent 场景</strong>：长任务时显示"停止"按钮</li><li><strong>状态</strong>：已具备（<code>/stop</code>、Telegram cancel）</li><li><strong>优先级</strong>：P0</li></ul>
+<h3 id="42-undo">4.2 Undo</h3>
+<ul><li><strong>自检问题</strong>：用户能否撤销 AI 的最近操作？</li><li><strong>Agent 场景</strong>：删除刚刚生成的文件、撤回刚刚发出的消息</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P1</li></ul>
+<h3 id="43-edit-prompt">4.3 Edit prompt</h3>
+<ul><li><strong>自检问题</strong>：用户能否修改已发送的提示词？</li><li><strong>Agent 场景</strong>：在任务执行中修改 prompt，AI 重新规划</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P1</li></ul>
+<h3 id="44-branching">4.4 Branching</h3>
+<ul><li><strong>自检问题</strong>：是否能从某个节点分叉探索不同路径？</li><li><strong>Agent 场景</strong>：从 A 回复分叉到 A1 / A2 / A3 平行实验</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P2</li></ul>
+<h3 id="45-version-history">4.5 Version history</h3>
+<ul><li><strong>自检问题</strong>：是否保存和回溯 AI 交互的不同版本？</li><li><strong>Agent 场景</strong>：所有回复 / 文件操作可回看和回退</li><li><strong>状态</strong>：部分具备（session DB 但 UX 不显式）</li><li><strong>优先级</strong>：P1</li></ul>
+<h3 id="46-feedback-loop">4.6 Feedback loop</h3>
+<ul><li><strong>自检问题</strong>：用户能否反馈以改进后续结果？</li><li><strong>Agent 场景</strong>：👍 / 👎 反馈、显式"更短 / 更详细"指令</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P1</li></ul>
+<hr>
+<h2 id="五trust-builders信任构建-6-个模式">五、Trust builders（信任构建）— 6 个模式</h2>
+<p>增强用户对 AI 系统的信任感。</p>
+<h3 id="51-confidence-score">5.1 Confidence score</h3>
+<ul><li><strong>自检问题</strong>：是否显示 AI 对输出的置信度？</li><li><strong>Agent 场景</strong>：在事实类回答旁显示"置信度：85%"</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P0</li></ul>
+<h3 id="52-source-citation">5.2 Source citation</h3>
+<ul><li><strong>自检问题</strong>：是否标注信息来源便于验证？</li><li><strong>Agent 场景</strong>：<code>web_search</code> 结果自动带 URL</li><li><strong>状态</strong>：部分具备（工具层有，UX 不一致）</li><li><strong>优先级</strong>：P0</li></ul>
+<h3 id="53-explanation">5.3 Explanation</h3>
+<ul><li><strong>自检问题</strong>：AI 是否解释为什么给出某个答案？</li><li><strong>Agent 场景</strong>：推理路径可展开 / 折叠</li><li><strong>状态</strong>：需改进（隐式推理存在，无显式 toggle）</li><li><strong>优先级</strong>：P1</li></ul>
+<h3 id="54-human-review">5.4 Human review</h3>
+<ul><li><strong>自检问题</strong>：是否标记需要人工审核的内容？</li><li><strong>Agent 场景</strong>：自动邮件、支付类操作需二次确认</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P0</li></ul>
+<h3 id="55-transparency-toggle">5.5 Transparency toggle</h3>
+<ul><li><strong>自检问题</strong>：用户能否切换显示 AI 推理过程？</li><li><strong>Agent 场景</strong>："详细模式"展示 token-by-token 推理</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P2</li></ul>
+<h3 id="56-error-handling">5.6 Error handling</h3>
+<ul><li><strong>自检问题</strong>：失败时是否优雅处理？</li><li><strong>Agent 场景</strong>：工具调用失败时回退、重试、提示替代路径</li><li><strong>状态</strong>：已具备</li><li><strong>优先级</strong>：P0</li></ul>
+<hr>
+<h2 id="六identifiers标识符-6-个模式">六、Identifiers（标识符）— 6 个模式</h2>
+<p>帮助用户识别和区分不同的 AI 实体或内容。</p>
+<h3 id="61-ai-avatar">6.1 AI avatar</h3>
+<ul><li><strong>自检问题</strong>：是否有可识别的 AI 视觉形象？</li><li><strong>Agent 场景</strong>：跨平台一致的 Hermes logo / 头像</li><li><strong>状态</strong>：已具备</li><li><strong>优先级</strong>：P1</li></ul>
+<h3 id="62-content-labeling">6.2 Content labeling</h3>
+<ul><li><strong>自检问题</strong>：是否明确标注 AI 生成的内容？</li><li><strong>Agent 场景</strong>：所有 AI 输出在 Telegram 端带"AI"标签</li><li><strong>状态</strong>：已具备（消息源标识）</li><li><strong>优先级</strong>：P0</li></ul>
+<h3 id="63-status-indicator">6.3 Status indicator</h3>
+<ul><li><strong>自检问题</strong>：是否显示 AI 当前状态（思考 / 完成 / 错误）？</li><li><strong>Agent 场景</strong>：Typing bubble + "正在执行 search..."文字</li><li><strong>状态</strong>：已具备</li><li><strong>优先级</strong>：P0</li></ul>
+<h3 id="64-typing-indicator">6.4 Typing indicator</h3>
+<ul><li><strong>自检问题</strong>：是否显示 AI 正在输入的动画？</li><li><strong>Agent 场景</strong>：Telegram typing action</li><li><strong>状态</strong>：已具备</li><li><strong>优先级</strong>：P1</li></ul>
+<h3 id="65-sound-cue">6.5 Sound cue</h3>
+<ul><li><strong>自检问题</strong>：是否用声音提示状态变化？</li><li><strong>Agent 场景</strong>：任务完成时一声轻响</li><li><strong>状态</strong>：未评估</li><li><strong>优先级</strong>：P2</li></ul>
+<h3 id="66-progress-bar">6.6 Progress bar</h3>
+<ul><li><strong>自检问题</strong>：长时间任务是否显示进度？</li><li><strong>Agent 场景</strong>：多步任务时显示"步骤 2/5"</li><li><strong>状态</strong>：已具备</li><li><strong>优先级</strong>：P0</li></ul>
+<hr>
+<h2 id="七uilibraryui-组件库-1-个模式">七、UILibrary（UI 组件库）— 1 个模式</h2>
+<p>Shape of AI 还提供可复用的 UI 组件参考。</p>
+<h3 id="71-ui-components">7.1 UI Components</h3>
+<ul><li><strong>自检问题</strong>：是否有可复用的 AI 交互界面组件库？</li><li><strong>Agent 场景</strong>：按钮、卡片、引用块、表单等组件的跨 agent 共享</li><li><strong>状态</strong>：部分具备（Telegram 端组件散落，无统一库）</li><li><strong>优先级</strong>：P1</li></ul>
+<hr>
+<h2 id="对-hermes-的第一轮建议10-条按优先级排序">对 Hermes 的第一轮建议（10 条，按优先级排序）</h2>
+<ol><li><strong>P0 - Agent 状态要更可见</strong>：Status indicator 应区分"思考中 / 执行中 / 已完成"三态，目前是二态。</li><li><strong>P0 - 中断 / 撤销 / 回退必须级联</strong>：Stop button 触发的停止应当级联到所有 sub-agent，不能只停止主 agent。</li><li><strong>P0 - 自动结果要带来源 / 状态 / 证据</strong>：Source citation 必须包含链接、置信度、最后验证时间，缺一不可。</li><li><strong>P0 - 长任务必须有进度与阶段</strong>：Progress bar 必须显示阶段名（如"提取 → 翻译 → 校对"），不能只显示百分比。</li><li><strong>P0 - 区分草稿 / 建议 / 已执行动作</strong>：所有 Inline Action 必须有"预览 / 已生效"标签，已执行动作不可静默发生。</li><li><strong>P1 - 默认透明推理可关</strong>：Transparency toggle 应当默认开启推理可见，由用户决定是否隐藏。</li><li><strong>P1 - 失败兜底要显式</strong>：Error handling 必须有可重试、可降级、可放弃三个选项，不能只显示错误。</li><li><strong>P1 - 输入多模态要显眼</strong>：Voice / Camera / Drag and drop 应当有 UI 入口，不能只通过工具间接使用。</li><li><strong>P1 - 输出调节常驻可达</strong>：Temperature / Length / Format 应当放在设置里，不应当让用户每次写 prompt。</li><li><strong>P2 - 跨 agent 标识稳定</strong>：AI avatar / Content labeling 跨 Hermes / OpenClaw / ConPort 必须一致，不能每个 agent 长得不一样。</li></ol>
+<hr>
+<h2 id="与-6-层-ai-experience-的对应关系">与 6 层 AI Experience 的对应关系</h2>
+<p>The Layers of AI Experience 提出 AI 体验的 6 层模型：Model / Prompt / Interface / Workflow / System / Emergence。下表把 37 个模式映射到这 6 层。</p>
+<blockquote><p>注：Shape of AI 原文使用 Interface / Interaction / Conversation / Collaboration / Delegation / Companionship 6 层。本表使用更面向个人 agent 项目的 Model / Prompt / Interface / Workflow / System / Emergence 6 层（与 Hermes Agent 自身架构对齐），但映射逻辑相同。</p></blockquote>
+<table class="md-table"><thead><tr><th>6 层</th><th>含义</th><th>对应的 Shape of AI 模式（37）</th><th>覆盖度</th></tr></thead><tbody><tr><td><strong>Model</strong></td><td>模型本身的理解与生成能力</td><td>（不直接对应 UX 模式）</td><td>—</td></tr><tr><td><strong>Prompt</strong></td><td>用户输入和上下文</td><td>Prompt library、Persona picker、Temperature slider、Length control、Tone selector、Format selector</td><td>部分覆盖（5/37 = 14%）</td></tr><tr><td><strong>Interface</strong></td><td>用户直接看到的界面</td><td>Wayfinders（6）、Inputs（5 减去 Prompt library）、Identifiers（6）、Transparency toggle</td><td>高覆盖（18/37 = 49%）</td></tr><tr><td><strong>Workflow</strong></td><td>任务的执行流程</td><td>Chained action、Workspaces、Progress bar、Stop button、Branching、Version history、Regenerate、Feedback loop</td><td>部分覆盖（8/37 = 22%）</td></tr><tr><td><strong>System</strong></td><td>系统级保障与可观测性</td><td>Source citation、Confidence score、Explanation、Human review、Error handling、Undo、Edit prompt、Connectors、@ mention、Slash command</td><td>部分覆盖（10/37 = 27%）</td></tr><tr><td><strong>Emergence</strong></td><td>跨会话的涌现能力</td><td>Content labeling、AI avatar、Sound cue、Drag and drop、Camera input、Voice input、Example gallery、Follow up、Inline Action、UI Components</td><td>弱覆盖（10/37 = 27%）</td></tr></tbody></table>
+<p><strong>最大空白</strong>：</p>
+<ul><li><strong>Emergence 层</strong>（跨会话、跨 agent 涌现能力）最弱，缺少长期记忆、companionship、delegation 的 UX 模式</li><li><strong>Prompt 层</strong>几乎完全依赖用户自己写，缺少主动引导（Prompt library / Persona picker 都是 P1-P2）</li><li><strong>System 层</strong>的 Trust builders 大部分缺失，Hermes Agent 在"信任建立"上投入不足</li></ul>
+<hr>
+<h2 id="与-shape-of-ai-条目的差异">与 Shape of AI 条目的差异</h2>
+<table class="md-table"><thead><tr><th>维度</th><th>Shape of AI 资源条目</th><th>本表</th></tr></thead><tbody><tr><td>形式</td><td>资源清单 + 链接</td><td>可勾选 checklist</td></tr><tr><td>视角</td><td>通用 AI 产品</td><td>专门针对 Hermes Agent</td></tr><tr><td>内容</td><td>模式名 + 说明 + 链接</td><td>模式名 + 自检问题 + Agent 场景 + 状态 + 优先级</td></tr><tr><td>分类</td><td>6 大类（横向）</td><td>6 大类（横向）+ 6 层（纵向）</td></tr><tr><td>更新频率</td><td>Shape of AI 站点</td><td>跟随 Hermes Agent 实际能力</td></tr><tr><td>派生关系</td><td>原始</td><td>派生自 <code>2026-06-26-shape-of-ai-ux-patterns</code></td></tr></tbody></table>
+<hr>
+<h2 id="变更日志">变更日志</h2>
+<ul><li><strong>2026-06-26</strong>：初版。基于 Shape of AI 37 个模式 + Layers of AI Experience 6 层模型</li></ul>
+</div>
+</details>
+</section>
+
+<nav class="detail-actions">
+<a class="action-link source-link" href="https://www.shapeof.ai/" target="_blank" rel="noopener">原文链接 ↗</a>
+<a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/notes/2026/2026-06-26-hermes-agent-ui-shape-of-ai-checklist" target="_blank" rel="noopener">GitHub 文件夹 →</a>
+<button class="action-btn" id="copy-path-btn" data-path="content/notes/2026/2026-06-26-hermes-agent-ui-shape-of-ai-checklist">复制 path</button>
+<span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
+</nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
+
+</article>
+</main>
+<footer>
+<p><a href="../../">hermes-knowledge-base</a> · 站内详情页</p>
+</footer>
+<script src="../../app.js" defer></script>
+<script>
+(function() {
+  const btn = document.getElementById('copy-path-btn');
+  const fb = document.getElementById('copy-feedback');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      const path = btn.getAttribute('data-path') || '';
+      const done = function() {
+        if (fb) {
+          fb.textContent = '已复制: ' + path;
+          setTimeout(function() { fb.textContent = ''; }, 2500);
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(path).then(done, function() {
+          // Fallback for non-secure contexts.
+          const ta = document.createElement('textarea');
+          ta.value = path;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); done(); } catch (e) {}
+          document.body.removeChild(ta);
+        });
+      }
+    });
+  }
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {
+    const onScroll = function() {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+</body>
+</html>

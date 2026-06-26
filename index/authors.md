@@ -36,6 +36,10 @@
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
 
+## Conan Xin
+
+- Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
+
 ## Dario Amodei / Emily Chang
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview

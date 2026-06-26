@@ -35,6 +35,7 @@
 
 ## AI UX
 
+- Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 - The Shape of AI
 
 ## AI governance
@@ -67,7 +68,12 @@
 
 ## Agent
 
+- Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 - Nia Docs — 把整个 Web 变成文件系统
+
+## Agent UI
+
+- Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 
 ## Agentic UX
 
@@ -306,6 +312,10 @@
 ## Henri Bortoft
 
 - We May Be Entering A Second Axial Age
+
+## Hermes
+
+- Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 
 ## Hermes Agent
 
@@ -637,6 +647,7 @@
 ## Shape of AI
 
 - The Layers of AI experience
+- Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 - The Shape of AI
 
 ## Sibelius
@@ -1354,7 +1365,12 @@
 
 ## 交互模式
 
+- Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 - The Shape of AI
+
+## 产品设计
+
+- Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 
 ## 亿万富翁
 
@@ -1727,6 +1743,10 @@
 ## 自我认知
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
+
+## 自检表
+
+- Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 
 ## 苦行
 
