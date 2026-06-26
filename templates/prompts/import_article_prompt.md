@@ -115,8 +115,52 @@ if is_project_route and "/hermes-knowledge-base/items/" in output_url and "同�
 - 正文抓取不完整（明显截断、缺少关键章节）
 - 文章需要登录或付费才能阅读完整内容
 - 内容类型不明确（无法判断是文章、论文、评论等）
-- 翻译后英文残留严重（suspicious_count ≥ 20）
+- 翻译后英文残留严重（suspicious_count ≥ 20）—— **长名单文章例外**：residue 可能因专名密度天然高，详细规则见下方「长名单文章特殊规则」与 [docs/LISTICLE_IMPORT_RULES.md](../../docs/LISTICLE_IMPORT_RULES.md)
 - metadata 关键字段无法确定（如作者、标题缺失）
+
+## 📋 长名单文章（listicle）特殊规则
+
+**触发条件**：文章标题或结构包含「Top N / Best N / Greatest N / 排名 / listicle / 编号型列表」。
+
+**完整规范**：[docs/LISTICLE_IMPORT_RULES.md](../../docs/LISTICLE_IMPORT_RULES.md)（v1.0, 2026-06-26 固化）
+
+**7 条核心约束（精简版）**：
+
+1. **必须先完整解析 source.md** — 不得基于截断版 web_extract 开始翻译。长名单文章 fallback chain 必须包含 `curl + HTML 解析` 这一步,不要止步于 web_extract。
+
+2. **翻译前结构预检**（必跑）:
+   - 统计 H2 数量（应有 N 个,N=文章声称的列表长度）
+   - 检查编号连续性（无 gap: #100, #99, #98, … #51）
+   - 检查重复（同一编号不应出现两次）
+   - 如果原文分页（如「page 3 of 3」），**只记录当前页覆盖范围,不得假装已覆盖全部分页**
+
+3. **翻译后结构对齐 hard-stop**:
+   - `source.md` 的编号标题 ↔ `translation.zh-CN.md` 的编号标题必须一一对应
+   - 错位 / 缺号 / 重复 / 凭空捏造 → **禁止 commit/push,必须修复**
+
+4. **metadata.yaml 必填字段**（长名单额外要求）:
+   ```yaml
+   coverage_scope: "rank_100_to_51_only"   # 当前覆盖范围
+   is_partial_series: true                 # 是否系列文章的一部分
+   series_info:                            # 完整系列信息
+     total_parts: 3
+     this_part: 1
+     covered_range: "rank_100_to_51"
+   translation_notes: |
+     check_translation_residue.py 返回 suspicious_count=N
+     这是音乐/影视/书单类文章的专名残留,不是漏译
+   ```
+
+5. **summary.md 必填段**: 「覆盖范围」章节,明确说明本次覆盖与未涵盖部分
+
+6. **residue warning 解读**: 长名单文章 residue 可能天然高（50 首歌 × 歌名/艺人名/专辑名 = 80-150 项）。判定流程:
+   - 抽样 10 个 residue 字符串
+   - 80%+ 是已知专名 → ACCEPT
+   - < 50% 是专名 → 真正漏译,hard-stop
+
+7. **状态标记**: 长名单文章推荐用 `PASS_WITH_WARNINGS` 而非简单 `PASS`(若 residue 警告),commit message 应包含状态标记
+
+**历史案例**：2026-06-26 Paste「100 greatest songs of the 1960s」(commit `725b7a9`) 因 web_extract 截断导致 11 首歌 H2 错位 + #75 缺失 + #74 凭空捏造,后续通过 source 重提取修复,教训固化到 LISTICLE_IMPORT_RULES.md。
 
 ## 禁止事项
 
@@ -153,3 +197,47 @@ export_site_data.py
 generate_item_pages.py
 sync_pages_docs.py
 ```
+
+---
+
+## 长名单文章专用字段模板（LISTICLE）
+
+长名单文章必须在 `metadata.yaml` 中包含以下字段。**完整规范**：`docs/LISTICLE_IMPORT_RULES.md`
+
+```yaml
+# 覆盖范围（长名单文章必填）
+coverage_scope: "rank_100_to_51_only"      # 当前导入的覆盖范围
+is_partial_series: true                     # 是否是系列文章的一部分
+
+# 系列信息（如果是分页型 listicle）
+series_info:
+  total_parts: 3
+  this_part: 1
+  covered_range: "rank_100_to_51"
+  remaining_parts:
+    - part: 2
+      url: "https://..."
+      covered_range: "rank_50_to_11"
+    - part: 3
+      url: "https://..."
+      covered_range: "rank_10_to_1"
+
+# 翻译备注（说明 residue warning 性质）
+translation_notes: |
+  check_translation_residue.py returned suspicious_count=N.
+  This is expected for a music/film/book listicle article
+  containing N song/film/book titles + artist/director/author names
+  (all preserved as proper nouns). No genuine untranslated paragraphs.
+```
+
+**长名单文章的 summary.md 必填段**：明确说明本次覆盖与未涵盖部分（详见 LISTICLE_IMPORT_RULES.md §5.2）
+
+**长名单文章的 commit message 约定**：
+```
+Add [Source] [topic] list [N items] ([subtitle]) — [STATUS]
+例: Add Paste Magazine 1960s top 100 songs list #100-#51 (zh-CN, 50 songs) — PASS_WITH_WARNINGS (residue=85 proper nouns)
+```
+
+**长名单文章的报告必填段**：
+- `## Coverage scope` 表格
+- `## Translation residue analysis` 段（专名类型 + 占比 + ACCEPT 判定）

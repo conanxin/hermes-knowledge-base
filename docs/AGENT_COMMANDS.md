@@ -90,10 +90,25 @@
 
 - check_kb.py PASS（0 issues）
 - update_site.py PASS（site/ 和 docs/ 同步完成）
-- check_translation_residue.py 无严重残留（suspicious_count < 20）
+- check_pages_sync.py PASS（site/ ↔ docs/ 内容一致）
+- check_translation_residue.py 软门禁：suspicious_count < 20（长名单 / 影视 / 书单类文章例外 — 详见 [LISTICLE_IMPORT_RULES.md](LISTICLE_IMPORT_RULES.md) §6）
 - metadata.yaml 字段完整（含 title_zh, source_site, language, translation_language, word_count）
 - word_count.source > 0 且 word_count.translation > 0
 - notes.md 使用统一模板
+
+### 📋 长名单文章（listicle）特殊规则
+
+当文章为 **Top N / Best N / Greatest N / 排名型 listicle**(例如 Paste「100 greatest songs of the 1960s」),**必须**按以下加强流程处理。**完整规范**：[docs/LISTICLE_IMPORT_RULES.md](LISTICLE_IMPORT_RULES.md)。
+
+**5 条核心约束**（细节见链接）：
+
+1. **必须先完整解析 source.md** — 不得基于截断版 web_extract 开始翻译。
+2. **翻译前结构预检** — 统计 H2 数量、检查编号连续性、查重、记录分页范围。
+3. **翻译后结构对齐** — source.md 与 translation.zh-CN.md 的编号标题必须一一对应。错位 / 缺号 / 重复 / 凭空捏造 → hard-stop。
+4. **metadata + summary 必须记录 coverage_scope** — 例：`coverage_scope: "rank_100_to_51_only"` + `is_partial_series: true`。
+5. **residue 状态分级** — 长名单文章 residue 可能很高(全是专名),状态用 `PASS_WITH_WARNINGS` 而非简单 `PASS`。但必须在 metadata.translation_notes 与报告中说明专名类型,不得因数高而掩盖真正漏译。
+
+**历史案例**：2026-06-26 Paste「100 greatest songs of the 1960s」(commit `725b7a9`) 翻译过程曾因截断导致 #76-#66 共 11 首歌 H2 错位 + #75 缺失 + #74 凭空捏造,后续通过 source 重提取与 patch 修复,经验固化到 LISTICLE_IMPORT_RULES.md。
 
 ### 导入后自动执行的质量检查
 
