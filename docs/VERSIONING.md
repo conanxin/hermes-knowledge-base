@@ -95,16 +95,77 @@ v0.3.18–v0.3.35 期间存在 **music enrichment** 和 **youtube capability** �
 
 **从 v0.3.37 开始，单轨单 tag**。
 
+## Versioned Task 的 Mandatory Preflight
+
+从 **v0.3.38** 开始，所有 versioned task 必须运行 preflight：
+
+```bash
+python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name
+```
+
+### Preflight 检查内容
+
+1. Git repo 有效性
+2. Working tree clean
+3. HEAD 与 origin/main 同步
+4. Planned tag 不存在（本地和 remote）
+5. Minor version 不冲突（不小于 recommended next minor）
+6. 核心检查脚本通过（check_kb.py, check_pages_sync.py, check_tracks.py）
+
+### Preflight 结果处理
+
+| 结果 | 处理方式 |
+|------|----------|
+| **PASS** | 继续执行任务 |
+| **PASS_WITH_WARNINGS** | 仅当 warning 为已知非阻断项（如 v0.3.36 known duplicate）时可继续 |
+| **FAIL** | **立即停止**，不得继续 |
+
+## 新任务版本号选择
+
+1. **先运行** `python3 scripts/check_release_tags.py`
+2. **以 `recommended_next_minor` 为准**
+3. 不要复用已使用过的 minor number
+4. 如果 planned minor > recommended，输出 WARNING（gap 可接受但需验证）
+
+## Tag 创建前后验证
+
+### 创建前
+
+```bash
+git tag --list 'v0.3.N-*'
+git ls-remote --tags origin 'v0.3.N-*'
+```
+
+### 创建后
+
+```bash
+git rev-parse v0.3.N-task-name      # tag object
+git rev-parse v0.3.N-task-name^{}    # deref commit
+```
+
+### 如果 tag 已存在
+
+- **不删除**
+- **不覆盖**
+- **不 force push**
+- 选择新的版本号
+
 ## Agent 执行前检查清单
 
 - [ ] 运行 `python3 scripts/check_release_tags.py`
 - [ ] 确认推荐版本号
+- [ ] 运行 `python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name`
+- [ ] 确认 preflight PASS
 - [ ] 检查 `git tag --list 'v0.3.N-*'` 和 `git ls-remote --tags origin 'v0.3.N-*'`
 - [ ] 确认 v0.3.N 未被使用
 - [ ] 创建 annotated tag: `git tag -a v0.3.N-description -m "..."`
 - [ ] 推送 tag: `git push origin v0.3.N-description`
+- [ ] 验证 tag deref: `git rev-parse v0.3.N-description^{}`
 
 ## 相关文档
 
 - [docs/RELEASES.md](RELEASES.md) — 完整 release index
+- [docs/AGENT_COMMANDS.md](AGENT_COMMANDS.md) — Agent 命令与导入流程
+- [docs/CLOUD_HERMES_INTEGRATION.md](CLOUD_HERMES_INTEGRATION.md) — 云端 Hermes 开工规则
 - [scripts/check_release_tags.py](../scripts/check_release_tags.py) — 自动 tag 检查
+- [scripts/check_task_preflight.py](../scripts/check_task_preflight.py) — 任务 preflight 检查

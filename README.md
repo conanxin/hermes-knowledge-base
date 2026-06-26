@@ -41,12 +41,20 @@ python3 scripts/build_index.py
 python3 scripts/check_pages_sync.py
 ```
 
+**任务启动前 preflight（v0.3.38+）：**
+
+```bash
+python3 scripts/check_task_preflight.py              # 普通任务
+python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name  # versioned task
+```
+
 | 脚本 | 用途 | 预期结果 |
 |------|------|----------|
 | `check_kb.py` | 检查 metadata 完整性 | PASS (19/19) |
 | `check_translation_residue.py` | 检查翻译残留 | WARNING 可接受 |
 | `build_index.py` | 重建索引 | 19 records |
 | `check_pages_sync.py` | 检查 site/ 与 docs/ 发布文件一致 | PASS |
+| `check_task_preflight.py` | 任务启动前检查 | PASS / PASS_WITH_WARNINGS |
 
 ## 本地浏览知识库
 

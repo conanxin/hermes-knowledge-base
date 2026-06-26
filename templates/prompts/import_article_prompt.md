@@ -93,19 +93,48 @@ if is_project_route and "/hermes-knowledge-base/items/" in output_url and "同�
 
 ## 执行流程
 
-1. 抓取正文（web_extract → browser 降级）
-2. 创建目录结构
-3. 保存 source.md
-4. 完整翻译为 translation.zh-CN.md
-5. 生成 metadata.yaml（含 title_zh, source_site, word_count 等完整字段）
-6. 生成 summary.md
-7. 生成 notes.md（使用统一模板）
-8. 处理 assets/
-9. 更新索引（build_index.py）
-10. 更新在线浏览页（update_site.py）
-11. 运行质量检查（check_kb.py + check_translation_residue.py）
-12. Commit & Push
-13. 生成导入报告
+### 0. Preflight（v0.3.38+ 强制）
+
+**所有导入任务开始前必须先运行 preflight：**
+
+```bash
+cd ~/hermes-knowledge-base
+git fetch origin
+git pull --ff-only origin main
+python3 scripts/check_task_preflight.py
+```
+
+**如果是 versioned task：**
+
+```bash
+python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name
+```
+
+**Preflight 结果处理：**
+
+| 结果 | 处理方式 |
+|------|----------|
+| **PASS** | 继续执行导入 |
+| **PASS_WITH_WARNINGS** | 仅当 warning 为已知非阻断项（如 v0.3.36 known duplicate）时可继续 |
+| **FAIL** | **立即停止**，不得进入抓取/翻译阶段 |
+
+### 1. 抓取正文（web_extract → browser 降级）
+
+- 如果 URL 抓取失败 / paywall / ACL / 正文不完整 → **hard stop**，记录失败原因
+- 长名单文章必须使用完整 source.md（不得基于截断版 web_extract）
+
+### 2. 创建目录结构
+### 3. 保存 source.md
+### 4. 完整翻译为 translation.zh-CN.md
+### 5. 生成 metadata.yaml（含 title_zh, source_site, word_count 等完整字段）
+### 6. 生成 summary.md
+### 7. 生成 notes.md（使用统一模板）
+### 8. 处理 assets/
+### 9. 更新索引（build_index.py）
+### 10. 更新在线浏览页（update_site.py）
+### 11. 运行质量检查（check_kb.py + check_translation_residue.py）
+### 12. Commit & Push
+### 13. 生成导入报告
 
 ## 强制停止条件
 
