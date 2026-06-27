@@ -18,6 +18,7 @@
 
 ## 19th-century
 
+- Compensation
 - Self-Reliance
 
 ## 2026
@@ -874,6 +875,7 @@
 
 ## american-literature
 
+- Compensation
 - Self-Reliance
 
 ## animation
@@ -922,6 +924,10 @@
 
 - The Old World Is Dying
 
+## cause-and-effect
+
+- Compensation
+
 ## character_development
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
@@ -957,6 +963,10 @@
 ## community
 
 - Hacker News ML 热门链接
+
+## compensation
+
+- Compensation
 
 ## constitutional AI
 
@@ -1197,6 +1207,10 @@
 
 - Hacker News ML 热门链接
 
+## moral-philosophy
+
+- Compensation
+
 ## mqtt
 
 - Hydro0x01 Local Hermes Security Audit
@@ -1257,6 +1271,7 @@
 
 ## philosophy
 
+- Compensation
 - Self-Reliance
 - On the Duty of Civil Disobedience
 - Walking
@@ -1319,6 +1334,7 @@
 
 ## ralph-waldo-emerson
 
+- Compensation
 - Self-Reliance
 
 ## reading
@@ -1443,6 +1459,7 @@
 
 ## transcendentalism
 
+- Compensation
 - Self-Reliance
 - Walking
 
@@ -1602,6 +1619,10 @@
 ## 哈佛
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
+
+## 因果报应
+
+- Compensation
 
 ## 增速
 
@@ -1812,6 +1833,10 @@
 
 - 灵感资源库
 
+## 爱默生
+
+- Compensation
+
 ## 特朗普
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
@@ -1909,6 +1934,7 @@
 
 ## 美国文学
 
+- Compensation
 - On the Duty of Civil Disobedience
 - Walking
 
@@ -1948,6 +1974,10 @@
 ## 虚构
 
 - Don't dethrone consciousness!
+
+## 补偿
+
+- Compensation
 
 ## 裂脑患者
 
@@ -1991,6 +2021,7 @@
 
 ## 超验主义
 
+- Compensation
 - Walking
 
 ## 轴心时代
@@ -2004,6 +2035,10 @@
 ## 道家
 
 - Ken Liu on AI and Freedom
+
+## 道德哲学
+
+- Compensation
 
 ## 道德经
 

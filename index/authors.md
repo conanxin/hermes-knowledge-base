@@ -144,6 +144,7 @@
 
 ## Ralph Waldo Emerson
 
+- Compensation
 - Self-Reliance
 
 ## Sean Kenji Starrs and Robert Hunter Wade

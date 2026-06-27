@@ -1,0 +1,60 @@
+title: "Compensation"
+title_zh: "论补偿"
+author: "Ralph Waldo Emerson"
+source_url: "https://www.gutenberg.org/files/2944/2944-h/2944-h.htm"
+source_site: "Project Gutenberg"
+source_gutenberg_id: "2944"
+source_collection: "Essays, First Series"
+extraction_scope: "Only III. COMPENSATION from Essays, First Series"
+extraction_start: "<h2><a name=\"link2H_4_0003\" id=\"link2H_4_0003\"></a>III.<br />\nCOMPENSATION</h2> at HTML byte position 109195"
+extraction_end: "Just before <h2><a name=\"link2H_4_0004\" id=\"link2H_4_0004\"></a>IV.<br />\nSPIRITUAL LAWS</h2> at HTML byte position 153757"
+anthology_boundary_check: "PASS"
+excluded_sections:
+  - "I. HISTORY"
+  - "II. SELF-RELIANCE"
+  - "IV. SPIRITUAL LAWS"
+  - "V. LOVE"
+  - "VI. FRIENDSHIP"
+  - "VII. PRUDENCE"
+  - "VIII. HEROISM"
+  - "IX. THE OVER-SOUL"
+  - "X. CIRCLES"
+  - "XI. INTELLECT"
+  - "XII. ART"
+published_date: "1841-08-01"
+type: "essay"
+language: "en"
+translation_language: "zh-CN"
+tags:
+  - transcendentalism
+  - compensation
+  - moral-philosophy
+  - cause-and-effect
+  - american-literature
+  - philosophy
+  - 19th-century
+  - ralph-waldo-emerson
+  - 爱默生
+  - 超验主义
+  - 道德哲学
+  - 因果报应
+  - 补偿
+  - 美国文学
+topics:
+  - 道德补偿原则
+  - 善恶因果的对等
+  - 命运与行动的互相回应
+  - 损失与收获的辩证
+  - 超验主义的宇宙观
+  - 与 Self-Reliance 的张力
+word_count:
+  source: 7700
+  translation: 17500
+captured_date: "2026-06-27"
+status: "published"
+summary: "Emerson's 1841 essay on the moral law of compensation — the doctrine that every gain is matched by an equivalent loss, every pain by a corresponding pleasure, and that the universe is governed by a balance between polarities. A companion piece to Self-Reliance, applying transcendentalist metaphysics to ethics."
+summary_zh: "爱默生 1841 年散文，论述道德补偿原则——每一份获得必对应等量的失去，每一份痛苦必对应相应的快乐，宇宙由两极之间的平衡所主宰。本文是《论自立》的姊妹篇，将超验主义形而上学应用于伦理学。"
+import_date: "2026-06-27"
+import_version: "v0.3.56-gutenberg-recipe-driven-import"
+kb_entry_id: "2026-06-27-emerson-compensation"
+slug: "2026-06-27-emerson-compensation"
