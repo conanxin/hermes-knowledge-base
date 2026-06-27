@@ -13,6 +13,23 @@ language: "en"
 translation_language: "zh-CN"
 extraction_scope: "Only II. SELF-RELIANCE from Essays, First Series (1841). Boundaries: from <h2 id=\"link2H_4_0002\"> to start of <h2 id=\"link2H_4_0003\"> (Compensation)."
 source_collection: "Essays, First Series"
+extraction_start: "<h2 id=\"link2H_4_0002\">II. SELF-RELIANCE</h2> at HTML position 52118"
+extraction_end: "Just before <h2 id=\"link2H_4_0003\">III. COMPENSATION</h2> at HTML position 109195"
+anthology_boundary_check: "PASS"
+excluded_sections:
+  - "I. HISTORY"
+  - "III. COMPENSATION"
+  - "IV. SPIRITUAL LAWS"
+  - "V. LOVE"
+  - "VI. FRIENDSHIP"
+  - "VII. PRUDENCE"
+  - "VIII. HEROISM"
+  - "IX. THE OVER-SOUL"
+  - "X. CIRCLES"
+  - "XI. INTELLECT"
+  - "XII. ART"
+import_recipe: "docs/import-recipes/PROJECT_GUTENBERG.md"
+legacy_backfill_version: "v0.3.58-legacy-anthology-metadata-backfill"
 tags:
   - transcendentalism
   - self-reliance
