@@ -112,6 +112,29 @@ python3 scripts/check_task_preflight.py
 - 如果 URL 抓取失败 / paywall / ACL / 正文不完整 → **hard stop**，记录失败原因
 - 完整翻译
 
+### 2a. Anthology / Collection 页面抽取（v0.3.52+）
+
+如果用户提供的是合集 URL（如 Project Gutenberg 全书页），但只指定单篇 / 单一章节：
+
+```
+把这篇文章完整翻译并加入知识库：
+https://www.gutenberg.org/files/2944/2944-h/2944-h.htm
+
+导入范围限定：
+只导入 Ralph Waldo Emerson 的 Self-Reliance 一文。
+```
+
+**规则**：
+
+- 明确范围优先于 URL 页面整体
+- collection URL 不等于导入整本书
+- 必须做 extraction boundary check
+- 仅抽取指定边界，其他章节不得混入
+- 必须记录 `extraction_scope` 字段到 metadata.yaml
+- 必须在 notes.md 记录起点和终点
+
+完整规范见 [templates/prompts/import_article_prompt.md § Anthology / Collection Page 单篇抽取规则](../templates/prompts/import_article_prompt.md)
+
 ### 3. 质量检查
 
 ```bash

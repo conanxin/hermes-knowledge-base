@@ -207,6 +207,58 @@ python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name
 
 **历史案例**：2026-06-26 Paste「100 greatest songs of the 1960s」(commit `725b7a9`) 因 web_extract 截断导致 11 首歌 H2 错位 + #75 缺失 + #74 凭空捏造,后续通过 source 重提取修复,教训固化到 LISTICLE_IMPORT_RULES.md。
 
+## 📚 Anthology / Collection Page 单篇抽取规则（v0.3.52+）
+
+**触发条件**：用户提供的 URL 是合集页 / 书籍页 / 多章节页（如 Project Gutenberg 全书页、Anthology、Collection），但用户在指令中明确指定单篇 / 单一章节 / 单一标题。
+
+**核心规则**：
+
+1. **明确范围优先于 URL 页面整体** — 用户在短命令中指定的单篇 / 单一标题是最终导入范围，不得因 URL 包含合集而扩大范围。
+2. **必须抽取指定边界** — 仅抽取指定篇章的正文，不得导入整本书或其他章节。
+3. **必须记录 extraction scope** — 在 metadata.yaml 中明确 `extraction_scope` 字段；source.md 顶部必须说明边界；notes.md 必须记录起点和终点。
+4. **边界无法稳定识别 → hard-stop** — 如果页面结构无法可靠识别指定篇章的起止位置，必须停止导入，不得"差不多"抽取整页。
+5. **不得混入其他章节** — 目录、许可证、其他章节正文均不得混入 source.md 或 translation.zh-CN.md 主体。
+6. **collection URL ≠ 整本书** — 合集 URL 不等于导入整本书。
+
+**示例**：
+
+```
+把这篇文章完整翻译并加入知识库：
+https://www.gutenberg.org/files/2944/2944-h/2944-h.htm
+
+导入范围限定：
+只导入 Ralph Waldo Emerson 的 Self-Reliance 一文。
+```
+
+实际执行时：
+- 识别 `<h2 id="link2H_4_0002">II. SELF-RELIANCE</h2>` 作为起点
+- 识别 `<h2 id="link2H_4_0003">III. COMPENSATION</h2>` 前一行为终点
+- source.md / translation.zh-CN.md 仅包含 Self-Reliance 一章
+- 其他 11 篇（History、Compensation、Spiritual Laws、Love、Friendship、Prudence、Heroism、The Over-Soul、Circles、Intellect、Art）不导入
+
+**metadata.yaml 必填字段**：
+
+```yaml
+extraction_scope: "Only II. SELF-RELIANCE from Essays, First Series"
+source_collection: "Essays, First Series"  # 合集名（可选）
+```
+
+**notes.md 必填段**：
+
+```markdown
+## Extraction Scope
+
+- **Boundaries**:
+  - **Start**: `<h2 id="link2H_4_0002">II. SELF-RELIANCE</h2>` (HTML position N)
+  - **End**: Just before `<h2 id="link2H_4_0003">III. COMPENSATION</h2>` (HTML position N)
+  - **Length**: N characters
+- **Excluded**: History, Compensation, Spiritual Laws, ... (其他 11 篇)
+```
+
+**历史案例**：2026-06-27 Emerson《Self-Reliance》导入（v0.3.51），从 Project Gutenberg 全书页（12 篇 essays）仅抽取 II. SELF-RELIANCE，边界止于 III. COMPENSATION 前；其余 11 篇未导入。
+
+---
+
 ## 🎵 音乐/影视/书目 listicle 的 track/film/book links（v0.3.19+）
 
 当 listicle 每条目对应可播放/可定位实体（歌曲、影片、书目），需要给条目挂链接时，**优先级**：

@@ -594,3 +594,19 @@ python3 scripts/check_task_postflight.py \
 - **2026-06-27**: v1.1 新增 §10 Postflight 检查章节(WARN-only 最小版)
 - **2026-06-27**: v1.2 新增 §13 报告模板覆盖率审计，完善 required/recommended 字段清单
 - v2 触发: KB 条目出 v2 / 反模式新增 / 协议步骤变化
+
+---
+
+## 14. Anthology / Collection Page 导入报告必填字段（v0.3.52+）
+
+如果导入任务涉及合集页 / 书籍页 / 多章节页抽取（用户明确指定单篇），报告必须在 §4 Inputs 部分增加以下字段：
+
+- **`source URL`**：合集 / 书籍 / 多章节页 URL
+- **`extraction scope`**：明确写明抽取范围（如 "Only II. SELF-RELIANCE from Essays, First Series"）
+- **`extraction start`**：抽取起点（如 "II. SELF-RELIANCE" 或 HTML anchor ID）
+- **`extraction end`**：抽取终点（如 "before III. COMPENSATION" 或 HTML anchor ID）
+- **`anthology / collection boundary check`**：PASS / FAIL with evidence（如 "PASS — HTML positions 52,118–109,195; 57,077 chars extracted; 11 other chapters excluded"）
+
+如果任一字段缺失，postflight 将 WARN（v0.3.52+）。
+
+完整规则见 [templates/prompts/import_article_prompt.md § Anthology / Collection Page 单篇抽取规则](../templates/prompts/import_article_prompt.md)。

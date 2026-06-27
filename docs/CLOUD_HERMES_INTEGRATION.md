@@ -51,6 +51,19 @@ python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name
 * postflight warning 不得隐藏。
 * report 缺字段时不要 amend 旧 commit，优先后续报告中记录。
 
+### 5a. Anthology / Collection Page 导入（v0.3.52+）
+
+如果云端任务涉及合集页 / 书籍页 / 多章节页抽取，必须：
+
+- **写明 extraction scope**：报告中必须列出导入的章节边界（起点 + 终点 + 排除章节列表）。
+- **无法确认边界时 hard-stop**：不得用整页正文替代指定单篇。
+- **报告必填字段**：
+  - `extraction_scope`
+  - `extraction_start` / `extraction_end`
+  - `anthology_boundary_check` (PASS / FAIL with evidence)
+
+完整规则见 [templates/prompts/import_article_prompt.md § Anthology / Collection Page 单篇抽取规则](../templates/prompts/import_article_prompt.md) 和 [docs/AGENT_COMMANDS.md § 2a](AGENT_COMMANDS.md)。
+
 ### 禁止操作
 
 - **不得在 dirty tree 上执行** — 必须先 commit 或清理
