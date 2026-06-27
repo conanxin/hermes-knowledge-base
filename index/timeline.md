@@ -32,6 +32,7 @@
 - Self-Reliance
 - A Modest Proposal
 - On the Duty of Civil Disobedience
+- Walking
 - Hermes Agent Task Report Template
 - Hermes Agent UI P0 Implementation Spec
 - Hermes Agent UI Self-Audit v1

@@ -1,0 +1,41 @@
+title: "Walking"
+title_zh: "步行"
+author: "Henry David Thoreau"
+source_url: "https://www.gutenberg.org/files/1022/1022-h/1022-h.htm"
+source_site: "Project Gutenberg"
+published_date: "1862-06-01"
+type: "essay"
+language: "en"
+translation_language: "zh-CN"
+tags:
+  - philosophy
+  - nature
+  - walking
+  - wilderness
+  - transcendentalism
+  - American literature
+  - Thoreau
+  - 梭罗
+  - 步行
+  - 野性
+  - 自然
+  - 超验主义
+  - 美国文学
+topics:
+  - 步行的艺术
+  - 野性作为世界的保存
+  - 朝圣与西方
+  - 文明与野性的关系
+  - 黄昏与夜行
+  - 康科德的日常生活
+word_count:
+  source: 12100
+  translation: 19600
+captured_date: "2026-06-27"
+status: "published"
+summary: "Thoreau's 1862 essay celebrating walking as an art, a religious act, and a westward pilgrimage toward Wildness — arguing that in Wildness lies the preservation of the world, and that every true walk is a crusade to reclaim the Holy Land from the Infidels."
+summary_zh: "梭罗 1862 年的散文，将步行视为艺术、宗教行动与朝向野性的朝圣之旅——主张野性之中蕴藏着对世界的保存，每一次的真正步行都是一场从异教徒手中夺回圣地的十字军东征。"
+import_date: "2026-06-27"
+import_version: "v0.3.54-normal-article-import-production"
+kb_entry_id: "2026-06-27-thoreau-walking"
+slug: "thoreau-walking"

@@ -120,6 +120,7 @@
 ## American literature
 
 - On the Duty of Civil Disobedience
+- Walking
 
 ## Amit Shekhar
 
@@ -759,6 +760,7 @@
 ## Thoreau
 
 - On the Duty of Civil Disobedience
+- Walking
 
 ## Tina Turner
 
@@ -1199,6 +1201,10 @@
 
 - Hydro0x01 Local Hermes Security Audit
 
+## nature
+
+- Walking
+
 ## news
 
 - Hacker News ML 热门链接
@@ -1253,6 +1259,7 @@
 
 - Self-Reliance
 - On the Duty of Civil Disobedience
+- Walking
 
 ## pixar
 
@@ -1437,6 +1444,7 @@
 ## transcendentalism
 
 - Self-Reliance
+- Walking
 
 ## transnational_corporations
 
@@ -1463,6 +1471,14 @@
 ## vulnerability
 
 - How AI Will Change Us
+
+## walking
+
+- Walking
+
+## wilderness
+
+- Walking
 
 ## workflow
 
@@ -1758,6 +1774,7 @@
 ## 梭罗
 
 - On the Duty of Civil Disobedience
+- Walking
 
 ## 模仿欲望
 
@@ -1766,6 +1783,10 @@
 ## 欺骗
 
 - How to Earn a Billion Dollars
+
+## 步行
+
+- Walking
 
 ## 毕业演讲
 
@@ -1889,6 +1910,7 @@
 ## 美国文学
 
 - On the Duty of Civil Disobedience
+- Walking
 
 ## 翻译
 
@@ -1914,6 +1936,10 @@
 ## 自检表
 
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
+
+## 自然
+
+- Walking
 
 ## 苦行
 
@@ -1963,6 +1989,10 @@
 
 - Superlinear Returns
 
+## 超验主义
+
+- Walking
+
 ## 轴心时代
 
 - We May Be Entering A Second Axial Age
@@ -1982,6 +2012,10 @@
 ## 野心
 
 - Superlinear Returns
+
+## 野性
+
+- Walking
 
 ## 门槛效应
 
