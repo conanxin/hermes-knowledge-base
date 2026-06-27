@@ -119,6 +119,10 @@
 
 - The 100 greatest songs of the 1960s
 
+## Miao Miao; Hui Situ
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
+
 ## Moira Weigel / Anthony Burton / Alexis Papazoglou
 
 - The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou

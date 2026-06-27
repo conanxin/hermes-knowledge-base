@@ -33,6 +33,10 @@
 
 - A Modest Proposal
 
+## ADAPT
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
+
 ## AGI 时间表
 
 - Sign of the future: GPT-5.5
@@ -114,9 +118,17 @@
 
 - An "infovore" shares his chats
 
+## Algorithmic management
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
+
 ## All That We See or Seem
 
 - Ken Liu on AI and Freedom
+
+## Amazon warehouse
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
 ## American literature
 
@@ -166,6 +178,10 @@
 ## Brain Trust
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
+## Braverman
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
 ## Cathedral
 
@@ -239,6 +255,10 @@
 ## Demis Hassabis
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
+## Digital Taylorism
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
 ## Documentation
 
@@ -433,6 +453,10 @@
 
 - Owning Our Words: Sounding the Depths of Language
 
+## Journal of Business Ethics
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
+
 ## Juan Ruocco
 
 - The People Are Never Right
@@ -444,6 +468,10 @@
 ## Karl Jaspers
 
 - We May Be Entering A Second Axial Age
+
+## Karl Marx
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
 ## Karpathy
 
@@ -473,6 +501,10 @@
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
 - Karpathy Second Brain 实现指南
 
+## Labour process theory
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
+
 ## Le Guin
 
 - Ken Liu on AI and Freedom
@@ -501,9 +533,17 @@
 
 - Nia Docs — 把整个 Web 变成文件系统
 
+## MCS
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
+
 ## Magnifica humanitas
 
 - Your AI Is Not a Tool
+
+## Management control systems
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
 ## Marginal Revolution
 
@@ -697,6 +737,10 @@
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
+## Scientific management
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
+
 ## Second Brain
 
 - Karpathy Second Brain 实现指南
@@ -731,6 +775,10 @@
 ## TDR
 
 - How Reverse Game Theory Could Solve The Housing Shortage
+
+## Taylorism
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
 ## Ted Chiang
 
@@ -807,6 +855,10 @@
 
 - Hermes Agent UI Self-Audit v1
 
+## UK retail logistics
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
+
 ## Unqualified Reservations
 
 - The People Are Never Right
@@ -834,6 +886,10 @@
 ## Wiki
 
 - Wiki 代替 RAG 的可行性评估
+
+## Worker alienation
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
 ## Y Combinator
 
