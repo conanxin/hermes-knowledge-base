@@ -259,6 +259,26 @@ source_collection: "Essays, First Series"  # 合集名（可选）
 
 ---
 
+## 🔖 Source-Specific Import Recipes（v0.3.55+）
+
+**触发条件**：`source_url` 命中一个已知来源类型时（如 `gutenberg.org`），必须在执行 §1–§10 的常规流程之前加载对应 recipe，并遵守 recipe 中所有硬规则。
+
+| 来源 URL 域名 | Recipe 路径 | 状态 |
+|---|---|---|
+| `gutenberg.org` / `www.gutenberg.org` | `docs/import-recipes/PROJECT_GUTENBERG.md` | Active since v0.3.55 |
+
+**Project Gutenberg 强制要求**：
+
+1. **如果 `source_url` 属于 `gutenberg.org`，加载并遵守 [docs/import-recipes/PROJECT_GUTENBERG.md](../../../docs/import-recipes/PROJECT_GUTENBERG.md)。**
+2. **不得跳过** recipe 中的 §3 duplicate check / §4 blocked check / §6–§7 extraction scope 检查。
+3. **collection page / anthology page**（多章节合集页）必须遵守 recipe §6 的单篇抽取规则与 §7 的 hard-stop cases（`AMBIGUOUS_ANTHOLOGY_SCOPE` / `EXTRACTION_BOUNDARY_NOT_FOUND`）。
+4. **Gutenberg 噪声清理**（recipe §8）：剥离 license footer、navigation、related links、transcriber notes，但保留最小来源说明。
+5. **报告中必须记录**：recipe 是否适用、是否触发了 hard-stop、metadata 中是否设置了 `source_collection` / `extraction_scope` 字段。
+
+**不命中已知 recipe 时**：按通用流程处理（§1–§10），但建议在报告中说明 `source_url` 域名 + 是否考虑未来为其新增 recipe。
+
+---
+
 ## 🎵 音乐/影视/书目 listicle 的 track/film/book links（v0.3.19+）
 
 当 listicle 每条目对应可播放/可定位实体（歌曲、影片、书目），需要给条目挂链接时，**优先级**：

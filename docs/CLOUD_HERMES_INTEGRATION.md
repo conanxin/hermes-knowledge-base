@@ -64,6 +64,23 @@ python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name
 
 完整规则见 [templates/prompts/import_article_prompt.md § Anthology / Collection Page 单篇抽取规则](../templates/prompts/import_article_prompt.md) 和 [docs/AGENT_COMMANDS.md § 2a](AGENT_COMMANDS.md)。
 
+### 5b. Source-Specific Import Recipes（v0.3.55+）
+
+云端导入 Project Gutenberg 来源（或任何已建立 recipe 的来源）时，**必须先加载并遵守对应 recipe**：
+
+| 来源 URL 域名 | Recipe 路径 |
+|---|---|
+| `gutenberg.org` / `www.gutenberg.org` | [docs/import-recipes/PROJECT_GUTENBERG.md](import-recipes/PROJECT_GUTENBERG.md) |
+
+**云端 Gutenberg 导入要求**：
+
+- 必须在报告中显式记录 **recipe 是否适用**（适用于 Project Gutenberg、不适用、命中但被 hard-stop）。
+- 若触发 recipe §7 的 hard-stop cases（`AMBIGUOUS_ANTHOLOGY_SCOPE` / `EXTRACTION_BOUNDARY_NOT_FOUND`），报告中必须包含 `blocked_reason` 字段。
+- 若为 anthology extraction，metadata.yaml 必须包含 `source_collection` + `extraction_scope` 字段。
+- 云端导入与本地导入的差异：云端必须遵守 [§ 2 同步远程](#2-同步远程) 与 [§ 6 Versioned Task 流程](#6-versioned-task-流程)，不能在 dirty tree 上继续。
+
+**不命中已知 recipe 时**：按通用流程处理，但报告中说明 `source_url` 域名 + 是否建议未来新增 recipe。
+
 ### 禁止操作
 
 - **不得在 dirty tree 上执行** — 必须先 commit 或清理

@@ -135,6 +135,21 @@ https://www.gutenberg.org/files/2944/2944-h/2944-h.htm
 
 完整规范见 [templates/prompts/import_article_prompt.md § Anthology / Collection Page 单篇抽取规则](../templates/prompts/import_article_prompt.md)
 
+### 2b. Source-Specific Import Recipes (v0.3.55+)
+
+不同来源的文章有不同的抓取 / 清洗 / 抽取规则。当 source_url 命中一个已知的来源类型时，**必须先加载并遵守对应 recipe**：
+
+| Source type | Recipe |
+|---|---|
+| Project Gutenberg (gutenberg.org) | [docs/import-recipes/PROJECT_GUTENBERG.md](import-recipes/PROJECT_GUTENBERG.md) |
+
+**Project Gutenberg 特定要求**：
+
+- 导入 Project Gutenberg 来源（单篇 essay 或合集章节）请优先参考 [docs/import-recipes/PROJECT_GUTENBERG.md](import-recipes/PROJECT_GUTENBERG.md)。
+- collection page / anthology page（多章节合集页）必须遵守该 recipe 的 §6 (单篇抽取) 与 §7 (hard-stop cases)。
+- 不得跳过 recipe 中的 duplicate / blocked / extraction scope 检查。
+- 报告中必须记录 recipe 是否适用、是否触发 hard-stop。
+
 ### 3. 质量检查
 
 ```bash
