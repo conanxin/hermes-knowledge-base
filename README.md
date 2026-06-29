@@ -27,6 +27,7 @@
 | 类型 | 数量 | 说明 | 目录 |
 |------|------|------|------|
 | article | 6 | 外部文章，有 source_url，需翻译 | `content/articles/` |
+| wechat_article | 0 | 微信公众号文章，有 source_url，中文原文 | `content/articles/` |
 | note | 5 | 中文笔记，无翻译，有 legacy_source_path | `content/legacy-knowledge/` |
 | project | 4 | 项目文档，有 source_url，无翻译 | `content/projects/` |
 | resource_collection | 4 | 资源集合，结构化列表，无翻译 | `content/collections/` |
@@ -152,6 +153,98 @@ cp templates/prompts/import_article_prompt.md /tmp/my_import.md
 ```
 
 详见 `templates/prompts/import_article_prompt.md` 和 `docs/AGENT_COMMANDS.md`。
+
+## 微信公众号文章入库
+
+Hermes Knowledge Base 支持将微信公众号文章全文入库保存。
+
+### 能力说明
+
+将微信公众号文章（通过 OpenClaw @tencent-weixin/openclaw-weixin 读取全文）转换为：
+- `metadata` — 文章元数据（含 content_kind, source_platform, dedupe_key, wechat, capture 字段）
+- `source.md` — 原文全文
+- `translation.zh-CN.md` — 清洗后的中文正文（V1 可与 source.md 一致）
+- `summary.md` — 文章摘要
+- `notes.md` — 结构化笔记
+- `raw_payload.json` — 原始 JSON 捕获包备份
+- `KB 条目` — 知识库正式条目
+- `GitHub Pages 站点更新` — 自动发布到浏览站点
+
+### 最短命令
+
+在微信中直接对 Hermes 说：
+
+```
+把这篇公众号文章加入 Hermes 知识库
+```
+
+或：
+
+```
+入库这篇公众号文章
+```
+
+或：
+
+```
+保存这篇公众号全文到知识库
+```
+
+### 输出目录
+
+```
+content/articles/YYYY/YYYY-MM-DD-wechat-<account-slug>-<title-slug>/
+```
+
+### 输出文件
+
+| 文件 | 说明 |
+|------|------|
+| `metadata.yaml` | 知识库元数据（含 wechat / capture 字段） |
+| `source.md` | 原文全文 |
+| `translation.zh-CN.md` | 清洗后的中文正文 |
+| `summary.md` | 文章摘要 |
+| `notes.md` | 结构化笔记 |
+| `raw_payload.json` | 原始 JSON 捕获包 |
+
+### 质量检查命令
+
+```bash
+cd ~/hermes-knowledge-base
+python3 scripts/check_task_preflight.py
+python3 -m py_compile scripts/import_wechat_article_capture.py
+python3 scripts/check_kb.py
+python3 scripts/update_site.py
+python3 scripts/check_translation_residue.py
+git status
+```
+
+| 检查项 | 要求 | 失败处理 |
+|--------|------|----------|
+| content_markdown 完整性 | 非空、非截断、非仅摘要 | 拒绝入库，报告原因 |
+| word_count | source > 0, translation > 0，整数 | 重新计算 |
+| metadata.yaml 字段 | 含 content_kind, source_platform, dedupe_key | 补充缺失字段 |
+| tags | 6-12 个 | 调整数量 |
+| topics | 3-8 个 | 调整数量 |
+
+### 强制停止条件
+
+以下情况 Hermes 必须停止导入，向用户报告，不要强行入库：
+
+- content_markdown 为空或明显截断
+- 文章只有摘要，没有正文主体
+- 内容需要登录或付费才能阅读完整内容
+- 文章已删除或违规无法查看
+- metadata 关键字段无法确定（如 title、source_url 缺失）
+
+### 相关文档
+
+| 文档 | 路径 | 说明 |
+|------|------|------|
+| 导入工作流 | `docs/workflows/wechat-article-kb-import-workflow.md` | 完整入库流程 |
+| 导入命令 | `docs/commands/wechat-article-kb-import-command.md` | 快捷命令说明 |
+| 导入 Prompt | `templates/prompts/import_wechat_article_prompt.md` | Agent 处理规则 |
+| 导入脚本 | `scripts/import_wechat_article_capture.py` | 自动化脚本 |
 
 ## YouTube 视频知识包
 
