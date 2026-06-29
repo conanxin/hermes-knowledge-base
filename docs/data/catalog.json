@@ -635,18 +635,15 @@
       "David Perell",
       "How I Write",
       "Pixar",
-      "皮克斯",
       "讲故事",
       "剧本写作",
       "animation",
-      "动画",
       "海底总动员",
       "玩具总动员",
       "Steve Jobs",
       "John Lasseter",
       "Brain Trust",
       "creative process",
-      "创作过程",
       "writing",
       "storytelling"
     ],
@@ -772,16 +769,12 @@
     "tags": [
       "Conan O'Brien",
       "哈佛",
-      "毕业演讲",
       "2026",
       "Humility",
       "Pivot",
       "Luck",
       "Community",
       "算法自恋",
-      "自我认知",
-      "成功学",
-      "政治讽刺",
       "特朗普",
       "AI",
       "Walt Whitman",
@@ -850,7 +843,7 @@
     ],
     "word_count": {
       "source": 2733,
-      "translation": 3800
+      "translation": 4360
     },
     "author_zh": "孙茉莉",
     "date_imported": "2026-06-25",
@@ -1459,17 +1452,11 @@
       "american-literature",
       "philosophy",
       "19th-century",
-      "ralph-waldo-emerson",
-      "爱默生",
-      "超验主义",
-      "道德哲学",
-      "因果报应",
-      "补偿",
-      "美国文学"
+      "ralph-waldo-emerson"
     ],
     "word_count": {
       "source": 7700,
-      "translation": 17500
+      "translation": 4571
     },
     "slug": "2026-06-27-emerson-compensation",
     "anthology_boundary_check": "PASS",
@@ -1532,7 +1519,7 @@
     ],
     "word_count": {
       "source": 11000,
-      "translation": 11000
+      "translation": 7859
     },
     "anthology_boundary_check": "PASS",
     "excluded_sections": [
@@ -1597,7 +1584,7 @@
     ],
     "word_count": {
       "source": 3500,
-      "translation": 3200
+      "translation": 5157
     },
     "content_kind": "essay",
     "import_method": "short_command_preflight_e2e_regression",
@@ -1642,7 +1629,7 @@
     ],
     "word_count": {
       "source": 1500,
-      "translation": 1500
+      "translation": 1353
     },
     "slug": "2026-06-27-thoreau-civil-disobedience",
     "import_date": "2026-06-27",
@@ -1691,7 +1678,7 @@
     ],
     "word_count": {
       "source": 12100,
-      "translation": 19600
+      "translation": 5584
     },
     "slug": "2026-06-27-thoreau-walking",
     "import_date": "2026-06-27",
@@ -1735,7 +1722,7 @@
     ],
     "word_count": {
       "source": 11422,
-      "translation": 11422
+      "translation": 10414
     },
     "capture": {
       "tool": "openclaw-weixin",
@@ -1833,7 +1820,6 @@
     ],
     "tags": [
       "Orwell",
-      "奥威尔",
       "散文",
       "写作动机",
       "政治写作",

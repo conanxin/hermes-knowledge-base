@@ -28,7 +28,7 @@ tags:
   - "poverty"
 word_count:
   source: 3500
-  translation: 3200
+  translation: 5157
 content_kind: "essay"
 import_method: "short_command_preflight_e2e_regression"
 import_version: "v0.3.39"

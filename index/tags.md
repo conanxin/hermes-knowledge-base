@@ -1663,15 +1663,7 @@
 
 - How to Earn a Billion Dollars
 
-## 创作过程
-
-- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
-
 ## 剧本写作
-
-- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
-
-## 动画
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
@@ -1699,10 +1691,6 @@
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
 
-## 因果报应
-
-- Compensation
-
 ## 增速
 
 - How to Earn a Billion Dollars
@@ -1714,10 +1702,6 @@
 ## 大型语言模型
 
 - Don't dethrone consciousness!
-
-## 奥威尔
-
-- Why I Write
 
 ## 好奇心
 
@@ -1772,10 +1756,6 @@
 
 - Your AI Is Not a Tool
 
-## 成功学
-
-- Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
-
 ## 技术-法西斯主义
 
 - The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
@@ -1822,10 +1802,6 @@
 ## 政治哲学
 
 - On the Duty of Civil Disobedience
-
-## 政治讽刺
-
-- Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
 
 ## 教皇利奥
 
@@ -1912,10 +1888,6 @@
 
 - Walking
 
-## 毕业演讲
-
-- Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
-
 ## 民主社会主义
 
 - Why I Write
@@ -1940,10 +1912,6 @@
 
 - 灵感资源库
 
-## 爱默生
-
-- Compensation
-
 ## 特朗普
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
@@ -1963,10 +1931,6 @@
 ## 电影
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
-
-## 皮克斯
-
-- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
 ## 监视资本主义
 
@@ -2041,7 +2005,6 @@
 
 ## 美国文学
 
-- Compensation
 - On the Duty of Civil Disobedience
 - Walking
 
@@ -2057,10 +2020,6 @@
 
 - 一键把 YouTube 视频加入知识库
 - Karpathy Second Brain 实现指南
-
-## 自我认知
-
-- Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
 
 ## 自检
 
@@ -2081,10 +2040,6 @@
 ## 虚构
 
 - Don't dethrone consciousness!
-
-## 补偿
-
-- Compensation
 
 ## 裂脑患者
 
@@ -2132,7 +2087,6 @@
 
 ## 超验主义
 
-- Compensation
 - Walking
 
 ## 轴心时代
@@ -2146,10 +2100,6 @@
 ## 道家
 
 - Ken Liu on AI and Freedom
-
-## 道德哲学
-
-- Compensation
 
 ## 道德经
 
