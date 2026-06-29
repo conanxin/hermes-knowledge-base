@@ -573,7 +573,6 @@
 ## Mencius Moldbug
 
 - The People Are Never Right
-- The People Are Never Right
 
 ## Merle Haggard
 

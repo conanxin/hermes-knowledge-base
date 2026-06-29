@@ -29,10 +29,14 @@
 
 ```bash
 python3 scripts/check_task_postflight.py \
-    --report reports/<task_report>.md \
-    --tag v0.3.N-task-name \
-    --expect-clean \
-    --expect-head-origin
+    --report-file reports/<task_report>.md \
+    --profile auto
+# 旧 CLI（v0.3.41 之前，已弃用，仅作为历史快照保留；不再被脚本接受为推荐写法）：
+#     --report ... --tag ... --expect-clean --expect-head-origin
+# 新 CLI 用 --report-file + --profile auto|publish|article_import|versioned。
+# --expect-clean / --expect-head-origin 在新 CLI 中作为可选 flag 仍可附加在
+# --profile auto 之后（脚本会接受它们以做 working-tree/HEAD 校验），但推荐
+# 显式加 --tag <tag> 以让 postflight 验证 tag deref。
 ```
 
 **说明：**

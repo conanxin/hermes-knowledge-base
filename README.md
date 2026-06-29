@@ -136,8 +136,8 @@ python3 scripts/check_translation_residue.py
 | metadata.yaml 字段完整 | 必须包含 title, title_zh, source_url, source_site, author, published_date, captured_date, language, translation_language, status, type, topics, tags, word_count | 修复后重新检查 |
 | title_zh | 非空，不得为 PLACEHOLDER | 补充中文标题 |
 | word_count | source > 0, translation > 0 | 重新计算并写入 |
-| tags | 6-12 个 | 调整数量 |
-| topics | 3-8 个 | 调整数量 |
+| tags | 6-12 个 *(soft guideline，audit_kb_state.py 仅 WARN，不阻断；细粒度可发现性的条目如 listicle 视频/音乐可超出)* | 调整数量 |
+| topics | 3-8 个 *(soft guideline，audit_kb_state.py 仅 WARN，不阻断)* | 调整数量 |
 | 翻译完整性 | 无大段英文残留、无漏译、无乱码 | 修复翻译 |
 | notes.md | 使用统一模板 | 替换为 templates/notes.md |
 | 在线浏览页同步 | update_site.py PASS | 修复同步问题 |
