@@ -24,14 +24,23 @@
 
 ## 当前内容类型
 
+<!-- KB_STATE_START — auto-updated by scripts/audit_kb_state.py -->
+<!-- Run `python3 scripts/audit_kb_state.py` to refresh; do not edit manually. -->
+<!-- Real total = 54 items. Last refreshed: 2026-06-29 (v0.3.60). -->
+
 | 类型 | 数量 | 说明 | 目录 |
 |------|------|------|------|
-| article | 6 | 外部文章，有 source_url，需翻译 | `content/articles/` |
-| wechat_article | 0 | 微信公众号文章，有 source_url，中文原文 | `content/articles/` |
-| note | 5 | 中文笔记，无翻译，有 legacy_source_path | `content/legacy-knowledge/` |
-| project | 4 | 项目文档，有 source_url，无翻译 | `content/projects/` |
-| resource_collection | 4 | 资源集合，结构化列表，无翻译 | `content/collections/` |
-| **总计** | **19** | — | — |
+| article | 25 | 外部文章（含 wechat 子集），有 source_url，需翻译 | `content/articles/` |
+| essay | 8 | 散文 / 自传性长文，与 article 同等需要翻译 | `content/articles/` |
+| note | 9 | 中文笔记，无翻译，来源 `legacy-knowledge` 或 `notes` | `content/legacy-knowledge/`, `content/notes/` |
+| resource_collection | 5 | 资源集合（结构化列表，无翻译） | `content/resource_collections/` + `content/collections/`（遗留目录，请勿新建条目） |
+| project | 4 | 项目文档（有 source_url，无翻译） | `content/projects/` |
+| video | 1 | YouTube 视频知识包（transcript + cards + analysis） | `content/articles/` |
+| academic_paper | 1 | 学术论文（tandfonline 等） | `content/papers/` |
+| interview | 1 | 长访谈（视频/播客转录） | `content/articles/` |
+| **总计** | **54** | — | — |
+
+<!-- KB_STATE_END -->
 
 ## 质量检查命令
 
@@ -51,11 +60,12 @@ python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name  # versio
 
 | 脚本 | 用途 | 预期结果 |
 |------|------|----------|
-| `check_kb.py` | 检查 metadata 完整性 | PASS (19/19) |
+| `check_kb.py` | 检查 metadata 完整性 | PASS（详见 `audit_kb_state.py` 输出的"真实条目总数"） |
 | `check_translation_residue.py` | 检查翻译残留 | WARNING 可接受 |
-| `build_index.py` | 重建索引 | 19 records |
+| `build_index.py` | 重建索引 | 与 `audit_kb_state.py` 输出的"真实条目总数"一致 |
 | `check_pages_sync.py` | 检查 site/ 与 docs/ 发布文件一致 | PASS |
 | `check_task_preflight.py` | 任务启动前检查 | PASS / PASS_WITH_WARNINGS |
+| `audit_kb_state.py` *(v0.3.60+)* | 状态审计：检查 README 数字漂移、目录漂移、类型漂移、catalog 同步 | PASS_WITH_WARNINGS（历史 drift 不阻塞，仅 WARN） |
 
 ## 本地浏览知识库
 

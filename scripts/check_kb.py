@@ -16,6 +16,10 @@ REQUIRED_FIELDS = [
 # Fields that must have a non-empty value regardless of type
 MUST_BE_NON_EMPTY = {"title", "title_zh", "captured_date", "status", "type"}
 
+# Types that should have a translation.zh-CN.md if `translation_language: zh-CN` is set.
+# v0.3.60 — extracted from inline `item_type == "article"` check to cover essay as well.
+TRANSLATABLE_TYPES = {"article", "essay"}
+
 # Base files required for ALL types
 BASE_REQUIRED_FILES = [
     "metadata.yaml",
@@ -105,15 +109,17 @@ def check_kb():
                 issues.append(f"EMPTY source_site in {rel_meta}")
 
         # --- 5. translation_language rules ---
-        if item_type == "article":
+        # v0.3.60 — use TRANSLATABLE_TYPES set (article + essay) instead of article-only.
+        if item_type in TRANSLATABLE_TYPES:
             trans_lang = data.get("translation_language", "")
             if is_empty(trans_lang) or trans_lang not in ("zh-CN", "zh"):
-                issues.append(f"INVALID translation_language='{trans_lang}' for article in {rel_meta}")
+                issues.append(f"INVALID translation_language='{trans_lang}' for translatable type={item_type!r} in {rel_meta}")
             trans_file = item_dir / "translation.zh-CN.md"
             if not trans_file.exists():
                 issues.append(f"MISSING translation.zh-CN.md: {rel_dir}")
         else:
-            # note/project/resource/report/prompt/resource_collection: translation_language can be null/empty
+            # note/project/resource/report/prompt/resource_collection/video/academic_paper/interview:
+            # translation_language can be null/empty
             pass
 
         # --- 6. word_count rules ---
@@ -135,7 +141,8 @@ def check_kb():
         # content_kind. This catches the failure mode where a translator subagent
         # reports a CJK count but the number isn't faithfully copied into metadata.yaml.
         content_kind = data.get("content_kind", "")
-        if item_type == "article" and isinstance(word_count, dict) and word_count.get("translation", 0) > 0:
+        # v0.3.60 — use TRANSLATABLE_TYPES set (article + essay) instead of article-only.
+        if item_type in TRANSLATABLE_TYPES and isinstance(word_count, dict) and word_count.get("translation", 0) > 0:
             trans_file = item_dir / "translation.zh-CN.md"
             if trans_file.exists():
                 try:
