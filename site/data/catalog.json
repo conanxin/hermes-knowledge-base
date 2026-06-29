@@ -36,6 +36,59 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-03-25-reverse-game-theory-housing-shortage"
   },
   {
+    "title": "Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK",
+    "title_zh": "劳动过程中的泰勒主义与异化:以英国亚马逊仓库为例",
+    "type": "article",
+    "path": "content/articles/2026/2026-06-16-taylorism-alienation-amazon-uk",
+    "author": "Miao Miao; Hui Situ",
+    "source_url": "https://link.springer.com/article/10.1007/s10551-026-06378-6",
+    "source_site": "Journal of Business Ethics (Springer Nature)",
+    "language": "en",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "2026-06-16",
+    "captured_date": "2026-06-27",
+    "topics": [
+      "泰勒主义",
+      "工人异化",
+      "管理控制系统 (MCS)",
+      "劳动过程理论",
+      "亚马逊仓库",
+      "批判管理会计",
+      "数字泰勒主义",
+      "平台资本主义劳动"
+    ],
+    "tags": [
+      "Taylorism",
+      "Worker alienation",
+      "Management control systems",
+      "MCS",
+      "Labour process theory",
+      "Braverman",
+      "Karl Marx",
+      "Amazon warehouse",
+      "ADAPT",
+      "Digital Taylorism",
+      "Scientific management",
+      "UK retail logistics",
+      "Algorithmic management",
+      "Journal of Business Ethics"
+    ],
+    "word_count": {
+      "source": 11350,
+      "translation": 19886
+    },
+    "ai_use_disclosure": "Author-declared AI use limited to language polishing (Springer compliant). Translation performed independently by KB importer.",
+    "content_kind": "written_article",
+    "import_method": "kb_article_import_full_translation",
+    "import_version": "v0.3.59",
+    "license": "CC BY 4.0",
+    "updated_date": "2026-06-27",
+    "slug": "2026-06-16-taylorism-alienation-amazon-uk",
+    "detail_url": "items/2026-06-16-taylorism-alienation-amazon-uk/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-16-taylorism-alienation-amazon-uk"
+  },
+  {
     "title": "AI 没有意识，但它正在成为我们的无意识",
     "title_zh": "AI 没有意识，但它正在成为我们的无意识",
     "type": "article",
@@ -1661,6 +1714,59 @@
     "updated_date": "2026-06-27",
     "detail_url": "items/2026-06-27-thoreau-walking/",
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-27-thoreau-walking"
+  },
+  {
+    "title": "携手之外：国际学习科学年会（ISLS） 2026 的五条主线",
+    "title_zh": "携手之外：国际学习科学年会（ISLS） 2026 的五条主线",
+    "type": "article",
+    "path": "content/articles/2026/2026-06-28-wechat-可可乐博-携手之外国际学习科学年会isls-2026-的五条主线",
+    "author": "辛海洋",
+    "source_url": "https://mp.weixin.qq.com/s?__biz=MzUzNjY5Mjg3Ng==&amp;mid=2247488455&amp;idx=1&amp;sn=57adb2175a91308128061541871f010d&amp;scene=21#wechat_redirect",
+    "source_site": "可可乐博",
+    "language": "zh-CN",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "2026-06-28",
+    "captured_date": "2026-06-29",
+    "topics": [
+      "人工智能",
+      "科技",
+      "产品",
+      "文化",
+      "社会",
+      "哲学"
+    ],
+    "tags": [
+      "文章",
+      "阅读",
+      "认知",
+      "教育",
+      "可可乐博",
+      "公众号",
+      "AI"
+    ],
+    "word_count": {
+      "source": 11422,
+      "translation": 11422
+    },
+    "capture": {
+      "tool": "openclaw-weixin",
+      "captured_at": "2026-06-29T10:43:43",
+      "version": "1.0"
+    },
+    "content_kind": "wechat_official_article",
+    "dedupe_key": "wechat:MzUzNjY5Mjg3Ng:携手之外国际学习科学年会isls-2026-的五条主线",
+    "source_platform": "wechat_official_account",
+    "wechat": {
+      "account_name": "可可乐博",
+      "url_params": {
+        "__biz": "MzUzNjY5Mjg3Ng=="
+      }
+    },
+    "updated_date": "2026-06-29",
+    "slug": "2026-06-28-wechat-可可乐博-携手之外国际学习科学年会isls-2026-的五条主线",
+    "detail_url": "items/2026-06-28-wechat-可可乐博-携手之外国际学习科学年会isls-2026-的五条主线/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-28-wechat-可可乐博-携手之外国际学习科学年会isls-2026-的五条主线"
   },
   {
     "title": "Why I Write",

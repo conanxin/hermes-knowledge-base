@@ -66,6 +66,20 @@ Available commands in Hermes Knowledge Base.
 
 ---
 
+### wechat-article-kb-import
+
+**Purpose**: Import a WeChat Official Account article into the knowledge base.
+
+**Shortest call**: `把这篇公众号文章加入 Hermes 知识库`
+
+**When to use**: When you read a WeChat article worth archiving.
+
+**Output**: KB entry with metadata, source, summary, notes, raw_payload
+
+**Documentation**: `docs/commands/wechat-article-kb-import-command.md`
+
+---
+
 ## How to Add New Commands
 
 1. Create command documentation in `docs/commands/<command-name>-command.md`
@@ -75,4 +89,4 @@ Available commands in Hermes Knowledge Base.
 
 ---
 
-*Last updated: 2026-06-26*
+*Last updated: 2026-06-29*

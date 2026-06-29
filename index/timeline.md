@@ -3,6 +3,7 @@
 ## 2026-06
 
 - How Reverse Game Theory Could Solve The Housing Shortage
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 - AI 没有意识，但它正在成为我们的无意识
 - Don't dethrone consciousness!
 - 日本铁路如何在分裂中保持统一
@@ -34,6 +35,7 @@
 - A Modest Proposal
 - On the Duty of Civil Disobedience
 - Walking
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
 - Why I Write
 - Hermes Agent Task Report Template
 - Hermes Agent UI P0 Implementation Spec

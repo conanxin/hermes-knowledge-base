@@ -33,6 +33,10 @@
 
 - A Modest Proposal
 
+## ADAPT
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
+
 ## AGI 时间表
 
 - Sign of the future: GPT-5.5
@@ -44,6 +48,7 @@
 - Your AI Is Not a Tool
 - We May Be Entering A Second Axial Age
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
 - 灵感资源库
 
 ## AI UX
@@ -114,9 +119,17 @@
 
 - An "infovore" shares his chats
 
+## Algorithmic management
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
+
 ## All That We See or Seem
 
 - Ken Liu on AI and Freedom
+
+## Amazon warehouse
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
 ## American literature
 
@@ -170,6 +183,10 @@
 ## Brain Trust
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
+## Braverman
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
 ## Burmese Days
 
@@ -247,6 +264,10 @@
 ## Demis Hassabis
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
+## Digital Taylorism
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
 ## Documentation
 
@@ -445,6 +466,10 @@
 
 - Owning Our Words: Sounding the Depths of Language
 
+## Journal of Business Ethics
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
+
 ## Juan Ruocco
 
 - The People Are Never Right
@@ -456,6 +481,10 @@
 ## Karl Jaspers
 
 - We May Be Entering A Second Axial Age
+
+## Karl Marx
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
 ## Karpathy
 
@@ -485,6 +514,10 @@
 - Karpathy 的 LLM Wiki：AI 知识管理新范式
 - Karpathy Second Brain 实现指南
 
+## Labour process theory
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
+
 ## Le Guin
 
 - Ken Liu on AI and Freedom
@@ -513,9 +546,17 @@
 
 - Nia Docs — 把整个 Web 变成文件系统
 
+## MCS
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
+
 ## Magnifica humanitas
 
 - Your AI Is Not a Tool
+
+## Management control systems
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
 ## Marginal Revolution
 
@@ -710,6 +751,10 @@
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
+## Scientific management
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
+
 ## Second Brain
 
 - Karpathy Second Brain 实现指南
@@ -748,6 +793,10 @@
 ## TDR
 
 - How Reverse Game Theory Could Solve The Housing Shortage
+
+## Taylorism
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
 ## Ted Chiang
 
@@ -824,6 +873,10 @@
 
 - Hermes Agent UI Self-Audit v1
 
+## UK retail logistics
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
+
 ## Unqualified Reservations
 
 - The People Are Never Right
@@ -851,6 +904,10 @@
 ## Wiki
 
 - Wiki 代替 RAG 的可行性评估
+
+## Worker alienation
+
+- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
 ## Y Combinator
 
@@ -1578,6 +1635,10 @@
 
 - Don't dethrone consciousness!
 
+## 公众号
+
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
+
 ## 公共语言
 
 - Owning Our Words: Sounding the Depths of Language
@@ -1629,6 +1690,10 @@
 ## 口述史
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
+
+## 可可乐博
+
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
 
 ## 右翼思想史
 
@@ -1778,6 +1843,10 @@
 
 - Don't dethrone consciousness!
 
+## 教育
+
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
+
 ## 散文
 
 - Why I Write
@@ -1793,6 +1862,10 @@
 ## 整合信息理论
 
 - Don't dethrone consciousness!
+
+## 文章
+
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
 
 ## 斯皮尔伯格
 
@@ -2025,6 +2098,10 @@
 
 - Don't dethrone consciousness!
 
+## 认知
+
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
+
 ## 认知投降
 
 - Your AI Is Not a Tool
@@ -2097,6 +2174,10 @@
 ## 门槛效应
 
 - Superlinear Returns
+
+## 阅读
+
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
 
 ## 隐喻
 

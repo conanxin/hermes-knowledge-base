@@ -58,6 +58,19 @@ Available workflows in Hermes Knowledge Base.
 
 ---
 
+### wechat-article-kb-import-workflow
+
+**Purpose**: Import a WeChat Official Account article into Hermes KB.
+
+**Input**: JSON capture package from OpenClaw @tencent-weixin/openclaw-weixin
+**Output**: KB entry + index + site update
+
+**Relationship**: Called by `wechat-article-kb-import` command.
+
+**Documentation**: `docs/workflows/wechat-article-kb-import-workflow.md`
+
+---
+
 ## How to Add New Workflows
 
 1. Create workflow documentation in `docs/workflows/<workflow-name>-workflow.md`
@@ -67,4 +80,4 @@ Available workflows in Hermes Knowledge Base.
 
 ---
 
-*Last updated: 2026-06-26*
+*Last updated: 2026-06-29*
