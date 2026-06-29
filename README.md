@@ -219,6 +219,19 @@ hermes-knowledge-base/
 
 完整边界与白 / 黑名单见 [CLAUDE.md](CLAUDE.md)。
 
+### 并发 session / local divergence 处理入口（v0.3.68+）
+
+当多个 agent session 同时在仓库上工作时，可能出现 local HEAD 与 origin/main 偏差。**不要**立即 `git pull --rebase` / `git push --force`。任务启动前先做 4 步：
+
+1. `git fetch origin main --tags`（**只**拉 refs，**不**动工作树）
+2. `python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task --classify-dirty --json` 看 `git_divergence` 字段（v0.3.68+ 新增）
+3. 按 [docs/AGENT_COMMANDS.md §"任务启动前 Divergence 检查" 的决策树](docs/AGENT_COMMANDS.md#任务启动前-divergence-检查v0368) 处理：synced 继续；behind clean pull；ahead 记录；diverged 询问用户
+4. 不得 `git push --force` / `git reset --hard origin/main` / 在 dirty 上 `git pull --rebase`
+
+### Tags / Topics 软范围 WARN 政策（v0.3.68+）
+
+`scripts/audit_kb_state.py` 的约 24 个 `tags count` / `topics count` 软范围漂移 WARN 属于**信息性提示**，**不**作为 immediate cleanup target。**不**批量裁剪；长尾条目（listicle / video / music / research cluster）允许 tags > 12、topics > 8。完整 policy 与理由见 [docs/AGENT_COMMANDS.md §"Tags / Topics 软范围 WARN 处理"](docs/AGENT_COMMANDS.md#tags--topics-软范围-warn-处理v0368-policy)。
+
 ## 11. 近期里程碑
 
 完整 release notes 在 [docs/RELEASES.md](docs/RELEASES.md) 与 [CHANGELOG.md](CHANGELOG.md)。近期：
@@ -229,6 +242,9 @@ hermes-knowledge-base/
 | v0.3.62 | 微信公众号状态权威说明 + capture bridge + diagnostic | 奠定 §7 当前真实能力叙述 |
 | v0.3.64 | WeChat 扩展 re-enable pilot（观测 / 回滚） | 验证 Path A 不足以激活 channel；完整回滚到 v0.3.62 状态 |
 | **v0.3.65** | **本版本：README-only entrypoint refresh** | 详细见 `reports/readme_entrypoint_refresh_v0.3.65_20260629.md` |
+| v0.3.66 | README §9 目录树去重 + preflight `--classify-dirty` flag | 详细见 `reports/readme_polish_preflight_dirty_split_v0.3.66_20260629.md` |
+| v0.3.67 | `word_count.translation` 漂移刷新（7→0 WARN） | 详细见 `reports/word_count_metadata_refresh_v0.3.67_20260629.md` |
+| **v0.3.68** | **本版本：local divergence 治理 + tags/topics soft-WARN policy 文档化** | 详细见 `reports/local_divergence_and_soft_warn_policy_v0.3.68_20260629.md` |
 
 ---
 

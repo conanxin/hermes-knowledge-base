@@ -113,6 +113,8 @@ _TASK_RELEVANT_PATH_PREFIXES = (
     "scripts/",
     "templates/",
     "inbox/",
+    "memory/",  # v0.3.68+: memory/ is task-relevant; was missing and caused false-EXTERNAL
+    "docs/releases/",  # v0.3.68+: per-version release notes are task-relevant
 )
 
 # Heuristic: a historical "reports/*.md SHA backfill" pattern is a single-line edit where
@@ -319,7 +321,10 @@ def main():
     else:
         results["checks"]["git_status"] = "PASS"
 
-    # 3. Check HEAD vs origin/main
+    # 3. Check HEAD vs origin/main — strict default: any divergence → FAIL.
+    #    v0.3.68+: also record a divergence summary in the results so agents and humans
+    #    can read the local-vs-remote state from the JSON. Default strict behavior is
+    #    preserved: omitting --classify-dirty still FAILs on any divergence.
     head = run_git("rev-parse", "HEAD", check=False)
     origin_head = run_git("rev-parse", "origin/main", check=False)
     if head and origin_head:
@@ -330,6 +335,56 @@ def main():
             results["status"] = "FAIL"
     else:
         results["warnings"].append("Could not verify HEAD vs origin/main")
+
+    # 3b. Divergence summary (v0.3.68+) — read-only. NEVER auto-resolves; if HEAD diverges
+    #     from origin/main, the agent must follow the spec'd decision tree (see
+    #     docs/AGENT_COMMANDS.md §"Task-startup divergence check"):
+    #       a. local ahead AND ahead is in current task plan   → continue, record
+    #       b. local ahead AND ahead is external session work  → stop, ask user
+    #       c. origin ahead local AND working tree is clean    → git pull --ff-only
+    #       d. diverged                                        → stop, ask user
+    #     No automatic merge/rebase/reset/force-push from this script.
+    try:
+        _head = head or run_git("rev-parse", "HEAD", check=False)
+        _origin = origin_head or run_git("rev-parse", "origin/main", check=False)
+        if _head and _origin:
+            _merge_base = subprocess.run(
+                ["git", "merge-base", _head, _origin],
+                capture_output=True, text=True, check=False,
+            ).stdout.strip() or None
+            _ahead_behind = subprocess.run(
+                ["git", "rev-list", "--left-right", "--count", f"{_head}...{_origin}"],
+                capture_output=True, text=True, check=False,
+            ).stdout.strip()  # e.g. "0\t0" or "1\t2"
+            _ahead, _behind = (0, 0)
+            if _ahead_behind and "\t" in _ahead_behind:
+                _ahead, _behind = (int(x) for x in _ahead_behind.split("\t"))
+            results["git_divergence"] = {
+                "head": _head,
+                "origin_main": _origin,
+                "merge_base": _merge_base,
+                "ahead_count": _ahead,
+                "behind_count": _behind,
+                "is_diverged": bool(_ahead and _behind),
+                "is_ahead": bool(_ahead and not _behind),
+                "is_behind": bool(_behind and not _ahead),
+                "is_synced": bool(not _ahead and not _behind),
+            }
+        else:
+            results["git_divergence"] = {
+                "head": _head,
+                "origin_main": _origin,
+                "merge_base": None,
+                "ahead_count": None,
+                "behind_count": None,
+                "is_diverged": None,
+                "is_ahead": None,
+                "is_behind": None,
+                "is_synced": None,
+            }
+    except Exception as _e:
+        # Never let the divergence-summary probe break preflight.
+        results["git_divergence"] = {"error": repr(_e)}
 
     # 4. Check planned tag
     if args.planned_tag:

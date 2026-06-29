@@ -100,7 +100,59 @@ python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name
 | **PASS_WITH_WARNINGS** | 仅当 warning 为已知非阻断项（如 v0.3.36 known duplicate）时可继续，并在报告中记录 |
 | **FAIL** | **立即停止**，不得继续导入、不得 update_site、不得 commit/push |
 
-### Preflight 因非本任务历史报告 dirty 失败（v0.3.66+）
+### 任务启动前 Divergence 检查（v0.3.68+）
+
+任何任务第一步**必须**先记录本地 / 远端拓扑，**不要**立刻 `git pull`：
+
+```bash
+cd ~/hermes-knowledge-base
+git status --short                                # 1. 工作树 dirty
+git rev-parse HEAD                                 # 2. 本地 HEAD
+git fetch origin main --tags                       # 3. 拉取最新 refs（不修改工作树）
+git rev-parse origin/main                          # 4. 远端 main
+git merge-base HEAD origin/main                    # 5. 共同祖先
+git rev-list --left-right --count HEAD...origin/main  # 6. ahead/behind
+```
+
+`scripts/check_task_preflight.py` 现在（v0.3.68+）在 JSON 输出中包含 `git_divergence` 字段：
+
+```json
+{
+  "git_divergence": {
+    "head":         "<sha>",
+    "origin_main":  "<sha>",
+    "merge_base":   "<sha>",
+    "ahead_count":  0,
+    "behind_count": 0,
+    "is_diverged":  false,
+    "is_ahead":     false,
+    "is_behind":    false,
+    "is_synced":    true
+  }
+}
+```
+
+`is_diverged / is_ahead / is_behind / is_synced` 四个布尔字段给 agent 与人一个一眼可读的拓扑状态。
+
+#### Divergence 决策树（v0.3.68+）
+
+| 拓扑 | 处置 |
+|------|------|
+| **synced**（ahead=0, behind=0） | 继续，**不要** pull（已同步） |
+| **behind**（behind>0, ahead=0） + 工作树 clean | `git pull --ff-only origin main` |
+| **behind**（behind>0, ahead=0） + 工作树 dirty | **停止**——先 commit / stash 当前工作，再 pull；不要在 dirty 上 pull |
+| **ahead**（ahead>0, behind=0） + ahead commit 是本任务产物 | 继续，**记录** ahead commit 列表；不要立刻 push；commit / tag 流程中会一并 push |
+| **ahead**（ahead>0, behind=0） + ahead commit 是外部 session 产物 | **停止并询问用户**；不要 reset、不要 force push、不要 `git push --force-with-lease`；建议先 `git log --oneline origin/main..HEAD` 看 ahead 内容 |
+| **diverged**（ahead>0, behind>0） | **停止并询问用户**；不要自动 merge / rebase；需要 explicit `git merge origin/main` 或 `git rebase origin/main` 用户授权 |
+
+#### 严格禁止
+
+- ❌ 任何情况下**不得** `git push --force` / `--force-with-lease` / `-f`（v0.3.67 出现过 `befb3f9` 因外部 force-push 抹掉 `ea035c6` 的现象；本任务严禁此操作）
+- ❌ 不得在 dirty 工作树上 `git pull --rebase`（会产生未审阅的 rebase 冲突）
+- ❌ 不得用 `git reset --hard origin/main` 覆盖本地 ahead commits（会丢工作）
+- ❌ 不得在未询问用户的情况下处理 external-session 的 ahead commits
+
+#### Preflight 因非本任务历史报告 dirty 失败（v0.3.66+）
 
 如果 preflight FAIL 的**唯一**原因是 `Working tree dirty:`，且 dirty 条目仅来自**历史 `reports/*.md` 的外部 SHA 回填**（通常是上一次别 session 留下的字段补全），不得：
 
@@ -114,6 +166,21 @@ python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name
 - ✅ 询问用户或使用 v0.3.66 新增的 `python3 scripts/check_task_preflight.py --classify-dirty --json` 模式（仅在全部 dirty 归类为 EXTERNAL 时降级为 PASS_WITH_WARNINGS，且**绝不**自动 stage / restore / commit）
 - ✅ 在本任务 commit 中 per-file `git add`，只携带本任务明确产出的文件
 - ✅ 后续任务以同样纪律处理（per-task 自报 dirty 来源，不假定继承前序任务）
+
+### Tags / Topics 软范围 WARN 处理（v0.3.68+ policy）
+
+`scripts/audit_kb_state.py` 持续报告约 24 个 `tags count outside [6,12]` 与 `topics count outside [3,8]` 软范围漂移。**这是 WARN，不是 FAIL**——绝**不**作为 immediate cleanup target。
+
+具体规则：
+
+- ❌ 不得在 routine commit / governance commit 里**批量裁剪** tags / topics 来"fit into range"
+- ❌ 不得为了消除 WARN 而删除有信息量的标签（如 listicle / video / music / research cluster 等条目的细分标签）
+- ✅ 长尾条目（listicle / video / music / 多源研究综述 / anthology 类）允许 tags > 12、topics > 8，因为分类细粒度本身是该条目的知识价值的一部分
+- ✅ 短条目（短文 / 单点笔记）允许 tags < 6、topics < 3
+- ✅ `audit_kb_state.py` 继续 WARN-only——不升级为 FAIL，不阻塞 preflight / postflight
+- ✅ 软范围 WARN 的清理属于**专项治理任务**（如 v0.3.63 `tag-soft-limit-convergence`），必须单独立项、用户明确授权、单点 commit；不在治理任务中顺手做
+
+> 此政策背后的原因：tags / topics 是 KB 的**显性**知识图谱信号；批量裁剪会破坏 search / browse 的细粒度可发现性。审计 WARN 是"未来可能值得整理"提示，不是"立刻修"指令。
 
 ---
 
