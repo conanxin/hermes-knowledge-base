@@ -124,13 +124,16 @@ $ git status --short
 
 ## Commit
 
-- (final SHA filled in after commit)
+- SHA: `5f8b0e4f80b56e0a550f457bd9e45335d2680b7d`
 - Message: `Add KB state dashboard and README sync audit`
+- Push: `bdb1bc8..5f8b0e4 main -> main` (origin/main)
 
 ## Tag
 
-- (final tag deref filled in after tag push)
 - Tag: `v0.3.60-kb-state-dashboard-readme-sync`
+- Tag object: `8529a09293b63ac39514a48aca023a934d869652`
+- Tag deref (commit): `5f8b0e4f80b56e0a550f457bd9e45335d2680b7d`
+- Tag pushed: `[new tag] v0.3.60-kb-state-dashboard-readme-sync -> v0.3.60-kb-state-dashboard-readme-sync`
 
 ## GitHub Pages check
 
