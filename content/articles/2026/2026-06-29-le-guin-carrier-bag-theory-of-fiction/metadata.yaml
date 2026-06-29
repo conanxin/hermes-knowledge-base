@@ -1,0 +1,42 @@
+title: "The Carrier Bag Theory of Fiction"
+title_zh: "故事的承载袋理论"
+author: "Ursula K. Le Guin"
+source: "Dancing at the Edge of World (Grove Press, 1986), pp. 164-170"
+source_url: null
+source_url_missing: true
+source_site: "local-pdf"
+local_pdf_path: "inbox/raw/pdf/2026-06-29-le-guin-carrier-bag-theory-of-fiction.pdf"
+source_pdf_sha256: null
+published_date: "1986-01-01"
+publication_year: 1986
+captured_date: "2026-06-29"
+type: "essay"
+content_kind: "literary_criticism"
+language: "en"
+translation_language: "zh-CN"
+extraction_method: "tesseract-5.3.4-ocr-250dpi"
+ocr_report: "reports/pdf_ocr_import_2026-06-29-le-guin-carrier-bag.md"
+extraction_scope: "Main essay 'The Carrier Bag Theory of Fiction' (pp. 164-170) is complete. Companion essay 'Heroes' (pp. 170-171) included up to scan boundary; remainder not in source PDF."
+status: "translated"
+tags:
+  - ursula-k-le-guin
+  - narrative-theory
+  - science-fiction
+  - feminism
+  - prehistory
+  - hero-narrative
+  - carrier-bag-theory
+  - literary-criticism
+  - elizabeth-fisher
+  - virginia-woolf
+topics:
+  - Hero narrative vs container narrative
+  - Carrier Bag Theory of human evolution
+  - Feminist critique of ascent-of-man stories
+  - Novel as medicine bundle vs arrow
+  - Science fiction as realistic rather than mythological
+  - Woolf's Glossary: hero as bottle, heroism as botulism
+word_count:
+  source: 2900
+  translation: 4940
+import_recipe: "docs/import-recipes/PDF_OCR_IMPORT.md"

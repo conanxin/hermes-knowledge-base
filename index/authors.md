@@ -159,6 +159,10 @@
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
 
+## Ursula K. Le Guin
+
+- The Carrier Bag Theory of Fiction
+
 ## 社区整理
 
 - Awesome LLM Long Context 资源列表

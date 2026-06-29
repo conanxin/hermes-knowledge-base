@@ -1769,6 +1769,60 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-28-wechat-可可乐博-携手之外国际学习科学年会isls-2026-的五条主线"
   },
   {
+    "title": "The Carrier Bag Theory of Fiction",
+    "title_zh": "故事的承载袋理论",
+    "type": "essay",
+    "path": "content/articles/2026/2026-06-29-le-guin-carrier-bag-theory-of-fiction",
+    "author": "Ursula K. Le Guin",
+    "source_url": null,
+    "source_site": "local-pdf",
+    "source_url_missing": true,
+    "language": "en",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "1986-01-01",
+    "captured_date": "2026-06-29",
+    "topics": [
+      "Hero narrative vs container narrative",
+      "Carrier Bag Theory of human evolution",
+      "Feminist critique of ascent-of-man stories",
+      "Novel as medicine bundle vs arrow",
+      "Science fiction as realistic rather than mythological",
+      {
+        "Woolf's Glossary": "hero as bottle, heroism as botulism"
+      }
+    ],
+    "tags": [
+      "ursula-k-le-guin",
+      "narrative-theory",
+      "science-fiction",
+      "feminism",
+      "prehistory",
+      "hero-narrative",
+      "carrier-bag-theory",
+      "literary-criticism",
+      "elizabeth-fisher",
+      "virginia-woolf"
+    ],
+    "word_count": {
+      "source": 2900,
+      "translation": 4940
+    },
+    "content_kind": "literary_criticism",
+    "extraction_method": "tesseract-5.3.4-ocr-250dpi",
+    "extraction_scope": "Main essay 'The Carrier Bag Theory of Fiction' (pp. 164-170) is complete. Companion essay 'Heroes' (pp. 170-171) included up to scan boundary; remainder not in source PDF.",
+    "import_recipe": "docs/import-recipes/PDF_OCR_IMPORT.md",
+    "local_pdf_path": "inbox/raw/pdf/2026-06-29-le-guin-carrier-bag-theory-of-fiction.pdf",
+    "ocr_report": "reports/pdf_ocr_import_2026-06-29-le-guin-carrier-bag.md",
+    "publication_year": 1986,
+    "source": "Dancing at the Edge of World (Grove Press, 1986), pp. 164-170",
+    "source_pdf_sha256": null,
+    "updated_date": "2026-06-29",
+    "slug": "2026-06-29-le-guin-carrier-bag-theory-of-fiction",
+    "detail_url": "items/2026-06-29-le-guin-carrier-bag-theory-of-fiction/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-29-le-guin-carrier-bag-theory-of-fiction"
+  },
+  {
     "title": "Why I Write",
     "title_zh": "我为什么写作",
     "type": "essay",

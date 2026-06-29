@@ -1,0 +1,17 @@
+# Local source reference (PDF is gitignored)
+
+The original PDF for this knowledge-base entry is a 3.0 MB scanned file
+kept in the local working tree only; the repo's `.gitignore` rule `*.pdf`
+excludes it from version control.
+
+- **Absolute path on this machine**:
+  `/home/conanxin/.hermes/cache/documents/doc_168fe83c23d4_The-Carrier-Bag-Theory-of-Fiction.pdf`
+- **Local working copy (gitignored)**:
+  `inbox/raw/pdf/2026-06-29-le-guin-carrier-bag-theory-of-fiction.pdf`
+- **SHA-256**: not computed (no network access required; integrity of the
+  cache PDF is the user's responsibility)
+- **Format**: PDF 1.4, 4 pages, 792×612 pt (US Letter), no text layer
+- **Producer**: "Document Capture" (scanned)
+
+If this entry is later re-built from a different source PDF, recompute
+`sha256` and update `metadata.yaml:source_pdf_sha256`.

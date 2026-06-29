@@ -998,6 +998,10 @@
 
 - The Old World Is Dying
 
+## carrier-bag-theory
+
+- The Carrier Bag Theory of Fiction
+
 ## cause-and-effect
 
 - Compensation
@@ -1095,6 +1099,10 @@
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
 
+## elizabeth-fisher
+
+- The Carrier Bag Theory of Fiction
+
 ## embodiment
 
 - How AI Will Change Us
@@ -1127,6 +1135,10 @@
 ## federated-learning
 
 - ArXiv AI Agents 论文列表
+
+## feminism
+
+- The Carrier Bag Theory of Fiction
 
 ## folk
 
@@ -1178,6 +1190,10 @@
 ## hermes-agent
 
 - Session Guard Phase 1: Pre-Request Sanitizer
+
+## hero-narrative
+
+- The Carrier Bag Theory of Fiction
 
 ## high-tech authoritarian
 
@@ -1257,6 +1273,10 @@
 
 - Hacker News ML 热门链接
 
+## literary-criticism
+
+- The Carrier Bag Theory of Fiction
+
 ## literature
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
@@ -1289,6 +1309,10 @@
 ## mqtt
 
 - Hydro0x01 Local Hermes Security Audit
+
+## narrative-theory
+
+- The Carrier Bag Theory of Fiction
 
 ## nature
 
@@ -1383,6 +1407,10 @@
 
 - 先预检，再解读 YouTube 视频
 
+## prehistory
+
+- The Carrier Bag Theory of Fiction
+
 ## presence
 
 - How AI Will Change Us
@@ -1453,6 +1481,10 @@
 ## satire
 
 - A Modest Proposal
+
+## science-fiction
+
+- The Carrier Bag Theory of Fiction
 
 ## science_fiction
 
@@ -1546,6 +1578,10 @@
 
 - An "infovore" shares his chats
 
+## ursula-k-le-guin
+
+- The Carrier Bag Theory of Fiction
+
 ## us_hegemony
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
@@ -1559,6 +1595,10 @@
 - YouTube Video Brief Workflow
 - 一键把 YouTube 视频加入知识库
 - 先预检，再解读 YouTube 视频
+
+## virginia-woolf
+
+- The Carrier Bag Theory of Fiction
 
 ## vulnerability
 

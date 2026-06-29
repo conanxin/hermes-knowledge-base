@@ -36,6 +36,7 @@
 - On the Duty of Civil Disobedience
 - Walking
 - 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
+- The Carrier Bag Theory of Fiction
 - Why I Write
 - Hermes Agent Task Report Template
 - Hermes Agent UI P0 Implementation Spec
