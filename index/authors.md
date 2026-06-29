@@ -159,3 +159,7 @@
 
 - Awesome LLM Long Context 资源列表
 
+## 辛海洋
+
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
+

@@ -48,6 +48,7 @@
 - Your AI Is Not a Tool
 - We May Be Entering A Second Axial Age
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
 - 灵感资源库
 
 ## AI UX
@@ -1616,6 +1617,10 @@
 
 - Don't dethrone consciousness!
 
+## 公众号
+
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
+
 ## 公共语言
 
 - Owning Our Words: Sounding the Depths of Language
@@ -1663,6 +1668,10 @@
 ## 口述史
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
+
+## 可可乐博
+
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
 
 ## 右翼思想史
 
@@ -1804,6 +1813,10 @@
 
 - Don't dethrone consciousness!
 
+## 教育
+
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
+
 ## 数字技术
 
 - AI 没有意识，但它正在成为我们的无意识
@@ -1815,6 +1828,10 @@
 ## 整合信息理论
 
 - Don't dethrone consciousness!
+
+## 文章
+
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
 
 ## 斯皮尔伯格
 
@@ -2039,6 +2056,10 @@
 
 - Don't dethrone consciousness!
 
+## 认知
+
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
+
 ## 认知投降
 
 - Your AI Is Not a Tool
@@ -2111,6 +2132,10 @@
 ## 门槛效应
 
 - Superlinear Returns
+
+## 阅读
+
+- 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
 
 ## 隐喻
 
