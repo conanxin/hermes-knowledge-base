@@ -80,12 +80,37 @@ Available commands in Hermes Knowledge Base.
 
 ---
 
+## PDF Commands
+
+### pdf-ocr-kb-import
+
+**Purpose**: OCR a local PDF (if scanned), translate the full text, and import it into the knowledge base.
+
+**Shortest call**: `把这个本地 PDF OCR 识别、完整翻译并加入 Hermes 知识库：<PDF_PATH>`
+
+**When to use**: When the user has a local PDF (already on disk) and wants it persisted in the KB — not just analyzed in chat.
+
+**Output**: KB entry (6 files) + OCR report + catalog/index/site update + commit + push + live smoke
+
+**Safety boundaries**:
+- The user MUST supply an absolute PDF path; no guessing.
+- "Analyze this PDF" without "入库" / "加入" is **read-only**; do not auto-import.
+- No new system dependencies; only locally available tools (`pdfinfo`, `pdftotext`, `pdftoppm`, `tesseract`).
+- PDF is gitignored; `source.local-ref.txt` keeps the local pointer.
+- No standalone project, no `projects/data.json` modification, no Telegram.
+
+**Documentation**: `docs/commands/pdf-ocr-kb-import-command.md`
+
+---
+
 ## How to Add New Commands
 
 1. Create command documentation in `docs/commands/<command-name>-command.md`
 2. Update this README
 3. Create prompt template in `templates/prompts/<command-name>_prompt.md` (optional)
-4. Run `python3 scripts/check_kb.py` to verify
+4. Update `docs/workflows/README.md` if the command introduces a new workflow
+5. Update `docs/import-recipes/` if the command is a source-specific import path
+6. Run `python3 scripts/check_kb.py` to verify
 
 ---
 

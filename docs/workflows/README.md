@@ -71,12 +71,27 @@ Available workflows in Hermes Knowledge Base.
 
 ---
 
+## PDF Workflows
+
+### pdf-ocr-kb-import-workflow
+
+**Purpose**: End-to-end local PDF import: OCR (if scanned), translate, build KB entry, push, live smoke.
+
+**Input**: Absolute path to a local PDF file on the user's machine
+**Output**: KB entry (6 files) + OCR report + catalog/index/site update + commit + push
+**Relationship**: Called by `pdf-ocr-kb-import` command. Loads `docs/import-recipes/PDF_OCR_LOCAL.md` (MUST).
+
+**Documentation**: `docs/workflows/pdf-ocr-kb-import-workflow.md`
+
+---
+
 ## How to Add New Workflows
 
 1. Create workflow documentation in `docs/workflows/<workflow-name>-workflow.md`
 2. Update this README
 3. Update `docs/commands/README.md` if new commands are introduced
-4. Run `python3 scripts/check_kb.py` to verify
+4. Update `docs/import-recipes/` if the new workflow is a source-specific import path
+5. Run `python3 scripts/check_kb.py` to verify
 
 ---
 
