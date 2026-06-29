@@ -131,6 +131,10 @@
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
+## Animal Farm
+
+- Why I Write
+
 ## Anthropic
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
@@ -166,6 +170,10 @@
 ## Brain Trust
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
+## Burmese Days
+
+- Why I Write
 
 ## Cathedral
 
@@ -356,6 +364,10 @@
 ## Highlander Folk School
 
 - We May Be Entering A Second Axial Age
+
+## Homage to Catalonia
+
+- Why I Write
 
 ## How I Write
 
@@ -586,6 +598,7 @@
 ## Orwell
 
 - Ken Liu on AI and Freedom
+- Why I Write
 
 ## Otto Scharmer
 
@@ -719,6 +732,10 @@
 ## Sibelius
 
 - An "infovore" shares his chats
+
+## Spanish Civil War
+
+- Why I Write
 
 ## Steve Jobs
 
@@ -1036,6 +1053,7 @@
 ## essay
 
 - The Old World Is Dying
+- Why I Write
 
 ## ethics
 
@@ -1576,6 +1594,10 @@
 
 - We May Be Entering A Second Axial Age
 
+## 写作动机
+
+- Why I Write
+
 ## 出口管制
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
@@ -1635,6 +1657,10 @@
 ## 大型语言模型
 
 - Don't dethrone consciousness!
+
+## 奥威尔
+
+- Why I Write
 
 ## 好奇心
 
@@ -1732,6 +1758,10 @@
 
 - Sign of the future: GPT-5.5
 
+## 政治写作
+
+- Why I Write
+
 ## 政治哲学
 
 - On the Duty of Civil Disobedience
@@ -1747,6 +1777,10 @@
 ## 教皇通谕
 
 - Don't dethrone consciousness!
+
+## 散文
+
+- Why I Write
 
 ## 数字技术
 
@@ -1784,6 +1818,10 @@
 
 - The Layers of AI experience
 
+## 极权主义
+
+- Why I Write
+
 ## 架构对比
 
 - Wiki 代替 RAG 的可行性评估
@@ -1812,6 +1850,10 @@
 ## 毕业演讲
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
+
+## 民主社会主义
+
+- Why I Write
 
 ## 汉娜·阿伦特
 
@@ -2068,6 +2110,10 @@
 
 - AI 没有意识，但它正在成为我们的无意识
 - Ken Liu on AI and Freedom
+
+## 风格
+
+- Why I Write
 
 ## 驾驭层
 

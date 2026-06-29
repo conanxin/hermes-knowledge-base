@@ -34,6 +34,7 @@
 - A Modest Proposal
 - On the Duty of Civil Disobedience
 - Walking
+- Why I Write
 - Hermes Agent Task Report Template
 - Hermes Agent UI P0 Implementation Spec
 - Hermes Agent UI Self-Audit v1

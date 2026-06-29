@@ -65,6 +65,10 @@
 
 - Sign of the future: GPT-5.5
 
+## George Orwell
+
+- Why I Write
+
 ## Hacker News 社区
 
 - Hacker News ML 热门链接
