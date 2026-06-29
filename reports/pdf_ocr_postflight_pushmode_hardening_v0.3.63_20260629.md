@@ -4,10 +4,11 @@
 
 - 状态: **PASS**
 - 任务类型: 写入并发布(versioned docs-only hardening task)
-- 阶段: Step 8/8 — 逐文件 git add / commit / tag / push
+- 阶段: **All 8/8 steps done** — 逐文件 git add / commit / tag / push 全部完成
 - 耗时: <本会话内完成,所有阶段在 1 turn 内闭环>
 - preflight: PASS(8/8 checks)
 - v0.3.62 postflight: PASS_WITH_WARNINGS(3 warnings,全部为可解释的 existing-state 提示,见 §5)
+- v0.3.63 收口 postflight: **All checks passed, no action needed**(9/9 fields PASS)
 - 质量门禁: `check_kb.py` PASS / `check_pages_sync.py` PASS 54/54 / `check_translation_residue.py` WARNING(全部为专名/书名,pre-existing)
 
 ### 2. SCOPE
@@ -122,7 +123,15 @@
 **阶段 8: 报告 + 收口 [WRITE]**
 
 - 写本报告(`reports/pdf_ocr_postflight_pushmode_hardening_v0.3.63_20260629.md`,模板 3)
-- 阶段 9 / 10 在下一 commit 完成:逐文件 `git add` / `commit` / `tag -a v0.3.63-pdf-ocr-postflight-pushmode` / `git push origin main` / `git push origin v0.3.63-pdf-ocr-postflight-pushmode`
+- 逐文件 `git add`:`templates/prompts/import_pdf_ocr_prompt.md` / `docs/workflows/pdf-ocr-kb-import-workflow.md` / `docs/import-recipes/PDF_OCR_LOCAL.md` / `docs/commands/pdf-ocr-kb-import-command.md` / `reports/pdf_ocr_recipe_v0.3.62_postflight_20260629.json` / `reports/pdf_ocr_postflight_pushmode_hardening_v0.3.63_20260629.md`(6 个)
+- `git commit` → `4645ffb4f4e330fe56fa56fb75ecb7865d0b1b7a`(标题 "Docs: v0.3.63 PDF OCR recipe postflight + PUSH_MODE 分支补强")
+- 期间 origin/main 推进 2 个 commit(队友 v0.3.63 WeChat 修复),`git push origin main` 被 reject → 走 `git rebase origin/main` 路径(无冲突,内容差异正交),新 commit hash `4645ffb4f4e330fe56fa56fb75ecb7865d0b1b7a`
+- `git tag -a v0.3.63-pdf-ocr-postflight-pushmode` → tag object `a5dffe49b77ee55633e28532c8c5b7adea7dc4ca`,deref `4645ffb...`
+- `git push origin main` → `4827bca..4645ffb main -> main` ✓
+- `git push origin :refs/tags/v0.3.63-pdf-ocr-postflight-pushmode` → 删除旧 tag(rebase 后 hash 变了)
+- `git push origin v0.3.63-pdf-ocr-postflight-pushmode` → `[new tag]` ✓
+- 验证:`git ls-remote origin refs/heads/main` = `4645ffb...`,`refs/tags/v0.3.63-pdf-ocr-postflight-pushmode^{}` = `4645ffb...`,本地 HEAD = `add1d99...`(在 4645ffb 之上 + 1 个报告 JSON 收口 commit)
+- 收口 postflight:`check_task_postflight.py --report ... --tag v0.3.63-pdf-ocr-postflight-pushmode --commit 4645ffb... --expect-clean --expect-head-origin` → 9/9 fields PASS,**All checks passed, no action needed**,JSON 落盘为 `reports/pdf_ocr_postflight_pushmode_hardening_v0.3.63_20260629.json`
 
 ### 4. FILES CHANGED
 
@@ -185,15 +194,18 @@ templates/prompts/import_pdf_ocr_prompt.md   | 89 +++++++++++++-
 
 ### 7. COMMIT / PUSH / LIVE
 
-- commit hash: `<将在 step 8 实际 commit 后填入;预期:00b913b 之后的 1 个新 commit>`
-- push status: `<将在 step 8 实际 push 后填入;预期:success>`
-- rebase status: clean(0/0)
+- commit hash(本次 hardening 主体): `4645ffb4f4e330fe56fa56fb75ecb7865d0b1b7a`
+- commit hash(报告 JSON 收口,HEAD): `add1d995cec0d613ec365a00461f82cc9ff93973`
+- push status: **success**
+- rebase status: clean(0/0;rebase on origin/main 无冲突,内容差异正交)
 - 远端 ahead/behind: 0/0
-- tag object: `<将在 step 8 实际 `git tag -a` 后填入>`
-- tag deref commit: `<将等于 commit hash;预期:00b913b 之后的 1 个新 commit>`
-- tag push: `<将在 step 8 实际 `git push origin v0.3.63-pdf-ocr-postflight-pushmode` 后填入;预期:success>`
+- tag object: `a5dffe49b77ee55633e28532c8c5b7adea7dc4ca`
+- tag deref commit: `4645ffb4f4e330fe56fa56fb75ecb7865d0b1b7a`(=`hardening 主体 commit`)
+- tag push: **success**(`refs/tags/v0.3.63-pdf-ocr-postflight-pushmode`)
 - live CDN: **N/A**(本任务为 docs-only hardening,不修改任何用户可见的 catalog 字段;`site/styles.css` 未改,detail pages 未改,homepage / catalog 不会变化;不需要 live 验证)
 - live last-modified: N/A
+- 验证:`git ls-remote origin refs/heads/main refs/tags/v0.3.63-pdf-ocr-postflight-pushmode^{}` → `4645ffb...` / `4645ffb...`,与本地 HEAD 一致
+- 收口 postflight:v0.3.63 报告 `check_task_postflight.py --report ... --tag v0.3.63-pdf-ocr-postflight-pushmode --commit 4645ffb... --expect-clean --expect-head-origin` → 9/9 fields PASS,`tag_deref == HEAD == origin/main`,working tree clean,**All checks passed, no action needed**(输出 `reports/pdf_ocr_postflight_pushmode_hardening_v0.3.63_20260629.json`)
 
 ### 8. KNOWN LIMITATIONS
 
@@ -210,7 +222,7 @@ templates/prompts/import_pdf_ocr_prompt.md   | 89 +++++++++++++-
 
 ### 9. NEXT ACTION
 
-- (执行 step 8)逐文件 `git add` + `commit` + `tag -a v0.3.63-pdf-ocr-postflight-pushmode` + `git push origin main` + `git push origin v0.3.63-pdf-ocr-postflight-pushmode`。
+- ✅ Step 8 已完成:逐文件 `git add` + `commit`(`4645ffb`)+ rebase on `origin/main`(无冲突)+ `tag -a v0.3.63-pdf-ocr-postflight-pushmode` + `git push origin main` + `git push origin v0.3.63-pdf-ocr-postflight-pushmode` + 收口 JSON 落盘 + `add1d99` 收口 commit + push。
 - (可选,后续 v0.3.64+)补 v0.3.62 报告的 recommended import / feature 字段(`source URL` / `content directory` / `GitHub Pages URL` / `modified files` / `checks`),消除 v0.3.62 postflight 残余 warnings。本任务不做(超出 scope,且 v0.3.62 已发布)。
 - (可选,后续 v0.3.64+)清理 7 条 `check_kb.py` pre-existing 词数漂移 warnings。本任务不做(超出 scope)。
 - (可选,后续 v0.3.64+)把 `PUSH_MODE` 概念同步到 `docs/AGENT_COMMANDS.md` / `CLAUDE.md` / `DESIGN_RATIONALE.md` 的索引段落。本任务不做(超出 scope,且本次只动 4 个 PDF OCR 直接相关的文件)。
