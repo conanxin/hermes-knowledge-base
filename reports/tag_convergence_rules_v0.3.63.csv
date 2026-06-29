@@ -1,0 +1,33 @@
+source_tags,target_tag,reason,affected_files,confidence,applied
+MCS,Management control systems,同一概念缩写/全称,1,high,true
+Scientific management;Digital Taylorism,Taylorism,同族概念合并,1,high,true
+entrepreneurship;Y Combinator,startup,创业生态群合并,1,high,true
+Curtis Yarvin,Mencius Moldbug,同一作者笔名/真名,1,high,true
+storytelling;non-fiction;literature,writing,写作群合并,2,high,true
+comedy,humor,同义合并,1,high,true
+podcast;entertainment,media,媒体群合并,1,high,true
+screenwriting;narrative;visual storytelling,storytelling,叙事群合并,1,high,true
+Disney;Finding Nemo;WALL-E;Toy Story,Pixar,工作室/作品群合并,1,high,true
+environment;wilderness,nature,自然哲学群合并,1,high,true
+essay;literature;language;journalism;autobiography,writing,写作/文学群合并,3,high,true
+libertarianism;liberalism;autonomy,freedom,自由概念群合并,0,high,false
+totalitarianism,authoritarianism,同义词合并,0,high,false
+Three-Body Problem;Cixinism,Liu Cixin,作者作品群合并,0,high,false
+Chinese SF,science fiction,同义合并,0,high,false
+money,wealth,同义合并,0,high,false
+spirituality;mindfulness;awareness,consciousness,意识群合并,0,high,false
+reactionary,neoreaction,同义/近义合并,0,high,false
+popular science,science communication,同义合并,0,high,false
+movies,film,同义合并,0,high,false
+success;life advice;graduation;education,career,职业/教育群合并,0,high,false
+ideology;left-wing,politics,政治群合并,0,high,false
+socialism;neoliberalism;economics,capitalism,经济体系群合并,0,high,false
+hegemony;imperialism,structural power,权力概念群合并,0,high,false
+global governance;world order,international relations,国际关系群合并,0,high,false
+information;learning,knowledge,知识群合并,0,high,false
+books;education,reading,阅读/教育群合并,0,high,false
+AGI;machine learning;deep learning;neural networks,AI,AI技术群合并,0,high,false
+alignment;risk,safety,安全群合并,0,high,false
+regulation;policy,governance,治理群合并,0,high,false
+design;interaction;interface,user experience,UX群合并,0,high,false
+propaganda;truth,politics,政治群合并,0,high,false

@@ -1,0 +1,313 @@
+{
+  "generated_at": "2026-06-29T15:15:00+08:00",
+  "version": "v0.3.63",
+  "baseline_commit": "550a73b",
+  "baseline_warn": 30,
+  "baseline_hard_fail": 0,
+  "baseline_records": 54,
+  "applied_rules": 11,
+  "skipped_rules": 21,
+  "modified_files": 8,
+  "warn_after": 28,
+  "hard_fail_after": 0,
+  "records_after": 54,
+  "rules": [
+    {
+      "source": [
+        "MCS"
+      ],
+      "target": "Management control systems",
+      "reason": "同一概念缩写/全称",
+      "files": 1,
+      "confidence": "high",
+      "applied": true
+    },
+    {
+      "source": [
+        "Scientific management",
+        "Digital Taylorism"
+      ],
+      "target": "Taylorism",
+      "reason": "同族概念合并",
+      "files": 1,
+      "confidence": "high",
+      "applied": true
+    },
+    {
+      "source": [
+        "entrepreneurship",
+        "Y Combinator"
+      ],
+      "target": "startup",
+      "reason": "创业生态群合并",
+      "files": 1,
+      "confidence": "high",
+      "applied": true
+    },
+    {
+      "source": [
+        "Curtis Yarvin"
+      ],
+      "target": "Mencius Moldbug",
+      "reason": "同一作者笔名/真名",
+      "files": 1,
+      "confidence": "high",
+      "applied": true
+    },
+    {
+      "source": [
+        "storytelling",
+        "non-fiction",
+        "literature"
+      ],
+      "target": "writing",
+      "reason": "写作群合并",
+      "files": 2,
+      "confidence": "high",
+      "applied": true
+    },
+    {
+      "source": [
+        "comedy"
+      ],
+      "target": "humor",
+      "reason": "同义合并",
+      "files": 1,
+      "confidence": "high",
+      "applied": true
+    },
+    {
+      "source": [
+        "podcast",
+        "entertainment"
+      ],
+      "target": "media",
+      "reason": "媒体群合并",
+      "files": 1,
+      "confidence": "high",
+      "applied": true
+    },
+    {
+      "source": [
+        "screenwriting",
+        "narrative",
+        "visual storytelling"
+      ],
+      "target": "storytelling",
+      "reason": "叙事群合并",
+      "files": 1,
+      "confidence": "high",
+      "applied": true
+    },
+    {
+      "source": [
+        "Disney",
+        "Finding Nemo",
+        "WALL-E",
+        "Toy Story"
+      ],
+      "target": "Pixar",
+      "reason": "工作室/作品群合并",
+      "files": 1,
+      "confidence": "high",
+      "applied": true
+    },
+    {
+      "source": [
+        "environment",
+        "wilderness"
+      ],
+      "target": "nature",
+      "reason": "自然哲学群合并",
+      "files": 1,
+      "confidence": "high",
+      "applied": true
+    },
+    {
+      "source": [
+        "essay",
+        "literature",
+        "language",
+        "journalism",
+        "autobiography"
+      ],
+      "target": "writing",
+      "reason": "写作/文学群合并",
+      "files": 3,
+      "confidence": "high",
+      "applied": true
+    }
+  ],
+  "skipped": [
+    {
+      "source": [
+        "libertarianism",
+        "liberalism",
+        "autonomy"
+      ],
+      "target": "freedom",
+      "reason": "自由概念群合并"
+    },
+    {
+      "source": [
+        "totalitarianism"
+      ],
+      "target": "authoritarianism",
+      "reason": "同义词合并"
+    },
+    {
+      "source": [
+        "Three-Body Problem",
+        "Cixinism"
+      ],
+      "target": "Liu Cixin",
+      "reason": "作者作品群合并"
+    },
+    {
+      "source": [
+        "Chinese SF"
+      ],
+      "target": "science fiction",
+      "reason": "同义合并"
+    },
+    {
+      "source": [
+        "money"
+      ],
+      "target": "wealth",
+      "reason": "同义合并"
+    },
+    {
+      "source": [
+        "spirituality",
+        "mindfulness",
+        "awareness"
+      ],
+      "target": "consciousness",
+      "reason": "意识群合并"
+    },
+    {
+      "source": [
+        "reactionary"
+      ],
+      "target": "neoreaction",
+      "reason": "同义/近义合并"
+    },
+    {
+      "source": [
+        "popular science"
+      ],
+      "target": "science communication",
+      "reason": "同义合并"
+    },
+    {
+      "source": [
+        "movies"
+      ],
+      "target": "film",
+      "reason": "同义合并"
+    },
+    {
+      "source": [
+        "success",
+        "life advice",
+        "graduation",
+        "education"
+      ],
+      "target": "career",
+      "reason": "职业/教育群合并"
+    },
+    {
+      "source": [
+        "ideology",
+        "left-wing"
+      ],
+      "target": "politics",
+      "reason": "政治群合并"
+    },
+    {
+      "source": [
+        "socialism",
+        "neoliberalism",
+        "economics"
+      ],
+      "target": "capitalism",
+      "reason": "经济体系群合并"
+    },
+    {
+      "source": [
+        "hegemony",
+        "imperialism"
+      ],
+      "target": "structural power",
+      "reason": "权力概念群合并"
+    },
+    {
+      "source": [
+        "global governance",
+        "world order"
+      ],
+      "target": "international relations",
+      "reason": "国际关系群合并"
+    },
+    {
+      "source": [
+        "information",
+        "learning"
+      ],
+      "target": "knowledge",
+      "reason": "知识群合并"
+    },
+    {
+      "source": [
+        "books",
+        "education"
+      ],
+      "target": "reading",
+      "reason": "阅读/教育群合并"
+    },
+    {
+      "source": [
+        "AGI",
+        "machine learning",
+        "deep learning",
+        "neural networks"
+      ],
+      "target": "AI",
+      "reason": "AI技术群合并"
+    },
+    {
+      "source": [
+        "alignment",
+        "risk"
+      ],
+      "target": "safety",
+      "reason": "安全群合并"
+    },
+    {
+      "source": [
+        "regulation",
+        "policy"
+      ],
+      "target": "governance",
+      "reason": "治理群合并"
+    },
+    {
+      "source": [
+        "design",
+        "interaction",
+        "interface"
+      ],
+      "target": "user experience",
+      "reason": "UX群合并"
+    },
+    {
+      "source": [
+        "propaganda",
+        "truth"
+      ],
+      "target": "politics",
+      "reason": "政治群合并"
+    }
+  ]
+}
