@@ -127,45 +127,99 @@ If the operator decides to proceed:
 
 1. **Inspect why the extension was disabled** on 2026-04-09. Check
    `~/.openclaw/logs/` for entries from that day; check any related patches
-   in `~/.openclaw/patches/`.
-2. **Re-enable the extension** by moving it out of `extensions-disabled/`:
+   in `~/.openclaw/patches/`. *(v0.3.64 pilot: no direct evidence of the
+   reason was found in local logs / memory / patches; the directory name's
+   `2026-04-09-211122` suffix is the only timestamp evidence. The directory
+   contents themselves have mtime 2026-03-22 — the original install time.
+   The 2026-04-09 timestamp reflects the disable/rename action, not
+   anything in the directory itself.)*
 
+2. **Re-enable the extension — two distinct paths**, choose based on
+   what's actually intended:
+
+   **Path A (minimal file move, what v0.3.62 docs originally described)**:
    ```bash
    mv ~/.openclaw/extensions-disabled/openclaw-weixin.disabled.2026-04-09-211122 \
       ~/.openclaw/extensions/openclaw-weixin
-   ```
-
-3. **Restart the gateway**:
-
-   ```bash
    systemctl --user restart openclaw-gateway
    ```
+   ⚠ **v0.3.64 pilot discovered this is insufficient.** The `openclaw
+   channels list` output still reports `openclaw-weixin: not installed,
+   not configured, disabled` after a restart. The file-move puts the
+   extension package on disk where the gateway can find it, but the
+   gateway's plugin loader does not auto-activate it. The result is:
+   diagnostic sub-check #2 (extension enabled) reports PASS, but the
+   channel manager still treats it as not installed. Real inbound still
+   does not work via this path.
 
-4. **Re-run the diagnostic**:
+   **Path B (catalog-correct installation, what the gateway actually
+   expects)**:
+   ```bash
+   openclaw channels add openclaw-weixin
+   # OR (if add requires auth)
+   openclaw channels install openclaw-weixin
+   ```
+   This invokes the official catalog entry
+   (`@tencent-weixin/openclaw-weixin@2.4.3` with
+   `sha512-dPQbidUNWigC6V10vGW4i+GLH09x+6zUhafZRjuxkJ9GDu8o62WBsnUTojp4KqUH756hz+t2v9khiCRSi0dBDw==`).
+   The installed extension version is **2.4.3** (the on-disk package is
+   1.0.2 — a 2-version gap). v0.3.64 did **NOT** run this command because
+   it would change the installed package version (operator decision).
 
+3. **Authenticate the WeChat channel** (the channel is described in the
+   catalog as "Personal WeChat messaging via QR-code login"):
+
+   ```bash
+   openclaw channels login openclaw-weixin
+   # OR (depending on CLI subcommand surface)
+   openclaw weixin auth
+   ```
+   **This requires the operator to scan a QR code with their personal
+   WeChat app.** The QR code is the standard way personal WeChat
+   accounts register with a third-party long-poll client. v0.3.64
+   **deliberately did NOT** run this command because:
+   - It requires a human-in-the-loop action
+   - It creates a persistent session tied to a personal WeChat account
+   - It is outside the "lite fix" scope of v0.3.62 / v0.3.64
+   - The user profile rule states "登录微信/绕过限制/读取敏感 cookie 时停止"
+
+4. **Verify via diagnostic**:
    ```bash
    python3 scripts/diagnose_wechat_inbound.py
    ```
-
    Confirm sub-check #2 (WeChat extension enabled) is now ✓.
 
-5. **Authenticate the WeChat channel** (this is the non-trivial step — the
-   extension is a long-poll client that needs to scan a QR code once on first
-   use):
-
-   ```bash
-   openclaw weixin auth   # or whatever the v0.3.x CLI command is
-   ```
-
-6. **Send a test article** to the bot and verify a new capture JSON appears in
+5. **Send a test article** to the bot and verify a new capture JSON appears in
    `inbox/raw/wechat/`.
 
-7. **Optionally consume the new capture** with the bridge:
-
+6. **Optionally consume the new capture** with the bridge:
    ```bash
    python3 scripts/wechat_inbound_to_capture.py --dry-run    # preview
    python3 scripts/wechat_inbound_to_capture.py --import      # actually import
    ```
+
+## 6.5. v0.3.64 pilot findings (canonical addendum)
+
+The v0.3.64 pilot performed a controlled re-enable → observe → rollback
+sequence and discovered that **the file-move approach in §6 step 2 Path A
+is not sufficient on its own**. The full pilot report is at
+`reports/openclaw_weixin_reenable_pilot_v0.3.64_20260629.md`. Key findings:
+
+- `openclaw channels list --all` reports `openclaw-weixin: not installed,
+  not configured, disabled` even after a clean Path A re-enable + restart.
+- The official catalog expects version **2.4.3**; the on-disk package
+  is **1.0.2**. Path B (`openclaw channels add openclaw-weixin`) would
+  install the correct version.
+- The channel description in the catalog is "Personal WeChat messaging
+  via QR-code login" — i.e. operator QR-code scanning is a prerequisite
+  for any real inbound.
+- v0.3.64 deliberately **rolled back** the Path A mv before reporting,
+  to leave the system in its pre-pilot state. Final diagnostic after
+  rollback: 2/4 sub-checks pass (same as v0.3.62 baseline).
+- **Reason for disable on 2026-04-09 = not found in local evidence.**
+  No journal entries, no memory files, no patch logs from that day
+  mention weixin. The directory name's `2026-04-09-211122` suffix is
+  the only timestamp.
 
 ## 7. Why the existing import script was not enough
 
