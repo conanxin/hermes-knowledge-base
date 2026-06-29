@@ -164,6 +164,38 @@ cp templates/prompts/import_article_prompt.md /tmp/my_import.md
 
 详见 `templates/prompts/import_article_prompt.md` 和 `docs/AGENT_COMMANDS.md`。
 
+## 导入本地 PDF
+
+把本地 PDF（扫描件或带文本层）OCR 识别、完整翻译后加入知识库。详细规范见
+`docs/import-recipes/PDF_OCR_LOCAL.md`。
+
+**最短命令**：
+
+```
+把这个本地 PDF OCR 识别、完整翻译并加入 Hermes 知识库：/abs/path/to/file.pdf
+```
+
+**输出结构**（与 URL 文章同布局，多 1 个本地引用）：
+
+```
+content/articles/YYYY/YYYY-MM-DD-<slug>/
+├── metadata.yaml            # source_url_missing: true, source_site: "local-pdf"
+├── source.md                # OCR 文本 + <!-- page: N --> + [OCR疑似: ...]
+├── translation.zh-CN.md     # 简体中文全译
+├── summary.md
+├── notes.md
+└── source.local-ref.txt     # PDF 不入仓，本地引用
+```
+
+**注意**：
+
+- 用户只说"分析这个 PDF" → read-only，不入库
+- 用户必须提供**绝对路径**；agent 不得猜路径
+- PDF 本身被 `.gitignore`（`*.pdf`）排除；用 `source.local-ref.txt` 保留本地指针
+- 不得修改 `conanxin.github.io/projects/data.json`，不得生成 standalone project
+- 详见 [docs/import-recipes/PDF_OCR_LOCAL.md](docs/import-recipes/PDF_OCR_LOCAL.md) 与
+  [docs/workflows/pdf-ocr-kb-import-workflow.md](docs/workflows/pdf-ocr-kb-import-workflow.md)
+
 ## 微信公众号文章入库
 
 Hermes Knowledge Base 支持将微信公众号文章全文入库保存。

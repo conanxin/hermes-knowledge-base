@@ -146,6 +146,7 @@ https://www.gutenberg.org/files/2944/2944-h/2944-h.htm
 | Source type | Recipe |
 |---|---|
 | Project Gutenberg (gutenberg.org) | [docs/import-recipes/PROJECT_GUTENBERG.md](import-recipes/PROJECT_GUTENBERG.md) |
+| Local PDF file (扫描件或文本层) | [docs/import-recipes/PDF_OCR_LOCAL.md](import-recipes/PDF_OCR_LOCAL.md) |
 
 **Project Gutenberg 特定要求**：
 
@@ -153,6 +154,98 @@ https://www.gutenberg.org/files/2944/2944-h/2944-h.htm
 - collection page / anthology page（多章节合集页）必须遵守该 recipe 的 §6 (单篇抽取) 与 §7 (hard-stop cases)。
 - 不得跳过 recipe 中的 duplicate / blocked / extraction scope 检查。
 - 报告中必须记录 recipe 是否适用、是否触发 hard-stop。
+
+**本地 PDF OCR 特定要求**：
+
+- 任何"把这个本地 PDF OCR 识别、翻译并加入知识库"任务**必须**优先加载
+  [docs/import-recipes/PDF_OCR_LOCAL.md](import-recipes/PDF_OCR_LOCAL.md)。
+- 不得跳过 PDF 检视（pdfinfo / pdftotext）、OCR fallback、OCR 证据报告生成。
+- PDF 文件本身 gitignored；用 `source.local-ref.txt` 保留本地引用。
+- 详情见 [docs/workflows/pdf-ocr-kb-import-workflow.md](workflows/pdf-ocr-kb-import-workflow.md)
+  与 [docs/commands/pdf-ocr-kb-import-command.md](commands/pdf-ocr-kb-import-command.md)。
+
+### 2c. 本地 PDF OCR 入库流程（v0.3.62+）
+
+将 §2b 的"Source-Specific Recipes"展开为本地 PDF 入库专门小节。
+
+**触发语**（任一即可）：
+
+- "把这个本地 PDF OCR 识别、完整翻译并加入 Hermes 知识库：`<path>`"
+- "本地 PDF 入库：`<path>`"
+- "OCR 并翻译入库：`<path>`"
+- "把 PDF 文档识别、翻译后加入知识库：`<path>`"
+
+**必须加载**：[docs/import-recipes/PDF_OCR_LOCAL.md](import-recipes/PDF_OCR_LOCAL.md) **整篇**，不允许基于记忆自由发挥。
+
+**最短命令**：
+
+```
+把这个本地 PDF OCR 识别、完整翻译并加入 Hermes 知识库：/abs/path/to/file.pdf
+```
+
+`<path>` 必须是绝对路径。`./relative.pdf` 或 `~/Downloads/foo.pdf` 不合规；用户必须给出绝对路径，或 agent 自行 resolve 一次再代入。
+
+**默认输出结构**（与 URL 文章导入完全相同的 5 文件 + 1 个本地引用）：
+
+```
+content/articles/YYYY/YYYY-MM-DD-<slug>/
+├── metadata.yaml            # source_url_missing: true, source_site: "local-pdf"
+├── source.md                # 完整 OCR 文本 + <!-- page: N --> + [OCR疑似: ...]
+├── translation.zh-CN.md     # 完整简体中文翻译
+├── summary.md               # 中文摘要 + 关键金句 + 延伸问题
+├── notes.md                 # preflight/duplicate/blocked/OCR 决策
+└── source.local-ref.txt     # PDF 本地引用（PDF 本身不入仓）
+```
+
+外加 `reports/pdf_ocr_import_<DATE>-<slug>.md` —— OCR 证据报告，必填。
+
+**PDF 入库 vs URL 文章的差异**：
+
+| 差异点 | URL 文章 | 本地 PDF |
+|---|---|---|
+| 输入 | 远程 URL | 本地绝对路径 |
+| 抽取 | `curl` / `web_extract` | `pdfinfo` + `pdftotext`(有文本层)或 `pdftoppm` + `tesseract`(无文本层/扫描件) |
+| `source_url` | 真实 URL | `null`，配 `source_url_missing: true` |
+| `source_site` | URL host | `"local-pdf"`（规范值） |
+| 本地引用 | 不需要 | `source.local-ref.txt` 必填 |
+| 入仓 PDF | n/a | gitignored（`.gitignore` 已含 `*.pdf`） |
+| Hard-stop | paywall / ACL / 抓取失败 | PDF 不存在 / 加密 / OCR 失败 / 多页不可识别 |
+
+**Hard-stop 规则**（来自 [docs/import-recipes/PDF_OCR_LOCAL.md §18](import-recipes/PDF_OCR_LOCAL.md)）：
+
+- 用户只说"分析这个 PDF" → **read-only**，不得自动入库
+- 用户未提供 PDF 路径 → **必须 `clarify` 反问或 blocked**，不得猜
+- PDF 不存在 / 加密 / 损坏 → blocked
+- OCR 后仍有明显大段缺失 → blocked
+- 多页不可识别 → blocked
+- 文本层 / OCR 乱码严重 → blocked
+- 目录/正文边界无法判断 → blocked
+- 无法确认文档完整性 → blocked
+- metadata 关键字段无法用 `source_url_missing` / `local-pdf` / `unknown` 合法表达 → blocked
+- `check_kb.py` 或 `check_pages_sync.py` FAIL → blocked
+- `check_translation_residue.py` 报告真实未翻译段（非 allowlist 内的专名/书名/URL） → 修复或 blocked
+
+**质量门禁**（与 URL 文章同）：
+
+```bash
+python3 scripts/check_kb.py                  # PASS 必填
+python3 scripts/update_site.py               # 5/5 PASS 必填
+python3 scripts/check_pages_sync.py          # PASS 必填
+python3 scripts/check_translation_residue.py # WARN-only
+```
+
+**报告模板要求**：
+
+- 模板 3（写入并发布），9 段
+- 必填 §4.5 OCR / PDF specifics（OCR 方法、页数、字符级噪声数、源文件路径、sha256、入仓方式）
+- 必填 §4.6 Translation quality（source 词数、CJK 字数、翻译残留清单、是否需修复）
+- 必填 §7 Commit / Push / Live（commit hash、push success、live URL 或 PENDING_CDN_SYNC）
+- 必填 §8 Known limitations（每一条 OCR 噪声 + 翻译残留）
+
+**完整流程**：[docs/workflows/pdf-ocr-kb-import-workflow.md](workflows/pdf-ocr-kb-import-workflow.md)
+**用户入口命令**：[docs/commands/pdf-ocr-kb-import-command.md](commands/pdf-ocr-kb-import-command.md)
+**可复用 prompt**：[templates/prompts/import_pdf_ocr_prompt.md](../templates/prompts/import_pdf_ocr_prompt.md)
+**已知良好案例**：`content/articles/2026/2026-06-29-le-guin-carrier-bag-theory-of-fiction/`（commit `bdb1bc8`）
 
 ### 3. 质量检查
 
