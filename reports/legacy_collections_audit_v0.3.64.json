@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-06-29T15:25:00+08:00",
+  "version": "v0.3.64",
+  "baseline_commit": "7fff346",
+  "baseline_tag": "v0.3.63-tag-soft-limit-convergence",
+  "baseline_warn": 28,
+  "baseline_hard_fail": 0,
+  "baseline_records": 54,
+  "migrated_entries": [
+    "2026-05-06-arxiv-ai-agents",
+    "2026-05-06-arxiv-llm-systems",
+    "2026-05-14-hacker-news-ml",
+    "2026-05-17-awesome-llm-long-context"
+  ],
+  "migrated_files": 19,
+  "deleted_dir": "content/collections/",
+  "modified_files": [
+    "README.md"
+  ],
+  "auto_regenerated": [
+    "docs/data/catalog.json",
+    "site/data/catalog.json",
+    "index/catalog.jsonl",
+    "index/tags.md",
+    "index/authors.md",
+    "index/timeline.md",
+    "docs/items/*",
+    "site/items/*"
+  ],
+  "warn_after": 27,
+  "hard_fail_after": 0,
+  "records_after": 54,
+  "remaining_warn_types": {
+    "tag_count_high": 16,
+    "tag_count_low": 1,
+    "topic_count_high": 9,
+    "dir_drift": 0
+  },
+  "content_lost": false,
+  "body_modified": false,
+  "tag_modified": false,
+  "recommendation": "v0.3.65: second round tag convergence"
+}

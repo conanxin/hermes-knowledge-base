@@ -1,28 +1,24 @@
 # Hermes Knowledge Base
 
-个人知识库，由 Hermes agent 自动维护。
+个人静态知识库。Hermes agent 维护内容采集、翻译、归档与发布；站点由 GitHub Pages 提供在线浏览。
 
-## 用途
+## 1. 项目一句话说明
 
-保存文章、书籍、论文、视频、项目的完整中文翻译、摘要、背景资料和个人笔记。
+把"想留但不想再翻原文"的外部材料（文章 / 散文 / 论文 / 视频 / 播客 / 资源集合 / 个人笔记 / 项目）转成有元数据、有中文译本、有结构化笔记、可被全文检索的静态知识库。所有内容以 `metadata.yaml` 为单一入口，质量门禁一律在 `scripts/` 下。
 
-## 目录结构
+## 2. 入口
 
-| 目录 | 说明 |
-|------|------|
-| `inbox/raw/` | 原始素材（未处理的网页、PDF、截图等） |
-| `content/articles/` | 外部文章（有 source_url，需翻译） |
-| `content/books/` | 书籍 |
-| `content/papers/` | 论文 |
-| `content/videos/` | 视频 |
-| `content/projects/` | 项目文档（有 source_url，无翻译） |
-| `content/legacy-knowledge/` | 旧知识库迁移内容（中文笔记，无翻译） |
-| `index/` | 索引和目录 |
-| `scripts/` | 自动化脚本 |
-| `templates/` | 模板 |
-| `reports/` | 运行报告 |
+| 入口 | 地址 |
+|---|---|
+| 在线浏览（GitHub Pages） | <https://conanxin.github.io/hermes-knowledge-base/> |
+| 在线浏览（每条记录详情页） | <https://conanxin.github.io/hermes-knowledge-base/items/<slug>/> |
+| 本地预览 | `python3 -m http.server 8000 -d site` → <http://localhost:8000> |
+| 仓库自身 | <https://github.com/conanxin/hermes-knowledge-base> |
+| Changelog | [CHANGELOG.md](CHANGELOG.md) |
+| 发布索引 | [docs/RELEASES.md](docs/RELEASES.md) |
+| 完整使用手册 | [docs/AGENT_COMMANDS.md](docs/AGENT_COMMANDS.md) |
 
-## 当前内容类型
+## 3. 当前状态
 
 <!-- KB_STATE_START — auto-updated by scripts/audit_kb_state.py -->
 <!-- Run `python3 scripts/audit_kb_state.py` to refresh; do not edit manually. -->
@@ -33,7 +29,7 @@
 | article | 25 | 外部文章（含 wechat 子集），有 source_url，需翻译 | `content/articles/` |
 | essay | 8 | 散文 / 自传性长文，与 article 同等需要翻译 | `content/articles/` |
 | note | 9 | 中文笔记，无翻译，来源 `legacy-knowledge` 或 `notes` | `content/legacy-knowledge/`, `content/notes/` |
-| resource_collection | 5 | 资源集合（结构化列表，无翻译） | `content/resource_collections/` + `content/collections/`（遗留目录，请勿新建条目） |
+| resource_collection | 5 | 资源集合（结构化列表，无翻译） | `content/resource_collections/` |
 | project | 4 | 项目文档（有 source_url，无翻译） | `content/projects/` |
 | video | 1 | YouTube 视频知识包（transcript + cards + analysis） | `content/articles/` |
 | academic_paper | 1 | 学术论文（tandfonline 等） | `content/papers/` |
@@ -42,455 +38,199 @@
 
 <!-- KB_STATE_END -->
 
-## 质量检查命令
+> managed block 由 `scripts/audit_kb_state.py` 维护。除非审计脚本显式要求刷新，否则不要手改其中的统计数字；任何"加一条减一条"的动作都会让这个块和真实 `content/` 又漂一次。
+
+## 4. 支持的内容类型
+
+> 当前实际生效的 8 类（与上表一致）：`article` / `essay` / `note` / `resource_collection` / `project` / `video` / `academic_paper` / `interview`。
+
+类型分区与"是否需要中文译本"的真实情况：
+
+| 类型 | 是否需要翻译 | 内容来源 | 落地目录 |
+|---|---|---|---|
+| `article` | 是（zh-CN） | URL 文章（含 wechat 子集） | `content/articles/YYYY/` |
+| `essay` | 是（zh-CN） | 长篇散文 / 自传性长文 | `content/articles/YYYY/` |
+| `note` | 否（中文原生） | 个人笔记 / legacy 迁移 | `content/notes/`, `content/legacy-knowledge/` |
+| `resource_collection` | 否 | 结构化资源清单 / listicle | `content/resource_collections/` |
+| `project` | 否 | 项目文档（有 source_url） | `content/projects/` |
+| `video` | 是（zh-CN） | YouTube 视频知识包 | `content/articles/YYYY/` |
+| `academic_paper` | 是（zh-CN） | 学术论文（tandfonline 等） | `content/papers/` |
+| `interview` | 是（zh-CN） | 长访谈转录 | `content/articles/YYYY/` |
+
+每种类型的 schema 与字段约束见 [docs/TAXONOMY.md](docs/TAXONOMY.md)。
+
+## 5. Quick Start
 
 ```bash
-python3 scripts/check_kb.py
-python3 scripts/check_translation_residue.py
-python3 scripts/build_index.py
-python3 scripts/check_pages_sync.py
-```
+# 1. 拉取
+git pull --ff-only
 
-**任务启动前 preflight（v0.3.38+）：**
-
-```bash
-python3 scripts/check_task_preflight.py              # 普通任务
-python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name  # versioned task
-```
-
-| 脚本 | 用途 | 预期结果 |
-|------|------|----------|
-| `check_kb.py` | 检查 metadata 完整性 | PASS（详见 `audit_kb_state.py` 输出的"真实条目总数"） |
-| `check_translation_residue.py` | 检查翻译残留 | WARNING 可接受 |
-| `build_index.py` | 重建索引 | 与 `audit_kb_state.py` 输出的"真实条目总数"一致 |
-| `check_pages_sync.py` | 检查 site/ 与 docs/ 发布文件一致 | PASS |
-| `check_task_preflight.py` | 任务启动前检查 | PASS / PASS_WITH_WARNINGS |
-| `audit_kb_state.py` *(v0.3.60+)* | 状态审计：检查 README 数字漂移、目录漂移、类型漂移、catalog 同步 | PASS_WITH_WARNINGS（历史 drift 不阻塞，仅 WARN） |
-
-## 本地浏览知识库
-
-```bash
-# 1. 导出站点数据
-python3 scripts/export_site_data.py
-
-# 2. 启动本地服务器
-python3 -m http.server 8000 -d site
-
-# 3. 浏览器打开
-# http://localhost:8000
-```
-
-## 维护方式
-
-- Hermes agent 自动抓取、翻译、归档
-- `scripts/build_index.py` 自动更新索引
-- `scripts/check_kb.py` 检查内容完整性
-- 所有内容通过 metadata.yaml 管理元数据
-
-## 状态标记
-
-- `captured` — 已捕获，待处理
-- `translated` — 已翻译
-- `summarized` — 已摘要
-- `reviewed` — 已审阅
-- `archived` — 已归档
-
-## 导入文章
-
-### 短命令（推荐）
-
-直接对 Hermes 说：
-
-- "把这篇文章完整翻译并加入知识库：https://example.com/article"
-- "入库并完整翻译：https://example.com/article"
-- "加入知识库：https://example.com/article"
-- "翻译后入库：https://example.com/article"
-
-Hermes 会自动执行完整导入流程，无需追问（除非遇到付费墙、无法访问、多个 URL 等特殊情况）。
-
-默认行为：
-- `content_type` = `article`
-- 翻译语言 = `zh-CN`
-- 目录名自动使用 `YYYY-MM-DD-来源-slug`
-- tags/topics 由 Hermes 根据内容自动判断
-- 自动 commit 并 push
-
-### 导入后自动执行的质量检查
-
-每篇文章导入完成后，Hermes 会自动运行：
-
-```bash
-python3 scripts/check_kb.py
-python3 scripts/update_site.py
-python3 scripts/check_translation_residue.py
-```
-
-**check_kb.py** 必须 PASS，否则修复问题后再继续。  
-**update_site.py** 必须 PASS，确保 site/ 和 docs/ 同步完成。  
-**check_translation_residue.py** 可以有 warning，但严重残留必须修复。
-
-### 质量门禁规则
-
-| 检查项 | 要求 | 失败处理 |
-|--------|------|----------|
-| metadata.yaml 字段完整 | 必须包含 title, title_zh, source_url, source_site, author, published_date, captured_date, language, translation_language, status, type, topics, tags, word_count | 修复后重新检查 |
-| title_zh | 非空，不得为 PLACEHOLDER | 补充中文标题 |
-| word_count | source > 0, translation > 0 | 重新计算并写入 |
-| tags | 6-12 个 *(soft guideline，audit_kb_state.py 仅 WARN，不阻断；细粒度可发现性的条目如 listicle 视频/音乐可超出)* | 调整数量 |
-| topics | 3-8 个 *(soft guideline，audit_kb_state.py 仅 WARN，不阻断)* | 调整数量 |
-| 翻译完整性 | 无大段英文残留、无漏译、无乱码 | 修复翻译 |
-| notes.md | 使用统一模板 | 替换为 templates/notes.md |
-| 在线浏览页同步 | update_site.py PASS | 修复同步问题 |
-
-### 强制停止条件
-
-以下情况 Hermes 必须停止导入，向用户报告，不要强行入库：
-
-- URL 无法访问或返回 404/403/500
-- 正文抓取不完整（明显截断、缺少关键章节）
-- 文章需要登录或付费才能阅读完整内容
-- 内容类型不明确
-- 翻译后英文残留严重（suspicious_count ≥ 20）
-- metadata 关键字段无法确定
-
-### 模板化 Prompt（高级）
-
-如需自定义导入流程，使用模板：
-
-```bash
-cp templates/prompts/import_article_prompt.md /tmp/my_import.md
-# 替换占位符后发送给 Hermes
-```
-
-详见 `templates/prompts/import_article_prompt.md` 和 `docs/AGENT_COMMANDS.md`。
-
-## 导入本地 PDF
-
-把本地 PDF（扫描件或带文本层）OCR 识别、完整翻译后加入知识库。详细规范见
-`docs/import-recipes/PDF_OCR_LOCAL.md`。
-
-**最短命令**：
-
-```
-把这个本地 PDF OCR 识别、完整翻译并加入 Hermes 知识库：/abs/path/to/file.pdf
-```
-
-**输出结构**（与 URL 文章同布局，多 1 个本地引用）：
-
-```
-content/articles/YYYY/YYYY-MM-DD-<slug>/
-├── metadata.yaml            # source_url_missing: true, source_site: "local-pdf"
-├── source.md                # OCR 文本 + <!-- page: N --> + [OCR疑似: ...]
-├── translation.zh-CN.md     # 简体中文全译
-├── summary.md
-├── notes.md
-└── source.local-ref.txt     # PDF 不入仓，本地引用
-```
-
-**注意**：
-
-- 用户只说"分析这个 PDF" → read-only，不入库
-- 用户必须提供**绝对路径**；agent 不得猜路径
-- PDF 本身被 `.gitignore`（`*.pdf`）排除；用 `source.local-ref.txt` 保留本地指针
-- 不得修改 `conanxin.github.io/projects/data.json`，不得生成 standalone project
-- 详见 [docs/import-recipes/PDF_OCR_LOCAL.md](docs/import-recipes/PDF_OCR_LOCAL.md) 与
-  [docs/workflows/pdf-ocr-kb-import-workflow.md](docs/workflows/pdf-ocr-kb-import-workflow.md)
-
-## 微信公众号文章入库
-
-Hermes Knowledge Base 支持将微信公众号文章全文入库保存。
-
-### 能力说明
-
-将微信公众号文章（通过 OpenClaw @tencent-weixin/openclaw-weixin 读取全文）转换为：
-- `metadata` — 文章元数据（含 content_kind, source_platform, dedupe_key, wechat, capture 字段）
-- `source.md` — 原文全文
-- `translation.zh-CN.md` — 清洗后的中文正文（V1 可与 source.md 一致）
-- `summary.md` — 文章摘要
-- `notes.md` — 结构化笔记
-- `raw_payload.json` — 原始 JSON 捕获包备份
-- `KB 条目` — 知识库正式条目
-- `GitHub Pages 站点更新` — 自动发布到浏览站点
-
-### 最短命令
-
-在微信中直接对 Hermes 说：
-
-```
-把这篇公众号文章加入 Hermes 知识库
-```
-
-或：
-
-```
-入库这篇公众号文章
-```
-
-或：
-
-```
-保存这篇公众号全文到知识库
-```
-
-### 输出目录
-
-```
-content/articles/YYYY/YYYY-MM-DD-wechat-<account-slug>-<title-slug>/
-```
-
-### 输出文件
-
-| 文件 | 说明 |
-|------|------|
-| `metadata.yaml` | 知识库元数据（含 wechat / capture 字段） |
-| `source.md` | 原文全文 |
-| `translation.zh-CN.md` | 清洗后的中文正文 |
-| `summary.md` | 文章摘要 |
-| `notes.md` | 结构化笔记 |
-| `raw_payload.json` | 原始 JSON 捕获包 |
-
-### 质量检查命令
-
-```bash
-cd ~/hermes-knowledge-base
+# 2. 任务启动前必跑（任何任务）
 python3 scripts/check_task_preflight.py
-python3 -m py_compile scripts/import_wechat_article_capture.py
-python3 scripts/check_kb.py
+
+# 3. 一次性完成"质量门禁 + 重建 + 同步"
 python3 scripts/update_site.py
-python3 scripts/check_translation_residue.py
-git status
-```
 
-| 检查项 | 要求 | 失败处理 |
-|--------|------|----------|
-| content_markdown 完整性 | 非空、非截断、非仅摘要 | 拒绝入库，报告原因 |
-| word_count | source > 0, translation > 0，整数 | 重新计算 |
-| metadata.yaml 字段 | 含 content_kind, source_platform, dedupe_key | 补充缺失字段 |
-| tags | 6-12 个 | 调整数量 |
-| topics | 3-8 个 | 调整数量 |
-
-### 强制停止条件
-
-以下情况 Hermes 必须停止导入，向用户报告，不要强行入库：
-
-- content_markdown 为空或明显截断
-- 文章只有摘要，没有正文主体
-- 内容需要登录或付费才能阅读完整内容
-- 文章已删除或违规无法查看
-- metadata 关键字段无法确定（如 title、source_url 缺失）
-
-### 相关文档
-
-| 文档 | 路径 | 说明 |
-|------|------|------|
-| 导入工作流 | `docs/workflows/wechat-article-kb-import-workflow.md` | 完整入库流程 |
-| 导入命令 | `docs/commands/wechat-article-kb-import-command.md` | 快捷命令说明 |
-| 导入 Prompt | `templates/prompts/import_wechat_article_prompt.md` | Agent 处理规则 |
-| 导入脚本 | `scripts/import_wechat_article_capture.py` | 自动化脚本 |
-
-## YouTube 视频知识包
-
-Hermes Knowledge Base 支持将 YouTube 视频转换为完整的中文知识包。
-
-### 能力说明
-
-将 YouTube 视频（含字幕）转换为：
-- `metadata` — 视频元数据
-- `transcript.original` — 原始字幕（英文）
-- `transcript.zh` — 中文字幕
-- `transcript.bilingual` — 双语对照字幕
-- `analysis.zh` — 深度解读
-- `summary-post.zh` — 分享文章
-- `notes` — 永久笔记
-- `cards` — 知识卡片
-- `preflight-failure-archive` — 失败预检归档（如视频不可访问）
-- `KB 条目` — 知识库正式条目
-- `GitHub Pages 站点更新` — 自动发布到浏览站点
-
-### 最短命令
-
-```
-预检这个 YouTube 视频：<YOUTUBE_URL>
-解读这个 YouTube 视频并加入 Hermes 知识库：<YOUTUBE_URL>
-```
-
-### 预检命令
-
-在正式解读前，先判断视频是否可处理：
-
-```
-预检这个 YouTube 视频：<YOUTUBE_URL>
-```
-
-预检结果：
-- **PASS**：视频可访问且有字幕 → 继续解读和入库
-- **BLOCKED**：视频不可访问或无字幕 → 停止并归档失败
-
-### 输出结构
-
-**成功视频**：
-```
-content/articles/YYYY/YYYY-MM-DD-video-slug/
-├── metadata.yaml
-├── summary.md
-├── notes.md
-├── source.md
-├── translation.zh-CN.md
-├── cards.md
-└── ...
-```
-
-**失败预检**：
-```
-data/youtube-preflight-failures/YYYY/YYYY-MM-DD-video-id.json
-data/youtube-preflight-failures/YYYY/YYYY-MM-DD-video-id.md
-```
-
-### 安全边界
-
-- 不登录 YouTube 账号
-- 不读取浏览器 Cookie
-- 不下载完整视频（只提取字幕和元数据）
-- 不绕过地区限制或私密限制
-- 不处理私密视频
-- 不伪造字幕或元数据
-- 不可访问视频直接 BLOCKED 并归档，不继续处理
-
-### 相关文档
-
-| 文档 | 路径 | 说明 |
-|------|------|------|
-| 视频解读工作流 | `docs/workflows/youtube-video-brief-workflow.md` | 从 URL 到知识包的完整流程 |
-| 一键入库工作流 | `docs/workflows/youtube-video-kb-import-workflow.md` | 将知识包导入知识库 |
-| 链接预检工作流 | `docs/workflows/youtube-link-preflight-workflow.md` | 入库前的预检判断 |
-| 视频解读命令 | `docs/commands/youtube-brief-command.md` | 视频解读快捷命令 |
-| 一键入库命令 | `docs/commands/youtube-kb-import-command.md` | 入库快捷命令 |
-| 预检命令 | `docs/commands/youtube-preflight-command.md` | 预检快捷命令 |
-
-### 版本演进
-
-| 版本 | 内容 |
-|------|------|
-| v0.3.18 | 视频解读成功案例（Conan O'Brien 毕业演讲） |
-| v0.3.19 | 一键视频入库命令能力建设 |
-| v0.3.20 | 真实视频入库试运行（Dario Amodei 采访） |
-| v0.3.21 | 链接预检与失败归档机制 |
-
----
-
-## 浏览知识库
-
-### 在线访问
-
-GitHub Pages: https://conanxin.github.io/hermes-knowledge-base/
-
-### 更新在线浏览页
-
-新增知识库内容后，同步更新线上浏览页：
-
-```bash
-python3 scripts/build_index.py
-python3 scripts/export_site_data.py
-python3 scripts/sync_pages_docs.py
-git status
-```
-
-或一键运行：
-
-```bash
-python3 scripts/update_site.py
-```
-
-### 本地运行
-
-```bash
-python3 scripts/export_site_data.py
-python3 scripts/generate_item_pages.py
+# 4. 离线浏览
 python3 -m http.server 8000 -d site
+# → http://localhost:8000
 ```
 
-浏览器打开 http://localhost:8000
+只想确认 KB 健康、不重建：
 
-功能：
-- 按类型筛选（article / note / project / resource_collection）
-- 关键词搜索（标题、标签、主题）
+```bash
+python3 scripts/check_kb.py
+python3 scripts/audit_kb_state.py
+```
+
+## 6. 导入能力总览
+
+四种导入入口各自有完整工作流文档；README 只放最短命令，详细步骤、停止条件、字段约束请打开对应的 docs/workflows 文件。
+
+| 能力 | 触发命令（最短） | 文档 | 注意事项 |
+|---|---|---|---|
+| URL 文章 | 「入库并完整翻译：<url>」 | [docs/AGENT_COMMANDS.md](docs/AGENT_COMMANDS.md) | 默认 `content_type=article`、zh-CN、自动 commit/push |
+| 本地 PDF | 「把这个本地 PDF OCR 识别、完整翻译并加入 Hermes 知识库：<abs-path>」 | [docs/import-recipes/PDF_OCR_LOCAL.md](docs/import-recipes/PDF_OCR_LOCAL.md), [docs/workflows/pdf-ocr-kb-import-workflow.md](docs/workflows/pdf-ocr-kb-import-workflow.md) | 必须**绝对路径**；PDF 本身不入仓，只留 `source.local-ref.txt` |
+| 微信公众号文章 | 见 §7 「公众号」专门说明 | [docs/workflows/wechat-article-kb-import-workflow.md](docs/workflows/wechat-article-kb-import-workflow.md), [docs/workflows/wechat-real-inbound-troubleshooting.md](docs/workflows/wechat-real-inbound-troubleshooting.md) | **Hermes 当前不直接绑定个人微信**；推荐标准 capture JSON → bridge dry-run/import 路线 |
+| YouTube 视频 | 「预检这个 YouTube 视频：<url>」<br>「解读这个 YouTube 视频并加入 Hermes 知识库：<url>」 | [docs/YOUTUBE_CAPABILITIES.md](docs/YOUTUBE_CAPABILITIES.md), [docs/workflows/youtube-link-preflight-workflow.md](docs/workflows/youtube-link-preflight-workflow.md), [docs/workflows/youtube-video-brief-workflow.md](docs/workflows/youtube-video-brief-workflow.md) | 不登录、不读 cookie、不下载完整视频、私密视频直接 BLOCKED 并归档 |
+
+### 7. 微信公众号：当前真实能力
+
+**Hermes 当前不直接绑定个人微信。** `@tencent-weixin/openclaw-weixin` 扩展自 2026-04-09 起处于 disabled 状态（详见 [docs/workflows/wechat-real-inbound-troubleshooting.md](docs/workflows/wechat-real-inbound-troubleshooting.md) §2）。"你转发一次落地到 KB"的全自动链路当前不通：
+
+- ❌ 实时：WeChat → OpenClaw 网关 → capture JSON → KB（扩展 disabled，长轮询不注册）
+- ✅ 推荐：已绑定微信的 agent → 写入 standard capture JSON 到 `inbox/raw/wechat/` → 标准 capture JSON → Hermes KB dry-run/import
+
+具体落地（任选其一）：
+
+```bash
+# 只看能否解析、不入库
+python3 scripts/wechat_inbound_to_capture.py --dry-run
+
+# 用 latest / 指定的 capture JSON 跑一次入库（脚本内部仍默认 --dry-run，需再加 --no-import-dry-run 才会真正产出 5 文件）
+python3 scripts/wechat_inbound_to_capture.py --import
+
+# 直接对指定 capture 文件做入库语义检查 + 生成 KB 5 文件 dry-run
+python3 scripts/import_wechat_article_capture.py --dry-run inbox/raw/wechat/<file>.json
+# 真入库：去掉 --dry-run
+```
+
+不要做（硬停止）：
+
+- ❌ `openclaw channels add openclaw-weixin` / `openclaw channels login openclaw-weixin` —— 需要 QR 扫码，operator 决策
+- ❌ 读浏览器 cookie、绕过扩展禁用
+- ❌ "扫一次码就自动收文"的承诺 —— 这条链路 v0.3.62 状态是 PARTIAL（详见 troubleshooting 文档 §2）
+
+扩展链路重新打通、运营扫码登录 `openclaw-weixin` 的完整步骤见 [docs/workflows/wechat-real-inbound-troubleshooting.md](docs/workflows/wechat-real-inbound-troubleshooting.md) §6。该动作需 operator 显式确认，不在 Hermes 自动化范围内。
+
+### 详情页 / 浏览能力
+
+在线浏览页面内可：
+
+- 按类型筛选（覆盖上面 8 类，不再只是 4 类）
+- 按关键词搜索（标题 / 标签 / 主题）
 - 按日期倒序排列
-- **每张卡片标题和"阅读 →"按钮进入站内详情页**（`/items/<slug>/`）
-- 卡片右侧 **GitHub 文件夹** 按钮仍可打开 GitHub 原始目录
+- 卡片标题 / "阅读 →" → 站内详情页 `/items/<slug>/`，卡片右侧 GitHub 按钮 → 仓库原始目录
 - 一键复制 path
 
-### 站内详情页（v0.3.8+）
+类型差异化默认展开 / 折叠规则见 [docs/AGENT_COMMANDS.md](docs/AGENT_COMMANDS.md) 与站内实现。
 
-每条记录除了 GitHub 原始目录外，还在 GitHub Pages 内部生成独立阅读页：
+## 8. 标准质量门禁（一致命令集）
+
+无论是导入流程中、还是单纯发布流程中，都跑同一组：
+
+| 顺序 | 命令 | 性质 | 期望 |
+|---|---|---|---|
+| 0 | `python3 scripts/check_task_preflight.py [--planned-tag <v0.3.N-...>] [--allow-warnings]` | task 启动前 | PASS / PASS_WITH_WARNINGS |
+| 0 | `python3 -m py_compile scripts/*.py` | 编译 | exit 0 |
+| 1 | `python3 scripts/check_kb.py` | 内容完整性 | PASS（v0.3.60 起 word-count drift 仅 WARN） |
+| 2 | `python3 scripts/update_site.py` | 一键重建并同步 | exit 0（含同步 + post-sync 检查） |
+| 3 | `python3 scripts/audit_kb_state.py` | 状态审计：drift、目录、类型、catalog 同步 | PASS_WITH_WARNINGS（HARD FAILURES 必须为 0） |
+| 4 | `python3 scripts/check_pages_sync.py` | site/ ↔ docs/ 发布镜像一致性 | PASS（v0.3.60 起是 post-sync gate） |
+
+`check_kb.py` 是硬门禁：
+
+- 失败 → `update_site.py` 不会触碰 `site/data/catalog.json` 或 `docs/`，直接退非 0
+- 失败 → 严禁 commit / push
+- 半成品条目（缺文件、字段为 0、翻译不完整）必须先修复或隔离到 `inbox/quarantine/`
+
+`scripts/update_site.py` 的真实内部顺序（与脚本注释一致）：
+1. `check_kb.py` （hard-stop）
+2. `build_index.py`
+3. `export_site_data.py`
+4. `generate_item_pages.py`
+5. `sync_pages_docs.py`
+6. `check_pages_sync.py` （post-sync integrity check；非 0 即拒绝宣称成功）
+
+## 9. 仓库目录结构
 
 ```
-https://conanxin.github.io/hermes-knowledge-base/items/<slug>/
+hermes-knowledge-base/
+├── README.md                    # 本文件（项目入口页）
+├── CLAUDE.md                    # Agent 行为准则（read-first）
+├── CHANGELOG.md                 # 完整 changelog
+├── DESIGN_RATIONALE.md          # 设计原则（read-first，CSS / 组件）
+├── content/                     # 所有 KB 条目
+│   ├── articles/                #   - article / essay / video / interview
+│   ├── papers/                  #   - academic_paper
+│   ├── projects/                #   - project
+│   ├── resource_collections/    #   - resource_collection（现行）
+│   ├── collections/             #   - legacy（详见 docs/LEGACY_MIGRATION.md）
+│   ├── notes/                   #   - note
+│   ├── legacy-knowledge/        #   - 历史迁移条目（note 源）
+│   ├── books/                   #   - 预留：book 类型尚未启用
+│   └── videos/                  #   - 预留：video 资源原档（当前 KB 走 articles/）
+├── inbox/raw/                   # 原始素材 / capture JSON（不入 KB；wechat JSON 放 inbox/raw/wechat/）
+├── scripts/                     # 自动化（质量门禁 / 构建 / 同步 / 桥接 / 诊断）
+├── templates/                   # 模板（prompts / metadata / notes …）
+├── reports/                     # 每次任务的运行报告
+├── docs/                        # 完整手册（GitHub Pages 发布目录）
+│   ├── AGENT_COMMANDS.md        #   - Agent 命令总纲
+│   ├── TAXONOMY.md              #   - 字段与类型 schema
+│   ├── RELEASES.md              #   - 发布索引 + 推荐下一版
+│   ├── VERSIONING.md            #   - 标签规则与历史 duplicate 表
+│   ├── REPORTING_TEMPLATE.md    #   - 报告模板
+│   ├── TRANSLATION_RESIDUE_POLICY.md
+│   ├── LISTICLE_IMPORT_RULES.md
+│   ├── MUSIC_ARTICLE_RULES.md
+│   ├── COLLECTIONS.md / LEGACY_MIGRATION.md
+│   ├── YOUTUBE_CAPABILITIES.md / CLOUD_HERMES_INTEGRATION.md
+│   ├── commands/                #   - 每种能力的命令短档
+│   ├── import-recipes/          #   - 完整 recipe（PDF、Gutenberg …）
+│   ├── workflows/               #   - 完整工作流（含 wechat troubleshoot）
+│   ├── releases/                #   - 逐版本的 release notes
+│   ├── items/                   #   - 已生成的详情页快照（生成产物）
+│   └── data/                    #   - catalog / index 产物
+├── site/                        # 开发面；和 docs/ 的发布面字节级一致
+├── docs/                        # GitHub Pages 发布目录（与 site/ 镜像）
+└── site/                        # 开发、调试、本地预览
 ```
 
-例如：<https://conanxin.github.io/hermes-knowledge-base/items/2026-06-22-your-ai-is-not-a-tool/>
+发布链路上 `site/` ↔ `docs/` 必须字节级一致；改任意一边都要 `cp` 另一边，并由 `scripts/check_pages_sync.py` 校核。
 
-详情页结构（v0.3.9 起为每种类型提供差异化的默认展开/折叠）：
+## 10. Agent 操作边界
 
-| 区域 | 内容 |
-|------|------|
-| 顶部 | 返回首页链接 |
-| 标题 | `title_zh` + 英文副标题 `title` |
-| 目录 TOC | 来自正文主体的 h2/h3 标题（带编号 + 平滑滚动到锚点） |
-| 元数据 | 类型、作者、来源、发布日期、采集日期、迁移日期、标签、主题 |
-| 摘要 summary.md | 默认展开（所有类型） |
-| 主体正文 | 文章=中文翻译 / 资源集合=collection / 笔记·项目=source。默认展开 |
-| 原文 / 笔记 | 默认折叠，长文不会撑爆页面 |
-| 底部 | 原文链接（如有）+ GitHub 文件夹 + 复制 path |
-| 浮窗 | 滚动 400px 后右下角出现"↑ 返回顶部" |
+| 可以做 | 不可以做 |
+|---|---|
+| 跑 §8 的全部质量门禁 | 不登录微信、不扫 QR、不读 cookie |
+| `git pull --ff-only` / `git add <file-per-file>`（严禁 `git add -A`） | 不改 KB 正文（source.md / translation.zh-CN.md / summary.md / notes.md）一旦条目创建 |
+| per-file `git add`，commit + annotated tag + push | 不动历史 `reports/*.md` |
+| 引用 `docs/workflows/*` 与 `templates/prompts/*` 实施导入 | 不绕过 `check_kb.py` hard-stop（FAIL 时严禁 commit） |
+| 用 `--dry-run` 桥接脚本预览 | 不承诺"转一次就自动入库"——公众号链路当前 PARTIAL |
 
-可选文件缺失时，详情页显示"暂无该部分"，不会崩溃。
+完整边界与白 / 黑名单见 [CLAUDE.md](CLAUDE.md)。
 
-类型差异化默认展开/折叠（v0.3.9+）：
+## 11. 近期里程碑
 
-| 类型 | summary | translation / collection / source | source (次要) | notes |
-|------|---------|------------------------------------|----------------|-------|
-| article | 展开 | 展开（translation） | 折叠 | 折叠 |
-| resource_collection | 展开 | 展开（collection） | — | 折叠 |
-| note | 展开 | 展开（source） | — | 折叠 |
-| project | 展开 | 展开（source） | — | 折叠 |
+完整 release notes 在 [docs/RELEASES.md](docs/RELEASES.md) 与 [CHANGELOG.md](CHANGELOG.md)。近期：
 
-> 用户随时可以点击 section 标题手动展开/折叠，状态**不**持久化。
-
-`update_site.py` 一键重建并同步：
-
-```bash
-python3 scripts/update_site.py
-# 硬性执行顺序：
-#   0. check_kb.py            ← 质量门禁，FAIL 立即停止
-#   1. build_index.py
-#   2. export_site_data.py
-#   3. generate_item_pages.py
-#   4. sync_pages_docs.py
-```
-
-## Releases
-
-See [CHANGELOG.md](CHANGELOG.md) and [docs/RELEASES.md](docs/RELEASES.md) for version history and release notes.
-
-- **Latest YouTube capability entry**: [`v0.3.24-youtube-public-entry-qa`](https://github.com/conanxin/hermes-knowledge-base/releases/tag/v0.3.24-youtube-public-entry-qa)
-- **Music player fix**: [`v0.3.22-music-player-js-loader-fix`](https://github.com/conanxin/hermes-knowledge-base/releases/tag/v0.3.22-music-player-js-loader-fix)
+| 版本 | 主题 | 备注 |
+|---|---|---|
+| v0.3.60 | KB state dashboard 与 README managed block 起点 | 当前类型统计的来源 |
+| v0.3.62 | 微信公众号状态权威说明 + capture bridge + diagnostic | 奠定 §7 当前真实能力叙述 |
+| v0.3.64 | WeChat 扩展 re-enable pilot（观测 / 回滚） | 验证 Path A 不足以激活 channel；完整回滚到 v0.3.62 状态 |
+| **v0.3.65** | **本版本：README-only entrypoint refresh** | 详细见 `reports/readme_entrypoint_refresh_v0.3.65_20260629.md` |
 
 ---
 
-## 质量门禁（硬性规则）
-
-`update_site.py` 已在最前面内置 `check_kb.py` 硬停止：
-
-1. `check_kb.py` 失败 → `update_site.py` 立即返回非 0，**不会**运行 build / export / generate / sync，**不会**触碰 `site/data/catalog.json` 或 `docs/`。
-2. `check_kb.py` 失败时**严禁** commit / push。
-3. `word_count` 字段必须是 YAML 对象，**不允许**用带引号的字符串或裸数字。规范格式：
-
-   ```yaml
-   word_count:
-     source: 4434        # 整数（source.md 实际词数）
-     translation: 7079   # 整数（translation.zh-CN.md 实际 CJK 字数）
-   ```
-
-   不允许：`word_count: 4500`、`word_count: "4500"`、`word_count: "~4500"`、`word_count: 约4500`。
-4. 半成品条目（缺文件、字段为 0、翻译不完整）必须先修复或隔离到 `inbox/quarantine/`，再继续执行 `update_site.py`。
-5. 除非用户明确说"先不要 commit/push"，否则完整导入流程应自动运行到 check → update_site → commit → push；但当 check 失败时必须立即停止并报告。
+*Last refreshed for v0.3.65 on 2026-06-29.*

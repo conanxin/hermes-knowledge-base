@@ -84,11 +84,11 @@
 
 ## Hermes Agent
 
-- ArXiv LLM Systems 论文列表
 - 灵感资源库
 - Wiki 代替 RAG 的可行性评估
 - Session Guard Phase 1: Pre-Request Sanitizer
 - Hydro0x01 Local Hermes Security Audit
+- ArXiv LLM Systems 论文列表
 
 ## Houda Nait El Barj
 

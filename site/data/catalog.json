@@ -62,14 +62,11 @@
       "Taylorism",
       "Worker alienation",
       "Management control systems",
-      "MCS",
       "Labour process theory",
       "Braverman",
       "Karl Marx",
       "Amazon warehouse",
       "ADAPT",
-      "Digital Taylorism",
-      "Scientific management",
       "UK retail logistics",
       "Algorithmic management",
       "Journal of Business Ethics"
@@ -333,7 +330,6 @@
     ],
     "tags": [
       "Paul Graham",
-      "Y Combinator",
       "亿万富翁",
       "创业公司",
       "指数增长",
@@ -344,7 +340,8 @@
       "欺骗",
       "Twitch",
       "Airbnb",
-      "Justin.TV"
+      "Justin.TV",
+      "startup"
     ],
     "word_count": {
       "source": 2333,
@@ -525,7 +522,6 @@
       "现代君主制"
     ],
     "tags": [
-      "Curtis Yarvin",
       "Mencius Moldbug",
       "Juan Ruocco",
       "421.news",
@@ -580,25 +576,22 @@
     ],
     "tags": [
       "writing",
-      "storytelling",
       "novel_writing",
       "science_fiction",
-      "comedy",
       "character_development",
       "plot",
       "research",
       "jane_austen",
       "edith_wharton",
       "pixar",
-      "podcast",
       "interview",
       "creativity",
-      "literature",
       "humor",
       "british_literature",
       "improvisation",
       "reading",
-      "craft"
+      "craft",
+      "media"
     ],
     "word_count": {
       "source": 9174,
@@ -643,22 +636,19 @@
       "How I Write",
       "Pixar",
       "皮克斯",
-      "storytelling",
       "讲故事",
-      "screenwriting",
       "剧本写作",
       "animation",
       "动画",
-      "WALL-E",
-      "Finding Nemo",
       "海底总动员",
-      "Toy Story",
       "玩具总动员",
       "Steve Jobs",
       "John Lasseter",
       "Brain Trust",
       "creative process",
-      "创作过程"
+      "创作过程",
+      "writing",
+      "storytelling"
     ],
     "word_count": {
       "source": 8591,
@@ -855,8 +845,8 @@
       "charisma",
       "adaptability",
       "self_help",
-      "essay",
-      "substack"
+      "substack",
+      "writing"
     ],
     "word_count": {
       "source": 2733,
@@ -1689,7 +1679,6 @@
       "philosophy",
       "nature",
       "walking",
-      "wilderness",
       "transcendentalism",
       "American literature",
       "Thoreau",
@@ -1845,7 +1834,6 @@
     "tags": [
       "Orwell",
       "奥威尔",
-      "essay",
       "散文",
       "写作动机",
       "政治写作",
@@ -1855,7 +1843,8 @@
       "Animal Farm",
       "Homage to Catalonia",
       "Burmese Days",
-      "Spanish Civil War"
+      "Spanish Civil War",
+      "writing"
     ],
     "word_count": {
       "source": 2848,
@@ -1873,164 +1862,6 @@
     "updated_date": "2026-06-29",
     "detail_url": "items/2026-06-29-orwell-foundation-why-i-write/",
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-29-orwell-foundation-why-i-write"
-  },
-  {
-    "title": "ArXiv AI Agents 论文列表",
-    "title_zh": "ArXiv AI Agents 相关论文",
-    "type": "resource_collection",
-    "path": "content/collections/2026-05-06-arxiv-ai-agents",
-    "author": "ArXiv 作者",
-    "source_url": null,
-    "source_site": null,
-    "source_url_missing": true,
-    "language": "zh",
-    "translation_language": null,
-    "status": "migrated",
-    "published_date": "",
-    "captured_date": "2026-05-06",
-    "migrated_date": "2026-06-20",
-    "item_count": 3,
-    "topics": [
-      "AI Agents",
-      "ArXiv",
-      "Research Papers"
-    ],
-    "tags": [
-      "arxiv",
-      "research",
-      "ai-agents",
-      "papers",
-      "federated-learning",
-      "reinforcement-learning",
-      "agent-training"
-    ],
-    "word_count": {
-      "source": 200
-    },
-    "legacy_source_path": "~/.hermes/wiki/research/arxiv-ai-agents.md",
-    "migration_note": "从旧知识库迁移的 ArXiv AI Agents 相关论文列表，包含 3 篇 2026 年 4 月发布的研究论文。",
-    "updated_date": "2026-05-06",
-    "slug": "2026-05-06-arxiv-ai-agents",
-    "detail_url": "items/2026-05-06-arxiv-ai-agents/",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/collections/2026-05-06-arxiv-ai-agents"
-  },
-  {
-    "title": "ArXiv LLM Systems 论文列表",
-    "title_zh": "ArXiv LLM Systems 论文列表",
-    "type": "resource_collection",
-    "path": "content/collections/2026-05-06-arxiv-llm-systems",
-    "author": "Hermes Agent",
-    "source_url": null,
-    "source_site": "",
-    "source_url_missing": true,
-    "language": "zh",
-    "translation_language": null,
-    "status": "migrated",
-    "published_date": "2026-05-06",
-    "captured_date": "2026-05-06",
-    "migrated_date": "2026-06-20",
-    "item_count": 3,
-    "topics": [
-      "LLM",
-      "AI Systems",
-      "Benchmark"
-    ],
-    "tags": [
-      "arxiv",
-      "llm",
-      "speech-generation",
-      "code-intelligence",
-      "ai-safety",
-      "benchmark"
-    ],
-    "word_count": {
-      "source": 59
-    },
-    "legacy_source_path": "~/.hermes/wiki/research/arxiv-llm-systems.md",
-    "migration_note": "从旧 Wiki 迁移。原文为中文整理的 ArXiv 论文列表，无单一来源 URL，无翻译。",
-    "updated_date": "2026-05-06",
-    "slug": "2026-05-06-arxiv-llm-systems",
-    "detail_url": "items/2026-05-06-arxiv-llm-systems/",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/collections/2026-05-06-arxiv-llm-systems"
-  },
-  {
-    "title": "Hacker News ML 热门链接",
-    "title_zh": "Hacker News 机器学习热门内容",
-    "type": "resource_collection",
-    "path": "content/collections/2026-05-14-hacker-news-ml",
-    "author": "Hacker News 社区",
-    "source_url": null,
-    "source_site": null,
-    "source_url_missing": true,
-    "language": "zh",
-    "translation_language": null,
-    "status": "migrated",
-    "published_date": "",
-    "captured_date": "2026-05-14",
-    "migrated_date": "2026-06-20",
-    "item_count": 10,
-    "topics": [
-      "Machine Learning",
-      "Hacker News",
-      "News"
-    ],
-    "tags": [
-      "hacker-news",
-      "news",
-      "ml",
-      "machine-learning",
-      "community",
-      "links"
-    ],
-    "word_count": {
-      "source": 500
-    },
-    "legacy_source_path": "~/.hermes/wiki/research/hacker-news-ml.md",
-    "migration_note": "从旧知识库迁移的 Hacker News ML 板块热门内容快照，包含 10 条机器学习相关热门链接。原始数据为 HN RSS 抓取结果。",
-    "updated_date": "2026-05-14",
-    "slug": "2026-05-14-hacker-news-ml",
-    "detail_url": "items/2026-05-14-hacker-news-ml/",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/collections/2026-05-14-hacker-news-ml"
-  },
-  {
-    "title": "Awesome LLM Long Context 资源列表",
-    "title_zh": "长上下文大语言模型精选资源",
-    "type": "resource_collection",
-    "path": "content/collections/2026-05-17-awesome-llm-long-context",
-    "author": "社区整理",
-    "source_url": null,
-    "source_site": null,
-    "source_url_missing": true,
-    "language": "zh",
-    "translation_language": null,
-    "status": "migrated",
-    "published_date": "",
-    "captured_date": "2026-05-17",
-    "migrated_date": "2026-06-20",
-    "item_count": 2,
-    "topics": [
-      "LLM",
-      "Long-Context",
-      "Awesome-List"
-    ],
-    "tags": [
-      "github",
-      "resources",
-      "llm",
-      "long-context",
-      "awesome-list",
-      "arxiv",
-      "research"
-    ],
-    "word_count": {
-      "source": 113
-    },
-    "legacy_source_path": "~/.hermes/wiki/research/awesome-llm-long-context.md",
-    "migration_note": "从旧知识库迁移的长上下文 LLM 资源列表，包含文档工具与学术文献两类资源。原始提取中存在重复链接，已做去重合并。",
-    "updated_date": "2026-05-17",
-    "slug": "2026-05-17-awesome-llm-long-context",
-    "detail_url": "items/2026-05-17-awesome-llm-long-context/",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/collections/2026-05-17-awesome-llm-long-context"
   },
   {
     "title": "灵感资源库",
@@ -2594,6 +2425,164 @@
     "slug": "2026-05-18-hydro0x01-security-audit",
     "detail_url": "items/2026-05-18-hydro0x01-security-audit/",
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/projects/2026-05-18-hydro0x01-security-audit"
+  },
+  {
+    "title": "ArXiv AI Agents 论文列表",
+    "title_zh": "ArXiv AI Agents 相关论文",
+    "type": "resource_collection",
+    "path": "content/resource_collections/2026-05-06-arxiv-ai-agents",
+    "author": "ArXiv 作者",
+    "source_url": null,
+    "source_site": null,
+    "source_url_missing": true,
+    "language": "zh",
+    "translation_language": null,
+    "status": "migrated",
+    "published_date": "",
+    "captured_date": "2026-05-06",
+    "migrated_date": "2026-06-20",
+    "item_count": 3,
+    "topics": [
+      "AI Agents",
+      "ArXiv",
+      "Research Papers"
+    ],
+    "tags": [
+      "arxiv",
+      "research",
+      "ai-agents",
+      "papers",
+      "federated-learning",
+      "reinforcement-learning",
+      "agent-training"
+    ],
+    "word_count": {
+      "source": 200
+    },
+    "legacy_source_path": "~/.hermes/wiki/research/arxiv-ai-agents.md",
+    "migration_note": "从旧知识库迁移的 ArXiv AI Agents 相关论文列表，包含 3 篇 2026 年 4 月发布的研究论文。",
+    "updated_date": "2026-05-06",
+    "slug": "2026-05-06-arxiv-ai-agents",
+    "detail_url": "items/2026-05-06-arxiv-ai-agents/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/resource_collections/2026-05-06-arxiv-ai-agents"
+  },
+  {
+    "title": "ArXiv LLM Systems 论文列表",
+    "title_zh": "ArXiv LLM Systems 论文列表",
+    "type": "resource_collection",
+    "path": "content/resource_collections/2026-05-06-arxiv-llm-systems",
+    "author": "Hermes Agent",
+    "source_url": null,
+    "source_site": "",
+    "source_url_missing": true,
+    "language": "zh",
+    "translation_language": null,
+    "status": "migrated",
+    "published_date": "2026-05-06",
+    "captured_date": "2026-05-06",
+    "migrated_date": "2026-06-20",
+    "item_count": 3,
+    "topics": [
+      "LLM",
+      "AI Systems",
+      "Benchmark"
+    ],
+    "tags": [
+      "arxiv",
+      "llm",
+      "speech-generation",
+      "code-intelligence",
+      "ai-safety",
+      "benchmark"
+    ],
+    "word_count": {
+      "source": 59
+    },
+    "legacy_source_path": "~/.hermes/wiki/research/arxiv-llm-systems.md",
+    "migration_note": "从旧 Wiki 迁移。原文为中文整理的 ArXiv 论文列表，无单一来源 URL，无翻译。",
+    "updated_date": "2026-05-06",
+    "slug": "2026-05-06-arxiv-llm-systems",
+    "detail_url": "items/2026-05-06-arxiv-llm-systems/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/resource_collections/2026-05-06-arxiv-llm-systems"
+  },
+  {
+    "title": "Hacker News ML 热门链接",
+    "title_zh": "Hacker News 机器学习热门内容",
+    "type": "resource_collection",
+    "path": "content/resource_collections/2026-05-14-hacker-news-ml",
+    "author": "Hacker News 社区",
+    "source_url": null,
+    "source_site": null,
+    "source_url_missing": true,
+    "language": "zh",
+    "translation_language": null,
+    "status": "migrated",
+    "published_date": "",
+    "captured_date": "2026-05-14",
+    "migrated_date": "2026-06-20",
+    "item_count": 10,
+    "topics": [
+      "Machine Learning",
+      "Hacker News",
+      "News"
+    ],
+    "tags": [
+      "hacker-news",
+      "news",
+      "ml",
+      "machine-learning",
+      "community",
+      "links"
+    ],
+    "word_count": {
+      "source": 500
+    },
+    "legacy_source_path": "~/.hermes/wiki/research/hacker-news-ml.md",
+    "migration_note": "从旧知识库迁移的 Hacker News ML 板块热门内容快照，包含 10 条机器学习相关热门链接。原始数据为 HN RSS 抓取结果。",
+    "updated_date": "2026-05-14",
+    "slug": "2026-05-14-hacker-news-ml",
+    "detail_url": "items/2026-05-14-hacker-news-ml/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/resource_collections/2026-05-14-hacker-news-ml"
+  },
+  {
+    "title": "Awesome LLM Long Context 资源列表",
+    "title_zh": "长上下文大语言模型精选资源",
+    "type": "resource_collection",
+    "path": "content/resource_collections/2026-05-17-awesome-llm-long-context",
+    "author": "社区整理",
+    "source_url": null,
+    "source_site": null,
+    "source_url_missing": true,
+    "language": "zh",
+    "translation_language": null,
+    "status": "migrated",
+    "published_date": "",
+    "captured_date": "2026-05-17",
+    "migrated_date": "2026-06-20",
+    "item_count": 2,
+    "topics": [
+      "LLM",
+      "Long-Context",
+      "Awesome-List"
+    ],
+    "tags": [
+      "github",
+      "resources",
+      "llm",
+      "long-context",
+      "awesome-list",
+      "arxiv",
+      "research"
+    ],
+    "word_count": {
+      "source": 113
+    },
+    "legacy_source_path": "~/.hermes/wiki/research/awesome-llm-long-context.md",
+    "migration_note": "从旧知识库迁移的长上下文 LLM 资源列表，包含文档工具与学术文献两类资源。原始提取中存在重复链接，已做去重合并。",
+    "updated_date": "2026-05-17",
+    "slug": "2026-05-17-awesome-llm-long-context",
+    "detail_url": "items/2026-05-17-awesome-llm-long-context/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/resource_collections/2026-05-17-awesome-llm-long-context"
   },
   {
     "title": "The Shape of AI",

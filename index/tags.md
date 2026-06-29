@@ -233,10 +233,6 @@
 
 - An "infovore" shares his chats
 
-## Curtis Yarvin
-
-- The People Are Never Right
-
 ## DSPy
 
 - Hermes Agent Self-Evolution
@@ -264,10 +260,6 @@
 ## Demis Hassabis
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
-
-## Digital Taylorism
-
-- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
 ## Documentation
 
@@ -318,10 +310,6 @@
 ## Filesystem
 
 - Nia Docs — 把整个 Web 变成文件系统
-
-## Finding Nemo
-
-- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
 ## Francisco Varela
 
@@ -546,10 +534,6 @@
 
 - Nia Docs — 把整个 Web 变成文件系统
 
-## MCS
-
-- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
-
 ## Magnifica humanitas
 
 - Your AI Is Not a Tool
@@ -750,10 +734,6 @@
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
-## Scientific management
-
-- Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
-
 ## Second Brain
 
 - Karpathy Second Brain 实现指南
@@ -836,10 +816,6 @@
 
 - Ken Liu on AI and Freedom
 
-## Toy Story
-
-- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
-
 ## Toy Story 5
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
@@ -880,10 +856,6 @@
 
 - The People Are Never Right
 
-## WALL-E
-
-- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
-
 ## Walt Whitman
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
@@ -907,10 +879,6 @@
 ## Worker alienation
 
 - Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
-
-## Y Combinator
-
-- How to Earn a Billion Dollars
 
 ## academic
 
@@ -1033,10 +1001,6 @@
 
 - ArXiv LLM Systems 论文列表
 
-## comedy
-
-- Andrew Hunter Murray: Writing Advice Better Than Your English Classes
-
 ## community
 
 - Hacker News ML 热门链接
@@ -1113,11 +1077,6 @@
 ## esp32
 
 - Hydro0x01 Local Hermes Security Audit
-
-## essay
-
-- The Old World Is Dying
-- Why I Write
 
 ## ethics
 
@@ -1276,10 +1235,6 @@
 
 - The Carrier Bag Theory of Fiction
 
-## literature
-
-- Andrew Hunter Murray: Writing Advice Better Than Your English Classes
-
 ## llm
 
 - ArXiv LLM Systems 论文列表
@@ -1296,6 +1251,10 @@
 ## machine-learning
 
 - Hacker News ML 热门链接
+
+## media
+
+- Andrew Hunter Murray: Writing Advice Better Than Your English Classes
 
 ## ml
 
@@ -1379,10 +1338,6 @@
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
 
 ## plot
-
-- Andrew Hunter Murray: Writing Advice Better Than Your English Classes
-
-## podcast
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
 
@@ -1489,10 +1444,6 @@
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
 
-## screenwriting
-
-- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
-
 ## security
 
 - Session Guard Phase 1: Pre-Request Sanitizer
@@ -1530,9 +1481,12 @@
 
 - ArXiv LLM Systems 论文列表
 
+## startup
+
+- How to Earn a Billion Dollars
+
 ## storytelling
 
-- Andrew Hunter Murray: Writing Advice Better Than Your English Classes
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
 ## structural_power
@@ -1607,10 +1561,6 @@
 
 - Walking
 
-## wilderness
-
-- Walking
-
 ## workflow
 
 - YouTube Video Brief Workflow
@@ -1620,6 +1570,9 @@
 ## writing
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
+- Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+- The Old World Is Dying
+- Why I Write
 
 ## youth
 
