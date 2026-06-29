@@ -1,0 +1,108 @@
+{
+  "status": "PASS_WITH_WARNINGS",
+  "warnings_count": 3,
+  "checks": [
+    [
+      "git_repo",
+      "PASS"
+    ],
+    [
+      "git_status",
+      "DIRTY"
+    ],
+    [
+      "origin_main",
+      "PASS"
+    ],
+    [
+      "head_sync",
+      "PASS"
+    ],
+    [
+      "tag_local",
+      "PASS"
+    ],
+    [
+      "tag_remote",
+      "PASS"
+    ],
+    [
+      "tag_deref",
+      "PASS"
+    ],
+    [
+      "tag_commit_match",
+      "PASS"
+    ],
+    [
+      "report_exists",
+      "PASS"
+    ],
+    [
+      "report_readable",
+      "PASS"
+    ],
+    [
+      "report_field_STATUS",
+      "PASS"
+    ],
+    [
+      "report_field_commit",
+      "PASS"
+    ],
+    [
+      "report_field_tag",
+      "PASS"
+    ],
+    [
+      "report_field_check_kb.py",
+      "PASS"
+    ],
+    [
+      "report_field_check_pages_sync.py",
+      "PASS"
+    ],
+    [
+      "report_field_git status",
+      "PASS"
+    ],
+    [
+      "report_field_source URL",
+      "OPTIONAL"
+    ],
+    [
+      "report_field_content directory",
+      "OPTIONAL"
+    ],
+    [
+      "report_field_GitHub Pages URL",
+      "OPTIONAL"
+    ],
+    [
+      "report_field_modified files",
+      "OPTIONAL"
+    ],
+    [
+      "report_field_checks",
+      "OPTIONAL"
+    ],
+    [
+      "report_field_tag deref",
+      "PASS"
+    ]
+  ],
+  "warnings": [
+    "WARN: working tree not clean:\n?? reports/pdf_ocr_recipe_v0.3.62_postflight_20260629.json",
+    "WARN: report missing recommended import fields: source URL, content directory, GitHub Pages URL",
+    "WARN: report missing recommended feature fields: modified files, checks"
+  ],
+  "errors": [],
+  "head": "00b913b00274ff43d3c2aba9ebb014c26fd7e79d",
+  "origin_main": "00b913b00274ff43d3c2aba9ebb014c26fd7e79d",
+  "git_clean": false,
+  "report_path": "/home/conanxin/projects/hermes-knowledge-base/reports/pdf_ocr_local_import_recipe_v0.3.62_20260629.md",
+  "report_exists": true,
+  "tag": "v0.3.62-pdf-ocr-local-import-recipe",
+  "tag_deref": "00b913b00274ff43d3c2aba9ebb014c26fd7e79d",
+  "recommended_action": "Review warnings above and consider fixing before next task"
+}

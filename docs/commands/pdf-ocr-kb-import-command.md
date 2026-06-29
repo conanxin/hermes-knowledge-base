@@ -42,6 +42,60 @@ required ingredients in every variant are:
 | 导入这个本地 PDF | `导入这个本地 PDF：<path>` |
 | 把这个 PDF OCR 之后加进 KB | `把这个 PDF OCR 之后加进 KB：<path>` |
 
+## `{{PUSH_MODE}}` variants(同一命令,三种执行模式)
+
+The single command supports three execution modes via a `{{PUSH_MODE}}`
+flag. The user can request a variant with explicit phrasing; if the
+phrasing does not specify, the default is `commit_and_push`.
+
+### 1. 默认提交(`commit_and_push`)
+
+完整流程:OCR / 翻译 / 入库 / 逐文件 `git add` / `commit` / `push origin main` / live smoke。
+
+```
+把这个本地 PDF OCR 识别、完整翻译并加入 Hermes 知识库：<PDF_PATH>
+```
+
+等价变体:`本地 PDF 入库:<PDF_PATH>` / `OCR 并翻译入库:<PDF_PATH>` / 任何已有 "入库" / "加入" 关键字的本地 PDF 触发语(详见上表)。
+
+### 2. 只生成本地结果(`local_only`)
+
+只生成本地条目、OCR 报告和检查结果,**不 commit / 不 push / 不 tag**。适用场景:用户想先在本地看完结果再决定是否发布,或当前环境不允许推送到 `origin main`(如离线 / CI 失败恢复期)。
+
+```
+本地 PDF OCR 入库但先不要 commit/push：<PDF_PATH>
+```
+
+等价变体:
+
+- `本地 PDF 入库(暂不发布):<PDF_PATH>`
+- `先本地 OCR 入库,稍后我自己提交:<PDF_PATH>`
+- `本地 PDF 入库但不要 push:<PDF_PATH>`
+
+执行结果:`content/articles/.../6 文件` + `reports/pdf_ocr_import_*.md` 全部写好;`check_kb.py` PASS;**`update_site.py` 不跑**;`git status` 列出新增/修改文件;报告 `STATUS: LOCAL_ONLY` 或 `PASS_LOCAL`。
+
+### 3. 只做 dry-run(`dry_run`)
+
+只做 PDF 检测、文本层判断、OCR 可行性分析和导入计划,**不创建 content 条目**。适用场景:用户在提交大文档前先评估工作量,或确认 OCR 质量是否过关。
+
+```
+先 dry-run 分析这个 PDF 是否适合 OCR 入库：<PDF_PATH>
+```
+
+等价变体:
+
+- `先评估这个 PDF 的 OCR 入库可行性:<PDF_PATH>`
+- `dry-run 这个 PDF:<PDF_PATH>`
+- `先分析一下这个 PDF 能不能 OCR 入库:<PDF_PATH>`
+
+执行结果:只输出 `reports/pdf_ocr_import_dry_run_<slug>_<YYYYMMDD>.md`(含 PDF 元信息、文本层判定、OCR 方法选择、预计 6 文件路径、预计耗时);**不写 content**;**不跑 OCR 落盘**;**不 commit / push / tag**;报告 `STATUS: PASS_DRY_RUN` 或 `DRY_RUN_PLAN_READY` + 明确 `no content entry created` / `no OCR import committed`。
+
+### 4. 默认值与 hard-stop
+
+- 用户没指定模式 → 默认 `commit_and_push`。
+- 用户给的模式不是 `commit_and_push` / `local_only` / `dry_run` 之一 → hard-stop,写 `reports/pdf_ocr_local_import_blocked_<YYYYMMDD>.md`,**不进入 §3 之后的任何步骤**。
+- 三个分支的硬约束见 recipe §3.1 与 workflow Phase 0.5:`dry_run` 不得写 content;`local_only` 不得 commit/push;`commit_and_push` 才允许 live smoke。
+
 ## When to use
 
 Use this command when:

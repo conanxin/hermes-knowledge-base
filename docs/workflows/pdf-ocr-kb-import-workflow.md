@@ -24,8 +24,11 @@ Optional hints from the user:
 - `{{CONTENT_TYPE_HINT}}` — e.g. "essay", "paper", "book-chapter"
 - `{{TITLE_HINT}}` — pre-supplied title in English or Chinese
 - `{{AUTHOR_HINT}}` — pre-supplied author name
-- `{{PUSH_MODE}}` — default `commit_and_push`; alternative `dry_run`
-  (write files + run quality gates but do not commit/push)
+- `{{PUSH_MODE}}` — default `commit_and_push`; also accepts `local_only`
+  (write files + run quality gates, do **not** commit/push/tag) or
+  `dry_run` (read-only feasibility analysis, do **not** write content).
+  Empty value is treated as `commit_and_push`. Any other value is a
+  hard-stop — do not guess. See `PUSH_MODE 分支与执行阶段对应` below.
 
 ## Output
 
@@ -76,6 +79,32 @@ python3 scripts/check_task_preflight.py --planned-tag v0.3.N-pdf-ocr-<slug>
 
 If preflight FAIL → blocked report at
 `reports/pdf_ocr_local_import_blocked_<YYYYMMDD>.md`. Do not proceed.
+
+### Phase 0.5 — `PUSH_MODE` 分支与执行阶段对应(mandatory, blocking)
+
+**第一动作**:解析 `{{PUSH_MODE}}` 的值,确定本次执行的分支。任何不在下列三值之内(含拼写错误、大小写不一致、缩写)→ hard-stop,写
+`reports/pdf_ocr_local_import_blocked_<YYYYMMDD>.md`,**不进入 Phase 0 之前**。
+
+| 分支 | 停止线 | 是否 commit / push / tag | 是否写 content | 是否跑 `update_site.py` | 报告必填 |
+|---|---|---|---|---|---|
+| `commit_and_push` (默认;空值等同) | 全部 9 个 phase 跑完 | 是 | 是 | 是 | commit hash / push status / live URL 或 `PENDING_CDN_SYNC` |
+| `local_only` | Phase 6 之后(已生成 `git status` 列表) | **否** | 是 | **否** | `STATUS: LOCAL_ONLY` 或 `PASS_LOCAL` + `git status` 完整输出 |
+| `dry_run` | Phase 3 之后(OCR 决策已下,无实际 OCR 落盘) | **否** | **否** | **否** | `STATUS: PASS_DRY_RUN` 或 `DRY_RUN_PLAN_READY` + 明确 `no content entry created` / `no OCR import committed` |
+
+Phase 0 收尾必须输出:
+
+```text
+PUSH_MODE resolved: <commit_and_push|local_only|dry_run>
+(若为 dry_run / local_only:停止线 = <对应阶段>,跳过 commit/push/tag)
+```
+
+`commit_and_push` 与 `local_only` 的差异在 Phase 7 — 9:
+
+- `commit_and_push`:Phase 7 逐文件 `git add` → Phase 8 `commit` + `push` → Phase 9 live smoke + 报告
+- `local_only`:跳过 Phase 7 / 8 / 9 的 commit/push/tag 与 live smoke,只输出 `LOCAL_ONLY` 报告(仍写 `reports/pdf_ocr_local_import_recipe_v0.3.N_<YYYYMMDD>.md`)
+
+`dry_run` 的输出不写入 recipe 报告路径,而是
+`reports/pdf_ocr_import_dry_run_<slug>_<YYYYMMDD>.md`。
 
 ### Phase 1 — PDF inspection (read-only)
 
@@ -199,14 +228,23 @@ beyond the template's defaults are listed in PDF_OCR_LOCAL.md §22.
 
 ### Phase 10 — Postflight (versioned tasks only)
 
+**当前正确命令(v0.3.41+ 协议)**:
+
 ```bash
 python3 scripts/check_task_postflight.py \
-    --report-file reports/pdf_ocr_local_import_recipe_v0.3.N_<YYYYMMDD>.md \
-    --profile auto
+    --report reports/pdf_ocr_local_import_recipe_v0.3.N_<YYYYMMDD>.md \
+    --tag v0.3.N-pdf-ocr-<slug> \
+    --commit <commit-hash-from-recipe-step-2> \
+    --expect-clean \
+    --expect-head-origin \
+    --json
 ```
 
-Postflight is **WARN-only**. If warnings appear, list them in the
-final report; do not pretend PASS.
+> `--report-file` 是 v0.3.41 之前的兼容别名,**优先使用 `--report`**(语义更清晰、错误信息更准确)。同时 `--tag` / `--commit` / `--expect-clean` / `--expect-head-origin` 这四个 flag 是 v0.3.41+ 引入的严格性参数,versioned 任务必须传齐。
+>
+> **判定"真发布成功"的 5 件套**(per memory `github-pages-static-site` + `wiki-navigator` pitfall):HTTP 200 + `Cache-Control: max-age=300` 头 + 真实 `site/` 内容(非 4KB 占位) + 持续 ≥ 2 轮(T+0 / T+2min)+ `gh api .../pages` 返回 `html_url` + `build_type=workflow`。Phase 10 postflight 只校验 git 端(`tag_deref == commit` / `HEAD == origin/main` / `git clean` / 报告必填段),Pages 端的 5 件套由 Phase 8 live smoke 覆盖。
+
+Postflight 是 **WARN-only**(默认)。strict 模式(`--strict`)将缺失必填段升级为 FAIL。
 
 ## Hard-stop cases
 
@@ -221,6 +259,11 @@ In addition:
   reply, not into the knowledge base.
 - **No `{{PDF_PATH}}` variable resolved** — same as above.
 - **Multi-agent push collision** — see "Concurrency" below.
+- **`{{PUSH_MODE}}` not in `commit_and_push` / `local_only` / `dry_run`** —
+  any other value (typo, wrong case, abbreviation) is a hard-stop.
+  Do not guess. Write
+  `reports/pdf_ocr_local_import_blocked_<YYYYMMDD>.md` and stop
+  before Phase 1.
 
 ## Concurrency
 

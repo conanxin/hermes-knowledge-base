@@ -60,6 +60,38 @@ python3 scripts/check_task_preflight.py --planned-tag v0.3.N-<planned-suffix>
 do not commit, do not push. Write a blocked report to
 `reports/pdf_ocr_local_import_blocked_<YYYYMMDD>.md` and exit.
 
+### 3.1 `PUSH_MODE` 分支(在 §3 之后立刻判定)
+
+**第一动作**:解析 `{{PUSH_MODE}}` 的值,确定本次执行走哪个分支。空值
+→ `commit_and_push`(默认)。任何不在下列三值之内(含拼写错误、大小写
+不一致、缩写,如 `commit`、`local`、`dry`、`--commit-and-push` 等)→ **hard-stop**,
+写 `reports/pdf_ocr_local_import_blocked_<YYYYMMDD>.md`,**不进入 §4**。
+
+| 分支 | 是否写 content | 是否跑 `update_site.py` | 是否 commit | 是否 push | 是否 tag | 报告必填 |
+|---|---|---|---|---|---|---|
+| `commit_and_push` (默认;空值等同) | 是 | 是 | 是(逐文件 `git add`) | 是(`origin main`) | 是 | commit hash / push status / live URL 或 `PENDING_CDN_SYNC` |
+| `local_only` | 是 | **否** | **否** | **否** | **否** | `STATUS: LOCAL_ONLY` 或 `PASS_LOCAL` + `git status` 完整输出 |
+| `dry_run` | **否** | **否** | **否** | **否** | **否** | `STATUS: PASS_DRY_RUN` 或 `DRY_RUN_PLAN_READY` + 明确 `no content entry created` / `no OCR import committed` |
+
+**各分支对应的停止线**:
+
+- `commit_and_push`:全 23 节跑完
+- `local_only`:§20 quality gates 跑完(`check_kb.py` 必须 PASS)+ `git status` 列表生成后停;**不跑 `update_site.py`、不写 `site/`、不写 `docs/items/`、不 `git add`**
+- `dry_run`:§5 文本层判断 + §6 OCR 决策(只判断**走哪条路**,不实际跑 tesseract / pdftoppm 落盘)完成后停;输出 `reports/pdf_ocr_import_dry_run_<slug>_<YYYYMMDD>.md`
+
+**各分支的硬约束**(per memory,2026-06-29 任务规范):
+
+- `dry_run` 不得写 content
+- `local_only` 不得 commit / push / tag
+- `commit_and_push` 才允许 live smoke(且仅在 push 成功后)
+
+§3 末尾必须输出:
+
+```text
+PUSH_MODE resolved: <commit_and_push|local_only|dry_run>
+(若为 dry_run / local_only:停止线 = <对应阶段>,跳过 commit/push/tag)
+```
+
 ## 4. PDF inspection
 
 ```bash
@@ -392,6 +424,10 @@ or a hard-stop.
 
 ## 21. Commit / push / live smoke
 
+> **`PUSH_MODE` 限制**:本节仅在 `PUSH_MODE == commit_and_push` 时执行。
+> `local_only` / `dry_run` 直接跳过本节,跳到 §22 reporting。`PUSH_MODE`
+> 取值校验在 §3.1 完成。
+
 Per-file `git add` only (no `git add -A` / `git add .`):
 
 ```bash
@@ -432,6 +468,30 @@ curl -sI "https://conanxin.github.io/hermes-knowledge-base/items/YYYY-MM-DD-<slu
 
 If the live catalog is still N (not N+1), the status is
 `PENDING_CDN_SYNC`, which is **not** a FAIL. Document it in the report.
+
+### 21.1 Postflight(versioned 任务必跑)
+
+**当前正确命令(v0.3.41+ 协议)**:
+
+```bash
+python3 scripts/check_task_postflight.py \
+    --report reports/pdf_ocr_local_import_recipe_v0.3.N_<YYYYMMDD>.md \
+    --tag v0.3.N-pdf-ocr-<slug> \
+    --commit <commit-hash-from-recipe-step-2> \
+    --expect-clean \
+    --expect-head-origin
+```
+
+要点:
+
+- **`--report` 是首选参数**(语义更清晰、错误信息更准确)。
+  `--report-file` 是 v0.3.41 之前的**兼容别名**,仅在工具链锁定老版本时使用;默认应该用 `--report`。
+- `--tag` / `--commit` / `--expect-clean` / `--expect-head-origin` 这四个 flag 是 v0.3.41+ 引入的严格性参数,versioned 任务必须传齐。少了任何一个 → postflight 不会校验对应的 git-side invariant。
+- 加 `--strict` 把缺失必填段从 WARN 升级为 FAIL;默认 WARN-only。
+- 加 `--json` 输出 JSON 便于自动化校验(本任务规范要求 `--json` 输出保存为 `reports/<name>_postflight_<YYYYMMDD>.json`)。
+- **判定"真发布成功"是 live smoke(§21)+ postflight(§21.1)两端都跑过**。postflight 只校验 git 端(`tag_deref == commit` / `HEAD == origin/main` / `git clean` / 报告必填段),Pages 端的 5 件套(per memory `github-pages-static-site` pitfall:HTTP 200 + `Cache-Control: max-age=300` + 真实 `site/` 内容 + 持续 ≥ 2 轮 + `gh api .../pages` 返回 `html_url` + `build_type=workflow`)由 §21 live smoke 覆盖。
+
+失败时:postflight FAIL → 写 `BLOCKED` 报告,**不**继续本任务的其余步骤(commit / push / tag 已经在 §21 完成,本节是收口验证)。
 
 ## 22. Reporting requirements
 
@@ -528,5 +588,11 @@ python3 scripts/check_pages_sync.py
 python3 scripts/check_translation_residue.py
 
 # Per-file git add → commit → push
-# python3 scripts/check_task_postflight.py ...
+# (versioned tasks) postflight per §21.1:
+python3 scripts/check_task_postflight.py \
+    --report reports/pdf_ocr_local_import_recipe_v0.3.N_<YYYYMMDD>.md \
+    --tag v0.3.N-pdf-ocr-<slug> \
+    --commit <commit-hash> \
+    --expect-clean \
+    --expect-head-origin
 ```

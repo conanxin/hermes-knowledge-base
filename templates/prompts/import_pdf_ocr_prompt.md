@@ -14,7 +14,7 @@
 | `{{CONTENT_TYPE_HINT}}` | no | `essay` | Hint for `type` field in metadata.yaml (`essay` / `paper` / `book-chapter` / `report`) |
 | `{{TITLE_HINT}}` | no | (extract from PDF) | Pre-supplied title; if present, use it; otherwise extract from cover page |
 | `{{AUTHOR_HINT}}` | no | (extract from PDF) | Pre-supplied author; if present, use it; otherwise extract from cover / running header |
-| `{{PUSH_MODE}}` | no | `commit_and_push` | `commit_and_push` (default) or `dry_run` (write + quality gate only, no commit/push) |
+| `{{PUSH_MODE}}` | no | `commit_and_push` | 见下方 `{{PUSH_MODE}} 分支` 一节。允许值: `commit_and_push` (默认) / `local_only` (本地落盘不提交) / `dry_run` (可行性分析,不写 content)。空值等同 `commit_and_push`;任何其他值 → **hard-stop**,不猜测 |
 
 If `{{PDF_PATH}}` is missing, **call `clarify` to ask for the path**.
 Do not guess.
@@ -54,6 +54,85 @@ Do not guess.
 - "分析这个 PDF" / "读一下这个 PDF" / "总结这个 PDF" → read-only
 - 用户只给 URL,不给本地路径 → 使用 `import_article_prompt.md` 流程
 
+## {{PUSH_MODE}} 分支(必读,在 Phase 0 之前判定)
+
+**第一动作**:解析 `{{PUSH_MODE}}` 的值,然后在 Phase 0 之前决定本次执行的分支。空值 → `commit_and_push`(默认)。任何非下列三个值之一 → **hard-stop,不得猜测**。
+
+| 分支 | 是否创建 content 条目 | 是否修改 site/docs/catalog/index | 是否 commit | 是否 push | 是否 tag | 报告必填 |
+|---|---|---|---|---|---|---|
+| `commit_and_push` (默认) | 是 | 是 | 是(逐文件 `git add`) | 是(`origin main`) | 是 | commit hash / push status / live URL 或 `PENDING_CDN_SYNC` |
+| `local_only` | 是 | 否 | **否** | **否** | **否** | `STATUS: LOCAL_ONLY` 或 `PASS_LOCAL` + `git status` 列出新增/修改 |
+| `dry_run` | **否** | **否** | **否** | **否** | **否** | 明确 `no content entry created` / `no OCR import committed` |
+
+### `commit_and_push`(默认模式)
+
+完整流程,无任何省略:
+
+1. Phase 0 → 6:全部执行(包含 OCR、6 文件条目、`update_site.py` 重建、三个质量门禁)
+2. Phase 7:逐文件 `git add`(不使用 `git add -A` / `git add .`)
+3. Phase 8:`commit` + `push origin main`
+4. live smoke:curl home / catalog / detail
+5. 报告:commit hash / push status / live URL(若 CDN 尚未同步则写 `PENDING_CDN_SYNC`)
+
+### `local_only`(本地落盘但不发布)
+
+只生成本地条目、OCR 报告和检查结果,**不 commit / 不 push / 不 tag**。
+
+允许的动作:
+
+- Phase 0:fetch + pull(允许)
+- Phase 2 — 5:PDF 检视、OCR 决策、OCR 落盘、6 文件 entry 写入
+- Phase 6:`check_kb.py` 必须 PASS;`update_site.py` 不允许运行(`local_only` 明确不改 site)
+- `git status` 必须列出新增/修改文件(不 `git add`)
+
+不允许的动作:
+
+- ❌ 任何 `git add` / `git commit` / `git push` / `git tag`
+- ❌ `python3 scripts/update_site.py`
+- ❌ 修改 `docs/data/catalog.json` / `site/data/catalog.json` / `index/*.md` / `docs/items/...` / `site/items/...`
+- ❌ live smoke
+
+报告必填:`STATUS: LOCAL_ONLY` 或 `PASS_LOCAL`;`ACTIONS` 段明确每个阶段的 `[WRITE-LOCAL]` 标签;`FILES CHANGED` 段标 `[WRITE]` 但 `commit/push` 字段写 `N/A (local_only)`;附 `git status` 完整输出。
+
+### `dry_run`(可行性分析,不写 content)
+
+只做 PDF 检测、文本层判断、OCR 可行性分析和导入计划。
+
+允许的动作(全部 `[READ-ONLY]`):
+
+- Phase 0:fetch + pull + 取得 `recommended_next_minor`(留作参考,不打 tag)
+- Phase 2:PDF 检视(`pdfinfo` / `pdftotext` 字节统计)
+- Phase 3:文本层检测 + OCR 决策(选 tesseract 还是 pdftotext)
+- 输出 `reports/pdf_ocr_import_dry_run_<slug>_<YYYYMMDD>.md`:
+  - PDF 基础信息(页数、文件大小、是否扫描件)
+  - 文本层判定与 OCR 方法选择
+  - 预计 OCR 耗时(基于页数 × 单页估算)
+  - 预计 content 条目结构(类型、slug、6 文件清单)
+  - 预计 6 个文件大致路径(`content/articles/<DATE>/<DATE>-<slug>/...`)
+  - 质量门禁预期(check_kb / check_pages_sync / check_translation_residue 各自预估)
+  - 完整翻译字数估算(基于中文字符密度)
+  - `commit_and_push` 模式下的预计 `git add` 列表
+
+不允许的动作:
+
+- ❌ 创建任何正式 `content/articles/...` 条目
+- ❌ 任何 OCR 实际执行(不跑 tesseract / pdftoppm / pdftotext 落盘)
+- ❌ 修改 `site/` / `docs/` / `catalog.json` / `index/`
+- ❌ `git add` / `git commit` / `git push` / `git tag`
+
+报告必填:`STATUS: PASS_DRY_RUN` 或 `DRY_RUN_PLAN_READY`;明确写 `no content entry created` / `no OCR import committed`;`ACTIONS` 段全部标 `[READ-ONLY]`;不附 `FILES CHANGED` 段(改附 `PLANNED FILES` 段,只列计划路径)。
+
+### 分支校验
+
+在 Phase 0 末尾必须输出:
+
+```text
+PUSH_MODE resolved: <commit_and_push|local_only|dry_run>
+(若为 dry_run / local_only:停止线 = <对应阶段>,跳过 commit/push/tag)
+```
+
+如果 `{{PUSH_MODE}}` 不属于 `commit_and_push` / `local_only` / `dry_run` 之一(含拼写错误、大小写不一致、缩写)→ 写 `reports/pdf_ocr_local_import_blocked_<YYYYMMDD>.md`,**hard-stop,不进入 Phase 0**。
+
 ## 完整执行顺序
 
 ### Phase 0 — Preflight (mandatory, blocking)
@@ -68,6 +147,8 @@ python3 scripts/check_task_preflight.py --planned-tag v0.3.N-pdf-ocr-<slug>
 ```
 
 Preflight FAIL → 写 `reports/pdf_ocr_local_import_blocked_<YYYYMMDD>.md`,停止。
+
+**Phase 0 收尾**:输出 `PUSH_MODE resolved: <branch>`。若分支为 `local_only` 或 `dry_run`,对应阶段(Phase 5/6/7)按 `{{PUSH_MODE}} 分支` 一节中的停止线提前结束。
 
 ### Phase 1 — 加载 recipe
 
@@ -142,9 +223,10 @@ git diff --cached --stat
 git diff --cached --name-only
 ```
 
-如果 `{{PUSH_MODE}} == dry_run`,到此停止,生成 dry-run 报告。
+如果 `{{PUSH_MODE}} == dry_run` 或 `{{PUSH_MODE}} == local_only`,**Phase 7 — 9 整体不执行**:
+按 `{{PUSH_MODE}} 分支` 一节中的停止线,在 `dry_run` 模式下在 Phase 3 之后生成 dry-run 报告后即停;在 `local_only` 模式下 Phase 6 之后(已生成 `git status` 列表)即停。**绝对不要 `git add` / `git commit` / `git push` / `git tag`**。
 
-### Phase 8 — Commit + Push
+### Phase 8 — Commit + Push(仅 `commit_and_push`)
 
 ```bash
 git -c user.email="<>" -c user.name="<>" commit -m "Add OCR PDF knowledge entry: <title_zh> (zh-CN)"
@@ -175,6 +257,7 @@ git push origin main
 - **OCR 后仍存在不可识别页** → blocked;按 `PDF_OCR_LOCAL.md` §18.3
 - **`check_kb.py` / `check_pages_sync.py` FAIL** → blocked;不 commit / 不 push
 - **`check_translation_residue.py` 报告真实未翻译段** → blocked;修复或停止
+- **`{{PUSH_MODE}}` 不在 `commit_and_push` / `local_only` / `dry_run` 三值之内** → blocked;写 `reports/pdf_ocr_local_import_blocked_<YYYYMMDD>.md`,不进入 Phase 0;**不猜测默认值**
 
 ## 报告必填段
 
