@@ -1,0 +1,69 @@
+{
+  "generated_at": "2026-06-29T15:35:00+08:00",
+  "version": "v0.3.65",
+  "baseline_commit": "0e588c4",
+  "baseline_tag": "v0.3.64-legacy-collections-cleanup",
+  "baseline_warn": 27,
+  "baseline_hard_fail": 0,
+  "baseline_records": 54,
+  "safe_merge_files": [
+    {
+      "slug": "2026-06-27-emerson-compensation",
+      "before_tags": 14,
+      "after_tags": 8,
+      "removed": [
+        "爱默生",
+        "超验主义",
+        "美国文学",
+        "补偿",
+        "道德哲学",
+        "因果报应"
+      ],
+      "reason": "bilingual duplicates",
+      "warn_resolved": true
+    },
+    {
+      "slug": "2026-06-29-orwell-foundation-why-i-write",
+      "before_tags": 13,
+      "after_tags": 12,
+      "removed": [
+        "奥威尔"
+      ],
+      "reason": "bilingual duplicate",
+      "warn_resolved": true
+    },
+    {
+      "slug": "2026-06-24-how-i-write-andrew-stanton",
+      "before_tags": 18,
+      "after_tags": 15,
+      "removed": [
+        "皮克斯",
+        "动画",
+        "创作过程"
+      ],
+      "reason": "bilingual duplicates",
+      "warn_resolved": false
+    },
+    {
+      "slug": "2026-06-25-conan-harvard-commencement-2026",
+      "before_tags": 16,
+      "after_tags": 12,
+      "removed": [
+        "毕业演讲",
+        "自我认知",
+        "成功学",
+        "政治讽刺"
+      ],
+      "reason": "tag-topic overlap",
+      "warn_resolved": true
+    }
+  ],
+  "warn_after": 24,
+  "hard_fail_after": 0,
+  "records_after": 54,
+  "remaining_warn_breakdown": {
+    "tag_high": 13,
+    "tag_low": 1,
+    "topic_high": 10
+  }
+}

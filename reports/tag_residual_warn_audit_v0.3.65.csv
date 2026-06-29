@@ -1,0 +1,5 @@
+slug,before_tags,after_tags,removed_tags,reason,warn_resolved
+2026-06-27-emerson-compensation,14,8,爱默生;超验主义;美国文学;补偿;道德哲学;因果报应,bilingual duplicates,true
+2026-06-29-orwell-foundation-why-i-write,13,12,奥威尔,bilingual duplicate,true
+2026-06-24-how-i-write-andrew-stanton,18,15,皮克斯;动画;创作过程,bilingual duplicates,false
+2026-06-25-conan-harvard-commencement-2026,16,12,毕业演讲;自我认知;成功学;政治讽刺,tag-topic overlap,true

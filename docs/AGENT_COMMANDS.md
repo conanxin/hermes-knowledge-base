@@ -100,6 +100,21 @@ python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task-name
 | **PASS_WITH_WARNINGS** | 仅当 warning 为已知非阻断项（如 v0.3.36 known duplicate）时可继续，并在报告中记录 |
 | **FAIL** | **立即停止**，不得继续导入、不得 update_site、不得 commit/push |
 
+### Preflight 因非本任务历史报告 dirty 失败（v0.3.66+）
+
+如果 preflight FAIL 的**唯一**原因是 `Working tree dirty:`，且 dirty 条目仅来自**历史 `reports/*.md` 的外部 SHA 回填**（通常是上一次别 session 留下的字段补全），不得：
+
+- ❌ 自行 `git checkout -- <file>` / `git restore <file>` 丢弃
+- ❌ 把这些历史 reports 一并 `git add` 夹带到本任务的 commit / tag 中
+- ❌ 假装工作树干净
+
+应：
+
+- ✅ 在报告中明确记录 dirty 文件路径与来源（pre-existing / 外部 session）
+- ✅ 询问用户或使用 v0.3.66 新增的 `python3 scripts/check_task_preflight.py --classify-dirty --json` 模式（仅在全部 dirty 归类为 EXTERNAL 时降级为 PASS_WITH_WARNINGS，且**绝不**自动 stage / restore / commit）
+- ✅ 在本任务 commit 中 per-file `git add`，只携带本任务明确产出的文件
+- ✅ 后续任务以同样纪律处理（per-task 自报 dirty 来源，不假定继承前序任务）
+
 ---
 
 ## 导入文章流程

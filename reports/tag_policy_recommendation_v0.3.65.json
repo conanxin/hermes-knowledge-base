@@ -1,0 +1,59 @@
+{
+  "version": "v0.3.65",
+  "recommendation": "introduce tag allowlist",
+  "core_tags": [
+    "AI",
+    "technology",
+    "philosophy",
+    "politics",
+    "writing",
+    "science",
+    "history",
+    "economics",
+    "art",
+    "literature",
+    "psychology",
+    "sociology",
+    "education",
+    "environment",
+    "health",
+    "music",
+    "film",
+    "design",
+    "startup",
+    "innovation",
+    "ethics",
+    "future",
+    "society",
+    "culture",
+    "media",
+    "communication"
+  ],
+  "merge_candidates": [
+    {
+      "source": [
+        "老子",
+        "庄子",
+        "道德经"
+      ],
+      "target": "道家",
+      "confidence": "medium"
+    },
+    {
+      "source": [
+        "Twitch",
+        "Airbnb",
+        "Justin.TV"
+      ],
+      "target": "startup",
+      "confidence": "medium"
+    }
+  ],
+  "avoid_patterns": [
+    "bilingual duplicates in tags",
+    "tag-topic overlap",
+    "format tags (essay, interview)"
+  ],
+  "allowlist_proposed": true,
+  "allowlist_size_estimate": 50
+}

@@ -184,7 +184,7 @@ hermes-knowledge-base/
 ├── scripts/                     # 自动化（质量门禁 / 构建 / 同步 / 桥接 / 诊断）
 ├── templates/                   # 模板（prompts / metadata / notes …）
 ├── reports/                     # 每次任务的运行报告
-├── docs/                        # 完整手册（GitHub Pages 发布目录）
+├── docs/                        # 手册目录 + GitHub Pages 发布目录
 │   ├── AGENT_COMMANDS.md        #   - Agent 命令总纲
 │   ├── TAXONOMY.md              #   - 字段与类型 schema
 │   ├── RELEASES.md              #   - 发布索引 + 推荐下一版
@@ -201,12 +201,11 @@ hermes-knowledge-base/
 │   ├── releases/                #   - 逐版本的 release notes
 │   ├── items/                   #   - 已生成的详情页快照（生成产物）
 │   └── data/                    #   - catalog / index 产物
-├── site/                        # 开发面；和 docs/ 的发布面字节级一致
-├── docs/                        # GitHub Pages 发布目录（与 site/ 镜像）
-└── site/                        # 开发、调试、本地预览
+├── site/                        # 本地开发/预览面；与 docs/ 镜像
+└── 发布：site/ ↔ docs/ 必须字节级一致，由 scripts/check_pages_sync.py 校核
 ```
 
-发布链路上 `site/` ↔ `docs/` 必须字节级一致；改任意一边都要 `cp` 另一边，并由 `scripts/check_pages_sync.py` 校核。
+> `docs/` 同时承担两个角色：(a) 手册/工作流文档的源；(b) GitHub Pages 的发布面。`site/` 是开发、调试、本地预览（`python3 -m http.server 8000 -d site`）的镜像面。任何一边改动都要在另一边 `cp` 镜像，并由 `scripts/check_pages_sync.py` 校验一致性。
 
 ## 10. Agent 操作边界
 
