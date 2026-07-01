@@ -374,6 +374,29 @@ PUSH: success 或 failed
 
 ---
 
+### v0.3.83 provider environment (optional install)
+
+The two subtitle-only providers are optional installs; the chain still degrades gracefully when
+either is missing.
+
+```bash
+python -m pip install --upgrade yt-dlp youtube-transcript-api
+# If PEP 668 blocks the install (Debian/WSL):
+python -m pip install --user --break-system-packages --upgrade yt-dlp youtube-transcript-api
+```
+
+Hard guarantees enforced across the chain (mirrors the command doc and `material-kb-import-workflow.md`):
+
+- No video downloads (yt-dlp runs with `--skip-download`).
+- No cookies, no login state, no impersonation bypass.
+- Only `fetch_quality: full` with `transcript_char_count >= 800` is importable; `partial`,
+  `metadata_only`, blocked, or empty results never write a KB entry.
+- Auto captions stay `transcript_kind: auto` with `transcript_needs_review: true`; they require
+  explicit `--allow-auto-captions` to import.
+
+Recorded in the capture and material report per attempt: provider, status, language, kind,
+format, char_count, reason.
+
 ## 维护说明
 
 - 每次执行成功后，更新报告中的 `commit` 和 `push` 字段

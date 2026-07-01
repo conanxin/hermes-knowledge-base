@@ -69,6 +69,28 @@ explicit `--allow-auto-captions`. `metadata_only` and no-transcript results rema
 Every capture and material report records `provider_attempts` with provider, status, language,
 kind, format, char_count, and reason.
 
+### v0.3.83 provider environment (optional install)
+
+The `yt-dlp` and `youtube-transcript-api` packages are **optional** providers — the chain degrades
+gracefully when either or both are absent. To enable them in a fresh environment:
+
+```bash
+python -m pip install --upgrade yt-dlp youtube-transcript-api
+# If PEP 668 blocks the install (Debian/WSL with externally-managed marker):
+python -m pip install --user --break-system-packages --upgrade yt-dlp youtube-transcript-api
+```
+
+Hard guarantees enforced across the provider chain:
+
+- **No video downloads.** yt-dlp is invoked with `--skip-download` and only metadata or subtitle
+  text is parsed.
+- **No cookies, no login state, no impersonation bypass.** All public-provider fetches work
+  without browser authentication.
+- **`full` transcript only is importable.** fetch_quality `full` with `transcript_char_count >= 800`
+  is the import gate; `partial`, `metadata_only`, blocked, or empty results never write a KB entry.
+- **Auto captions are flagged for review.** `transcript_kind: auto` is stored alongside
+  `transcript_needs_review: true`, and import requires `--allow-auto-captions`.
+
 支持 `youtube.com/watch?v=...`、`youtu.be/...`、`youtube.com/shorts/...`。脚本只获取公开 metadata 与字幕 / transcript，不下载视频文件、不登录、不读取 cookie。没有字幕、字幕为空或过短、需要登录/访问受限时返回 `BLOCKED_INCOMPLETE_TEXT` 或 `BLOCKED_UNSUPPORTED`，不写半成品 KB 条目。
 
 当前输出为标准 6 文件：

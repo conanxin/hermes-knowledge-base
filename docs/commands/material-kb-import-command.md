@@ -39,6 +39,26 @@ python3 scripts/material_to_kb.py --input-list tmp/materials.txt --import
 
 `--dry-run` 是默认安全模式，不写 KB 条目。只有显式传 `--import` 才会调用下游脚本真实入库。
 
+## v0.3.83 YouTube provider environment
+
+YouTube 相关 fallback (`yt-dlp` + `youtube-transcript-api`) 是 **可选** provider，环境缺失时
+链照样能跑 (降级为 metadata_only)。要启用时：
+
+```bash
+python -m pip install --upgrade yt-dlp youtube-transcript-api
+# Debian/WSL PEP 668 时：
+python -m pip install --user --break-system-packages --upgrade yt-dlp youtube-transcript-api
+```
+
+保证：
+
+- 不下载视频文件 (yt-dlp 仅 `--skip-download`，只取 metadata / subtitle)
+- 不使用 cookie / 登录态 / 伪装绕过
+- 只有 `fetch_quality=full` 且 `transcript_char_count >= 800` 才入库；`partial` / `metadata_only` / blocked 不写条目
+- auto captions 标记 `transcript_kind: auto` + `transcript_needs_review: true`，导入需 `--allow-auto-captions`
+
+详见 `docs/commands/youtube-kb-import-command.md` 与 `docs/workflows/youtube-video-kb-import-workflow.md`。
+
 ---
 
 ## input-list 格式

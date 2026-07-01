@@ -112,6 +112,27 @@ python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-auto-captions 
 python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --caption-provider yt-dlp --dry-run
 ```
 
+### YouTube provider environment (v0.3.83)
+
+The `yt-dlp` and `youtube-transcript-api` packages are **optional** providers — the chain degrades
+gracefully (back to metadata_only) when either is missing. Enable in a fresh environment with:
+
+```bash
+python -m pip install --upgrade yt-dlp youtube-transcript-api
+# Debian/WSL PEP 668:
+python -m pip install --user --break-system-packages --upgrade yt-dlp youtube-transcript-api
+```
+
+Hard guarantees the chain keeps regardless of which providers are present:
+
+- **No video downloads.** yt-dlp runs with `--skip-download`; only metadata or subtitle text is parsed.
+- **No cookies, no login state, no impersonation bypass.** All fetches work from public endpoints.
+- **`full` transcript only is importable.** `fetch_quality=full` with `transcript_char_count>=800`
+  is the import gate. `partial`, `metadata_only`, blocked, empty, or too-short results never write
+  a KB entry.
+- **Auto captions stay flagged for review.** `transcript_kind: auto` +
+  `transcript_needs_review: true`; import requires `--allow-auto-captions`.
+
 ### 7. 微信公众号：当前真实能力
 
 **两条可用通道**（都不登录微信、不扫码、不读 cookie）：
@@ -329,7 +350,8 @@ hermes-knowledge-base/
 | **v0.3.79** | **新增 YouTube 字幕/转录稿入库路线**（`scripts/youtube_to_kb.py`，YouTube URL → metadata + transcript → KB） | 统一入口 `youtube_url` 接入；无字幕、字幕过短、需登录或不可公开获取时 hard stop；PDF 仍返回 `BLOCKED_UNSUPPORTED` |
 | **v0.3.81** | **新增 YouTube fetch quality gate**（`full` / `partial` / `metadata_only`） | 默认只入库 full transcript；partial 需要 `--allow-partial-transcript` 且满足 800 字符阈值；metadata-only 不入库 |
 | **v0.3.82** | **新增 YouTube automatic transcript providers**（direct captionTracks / subtitle-only yt-dlp / optional transcript API） | 自动字幕需 `--allow-auto-captions` 才可入库；provider_attempts 写入 capture 与 material report；metadata-only 仍不入库 |
+| **v0.3.83** | **YouTube provider 环境可选补齐**（`yt-dlp` + `youtube-transcript-api`） | 不下载视频；不使用 cookie / 登录态；full transcript 才入库；auto captions 标记 `needs_review`；不写半成品条目；详见 `reports/youtube_provider_env_real_import_v0.3.83_20260701.md` |
 
 ---
 
-*Last refreshed for v0.3.81 on 2026-07-01.*
+*Last refreshed for v0.3.83 on 2026-07-01.*

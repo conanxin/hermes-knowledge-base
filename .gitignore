@@ -9,6 +9,8 @@ reports/runtime/
 *.swp
 *.swo
 *~
+tmp/
+tmp/youtube_subs/
 
 # Ignore OS files
 .DS_Store

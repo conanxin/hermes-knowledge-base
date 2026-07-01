@@ -127,6 +127,25 @@ Automatic captions require explicit `--allow-auto-captions` for import and must 
 `transcript_kind: auto` plus `transcript_needs_review: true`. The material JSON report keeps
 `provider_attempts` for each YouTube input so failed providers and fallback success are auditable.
 
+### v0.3.83 provider environment (optional install)
+
+`yt-dlp` 和 `youtube-transcript-api` 是 **可选** provider；都不在时 chain 仍降级到 metadata_only。
+
+```bash
+python -m pip install --upgrade yt-dlp youtube-transcript-api
+# Debian/WSL PEP 668 时：
+python -m pip install --user --break-system-packages --upgrade yt-dlp youtube-transcript-api
+```
+
+不变量（与 YouTube 命令 / workflow 文档一致）：
+
+- 不下载视频文件，yt-dlp 走 `--skip-download`，只输出 metadata / subtitle
+- 不使用 cookie / 登录态 / 伪装绕过
+- 只有 `fetch_quality=full` 且 `transcript_char_count >= 800` 才入库；`partial` /
+  `metadata_only` / blocked / 空字幕 一律不写 KB 条目
+- auto captions 记 `transcript_kind: auto` + `transcript_needs_review: true`，导入需
+  `--allow-auto-captions`
+
 ---
 
 ## Step 4: 统一报告
