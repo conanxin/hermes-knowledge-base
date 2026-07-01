@@ -1,0 +1,107 @@
+{
+  "generated_at": "2026-07-01T15:48:09",
+  "mode": "import",
+  "summary": {
+    "total": 4,
+    "imported": 4,
+    "dry_run_ok": 0,
+    "skipped_duplicate": 0,
+    "blocked_unsupported": 0,
+    "blocked_fetch_failed": 0,
+    "blocked_incomplete_text": 0,
+    "failed_import": 0,
+    "failed_gate": 0
+  },
+  "gate_results": [
+    {
+      "name": "check_kb.py",
+      "exit": 0,
+      "status": "PASS",
+      "stdout_tail": "\n==================================================\nKnowledge Base Check\n==================================================\nTotal items: 65\nPASS: 65\nFAIL: 0\n\nSTATUS: PASS\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "update_site.py",
+      "exit": 0,
+      "status": "PASS",
+      "stdout_tail": "##########################\n# STEP 5/5: Post-sync integrity (check_pages_sync.py)\n##################################################\n\n==================================================\nRunning: scripts/check_pages_sync.py\n==================================================\n[5/5] scripts/check_pages_sync.py OK\n\n==================================================\nAll steps completed successfully.\nRun 'git status' to review changes before committing.\n==================================================\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "audit_kb_state.py",
+      "exit": 0,
+      "status": "PASS",
+      "stdout_tail": "tside soft range [6,12]: content\\articles\\2026\\2026-06-26-wechat-译林出版社-我生病了要去西湖玩玩才能好起来\\metadata.yaml\n  - tags count=4 outside soft range [6,12]: content\\articles\\2026\\2026-06-27-wechat-澎湃翻书党-从传统评点看金庸倚天篇张无忌为什么总是被骗\\metadata.yaml\n  ... and 6 more\n\n------------------------------------------------------------\nHARD FAILURES: 0\nWARNINGS: 36\n\n============================================================\nSTATUS: PASS_WITH_WARNINGS (36 warnings)\n============================================================\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "check_pages_sync.py",
+      "exit": 0,
+      "status": "PASS",
+      "stdout_tail": "ed402 05954f1d156ed402 OK\n\n[2/3] Item pages (site/items/ ↔ docs/items/)\n  site slugs: 65\n  docs slugs: 65\n  all 65 slugs present and byte-identical.\n\n[3/3] Content→items completeness (v0.3.70)\n  content/ metadata.yaml count: 65\n  site/items/ slug count:       65\n  docs/items/ slug count:       65\n  every content/ entry has an item page in both site/ and docs/.\n\n============================================================\nSTATUS: PASS\n============================================================\n\n",
+      "stderr_tail": ""
+    }
+  ],
+  "items": [
+    {
+      "input": "https://www.paulgraham.com/read.html",
+      "inferred_type": "generic_web_url",
+      "route": "web_article_to_kb.py",
+      "status": "IMPORTED",
+      "title": "The Need to Read",
+      "source_url": "https://www.paulgraham.com/read.html",
+      "kb_article_path": "D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-07-01-web-wwwpaulgrahamcom-the-need-to-read",
+      "docs_item_path": "docs/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-07-01-web-wwwpaulgrahamcom-the-need-to-read/index.html",
+      "site_item_path": "site/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-07-01-web-wwwpaulgrahamcom-the-need-to-read/index.html",
+      "capture_json_path": "inbox/raw/web/2026-07-01-the-need-to-read-2.json",
+      "route_report_path": "",
+      "duplicate_of": "",
+      "failure_reason": ""
+    },
+    {
+      "input": "https://www.nngroup.com/articles/ten-usability-heuristics/",
+      "inferred_type": "generic_web_url",
+      "route": "web_article_to_kb.py",
+      "status": "IMPORTED",
+      "title": "10 Usability Heuristics for User Interface Design",
+      "source_url": "https://www.nngroup.com/articles/ten-usability-heuristics/",
+      "kb_article_path": "D:\\Codex\\hermes-knowledge-base\\content\\articles\\1994\\1994-04-24-web-nielsen-norman-group-10-usability-heuristics-for-user-interface-design",
+      "docs_item_path": "docs/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\1994\\1994-04-24-web-nielsen-norman-group-10-usability-heuristics-for-user-interface-design/index.html",
+      "site_item_path": "site/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\1994\\1994-04-24-web-nielsen-norman-group-10-usability-heuristics-for-user-interface-design/index.html",
+      "capture_json_path": "inbox/raw/web/1994-04-24-10-usability-heuristics-for-user-interface-design-2.json",
+      "route_report_path": "",
+      "duplicate_of": "",
+      "failure_reason": ""
+    },
+    {
+      "input": "https://martinfowler.com/articles/is-quality-worth-cost.html",
+      "inferred_type": "generic_web_url",
+      "route": "web_article_to_kb.py",
+      "status": "IMPORTED",
+      "title": "Is High Quality Software Worth the Cost?",
+      "source_url": "https://martinfowler.com/articles/is-quality-worth-cost.html",
+      "kb_article_path": "D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-07-01-web-martinfowlercom-is-high-quality-software-worth-the-cost",
+      "docs_item_path": "docs/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-07-01-web-martinfowlercom-is-high-quality-software-worth-the-cost/index.html",
+      "site_item_path": "site/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-07-01-web-martinfowlercom-is-high-quality-software-worth-the-cost/index.html",
+      "capture_json_path": "inbox/raw/web/2026-07-01-is-high-quality-software-worth-the-cost-2.json",
+      "route_report_path": "",
+      "duplicate_of": "",
+      "failure_reason": ""
+    },
+    {
+      "input": "https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/",
+      "inferred_type": "generic_web_url",
+      "route": "web_article_to_kb.py",
+      "status": "IMPORTED",
+      "title": "Things You Should Never Do, Part I",
+      "source_url": "https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/",
+      "kb_article_path": "D:\\Codex\\hermes-knowledge-base\\content\\articles\\2000\\2000-04-06-web-joel-on-software-things-you-should-never-do-part-i",
+      "docs_item_path": "docs/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2000\\2000-04-06-web-joel-on-software-things-you-should-never-do-part-i/index.html",
+      "site_item_path": "site/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2000\\2000-04-06-web-joel-on-software-things-you-should-never-do-part-i/index.html",
+      "capture_json_path": "inbox/raw/web/2000-04-06-things-you-should-never-do-part-i-2.json",
+      "route_report_path": "",
+      "duplicate_of": "",
+      "failure_reason": ""
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+title: "Is High Quality Software Worth the Cost?"
+title_zh: "Is High Quality Software Worth the Cost?"
+source_url: "https://martinfowler.com/articles/is-quality-worth-cost.html"
+canonical_url: "https://martinfowler.com/articles/is-quality-worth-cost.html"
+source_site: "martinfowler.com"
+author: "Unknown"
+published_date: ""
+captured_date: "2026-07-01"
+language: "en"
+source_language: "en"
+translation_language: "zh-CN"
+status: "needs_translation_review"
+type: "article"
+content_kind: "web_article"
+source_platform: "web"
+dedupe_key: "web:b8044e9aa5ac:is-high-quality-software"
+content_hash: "40f67b78b7042354df1f8edef41f1b69a8960f507a116695afad9d47fe0ae6b0"
+is_translation_mirror: false
+topics:
+  - "阅读笔记"
+tags:
+  - "martinfowler.com"
+  - "文章"
+  - "阅读"
+  - "网页文章"
+  - "Web"
+word_count:
+  source: 2724
+  translation: 86
+web:
+  domain: "martinfowler.com"
+  extraction_method: "main"
+  description: "We usually perceive that it costs more to get higher quality, but software internal quality actually reduces costs."
+  image_count: 4
+  localize_images: false
+  images:
+    - url: "https://martinfowler.com/articles/is-quality-worth-cost/card.png"
+      source: "og:image"
+    - url: "https://martinfowler.com/articles/is-quality-worth-cost/cruft-impact.png"
+      source: "markdown"
+    - url: "https://martinfowler.com/articles/is-quality-worth-cost/poor.png"
+      source: "markdown"
+    - url: "https://martinfowler.com/articles/is-quality-worth-cost/both.png"
+      source: "markdown"
+capture:
+  tool: "web_article_to_kb.py"
+  captured_at: "2026-07-01T15:47:55"
+  version: "1.0"
+path: "content/articles/2026/2026-07-01-web-martinfowlercom-is-high-quality-software-worth-the-cost/"

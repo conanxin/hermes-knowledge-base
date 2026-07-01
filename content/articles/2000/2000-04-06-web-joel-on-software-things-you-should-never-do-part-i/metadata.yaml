@@ -1,0 +1,47 @@
+title: "Things You Should Never Do, Part I"
+title_zh: "Things You Should Never Do, Part I"
+source_url: "https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/"
+canonical_url: "https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/"
+source_site: "Joel on Software"
+author: "Unknown"
+published_date: "2000-04-06"
+captured_date: "2026-07-01"
+language: "en"
+source_language: "en"
+translation_language: "zh-CN"
+status: "needs_translation_review"
+type: "article"
+content_kind: "web_article"
+source_platform: "web"
+dedupe_key: "web:cd08715a8e33:things-you-should-never-do"
+content_hash: "51c11602edccc2648feabb8188f3a775080c3b753d2b6b83764892c20680ef12"
+is_translation_mirror: false
+topics:
+  - "阅读笔记"
+tags:
+  - "文章"
+  - "Joel on Software"
+  - "阅读"
+  - "网页文章"
+  - "Web"
+word_count:
+  source: 1498
+  translation: 86
+web:
+  domain: "www.joelonsoftware.com"
+  extraction_method: "body_fallback"
+  description: "Netscape 6.0 is finally going into its first public beta. There never was a version 5.0. The last major release, version 4.0, was released almost three years ago. Three years is an awfully long time in the Internet world. During this time, Netscape sat by, helplessly, as their market share plummeted. It's a bit smarmy…"
+  image_count: 3
+  localize_images: false
+  images:
+    - url: "https://i0.wp.com/www.joelonsoftware.com/wp-content/uploads/2016/12/11969842.jpg?fit=400%2C400&ssl=1"
+      source: "og:image"
+    - url: "https://i0.wp.com/www.joelonsoftware.com/wp-content/uploads/2016/12/11969842.jpg?fit=240%2C240&ssl=1"
+      source: "twitter:image"
+    - url: "https://secure.gravatar.com/avatar/4f742758d6ff8a422a0d154b351751a90a10542fda27afe910c1e16cb3779bf4?s=64&d=mm&r=pg"
+      source: "markdown"
+capture:
+  tool: "web_article_to_kb.py"
+  captured_at: "2026-07-01T15:47:57"
+  version: "1.0"
+path: "content/articles/2000/2000-04-06-web-joel-on-software-things-you-should-never-do-part-i/"

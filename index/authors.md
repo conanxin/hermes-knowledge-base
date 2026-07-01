@@ -98,6 +98,10 @@
 
 - How AI Will Change Us
 
+## Jakob Nielsen
+
+- 10 Usability Heuristics for User Interface Design
+
 ## Jasmine Sun
 
 - The Old World Is Dying
@@ -162,6 +166,12 @@
 ## Sean Kenji Starrs and Robert Hunter Wade
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
+
+## Unknown
+
+- Things You Should Never Do, Part I
+- Is High Quality Software Worth the Cost?
+- The Need to Read
 
 ## Ursula K. Le Guin
 

@@ -2,6 +2,8 @@
 
 ## 2026-07
 
+- 10 Usability Heuristics for User Interface Design
+- Things You Should Never Do, Part I
 - 专访林小英：接受教育，最终是为了让我们把日子过得生动
 - AI无法教会的三件事
 - “我生病了，要去西湖玩玩才能好起来”
@@ -9,6 +11,8 @@
 - 逆流而上的爱与勇气——写在阿伦特诞辰120周年之际
 - 北京热门徒步线路TOP10！
 - Financial Freedom is Easy, After You Learn This
+- Is High Quality Software Worth the Cost?
+- The Need to Read
 
 ## 2026-06
 

@@ -1,0 +1,61 @@
+title: "10 Usability Heuristics for User Interface Design"
+title_zh: "10 Usability Heuristics for User Interface Design"
+source_url: "https://www.nngroup.com/articles/ten-usability-heuristics/"
+canonical_url: "https://www.nngroup.com/articles/ten-usability-heuristics/"
+source_site: "Nielsen Norman Group"
+author: "Jakob Nielsen"
+published_date: "1994-04-24"
+captured_date: "2026-07-01"
+language: "en"
+source_language: "en"
+translation_language: "zh-CN"
+status: "needs_translation_review"
+type: "article"
+content_kind: "web_article"
+source_platform: "web"
+dedupe_key: "web:fcda6241993e:10-usability-heuristics-for"
+content_hash: "d07f210ad2a32e29dbcf6c86fc0d349be498390ffbd730daf9d92d04ce2d244a"
+is_translation_mirror: false
+topics:
+  - "阅读笔记"
+tags:
+  - "Nielsen Norman Group"
+  - "文章"
+  - "阅读"
+  - "网页文章"
+  - "Web"
+word_count:
+  source: 2257
+  translation: 86
+web:
+  domain: "www.nngroup.com"
+  extraction_method: "body_fallback"
+  description: "Jakob Nielsen's 10 general principles for interaction design. They are called \"heuristics\" because they are broad rules of thumb and not specific usability guidelines."
+  image_count: 13
+  localize_images: false
+  images:
+    - url: "https://media.nngroup.com/media/articles/opengraph_images/Updated10HeuristicSocialCard-36.png"
+      source: "json-ld"
+    - url: "https://media.nngroup.com/media/people/photos/Jakob-Nielsen-tie-800x800.jpg.256x256_q75_autocrop_crop-smart_upscale.jpg"
+      source: "markdown"
+    - url: "https://media.nngroup.com/media/editor/2020/11/05/heuristic-example-1-rbg-73.png"
+      source: "markdown"
+    - url: "https://media.nngroup.com/media/editor/2020/11/05/heuristic-example-74.png"
+      source: "markdown"
+    - url: "https://media.nngroup.com/media/editor/2020/11/05/heuristic-example-75.png"
+      source: "markdown"
+    - url: "https://media.nngroup.com/media/editor/2020/11/05/heuristic-example-76.png"
+      source: "markdown"
+    - url: "https://media.nngroup.com/media/editor/2020/11/05/heuristic-example-77.png"
+      source: "markdown"
+    - url: "https://media.nngroup.com/media/editor/2020/11/05/heuristic-example-78.png"
+      source: "markdown"
+    - url: "https://media.nngroup.com/media/editor/2020/11/05/heuristic-example-79.png"
+      source: "markdown"
+    - url: "https://media.nngroup.com/media/editor/2020/11/05/heuristic-example-80.png"
+      source: "markdown"
+capture:
+  tool: "web_article_to_kb.py"
+  captured_at: "2026-07-01T15:47:53"
+  version: "1.0"
+path: "content/articles/1994/1994-04-24-web-nielsen-norman-group-10-usability-heuristics-for-user-interface-design/"

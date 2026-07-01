@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-07-01T15:47:42",
+  "mode": "dry-run",
+  "summary": {
+    "total": 4,
+    "imported": 0,
+    "dry_run_ok": 4,
+    "skipped_duplicate": 0,
+    "blocked_unsupported": 0,
+    "blocked_fetch_failed": 0,
+    "blocked_incomplete_text": 0,
+    "failed_import": 0,
+    "failed_gate": 0
+  },
+  "gate_results": [],
+  "items": [
+    {
+      "input": "https://www.paulgraham.com/read.html",
+      "inferred_type": "generic_web_url",
+      "route": "web_article_to_kb.py",
+      "status": "DRY_RUN_OK",
+      "title": "The Need to Read",
+      "source_url": "https://www.paulgraham.com/read.html",
+      "kb_article_path": "",
+      "docs_item_path": "",
+      "site_item_path": "",
+      "capture_json_path": "inbox/raw/web/2026-07-01-the-need-to-read.json",
+      "route_report_path": "",
+      "duplicate_of": "",
+      "failure_reason": ""
+    },
+    {
+      "input": "https://www.nngroup.com/articles/ten-usability-heuristics/",
+      "inferred_type": "generic_web_url",
+      "route": "web_article_to_kb.py",
+      "status": "DRY_RUN_OK",
+      "title": "10 Usability Heuristics for User Interface Design",
+      "source_url": "https://www.nngroup.com/articles/ten-usability-heuristics/",
+      "kb_article_path": "",
+      "docs_item_path": "",
+      "site_item_path": "",
+      "capture_json_path": "inbox/raw/web/1994-04-24-10-usability-heuristics-for-user-interface-design.json",
+      "route_report_path": "",
+      "duplicate_of": "",
+      "failure_reason": ""
+    },
+    {
+      "input": "https://martinfowler.com/articles/is-quality-worth-cost.html",
+      "inferred_type": "generic_web_url",
+      "route": "web_article_to_kb.py",
+      "status": "DRY_RUN_OK",
+      "title": "Is High Quality Software Worth the Cost?",
+      "source_url": "https://martinfowler.com/articles/is-quality-worth-cost.html",
+      "kb_article_path": "",
+      "docs_item_path": "",
+      "site_item_path": "",
+      "capture_json_path": "inbox/raw/web/2026-07-01-is-high-quality-software-worth-the-cost.json",
+      "route_report_path": "",
+      "duplicate_of": "",
+      "failure_reason": ""
+    },
+    {
+      "input": "https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/",
+      "inferred_type": "generic_web_url",
+      "route": "web_article_to_kb.py",
+      "status": "DRY_RUN_OK",
+      "title": "Things You Should Never Do, Part I",
+      "source_url": "https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/",
+      "kb_article_path": "",
+      "docs_item_path": "",
+      "site_item_path": "",
+      "capture_json_path": "inbox/raw/web/2000-04-06-things-you-should-never-do-part-i.json",
+      "route_report_path": "",
+      "duplicate_of": "",
+      "failure_reason": ""
+    }
+  ]
+}

@@ -479,6 +479,10 @@
 
 - The Layers of AI experience
 
+## Joel on Software
+
+- Things You Should Never Do, Part I
+
 ## John Lasseter
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
@@ -654,6 +658,10 @@
 ## Nia Docs
 
 - Nia Docs — 把整个 Web 变成文件系统
+
+## Nielsen Norman Group
+
+- 10 Usability Heuristics for User Interface Design
 
 ## Notion
 
@@ -956,6 +964,13 @@
 ## Wayne Shorter
 
 - The 100 greatest songs of the 1960s
+
+## Web
+
+- 10 Usability Heuristics for User Interface Design
+- Things You Should Never Do, Part I
+- Is High Quality Software Worth the Cost?
+- The Need to Read
 
 ## Wendell Berry
 
@@ -1341,6 +1356,10 @@
 
 - Hacker News ML 热门链接
 
+## martinfowler.com
+
+- Is High Quality Software Worth the Cost?
+
 ## media
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
@@ -1663,6 +1682,10 @@
 - The Old World Is Dying
 - Why I Write
 
+## www.paulgraham.com
+
+- The Need to Read
+
 ## youth
 
 - The Old World Is Dying
@@ -1972,10 +1995,14 @@
 
 ## 文章
 
+- 10 Usability Heuristics for User Interface Design
+- Things You Should Never Do, Part I
 - “我生病了，要去西湖玩玩才能好起来”
 - 从传统评点看金庸｜《倚天》篇：张无忌为什么总是被骗？
 - 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
 - 逆流而上的爱与勇气——写在阿伦特诞辰120周年之际
+- Is High Quality Software Worth the Cost?
+- The Need to Read
 
 ## 斯皮尔伯格
 
@@ -2153,6 +2180,13 @@
 
 - Superlinear Returns
 
+## 网页文章
+
+- 10 Usability Heuristics for User Interface Design
+- Things You Should Never Do, Part I
+- Is High Quality Software Worth the Cost?
+- The Need to Read
+
 ## 美国文学
 
 - On the Duty of Civil Disobedience
@@ -2292,11 +2326,15 @@
 
 ## 阅读
 
+- 10 Usability Heuristics for User Interface Design
+- Things You Should Never Do, Part I
 - 专访林小英：接受教育，最终是为了让我们把日子过得生动
 - “我生病了，要去西湖玩玩才能好起来”
 - 从传统评点看金庸｜《倚天》篇：张无忌为什么总是被骗？
 - 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
 - 逆流而上的爱与勇气——写在阿伦特诞辰120周年之际
+- Is High Quality Software Worth the Cost?
+- The Need to Read
 
 ## 隐喻
 
