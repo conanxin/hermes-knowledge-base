@@ -55,4 +55,4 @@
 
 ## 附：首段原文（用于校对）
 
-![](https://mmbiz.qpic.cn/mmbiz_gif/CKYhgyUnM1CPnTWDh2N7T9XakUwC7zKU3JrMFlJxctAV2n8ZEnNaXpn98kViahZFtp6UTBa5NrWI0q1vGRpWkXg/640?wx_fmt=gif&wxfrom=5&wx_lazy=1)
+![](assets/image-001.gif)

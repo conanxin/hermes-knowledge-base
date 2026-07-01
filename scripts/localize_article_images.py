@@ -2,11 +2,15 @@
 """localize_article_images.py — Download remote WeChat images to local assets/.
 
 For each article under content/articles/YYYY/<slug>/:
-1. Scan source.md and translation.zh-CN.md for Markdown image syntax: ![alt](url)
+1. Scan public Markdown files for Markdown image syntax: ![alt](url)
+   - source.md
+   - translation.zh-CN.md
+   - summary.md
+   - notes.md
 2. Download each remote image to content/articles/YYYY/<slug>/assets/image-NNN.<ext>
 3. Rewrite the Markdown image URL to the local relative path: ![alt](assets/image-NNN.<ext>)
-4. For Chinese-mirror articles (source ≈ translation), sync both files so
-   check_kb.py word_count drift stays low.
+4. Keep non-image prose untouched; failed downloads leave the original URL in place
+   and are reported.
 
 Supports:
     python3 scripts/localize_article_images.py --article-path "content/articles/2026/<slug>"
@@ -45,6 +49,9 @@ _MD_IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)\s]*)\)")
 
 # Only http/https URLs are candidates for localization.
 _REMOTE_URL_RE = re.compile(r"^https?://", re.IGNORECASE)
+
+# Public Markdown files rendered into item pages.
+PUBLIC_MARKDOWN_FILENAMES = ("source.md", "translation.zh-CN.md", "summary.md", "notes.md")
 
 # Content-Type → extension mapping.
 CONTENT_TYPE_EXT = {
@@ -129,12 +136,41 @@ def _rewrite_markdown(md_text: str, url_to_local: dict[str, str]) -> str:
     return _MD_IMAGE_RE.sub(_replace, md_text)
 
 
+def _remote_markdown_image_urls(md_text: str) -> list[str]:
+    """Return remote Markdown image URLs from md_text, ignoring assets/... and ![]()."""
+    urls: list[str] = []
+    for m in _MD_IMAGE_RE.finditer(md_text):
+        url = m.group(2)
+        if url and _REMOTE_URL_RE.match(url):
+            urls.append(url)
+    return urls
+
+
+def _next_image_index(assets_dir: Path) -> int:
+    """Return the next image-NNN index without overwriting existing assets."""
+    if not assets_dir.exists():
+        return 1
+    max_seen = 0
+    for p in assets_dir.iterdir():
+        m = re.match(r"image-(\d{3,})\.", p.name)
+        if m:
+            max_seen = max(max_seen, int(m.group(1)))
+    return max_seen + 1
+
+
 def localize_article(article_path: Path, dry_run: bool = False) -> dict:
     """Localize images for a single article.
 
+    v0.3.75: extended to process ALL renderable Markdown files, not just
+    source.md and translation.zh-CN.md. Now also processes summary.md and
+    notes.md so that remote mmbiz URLs in the "附：首段原文（用于校对）"
+    section (or anywhere else in summary/notes) get localized too.
+
     Returns a dict with:
         article_path, image_total, image_localized, image_failed,
-        assets_path, failures (list of {url, reason}), dry_run
+        assets_path, failures (list of {url, reason}), dry_run,
+        files_changed (list of relative file paths that were rewritten),
+        markdown_files (per-file image_total/image_localized/image_failed/file_changed)
     """
     result = {
         "article_path": str(article_path.relative_to(KB_HOME).as_posix()) + "/",
@@ -144,37 +180,44 @@ def localize_article(article_path: Path, dry_run: bool = False) -> dict:
         "assets_path": "",
         "failures": [],
         "dry_run": dry_run,
+        "files_changed": [],
+        "markdown_files": [],
     }
 
-    source_md_path = article_path / "source.md"
-    trans_md_path = article_path / "translation.zh-CN.md"
-    meta_path = article_path / "metadata.yaml"
+    # Load all MD files that exist.
+    md_files: dict[str, str] = {}  # filename → text
+    for fname in PUBLIC_MARKDOWN_FILENAMES:
+        fpath = article_path / fname
+        if fpath.exists():
+            md_files[fname] = fpath.read_text(encoding="utf-8")
 
-    if not source_md_path.exists():
-        result["failures"].append({"url": "", "reason": "source.md not found"})
+    if not md_files:
+        result["failures"].append({"url": "", "reason": "no Markdown files found"})
         return result
 
-    source_text = source_md_path.read_text(encoding="utf-8")
-    trans_text = trans_md_path.read_text(encoding="utf-8") if trans_md_path.exists() else ""
-    is_mirror = _is_mirror_article(meta_path)
-
-    # Collect all remote image URLs from source.md (and translation if mirror).
+    # Collect all remote image URLs from ALL public Markdown files.
+    file_urls: dict[str, list[str]] = {}
+    file_results: dict[str, dict] = {}
     urls_to_download: list[str] = []
     seen_urls: set[str] = set()
 
-    for m in _MD_IMAGE_RE.finditer(source_text):
-        url = m.group(2)
-        if url and _REMOTE_URL_RE.match(url) and url not in seen_urls:
-            urls_to_download.append(url)
-            seen_urls.add(url)
-
-    if is_mirror and trans_text:
-        for m in _MD_IMAGE_RE.finditer(trans_text):
-            url = m.group(2)
-            if url and _REMOTE_URL_RE.match(url) and url not in seen_urls:
+    for fname, text in md_files.items():
+        urls = _remote_markdown_image_urls(text)
+        unique_file_urls = list(dict.fromkeys(urls))
+        file_urls[fname] = unique_file_urls
+        file_results[fname] = {
+            "file": fname,
+            "image_total": len(unique_file_urls),
+            "image_localized": 0,
+            "image_failed": 0,
+            "file_changed": False,
+        }
+        for url in unique_file_urls:
+            if url not in seen_urls:
                 urls_to_download.append(url)
                 seen_urls.add(url)
 
+    result["markdown_files"] = [file_results[fname] for fname in md_files]
     result["image_total"] = len(urls_to_download)
     if not urls_to_download:
         return result  # No remote images to localize.
@@ -183,17 +226,23 @@ def localize_article(article_path: Path, dry_run: bool = False) -> dict:
     result["assets_path"] = str(assets_dir.relative_to(KB_HOME).as_posix()) + "/"
 
     if dry_run:
-        # In dry-run, just report what would be downloaded.
         result["image_localized"] = len(urls_to_download)
+        for fname, urls in file_urls.items():
+            file_results[fname]["image_localized"] = len(urls)
+            file_results[fname]["file_changed"] = bool(urls)
+        result["files_changed"] = [
+            fname for fname, stats in file_results.items() if stats["file_changed"]
+        ]
         return result
 
     # Download images.
     url_to_local: dict[str, str] = {}
-    for i, url in enumerate(urls_to_download, 1):
+    next_index = _next_image_index(assets_dir)
+    for offset, url in enumerate(urls_to_download):
         try:
             data, content_type = _download_image(url)
             ext = _infer_extension(url, content_type)
-            filename = f"image-{i:03d}{ext}"
+            filename = f"image-{next_index + offset:03d}{ext}"
             local_rel = f"assets/{filename}"
 
             assets_dir.mkdir(parents=True, exist_ok=True)
@@ -207,15 +256,21 @@ def localize_article(article_path: Path, dry_run: bool = False) -> dict:
                 "reason": str(e)[:200],
             })
 
-    # Rewrite source.md
+    # v0.3.75: Rewrite ALL Markdown files that had remote URLs.
     if url_to_local:
-        new_source = _rewrite_markdown(source_text, url_to_local)
-        source_md_path.write_text(new_source, encoding="utf-8")
+        for fname, text in md_files.items():
+            new_text = _rewrite_markdown(text, url_to_local)
+            if new_text != text:
+                fpath = article_path / fname
+                fpath.write_text(new_text, encoding="utf-8")
+                result["files_changed"].append(fname)
+                file_results[fname]["file_changed"] = True
 
-        # Rewrite translation.zh-CN.md (mirror articles should stay in sync)
-        if is_mirror and trans_text:
-            new_trans = _rewrite_markdown(trans_text, url_to_local)
-            trans_md_path.write_text(new_trans, encoding="utf-8")
+    localized_urls = set(url_to_local)
+    failed_urls = set(urls_to_download) - localized_urls
+    for fname, urls in file_urls.items():
+        file_results[fname]["image_localized"] = sum(1 for url in urls if url in localized_urls)
+        file_results[fname]["image_failed"] = sum(1 for url in urls if url in failed_urls)
 
     return result
 

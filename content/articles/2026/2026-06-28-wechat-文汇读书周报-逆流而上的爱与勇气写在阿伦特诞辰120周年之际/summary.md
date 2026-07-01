@@ -59,4 +59,4 @@
 
 ## 附：首段原文（用于校对）
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/CwNL4Q2TsKLQgJEFPzcGHWAL6iaGeWLrhJHtibscFPjU5ejaLNAPE3u56ZHAPCibbsCpXQApk1dk4wD6NS6jicjG2TExHy3bupuQ0O9ib7AH19Gs/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-001.jpg)

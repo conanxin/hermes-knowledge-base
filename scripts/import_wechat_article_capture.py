@@ -486,10 +486,6 @@ def generate_summary_md(title: str, content: str, author: str, account_name: str
     check_kb.py — no half-baked *factual* claims are invented.
     """
     paragraphs = _split_paragraphs(content)
-    first_para = paragraphs[0] if paragraphs else ""
-    if len(first_para) > 300:
-        first_para = first_para[:300] + "..."
-
     key_sentences = _extract_key_sentences(paragraphs, max_count=6)
     headings = _extract_headings(content)
     concepts = _infer_core_concepts(content, title)
@@ -541,12 +537,6 @@ def generate_summary_md(title: str, content: str, author: str, account_name: str
 ## 个人阅读提示：这篇文章为什么值得保存
 
 （一句话说明你保存它的理由——是为了某个论点、某个案例、还是某种写法。请人工补充。）
-
----
-
-## 附：首段原文（用于校对）
-
-{first_para}
 '''
 
 
