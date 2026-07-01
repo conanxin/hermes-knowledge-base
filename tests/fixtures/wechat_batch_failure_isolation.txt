@@ -1,0 +1,9 @@
+# Batch WeChat import — mixed inputs with one intentional failure.
+# Line 1: a synthetic hiking fixture (must succeed).
+# Line 2: a non-existent local HTML path (must be BLOCKED_FETCH_FAILED).
+# Line 3: a synthetic sample fixture (must succeed).
+# The batch must NOT crash on line 2 — failure isolation.
+
+tests/fixtures/wechat_sample_hiking_article.html
+tests/fixtures/does_not_exist.html
+tests/fixtures/wechat_sample_article.html

@@ -1,0 +1,7 @@
+# Batch WeChat import input fixtures — sample articles (synthetic).
+# Each non-blank, non-# line is one input. Lines starting with # are skipped.
+# These are local fixture HTML files used by tests/run_wechat_batch_smoke.py
+# so the smoke test does not need network access.
+
+tests/fixtures/wechat_sample_article.html
+tests/fixtures/wechat_sample_hiking_article.html

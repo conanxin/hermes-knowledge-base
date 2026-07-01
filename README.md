@@ -91,7 +91,7 @@ python3 scripts/audit_kb_state.py
 |---|---|---|---|
 | URL 文章 | 「入库并完整翻译：<url>」 | [docs/AGENT_COMMANDS.md](docs/AGENT_COMMANDS.md) | 默认 `content_type=article`、zh-CN、自动 commit/push |
 | 本地 PDF | 「把这个本地 PDF OCR 识别、完整翻译并加入 Hermes 知识库：<abs-path>」 | [docs/import-recipes/PDF_OCR_LOCAL.md](docs/import-recipes/PDF_OCR_LOCAL.md), [docs/workflows/pdf-ocr-kb-import-workflow.md](docs/workflows/pdf-ocr-kb-import-workflow.md) | 必须**绝对路径**；PDF 本身不入仓，只留 `source.local-ref.txt` |
-| 微信公众号文章 | 「解读并入库这篇公众号文章：<mp.weixin.qq.com 链接>」<br>「解读并入库这个公众号文章本地文件：<path>」 | [docs/commands/wechat-url-kb-import-command.md](docs/commands/wechat-url-kb-import-command.md), [docs/workflows/wechat-article-kb-import-workflow.md](docs/workflows/wechat-article-kb-import-workflow.md), [docs/workflows/wechat-real-inbound-troubleshooting.md](docs/workflows/wechat-real-inbound-troubleshooting.md) | **v0.3.69 起支持公开 URL 直抓 + 本地文件兜底**（不登录、不扫码、不读 cookie）；OpenClaw 实时链路仍 disabled，详见 §7 |
+| 微信公众号文章 | 「解读并入库这篇公众号文章：<mp.weixin.qq.com 链接>」<br>「解读并入库这个公众号文章本地文件：<path>」<br>「批量解读并入库这些公众号文章：<urls.txt 或多行 URL>」 | [docs/commands/wechat-url-kb-import-command.md](docs/commands/wechat-url-kb-import-command.md), [docs/commands/wechat-batch-kb-import-command.md](docs/commands/wechat-batch-kb-import-command.md), [docs/workflows/wechat-article-kb-import-workflow.md](docs/workflows/wechat-article-kb-import-workflow.md) | **v0.3.69 起支持公开 URL 直抓 + 本地文件兜底；v0.3.71 起支持批量 + 三层去重**（不登录、不扫码、不读 cookie）；OpenClaw 实时链路仍 disabled，详见 §7 |
 | YouTube 视频 | 「预检这个 YouTube 视频：<url>」<br>「解读这个 YouTube 视频并加入 Hermes 知识库：<url>」 | [docs/YOUTUBE_CAPABILITIES.md](docs/YOUTUBE_CAPABILITIES.md), [docs/workflows/youtube-link-preflight-workflow.md](docs/workflows/youtube-link-preflight-workflow.md), [docs/workflows/youtube-video-brief-workflow.md](docs/workflows/youtube-video-brief-workflow.md) | 不登录、不读 cookie、不下载完整视频、私密视频直接 BLOCKED 并归档 |
 
 ### 7. 微信公众号：当前真实能力
@@ -130,6 +130,26 @@ python3 scripts/wechat_url_to_kb.py --text-file <path> --import
 ```
 
 抓不到完整正文（登录墙 / 拦截 / 截断）时 HARD STOP，提示用户另存为本地文件。详见 [docs/commands/wechat-url-kb-import-command.md](docs/commands/wechat-url-kb-import-command.md)。
+
+#### 通道 A 批量模式（v0.3.71+）
+
+一次给多个链接或本地文件，`scripts/wechat_batch_import.py` 逐篇调用通道 A，三层去重（source_url / title+account+date / content sha256），单篇失败不中断整批，最后生成 markdown + json 双格式 manifest。
+
+最短命令：
+
+```
+批量解读并入库这些公众号文章：
+<urls.txt 或多行 URL>
+```
+
+本地文件批量：
+
+```
+批量解读并入库这些公众号本地文件：
+<files.txt 或多行 .html/.md/.txt 路径>
+```
+
+详见 [docs/commands/wechat-batch-kb-import-command.md](docs/commands/wechat-batch-kb-import-command.md)。
 
 #### 通道 B（v0.3.62，OpenClaw 捕获包桥接）
 
@@ -283,8 +303,10 @@ hermes-knowledge-base/
 | v0.3.67 | `word_count.translation` 漂移刷新（7→0 WARN） | 详细见 `reports/word_count_metadata_refresh_v0.3.67_20260629.md` |
 | **v0.3.68** | **本版本：local divergence 治理 + tags/topics soft-WARN policy 文档化** | 详细见 `reports/local_divergence_and_soft_warn_policy_v0.3.68_20260629.md` |
 | **v0.3.69** | **新增微信公众号 URL 直接入库通道**（`scripts/wechat_url_to_kb.py`，公开 URL/HTML/MD/TXT → capture → KB） | 不登录、不扫码、不读 cookie；详见 `reports/wechat_url_direct_kb_import_v0.3.69_20260701.md` |
-| **v0.3.70** | **YouTube 视频解读入库：Ali Abdaal "Financial Freedom is Easy"** | 第 2 条 video 类型;详见 `reports/youtube_video_brief_kb_import_v0.3.70_20260701.md` |
+| v0.3.70 | Windows item page 生成修复 + topics/tags 误判修复 + word_count drift 修复 | 详见 `reports/wechat_import_hardening_windows_pages_fix_v0.3.70_20260701.md` |
+| **v0.3.70** | **YouTube 视频解读入库：Ali Abdaal "Financial Freedom is Easy"** | 第 2 条 video 类型；详见 `reports/youtube_video_brief_kb_import_v0.3.70_20260701.md` |
+| **v0.3.71** | **新增微信公众号批量入库 + 三层去重**（`scripts/wechat_batch_import.py`，URL 列表/多文件 → 去重 → manifest 报告） | 详见 `reports/wechat_batch_import_dedup_report_v0.3.71_20260701.md` |
 
 ---
 
-*Last refreshed for v0.3.70 on 2026-07-01.*
+*Last refreshed for v0.3.71 on 2026-07-01.*

@@ -1,11 +1,12 @@
 # WeChat Official Account Article KB Import — OpenClaw Workflow
 
-> **版本**: 1.1（v1.0 = OpenClaw 捕获包；v1.1 = 新增"公开 URL 直抓 + 本地文件兜底"通道，对应任务 `v0.3.69-wechat-url-direct-kb-import`）
+> **版本**: 1.2（v1.0 = OpenClaw 捕获包；v1.1 = 公开 URL 直抓 + 本地文件兜底，`v0.3.69`；v1.2 = 批量入库 + 三层去重，`v0.3.71`）
 > **创建时间**: 2026-06-29
 > **最近更新**: 2026-07-01
-> **来源**: 基于 OpenClaw @tencent-weixin/openclaw-weixin 能力 + `scripts/wechat_url_to_kb.py` 公开抓取通道
+> **来源**: 基于 OpenClaw @tencent-weixin/openclaw-weixin 能力 + `scripts/wechat_url_to_kb.py` 公开抓取通道 + `scripts/wechat_batch_import.py` 批量通道
 > **基线脚本**: `scripts/import_wechat_article_capture.py`（捕获包 → KB 条目）
-> **入口脚本**: `scripts/wechat_url_to_kb.py`（URL/本地文件 → 捕获包 → 调用基线脚本）
+> **单篇入口**: `scripts/wechat_url_to_kb.py`（URL/本地文件 → 捕获包 → 调用基线脚本）
+> **批量入口**: `scripts/wechat_batch_import.py`（多 URL/本地文件 → 逐篇调用单篇入口 → 三层去重 → manifest 报告）
 
 ---
 
@@ -302,13 +303,68 @@ PUSH: success 或 failed
 |------|------|------|
 | 本 Workflow | `docs/workflows/wechat-article-kb-import-workflow.md` | 本文档 |
 | 导入命令（OpenClaw 通道） | `docs/commands/wechat-article-kb-import-command.md` | v1.0 快捷命令 |
-| 导入命令（URL/本地文件通道） | `docs/commands/wechat-url-kb-import-command.md` | v1.1 快捷命令 |
+| 导入命令（URL/本地文件通道） | `docs/commands/wechat-url-kb-import-command.md` | v1.1 单篇快捷命令 |
+| 导入命令（批量通道） | `docs/commands/wechat-batch-kb-import-command.md` | v1.2 批量快捷命令 |
 | 导入 Prompt | `templates/prompts/import_wechat_article_prompt.md` | Agent 处理规则 |
-| 入口脚本 | `scripts/wechat_url_to_kb.py` | URL/本地文件 → capture JSON → 入库 |
+| 单篇入口脚本 | `scripts/wechat_url_to_kb.py` | URL/本地文件 → capture JSON → 入库 |
+| 批量入口脚本 | `scripts/wechat_batch_import.py` | 多 URL/本地文件 → 三层去重 → manifest 报告 |
 | 基线脚本 | `scripts/import_wechat_article_capture.py` | capture JSON → KB 条目 |
 | 测试 fixture | `tests/fixtures/wechat_sample_article.html` | 离线测试用公众号 HTML |
+| 测试 fixture（徒步 + /AI/ 陷阱） | `tests/fixtures/wechat_sample_hiking_article.html` | v0.3.70 回归 guard |
+| 批量测试 fixture | `tests/fixtures/wechat_batch_urls.txt` 等 | v0.3.71 批量 smoke |
+| 单篇 smoke | `tests/run_smoke_tests.py` | v0.3.70 smoke 套件 |
+| 批量 smoke | `tests/run_wechat_batch_smoke.py` | v0.3.71 批量 smoke 套件 |
 
 ---
+
+## v1.2 新增：批量入库 + 三层去重
+
+### 最短命令（WorkBuddy 里直接说）
+
+```
+批量解读并入库这些公众号文章：
+<urls.txt 或多行 URL>
+```
+
+本地文件批量：
+
+```
+批量解读并入库这些公众号本地文件：
+<files.txt 或多行 .html/.md/.txt 路径>
+```
+
+### 底层调用
+
+```bash
+python3 scripts/wechat_batch_import.py --input urls.txt --dry-run
+python3 scripts/wechat_batch_import.py --input urls.txt --import
+python3 scripts/wechat_batch_import.py --url "<u1>" --url "<u2>" --import
+```
+
+### 三层去重
+
+| 层 | 键 | 说明 |
+|----|----|------|
+| Layer 1 | `source_url` | URL 归一化后比对 `content/**/metadata.yaml` |
+| Layer 2 | `title + account_name + published_date` | 三元组完全一致 |
+| Layer 3 | `sha256(visible_text)` | 清洗后正文内容哈希 |
+
+重复输入标记 `SKIPPED_DUPLICATE` / `DRY_RUN_DUPLICATE`，`duplicate_of` 写明已存在的 KB 路径。同一批次内也会去重。
+
+### 失败隔离
+
+单篇失败（`BLOCKED_FETCH_FAILED` / `BLOCKED_INCOMPLETE_TEXT` / `FAILED_IMPORT`）不中断整批。所有文章处理完后，若 `--import` 且 ≥1 篇 IMPORTED，自动运行四项质量门禁；门禁失败 → 退出码 2，manifest 标 `FAILED_GATE`，不 commit / 不 push。
+
+### manifest
+
+```
+reports/wechat_batch_import_YYYYMMDD_HHMMSS.md
+reports/wechat_batch_import_YYYYMMDD_HHMMSS.json
+```
+
+详见 [`docs/commands/wechat-batch-kb-import-command.md`](../commands/wechat-batch-kb-import-command.md)。
+
+------
 
 ## 后续可扩展方向
 

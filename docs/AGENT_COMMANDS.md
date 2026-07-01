@@ -423,6 +423,75 @@ python3 scripts/import_wechat_article_capture.py --dry-run <上一步生成的 c
 **完整流程**：[docs/workflows/wechat-article-kb-import-workflow.md](workflows/wechat-article-kb-import-workflow.md)
 **用户入口命令**：[docs/commands/wechat-url-kb-import-command.md](commands/wechat-url-kb-import-command.md)
 
+### 2e. 微信公众号批量入库流程（v0.3.71+）
+
+**触发语**（任一即可）：
+
+- "批量解读并入库这些公众号文章：`<urls.txt>`"
+- "批量解读并入库这些公众号文章：`<多行 mp.weixin.qq.com 链接>`"
+- "批量解读并入库这些公众号本地文件：`<files.txt>`"
+
+**入口脚本**：`scripts/wechat_batch_import.py`
+**单篇脚本**：`scripts/wechat_url_to_kb.py`（v0.3.69）
+**必须加载**：[docs/commands/wechat-batch-kb-import-command.md](commands/wechat-batch-kb-import-command.md)。
+
+**最短命令**：
+
+```
+批量解读并入库这些公众号文章：
+<urls.txt 或多行 URL>
+```
+
+本地文件批量：
+
+```
+批量解读并入库这些公众号本地文件：
+<files.txt 或多行 .html/.md/.txt 路径>
+```
+
+**底层调用**：
+
+```bash
+# dry-run（默认安全模式）
+python3 scripts/wechat_batch_import.py --input urls.txt --dry-run
+# 真的入库（末尾自动跑质量门禁）
+python3 scripts/wechat_batch_import.py --input urls.txt --import
+# 也可直接传多个 --url / --html-file
+python3 scripts/wechat_batch_import.py --url "<u1>" --url "<u2>" --import
+```
+
+**去重策略**（三层，入库前完成）：
+
+1. `source_url` 去重（URL 归一化后比对）
+2. `title + account_name + published_date` 三元组去重
+3. `sha256(visible_text)` 正文内容哈希去重
+
+重复输入标记 `SKIPPED_DUPLICATE` / `DRY_RUN_DUPLICATE`，manifest 写明 `duplicate_of`。
+
+**失败策略**：单篇失败（`BLOCKED_FETCH_FAILED` / `BLOCKED_INCOMPLETE_TEXT` / `FAILED_IMPORT`）不中断整批。所有文章处理完后，若 `--import` 且 ≥1 篇 IMPORTED，自动运行四项质量门禁；门禁失败 → 退出码 2，manifest 标 `FAILED_GATE`，不 commit / 不 push。
+
+**manifest**：
+
+```
+reports/wechat_batch_import_YYYYMMDD_HHMMSS.md
+reports/wechat_batch_import_YYYYMMDD_HHMMSS.json
+```
+
+每篇一行，字段含 status / title / account / date / source_url / capture_json_path / kb_article_path / docs_item_path / site_item_path / failure_reason / duplicate_of。
+
+**硬约束**：不登录微信、不扫码、不读 cookie、不绕过微信限制、不 force push、不 `git add -A`、不写半成品、不做 `project`。
+
+**最小测试**：
+
+```bash
+python3 tests/run_wechat_batch_smoke.py
+```
+
+5 项 smoke：多 fixture 批处理 / 重复检测 / `/AI/` URL 陷阱回归 / 失败隔离 / pages_sync 仍 55 slugs。
+
+**完整流程**：[docs/workflows/wechat-article-kb-import-workflow.md](workflows/wechat-article-kb-import-workflow.md)
+**用户入口命令**：[docs/commands/wechat-batch-kb-import-command.md](commands/wechat-batch-kb-import-command.md)
+
 ### 3. 质量检查
 
 ```bash

@@ -1,0 +1,8 @@
+# Batch WeChat import — duplicate detection fixture.
+# The same fixture appears twice; the second occurrence must be detected as
+# a DRY_RUN_DUPLICATE (dry-run) or SKIPPED_DUPLICATE (import) by
+# scripts/wechat_batch_import.py via content-hash dedup (Layer 3), since
+# the fixture has no real source_url and synthetic title/account/date.
+
+tests/fixtures/wechat_sample_article.html
+tests/fixtures/wechat_sample_article.html
