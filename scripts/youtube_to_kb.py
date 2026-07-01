@@ -54,6 +54,10 @@ MIN_TRANSCRIPT_CHARS = 320
 MIN_TRANSCRIPT_WORDS = 80
 MIN_TRANSCRIPT_CJK = 80
 
+FETCH_QUALITY_FULL = "full"
+FETCH_QUALITY_PARTIAL = "partial"
+FETCH_QUALITY_METADATA_ONLY = "metadata_only"
+
 
 class YouTubeImportError(Exception):
     def __init__(self, status: str, reason: str):
@@ -487,7 +491,15 @@ def fetch_youtube_capture(url: str, preferred_language: str, prefer_auto: bool, 
     metadata = _metadata_from_player(player, source_url=url, video_id=video_id)
     tracks = _caption_tracks(player)
     tried: list[str] = []
-    for track in rank_caption_tracks(tracks, preferred_language, prefer_auto=prefer_auto, allow_auto=allow_auto):
+    try:
+        ranked_tracks = rank_caption_tracks(tracks, preferred_language, prefer_auto=prefer_auto, allow_auto=allow_auto)
+    except YouTubeImportError as exc:
+        return build_partial_capture(metadata, f"caption discovery fallback: {exc.reason}", raw={
+            "caption_track_count": len(tracks),
+            "metadata_source": "youtube_watch_page",
+            "caption_attempts": [exc.reason],
+        })
+    for track in ranked_tracks:
         label = f"{track.get('language', '')}/{track.get('kind', '')}/{track.get('name', '')}"
         try:
             caption_text = fetch_caption_text(track, timeout=timeout)
@@ -507,7 +519,11 @@ def fetch_youtube_capture(url: str, preferred_language: str, prefer_auto: bool, 
             "caption_attempts": tried + [f"{label}: ok"],
         })
     reason = "; ".join(tried) if tried else "no usable caption tracks after filtering"
-    raise YouTubeImportError(STATUS_BLOCKED_INCOMPLETE_TEXT, reason)
+    return build_partial_capture(metadata, reason, raw={
+        "caption_track_count": len(tracks),
+        "metadata_source": "youtube_watch_page",
+        "caption_attempts": tried,
+    })
 
 
 def load_fixture_capture(url: str, metadata_path: Path, transcript_path: Path | None, preferred_language: str, prefer_auto: bool, allow_auto: bool) -> dict[str, Any]:
@@ -523,7 +539,7 @@ def load_fixture_capture(url: str, metadata_path: Path, transcript_path: Path | 
     metadata.setdefault("duration_hms", _format_duration(metadata.get("duration")))
     tracks = metadata.get("caption_tracks") or []
     if transcript_path is None:
-        raise YouTubeImportError(STATUS_BLOCKED_INCOMPLETE_TEXT, "fixture metadata has no transcript file")
+        return build_partial_capture(metadata, "fixture metadata has no transcript file", raw={"metadata_source": "fixture"})
     if not tracks:
         tracks = [{
             "language": metadata.get("transcript_language") or preferred_language or "en",
@@ -533,6 +549,8 @@ def load_fixture_capture(url: str, metadata_path: Path, transcript_path: Path | 
     track = select_caption_track(tracks, preferred_language, prefer_auto=prefer_auto, allow_auto=allow_auto)
     raw_text = transcript_path.read_text(encoding="utf-8")
     segments = parse_vtt(raw_text) or parse_xml_transcript(raw_text)
+    if not segments:
+        return build_partial_capture(metadata, "fixture transcript file was empty or unparsable", raw={"metadata_source": "fixture"})
     return build_capture(metadata, track, segments, raw={"metadata_source": "fixture"})
 
 
@@ -571,10 +589,79 @@ def build_capture(metadata: dict[str, Any], track: dict[str, Any], segments: lis
         "content_markdown": transcript_md,
         "transcript_text": transcript_text,
         "content_hash": _content_hash(transcript_text),
+        "fetch_quality": FETCH_QUALITY_FULL,
+        "fetch_reason": "",
         "raw": raw,
     }
     if not capture["title"]:
         raise YouTubeImportError(STATUS_BLOCKED_INCOMPLETE_TEXT, "metadata title is empty")
+    return capture
+
+
+def build_partial_capture(metadata: dict[str, Any], reason: str, raw: dict[str, Any]) -> dict[str, Any]:
+    title = _clean_text(str(metadata.get("title") or ""))
+    if not title:
+        raise YouTubeImportError(STATUS_BLOCKED_INCOMPLETE_TEXT, "metadata title is empty")
+    description = _clean_text(str(metadata.get("description") or ""))
+    channel = _clean_text(str(metadata.get("channel") or metadata.get("author") or "Unknown"))
+    parts = [
+        f"# {title}",
+        "",
+        "## Video metadata",
+        "",
+        f"- Channel: {channel}",
+        f"- Video URL: {metadata.get('canonical_url') or metadata.get('source_url', '')}",
+        f"- Published date: {metadata.get('published_date', '')}",
+        f"- Duration: {metadata.get('duration_hms') or _format_duration(metadata.get('duration'))}",
+        "",
+    ]
+    if description:
+        parts.extend(["## Description", "", description, ""])
+    else:
+        parts.extend(["## Description", "", "No public description text was available.", ""])
+    parts.extend([
+        "## Transcript availability",
+        "",
+        f"Transcript captions were not available through the current fetch layer. Reason: {reason}",
+        "",
+    ])
+    content_md = "\n".join(parts).strip()
+    quality = FETCH_QUALITY_PARTIAL if description else FETCH_QUALITY_METADATA_ONLY
+    source_language = detect_language("", " ".join([title, description]))
+    transcript_text = re.sub(r"\s+", " ", " ".join([title, description, reason])).strip()
+    if not transcript_text:
+        raise YouTubeImportError(STATUS_BLOCKED_INCOMPLETE_TEXT, "no YouTube metadata text available for fallback")
+    capture = {
+        "title": title,
+        "channel": channel,
+        "author": metadata.get("author") or channel,
+        "channel_url": metadata.get("channel_url", ""),
+        "published_date": metadata.get("published_date", ""),
+        "upload_date": metadata.get("upload_date", ""),
+        "captured_at": _now_iso(),
+        "duration": int(metadata.get("duration") or 0),
+        "duration_hms": metadata.get("duration_hms") or _format_duration(metadata.get("duration")),
+        "view_count": int(metadata.get("view_count") or 0),
+        "description": description,
+        "thumbnail_url": metadata.get("thumbnail_url", ""),
+        "source_url": metadata.get("source_url", ""),
+        "canonical_url": metadata.get("canonical_url", ""),
+        "video_id": metadata.get("video_id", ""),
+        "source_site": "YouTube",
+        "source_platform": "youtube",
+        "source_language": source_language,
+        "translation_language": "zh-CN",
+        "transcript_language": "",
+        "transcript_kind": "none",
+        "transcript_track_name": "",
+        "transcript_segments": [],
+        "content_markdown": content_md,
+        "transcript_text": transcript_text,
+        "content_hash": _content_hash(transcript_text),
+        "fetch_quality": quality,
+        "fetch_reason": reason,
+        "raw": raw,
+    }
     return capture
 
 
@@ -777,6 +864,7 @@ type: "article"
 content_kind: "youtube_transcript"
 source_platform: "youtube"
 source_type: "youtube"
+fetch_quality: "{_yaml_quote(capture.get('fetch_quality', FETCH_QUALITY_FULL))}"
 dedupe_key: "youtube:{_yaml_quote(capture.get('video_id', ''))}"
 content_hash: "{_yaml_quote(capture.get('content_hash', ''))}"
 is_translation_mirror: {str(is_mirror).lower()}
@@ -798,6 +886,7 @@ word_count:
 youtube:
   video_id: "{_yaml_quote(capture.get('video_id', ''))}"
   transcript_track_name: "{_yaml_quote(capture.get('transcript_track_name', ''))}"
+  fetch_reason: "{_yaml_quote(capture.get('fetch_reason', ''))}"
   description: "{_yaml_quote(capture.get('description', ''))}"
 capture:
   tool: "youtube_to_kb.py"
@@ -955,6 +1044,7 @@ def _print_capture_summary(capture: dict[str, Any], capture_path: Path) -> None:
     print(f"  published_date: {capture.get('published_date')}", file=sys.stderr)
     print(f"  transcript_language: {capture.get('transcript_language')}", file=sys.stderr)
     print(f"  transcript_kind: {capture.get('transcript_kind')}", file=sys.stderr)
+    print(f"  fetch_quality: {capture.get('fetch_quality', FETCH_QUALITY_FULL)}", file=sys.stderr)
     print(f"  transcript_chars: {len(capture.get('content_markdown', ''))}", file=sys.stderr)
 
 

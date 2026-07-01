@@ -142,8 +142,8 @@ def smoke_3_capture_and_bundle(cap_path: Path) -> bool:
     return ok
 
 
-def smoke_4_no_transcript_blocks() -> bool:
-    print("\n=== Smoke 4: missing transcript hard-stops ===")
+def smoke_4_no_transcript_falls_back_partial() -> bool:
+    print("\n=== Smoke 4: missing transcript falls back to partial capture ===")
     code, out, err = run([
         TEST_PY,
         str(YOUTUBE_SCRIPT),
@@ -154,9 +154,11 @@ def smoke_4_no_transcript_blocks() -> bool:
         "--dry-run",
     ])
     combined = out + "\n" + err
-    ok = check(code != 0, "missing transcript exits non-zero", f"exit={code}")
-    ok &= check("STATUS: BLOCKED_INCOMPLETE_TEXT" in combined,
-                "missing transcript reports BLOCKED_INCOMPLETE_TEXT", combined[-300:])
+    ok = check(code == 0, "missing transcript exits 0 via fallback", f"exit={code}")
+    ok &= check("STATUS: DRY_RUN_OK" in combined,
+                "missing transcript reports DRY_RUN_OK", combined[-300:])
+    ok &= check("fetch_quality: partial" in combined or "fetch_quality: metadata_only" in combined,
+                "fallback reports partial or metadata_only quality", combined[-300:])
     return ok
 
 
@@ -241,7 +243,7 @@ def main() -> int:
     results.append(ok2)
     results.append(smoke_3_capture_and_bundle(cap_path) if cap_path else False)
     results.extend([
-        smoke_4_no_transcript_blocks(),
+        smoke_4_no_transcript_falls_back_partial(),
         smoke_5_duplicate_video_id(),
         smoke_6_material_router_youtube_route(),
         smoke_7_pdf_still_unsupported(),

@@ -28,6 +28,11 @@ from urllib.parse import urlparse
 
 KB_HOME = Path(__file__).resolve().parent.parent
 SCRIPTS_DIR = KB_HOME / "scripts"
+if str(SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS_DIR))
+
+from fetchers import fetcher_for
+
 REPORTS_DIR = KB_HOME / "reports"
 WECHAT_SINGLE_SCRIPT = SCRIPTS_DIR / "wechat_url_to_kb.py"
 WECHAT_BATCH_SCRIPT = SCRIPTS_DIR / "wechat_batch_import.py"
@@ -198,6 +203,10 @@ def base_result(item: dict[str, Any], status: str = "") -> dict[str, Any]:
         "route_report_path": "",
         "duplicate_of": "",
         "failure_reason": item.get("failure_reason", ""),
+        "fetch_status": "",
+        "fetch_quality": "",
+        "fetch_reason": "",
+        "fetch_text_chars": 0,
     }
 
 
@@ -274,6 +283,46 @@ def load_capture_fields(result: dict[str, Any]) -> None:
         return
     result["title"] = data.get("title", "") or result.get("title", "")
     result["source_url"] = data.get("source_url", "") or result.get("source_url", "")
+    result["fetch_quality"] = data.get("fetch_quality", "") or result.get("fetch_quality", "")
+
+
+def apply_fetch_result(result: dict[str, Any], fetch_result: dict[str, Any] | None) -> None:
+    if not fetch_result:
+        return
+    result["fetch_status"] = fetch_result.get("status", "")
+    result["fetch_quality"] = fetch_result.get("fetch_quality", "")
+    result["fetch_reason"] = fetch_result.get("reason", "")
+    result["fetch_text_chars"] = len(fetch_result.get("text", "") or "")
+    if not result.get("title"):
+        result["title"] = fetch_result.get("title", "")
+
+
+def status_from_fetch_block(fetch_result: dict[str, Any]) -> str:
+    metadata = fetch_result.get("metadata", {}) if isinstance(fetch_result.get("metadata"), dict) else {}
+    explicit = metadata.get("error_status", "")
+    if explicit in {STATUS_BLOCKED_UNSUPPORTED, STATUS_BLOCKED_FETCH_FAILED, STATUS_BLOCKED_INCOMPLETE_TEXT}:
+        return explicit
+    reason = (fetch_result.get("reason") or "").lower()
+    if "unsupported" in reason or "robots.txt disallows" in reason:
+        return STATUS_BLOCKED_UNSUPPORTED
+    if "network" in reason or "http" in reason or "non-200" in reason:
+        return STATUS_BLOCKED_FETCH_FAILED
+    return STATUS_BLOCKED_INCOMPLETE_TEXT
+
+
+def fetch_material(item: dict[str, Any], retries: int = 1) -> dict[str, Any] | None:
+    fetcher = fetcher_for(item.get("route_kind", ""), item.get("route_flag", ""))
+    if not fetcher:
+        return None
+    last: dict[str, Any] | None = None
+    for attempt in range(retries + 1):
+        last = fetcher.fetch(item["input"])
+        metadata = last.get("metadata", {}) if isinstance(last.get("metadata"), dict) else {}
+        if last.get("status") != "blocked" or metadata.get("error_status") != STATUS_BLOCKED_FETCH_FAILED:
+            return last
+        if attempt >= retries:
+            return last
+    return last
 
 
 def status_from_single_exit(proc: subprocess.CompletedProcess[str], dry_run: bool) -> tuple[str, str]:
@@ -304,6 +353,7 @@ def run_single_wechat(item: dict[str, Any], dry_run: bool) -> dict[str, Any]:
     result["capture_json_path"] = parse_capture_path(proc.stdout, proc.stderr)
     result["status"], result["failure_reason"] = status_from_single_exit(proc, dry_run)
     load_capture_fields(result)
+    apply_fetch_result(result, item.get("_fetch_result"))
     if result["status"] == STATUS_IMPORTED:
         kb_path = parse_imported_path(proc.stdout, proc.stderr)
         result["kb_article_path"] = kb_path
@@ -324,6 +374,7 @@ def run_single_web(item: dict[str, Any], dry_run: bool) -> dict[str, Any]:
     result["status"], result["failure_reason"] = status_from_single_exit(proc, dry_run)
     result["duplicate_of"] = parse_duplicate_of(proc.stdout, proc.stderr)
     load_capture_fields(result)
+    apply_fetch_result(result, item.get("_fetch_result"))
     if result["status"] == STATUS_IMPORTED:
         kb_path = parse_imported_path(proc.stdout, proc.stderr)
         result["kb_article_path"] = kb_path
@@ -344,6 +395,7 @@ def run_single_youtube(item: dict[str, Any], dry_run: bool) -> dict[str, Any]:
     result["status"], result["failure_reason"] = status_from_single_exit(proc, dry_run)
     result["duplicate_of"] = parse_duplicate_of(proc.stdout, proc.stderr)
     load_capture_fields(result)
+    apply_fetch_result(result, item.get("_fetch_result"))
     if result["status"] == STATUS_IMPORTED:
         kb_path = parse_imported_path(proc.stdout, proc.stderr)
         result["kb_article_path"] = kb_path
@@ -420,6 +472,7 @@ def run_batch_wechat(items: list[dict[str, Any]], dry_run: bool) -> list[dict[st
         result["docs_item_path"] = batch_item.get("docs_item_path", "")
         result["site_item_path"] = batch_item.get("site_item_path", "")
         result["failure_reason"] = batch_item.get("failure_reason", "")
+        apply_fetch_result(result, item.get("_fetch_result"))
         results.append(result)
 
     if len(results) < len(items):
@@ -520,16 +573,18 @@ def write_reports(results: list[dict[str, Any]], gates: list[dict[str, Any]], dr
         "",
         "## Inputs",
         "",
-        "| # | Input | Inferred type | Route | Status | Title | KB path | Failure reason |",
-        "|---:|---|---|---|---|---|---|---|",
+        "| # | Input | Inferred type | Route | Fetch | Quality | Status | Title | KB path | Failure reason |",
+        "|---:|---|---|---|---|---|---|---|---|---|",
     ])
     for idx, result in enumerate(results, 1):
         lines.append(
-            "| {idx} | {input} | {itype} | {route} | {status} | {title} | {kb} | {reason} |".format(
+            "| {idx} | {input} | {itype} | {route} | {fetch} | {quality} | {status} | {title} | {kb} | {reason} |".format(
                 idx=idx,
                 input=(result.get("input", "")[:80]).replace("|", "\\|"),
                 itype=result.get("inferred_type", ""),
                 route=(result.get("route", "")[:45]).replace("|", "\\|"),
+                fetch=result.get("fetch_status", ""),
+                quality=result.get("fetch_quality", ""),
                 status=result.get("status", ""),
                 title=(result.get("title", "")[:40]).replace("|", "\\|"),
                 kb=(result.get("kb_article_path", "")[:45]).replace("|", "\\|"),
@@ -554,9 +609,21 @@ def route_inputs(values: list[str], dry_run: bool) -> tuple[list[dict[str, Any]]
     for item in unsupported:
         results_by_index[item["index"]] = base_result(item, STATUS_BLOCKED_UNSUPPORTED)
 
-    wechat_items = [item for item in supported if item.get("route_kind") == "wechat"]
-    web_items = [item for item in supported if item.get("route_kind") == "web"]
-    youtube_items = [item for item in supported if item.get("route_kind") == "youtube"]
+    runnable_supported: list[dict[str, Any]] = []
+    for item in supported:
+        fetch_result = fetch_material(item)
+        item["_fetch_result"] = fetch_result
+        if fetch_result and fetch_result.get("status") == "blocked":
+            result = base_result(item, status_from_fetch_block(fetch_result))
+            apply_fetch_result(result, fetch_result)
+            result["failure_reason"] = fetch_result.get("reason", "")
+            results_by_index[item["index"]] = result
+        else:
+            runnable_supported.append(item)
+
+    wechat_items = [item for item in runnable_supported if item.get("route_kind") == "wechat"]
+    web_items = [item for item in runnable_supported if item.get("route_kind") == "web"]
+    youtube_items = [item for item in runnable_supported if item.get("route_kind") == "youtube"]
 
     if len(wechat_items) > 1:
         for result, item in zip(run_batch_wechat(wechat_items, dry_run=dry_run), wechat_items):
