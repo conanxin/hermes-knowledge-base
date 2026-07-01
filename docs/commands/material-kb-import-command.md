@@ -31,6 +31,8 @@
 python3 scripts/material_to_kb.py --input "<URL_OR_FILE>" --dry-run
 python3 scripts/material_to_kb.py --input "<URL_OR_FILE>" --import
 python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-partial-transcript --import
+python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-auto-captions --import
+python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --caption-provider yt-dlp --dry-run
 python3 scripts/material_to_kb.py --input-list tmp/materials.txt --dry-run
 python3 scripts/material_to_kb.py --input-list tmp/materials.txt --import
 ```
@@ -80,6 +82,18 @@ v0.3.81 adds an import quality gate for `youtube_to_kb.py` and the unified mater
 - blocked fetches, empty captions, no transcript body, login/cookie/paywall/private access, and text below the threshold never write KB entries.
 - Material reports include `fetch_status`, `fetch_quality`, `fetch_reason`, `transcript_language`, `transcript_kind`, `transcript_char_count`, `import_allowed`, and `import_block_reason`.
 
+v0.3.82 adds automatic transcript providers before the metadata-only fallback:
+
+1. direct `captionTracks`: try original URL, `fmt=vtt`, `fmt=srv3`, `fmt=ttml`, and `fmt=json3`
+2. subtitle-only `yt-dlp`: `--skip-download`, write subtitles only, never video files
+3. optional `youtube-transcript-api`: used only when already installed
+4. metadata diagnostics: report-only, never importable
+
+Automatic captions can be `fetch_quality=full`, but import requires explicit
+`--allow-auto-captions`; generated entries record `transcript_kind: auto` and
+`transcript_needs_review: true`. Material JSON reports include `provider_attempts`
+for every YouTube input.
+
 ---
 
 ## 报告
@@ -113,6 +127,7 @@ reports/material_import_YYYYMMDD_HHMMSS.json
 - `transcript_char_count`
 - `import_allowed`
 - `import_block_reason`
+- `provider_attempts`
 
 状态值包括：
 

@@ -17,6 +17,8 @@
 python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --dry-run
 python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --import
 python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --allow-partial-transcript --import
+python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --allow-auto-captions --import
+python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --caption-provider yt-dlp --dry-run
 python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --transcript-file "<file.vtt|file.srt|file.txt>" --dry-run
 ```
 
@@ -26,6 +28,7 @@ python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --transcript-file "<file.v
 python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --dry-run
 python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --import
 python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-partial-transcript --import
+python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-auto-captions --import
 ```
 
 ### v0.3.81 transcript quality gate
@@ -49,6 +52,22 @@ Rules:
 - No captions, empty captions, unusable transcript, login/cookie/paywall/private access, or text below the threshold must stop before writing `content/articles`.
 - The script does not download YouTube video files and does not fabricate transcript text.
 - `--transcript-file` is a local fallback for a user-supplied `.vtt`, `.srt`, or `.txt` transcript; it records `transcript_kind: local` and does not pretend the file came from YouTube captions.
+
+### v0.3.82 automatic transcript providers
+
+YouTube import no longer requires the user to provide a local transcript file first. The script tries:
+
+1. direct `captionTracks`: original URL, `fmt=vtt`, `fmt=srv3`, `fmt=ttml`, and `fmt=json3`
+2. subtitle-only `yt-dlp`: metadata/subtitle output only, never video files
+3. optional `youtube-transcript-api`: only when already installed in the environment
+4. metadata-only diagnostics: report-only, never importable
+
+Automatic captions can be accepted as a full transcript only when they pass the 800-character gate.
+They are marked `transcript_kind: auto` and `transcript_needs_review: true`; import requires
+explicit `--allow-auto-captions`. `metadata_only` and no-transcript results remain blocked.
+
+Every capture and material report records `provider_attempts` with provider, status, language,
+kind, format, char_count, and reason.
 
 支持 `youtube.com/watch?v=...`、`youtu.be/...`、`youtube.com/shorts/...`。脚本只获取公开 metadata 与字幕 / transcript，不下载视频文件、不登录、不读取 cookie。没有字幕、字幕为空或过短、需要登录/访问受限时返回 `BLOCKED_INCOMPLETE_TEXT` 或 `BLOCKED_UNSUPPORTED`，不写半成品 KB 条目。
 

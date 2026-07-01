@@ -23,6 +23,7 @@ ROUTER_SCRIPT = SCRIPTS_DIR / "material_to_kb.py"
 WECHAT_FIXTURE = REPO_ROOT / "tests" / "fixtures" / "wechat_sample_article.html"
 WEB_FIXTURE = REPO_ROOT / "tests" / "fixtures" / "web_sample_article.html"
 YOUTUBE_METADATA = REPO_ROOT / "tests" / "fixtures" / "youtube_sample_metadata.json"
+YTDLP_TRANSCRIPT = REPO_ROOT / "tests" / "fixtures" / "youtube_ytdlp_subtitle.vtt"
 YOUTUBE_URL = "https://youtu.be/ytfixture123"
 ENV = {**os.environ, "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"}
 
@@ -82,8 +83,8 @@ def smoke_2_web_fetch() -> bool:
     return ok
 
 
-def smoke_3_youtube_partial_fallback() -> bool:
-    print("\n=== Smoke 3: YouTube fetcher returns partial without captions ===")
+def smoke_3_youtube_metadata_fallback() -> bool:
+    print("\n=== Smoke 3: YouTube fetcher returns metadata_only without captions ===")
     old_meta = os.environ.get("HERMES_YOUTUBE_FIXTURE_METADATA")
     old_transcript = os.environ.get("HERMES_YOUTUBE_FIXTURE_TRANSCRIPT")
     os.environ["HERMES_YOUTUBE_FIXTURE_METADATA"] = str(YOUTUBE_METADATA)
@@ -100,7 +101,7 @@ def smoke_3_youtube_partial_fallback() -> bool:
         else:
             os.environ["HERMES_YOUTUBE_FIXTURE_TRANSCRIPT"] = old_transcript
     ok = check(result.get("status") == "partial", "YouTube fetch status partial", str(result))
-    ok &= check(result.get("fetch_quality") in {"partial", "metadata_only"}, "YouTube quality is partial or metadata_only")
+    ok &= check(result.get("fetch_quality") == "metadata_only", "YouTube quality is metadata_only")
     ok &= check(len(result.get("text", "")) > 80, "YouTube fallback returns metadata/description text")
     ok &= check("transcript" in result.get("reason", "").lower(), "YouTube fallback records transcript reason")
     capture = result.get("metadata", {}).get("capture", {})
@@ -134,6 +135,40 @@ def smoke_4_router_uses_fetch_layer() -> bool:
     return ok
 
 
+def smoke_5_youtube_ytdlp_fixture_fallback() -> bool:
+    print("\n=== Smoke 5: YouTube fetcher can use yt-dlp fixture fallback ===")
+    old_env = {name: os.environ.get(name) for name in [
+        "HERMES_YOUTUBE_FIXTURE_METADATA",
+        "HERMES_YOUTUBE_FIXTURE_TRANSCRIPT",
+        "HERMES_YTDLP_FIXTURE_SUBTITLE",
+        "HERMES_YTDLP_FIXTURE_KIND",
+        "HERMES_YTDLP_FIXTURE_LANGUAGE",
+    ]}
+    os.environ["HERMES_YOUTUBE_FIXTURE_METADATA"] = str(YOUTUBE_METADATA)
+    os.environ.pop("HERMES_YOUTUBE_FIXTURE_TRANSCRIPT", None)
+    os.environ["HERMES_YTDLP_FIXTURE_SUBTITLE"] = str(YTDLP_TRANSCRIPT)
+    os.environ["HERMES_YTDLP_FIXTURE_KIND"] = "auto"
+    os.environ["HERMES_YTDLP_FIXTURE_LANGUAGE"] = "en"
+    try:
+        result = YouTubeFetcher(route_flag="--url").fetch(YOUTUBE_URL)
+    finally:
+        for name, old in old_env.items():
+            if old is None:
+                os.environ.pop(name, None)
+            else:
+                os.environ[name] = old
+    capture = result.get("metadata", {}).get("capture", {})
+    attempts = capture.get("provider_attempts") or []
+    ok = check(result.get("status") == "ok", "YouTube yt-dlp fixture fetch status ok", str(result))
+    ok &= check(result.get("fetch_quality") == "full", "YouTube yt-dlp fixture quality full")
+    ok &= check(capture.get("transcript_kind") == "auto", "auto transcript kind recorded", str(capture))
+    ok &= check(capture.get("transcript_needs_review") is True, "auto transcript marked needs_review", str(capture))
+    ok &= check(capture.get("import_allowed") is False, "auto transcript import blocked by default", str(capture))
+    ok &= check(any(a.get("provider") == "yt-dlp" and a.get("status") == "ok" for a in attempts if isinstance(a, dict)),
+                "provider_attempts include yt-dlp ok", str(attempts))
+    return ok
+
+
 def main() -> int:
     print("=" * 60)
     print("Material fetch layer smoke tests (v0.3.80)")
@@ -141,8 +176,9 @@ def main() -> int:
     results = [
         smoke_1_wechat_fetch(),
         smoke_2_web_fetch(),
-        smoke_3_youtube_partial_fallback(),
+        smoke_3_youtube_metadata_fallback(),
         smoke_4_router_uses_fetch_layer(),
+        smoke_5_youtube_ytdlp_fixture_fallback(),
     ]
     print("\n" + "=" * 60)
     passed = sum(results)

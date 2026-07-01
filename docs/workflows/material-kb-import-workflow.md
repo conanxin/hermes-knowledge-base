@@ -1,6 +1,6 @@
 # Material KB Import Workflow
 
-> **版本**: 1.3 (`v0.3.81`)
+> **版本**: 1.4 (`v0.3.82`)
 > **创建时间**: 2026-07-01  
 > **入口命令**: [`docs/commands/material-kb-import-command.md`](../commands/material-kb-import-command.md)  
 > **入口脚本**: `scripts/material_to_kb.py`
@@ -80,6 +80,7 @@ dry-run 不应写入 KB 条目。
 ```bash
 python3 scripts/material_to_kb.py --input "<URL_OR_FILE>" --import
 python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-partial-transcript --import
+python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-auto-captions --import
 ```
 
 或：
@@ -114,6 +115,17 @@ quality gate fields in the material report.
 Record these fields in the markdown and JSON report: `fetch_status`, `fetch_quality`,
 `fetch_reason`, `transcript_language`, `transcript_kind`, `transcript_char_count`,
 `import_allowed`, and `import_block_reason`.
+
+v0.3.82 provider chain:
+
+- direct `captionTracks`: original, `vtt`, `srv3`, `ttml`, `json3`
+- subtitle-only `yt-dlp`: `--skip-download`; no video files are downloaded
+- optional `youtube-transcript-api`: only when already installed
+- metadata-only diagnostics: never importable
+
+Automatic captions require explicit `--allow-auto-captions` for import and must be marked
+`transcript_kind: auto` plus `transcript_needs_review: true`. The material JSON report keeps
+`provider_attempts` for each YouTube input so failed providers and fallback success are auditable.
 
 ---
 

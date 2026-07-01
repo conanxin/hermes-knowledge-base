@@ -16,6 +16,8 @@ For a plain YouTube URL, use the direct transcript importer first:
 python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --dry-run
 python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --import
 python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --allow-partial-transcript --import
+python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --allow-auto-captions --import
+python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --caption-provider yt-dlp --dry-run
 python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --transcript-file "<file.vtt|file.srt|file.txt>" --dry-run
 ```
 
@@ -25,6 +27,7 @@ The unified material router now delegates YouTube URLs to the same script:
 python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --dry-run
 python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --import
 python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-partial-transcript --import
+python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-auto-captions --import
 ```
 
 This route creates the standard KB six-file bundle from public metadata and a usable transcript:
@@ -58,6 +61,18 @@ Material reports and capture JSON must include `fetch_status`, `fetch_quality`, 
 `transcript_language`, `transcript_kind`, `transcript_char_count`, `import_allowed`, and
 `import_block_reason`. A local transcript fallback may be used with `--transcript-file` when the
 user supplies a `.vtt`, `.srt`, or `.txt` transcript; it must be marked `transcript_kind: local`.
+
+v0.3.82 automatic transcript provider chain:
+
+- direct `captionTracks`: original, `vtt`, `srv3`, `ttml`, `json3`
+- subtitle-only `yt-dlp`: `--skip-download`; do not download video files
+- optional `youtube-transcript-api`: only when already installed
+- metadata-only diagnostics: report-only and never importable
+
+Automatic captions are marked `transcript_kind: auto` and `transcript_needs_review: true`.
+Importing full automatic captions requires explicit `--allow-auto-captions`; metadata-only and
+no-transcript results must remain blocked. Capture JSON and material reports preserve
+`provider_attempts` for auditability.
 
 The older workflow below remains useful when a complete YouTube Video Brief output directory already exists.
 

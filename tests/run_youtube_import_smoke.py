@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke tests for YouTube transcript import (v0.3.81).
+"""Smoke tests for YouTube transcript import (v0.3.82).
 
 The tests are offline and use synthetic metadata/VTT fixtures. They do not
 fetch YouTube, download video files, or rely on external caption services.
@@ -24,6 +24,9 @@ YOUTUBE_SCRIPT = REPO_ROOT / "scripts" / "youtube_to_kb.py"
 ROUTER_SCRIPT = REPO_ROOT / "scripts" / "material_to_kb.py"
 METADATA_FIXTURE = REPO_ROOT / "tests" / "fixtures" / "youtube_sample_metadata.json"
 TRANSCRIPT_FIXTURE = REPO_ROOT / "tests" / "fixtures" / "youtube_sample_transcript.vtt"
+JSON3_TRANSCRIPT_FIXTURE = REPO_ROOT / "tests" / "fixtures" / "youtube_sample_transcript.json3"
+SRV3_TRANSCRIPT_FIXTURE = REPO_ROOT / "tests" / "fixtures" / "youtube_sample_transcript.srv3.xml"
+YTDLP_TRANSCRIPT_FIXTURE = REPO_ROOT / "tests" / "fixtures" / "youtube_ytdlp_subtitle.vtt"
 METADATA_ONLY_FIXTURE = REPO_ROOT / "tests" / "fixtures" / "youtube_metadata_only.json"
 PARTIAL_TRANSCRIPT_FIXTURE = REPO_ROOT / "tests" / "fixtures" / "youtube_partial_transcript.vtt"
 PDF_FIXTURE = "tests/fixtures/material_router_sample.pdf"
@@ -147,8 +150,86 @@ def smoke_3_capture_and_bundle(cap_path: Path) -> bool:
     return ok
 
 
-def smoke_4_no_transcript_falls_back_partial() -> bool:
-    print("\n=== Smoke 4: missing transcript dry-run is reportable but not importable ===")
+def smoke_4_provider_parsers() -> bool:
+    print("\n=== Smoke 4: caption provider parsers ===")
+    module = load_module(YOUTUBE_SCRIPT, "youtube_to_kb_provider_parsers")
+    vtt_segments = module.parse_vtt(TRANSCRIPT_FIXTURE.read_text(encoding="utf-8"))
+    json3_segments = module.parse_json3_transcript(JSON3_TRANSCRIPT_FIXTURE.read_text(encoding="utf-8"))
+    srv3_segments = module.parse_xml_transcript(SRV3_TRANSCRIPT_FIXTURE.read_text(encoding="utf-8"))
+    ok = check(len(vtt_segments) >= 10, "direct VTT parser returns segments", str(len(vtt_segments)))
+    ok &= check(len(json3_segments) == 3, "direct json3 parser returns segments", str(json3_segments))
+    ok &= check(len(srv3_segments) == 3, "direct srv3 XML parser returns segments", str(srv3_segments))
+    ok &= check(module._segments_char_count(json3_segments) > 80, "json3 parser produces visible text")
+    return ok
+
+
+def smoke_5_ytdlp_fallback_and_auto_gate() -> bool:
+    print("\n=== Smoke 5: direct empty can fallback to yt-dlp fixture ===")
+    env = {
+        **ENV,
+        "HERMES_YOUTUBE_FIXTURE_METADATA": str(METADATA_FIXTURE),
+        "HERMES_YTDLP_FIXTURE_SUBTITLE": str(YTDLP_TRANSCRIPT_FIXTURE),
+        "HERMES_YTDLP_FIXTURE_KIND": "auto",
+        "HERMES_YTDLP_FIXTURE_LANGUAGE": "en",
+    }
+    code, out, err = run([TEST_PY, str(ROUTER_SCRIPT), "--input", YOUTUBE_URL, "--dry-run"], env=env)
+    code_allowed, out_allowed, err_allowed = run([
+        TEST_PY,
+        str(ROUTER_SCRIPT),
+        "--input",
+        YOUTUBE_URL,
+        "--allow-auto-captions",
+        "--dry-run",
+    ], env=env)
+    data = parse_router_stdout(out)
+    data_allowed = parse_router_stdout(out_allowed)
+    item = data.get("items", [{}])[0]
+    item_allowed = data_allowed.get("items", [{}])[0]
+    attempts = item.get("provider_attempts") or []
+    ok = check(code == 0, "router exits 0 with yt-dlp fixture", f"exit={code}\nstderr tail: {err[-300:]}")
+    ok &= check(item.get("route") == "youtube_to_kb.py", "router still routes to youtube_to_kb.py", str(item))
+    ok &= check(item.get("fetch_quality") == "full", "yt-dlp fixture produces full fetch quality", str(item))
+    ok &= check(item.get("transcript_kind") == "auto", "auto caption kind is preserved", str(item))
+    ok &= check(item.get("import_allowed") is False, "auto captions default import_allowed false", str(item))
+    ok &= check("auto captions require --allow-auto-captions" in item.get("import_block_reason", ""),
+                "auto caption import block reason is explicit", str(item))
+    ok &= check(any(a.get("provider") == "yt-dlp" and a.get("status") == "ok" for a in attempts if isinstance(a, dict)),
+                "provider_attempts include yt-dlp ok", str(attempts))
+    ok &= check(code_allowed == 0, "allow-auto dry-run exits 0", f"exit={code_allowed}\nstderr tail: {err_allowed[-300:]}")
+    ok &= check(item_allowed.get("import_allowed") is True, "allow-auto captions makes full auto import_allowed true", str(item_allowed))
+    ok &= check("automatic captions need review" in item_allowed.get("warning", ""),
+                "allow-auto captions keeps needs-review warning", str(item_allowed))
+    return ok
+
+
+def smoke_6_ytdlp_unavailable_is_reported() -> bool:
+    print("\n=== Smoke 6: unavailable yt-dlp provider is reported ===")
+    env = {**ENV, "HERMES_YTDLP_FORCE_UNAVAILABLE": "1"}
+    code, out, err = run([
+        TEST_PY,
+        str(YOUTUBE_SCRIPT),
+        "--url",
+        YOUTUBE_URL,
+        "--metadata-file",
+        str(METADATA_FIXTURE),
+        "--caption-provider",
+        "yt-dlp",
+        "--dry-run",
+    ], env=env)
+    combined = out + "\n" + err
+    ok = check(code == 0, "yt-dlp unavailable exits 0 in dry-run", f"exit={code}")
+    cap_path = parse_capture_path(err) if "[capture]" in err else None
+    data = json.loads(cap_path.read_text(encoding="utf-8")) if cap_path else {}
+    attempts = data.get("provider_attempts") or []
+    ok &= check("STATUS: DRY_RUN_OK" in combined, "dry-run remains reportable", combined[-300:])
+    ok &= check(any(a.get("provider") == "yt-dlp" and a.get("status") == "unavailable" for a in attempts if isinstance(a, dict)),
+                "provider_attempts include yt-dlp unavailable", str(attempts))
+    ok &= check(data.get("fetch_quality") == "metadata_only", "unavailable provider falls back to metadata_only", str(data))
+    return ok
+
+
+def smoke_7_no_transcript_falls_back_metadata_only() -> bool:
+    print("\n=== Smoke 7: missing transcript dry-run is reportable but not importable ===")
     code, out, err = run([
         TEST_PY,
         str(YOUTUBE_SCRIPT),
@@ -162,8 +243,8 @@ def smoke_4_no_transcript_falls_back_partial() -> bool:
     ok = check(code == 0, "missing transcript exits 0 via fallback", f"exit={code}")
     ok &= check("STATUS: DRY_RUN_OK" in combined,
                 "missing transcript reports DRY_RUN_OK", combined[-300:])
-    ok &= check("fetch_quality: partial" in combined or "fetch_quality: metadata_only" in combined,
-                "fallback reports partial or metadata_only quality", combined[-300:])
+    ok &= check("fetch_quality: metadata_only" in combined,
+                "fallback reports metadata_only quality", combined[-300:])
     ok &= check("IMPORT_ALLOWED: false" in combined or "import_allowed: false" in combined,
                 "fallback dry-run records import_allowed false", combined[-300:])
     ok &= check("IMPORT_BLOCK_REASON:" in combined or "import_block_reason:" in combined,
@@ -171,8 +252,8 @@ def smoke_4_no_transcript_falls_back_partial() -> bool:
     return ok
 
 
-def smoke_5_metadata_only_import_blocked() -> bool:
-    print("\n=== Smoke 5: metadata-only import is blocked ===")
+def smoke_8_metadata_only_import_blocked() -> bool:
+    print("\n=== Smoke 8: metadata-only import is blocked ===")
     code, out, err = run([
         TEST_PY,
         str(YOUTUBE_SCRIPT),
@@ -191,8 +272,8 @@ def smoke_5_metadata_only_import_blocked() -> bool:
     return ok
 
 
-def smoke_6_partial_transcript_gate() -> bool:
-    print("\n=== Smoke 6: partial transcript requires explicit allow flag ===")
+def smoke_9_partial_transcript_gate() -> bool:
+    print("\n=== Smoke 9: partial transcript requires explicit allow flag ===")
     partial_meta = json.loads(METADATA_FIXTURE.read_text(encoding="utf-8"))
     partial_meta["video_id"] = "F3fCktnkBbc"
     partial_meta["source_url"] = "https://www.youtube.com/watch?v=F3fCktnkBbc"
@@ -236,8 +317,8 @@ def smoke_6_partial_transcript_gate() -> bool:
     return ok
 
 
-def smoke_7_short_transcript_blocked() -> bool:
-    print("\n=== Smoke 7: transcript below minimum is blocked ===")
+def smoke_10_short_transcript_blocked() -> bool:
+    print("\n=== Smoke 10: transcript below minimum is blocked ===")
     with tempfile.TemporaryDirectory(prefix=".youtube-short-smoke-", dir=REPO_ROOT) as tmp:
         short_path = Path(tmp) / "short.vtt"
         short_path.write_text("WEBVTT\n\n00:00:00.000 --> 00:00:02.000\nToo short.\n", encoding="utf-8")
@@ -261,8 +342,8 @@ def smoke_7_short_transcript_blocked() -> bool:
     return ok
 
 
-def smoke_8_duplicate_video_id() -> bool:
-    print("\n=== Smoke 8: duplicate video_id detection ===")
+def smoke_11_duplicate_video_id() -> bool:
+    print("\n=== Smoke 11: duplicate video_id detection ===")
     duplicate_meta = json.loads(METADATA_FIXTURE.read_text(encoding="utf-8"))
     duplicate_meta["video_id"] = "F3fCktnkBbc"
     duplicate_meta["source_url"] = "https://www.youtube.com/watch?v=F3fCktnkBbc"
@@ -290,8 +371,8 @@ def smoke_8_duplicate_video_id() -> bool:
     return ok
 
 
-def smoke_9_material_router_youtube_route() -> bool:
-    print("\n=== Smoke 9: material_to_kb routes YouTube offline ===")
+def smoke_12_material_router_youtube_route() -> bool:
+    print("\n=== Smoke 12: material_to_kb routes YouTube offline ===")
     env = {
         **ENV,
         "HERMES_YOUTUBE_FIXTURE_METADATA": str(METADATA_FIXTURE),
@@ -314,8 +395,8 @@ def smoke_9_material_router_youtube_route() -> bool:
     return ok
 
 
-def smoke_10_pdf_still_unsupported() -> bool:
-    print("\n=== Smoke 10: PDF remains unsupported ===")
+def smoke_13_pdf_still_unsupported() -> bool:
+    print("\n=== Smoke 13: PDF remains unsupported ===")
     code, out, err = run([TEST_PY, str(ROUTER_SCRIPT), "--input", PDF_FIXTURE, "--dry-run"])
     ok = check(code == 0, "router exits 0 for unsupported PDF", f"exit={code}\nstderr tail: {err[-300:]}")
     data = parse_router_stdout(out)
@@ -326,8 +407,8 @@ def smoke_10_pdf_still_unsupported() -> bool:
     return ok
 
 
-def smoke_11_quality_gates() -> bool:
-    print("\n=== Smoke 11: check_kb and check_pages_sync ===")
+def smoke_14_quality_gates() -> bool:
+    print("\n=== Smoke 14: check_kb and check_pages_sync ===")
     code1, out1, _ = run([TEST_PY, str(REPO_ROOT / "scripts" / "check_kb.py")])
     code2, out2, _ = run([TEST_PY, str(REPO_ROOT / "scripts" / "check_pages_sync.py")])
     ok = check(code1 == 0 and "STATUS: PASS" in out1, "check_kb.py PASS", f"exit={code1}")
@@ -337,21 +418,24 @@ def smoke_11_quality_gates() -> bool:
 
 def main() -> int:
     print("=" * 60)
-    print("YouTube transcript import smoke tests (v0.3.81)")
+    print("YouTube transcript import smoke tests (v0.3.82)")
     print("=" * 60)
     results = [smoke_1_inference_rules()]
     ok2, cap_path = smoke_2_youtube_script_fixture_dry_run()
     results.append(ok2)
     results.append(smoke_3_capture_and_bundle(cap_path) if cap_path else False)
     results.extend([
-        smoke_4_no_transcript_falls_back_partial(),
-        smoke_5_metadata_only_import_blocked(),
-        smoke_6_partial_transcript_gate(),
-        smoke_7_short_transcript_blocked(),
-        smoke_8_duplicate_video_id(),
-        smoke_9_material_router_youtube_route(),
-        smoke_10_pdf_still_unsupported(),
-        smoke_11_quality_gates(),
+        smoke_4_provider_parsers(),
+        smoke_5_ytdlp_fallback_and_auto_gate(),
+        smoke_6_ytdlp_unavailable_is_reported(),
+        smoke_7_no_transcript_falls_back_metadata_only(),
+        smoke_8_metadata_only_import_blocked(),
+        smoke_9_partial_transcript_gate(),
+        smoke_10_short_transcript_blocked(),
+        smoke_11_duplicate_video_id(),
+        smoke_12_material_router_youtube_route(),
+        smoke_13_pdf_still_unsupported(),
+        smoke_14_quality_gates(),
     ])
     print("\n" + "=" * 60)
     passed = sum(results)

@@ -1,0 +1,31 @@
+{
+  "events": [
+    {
+      "tStartMs": 0,
+      "segs": [
+        {
+          "utf8": "Welcome to a synthetic json3 caption sample. "
+        },
+        {
+          "utf8": "It demonstrates how YouTube caption events can be joined."
+        }
+      ]
+    },
+    {
+      "tStartMs": 7400,
+      "segs": [
+        {
+          "utf8": "The parser should preserve useful ordering and timing."
+        }
+      ]
+    },
+    {
+      "tStartMs": 13200,
+      "segs": [
+        {
+          "utf8": "No real article or video transcript is embedded in this fixture."
+        }
+      ]
+    }
+  ]
+}

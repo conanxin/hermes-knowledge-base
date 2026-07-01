@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transcript>
+  <text start="0.0" dur="4.0">Welcome to a synthetic srv3 caption sample.</text>
+  <text start="4.0" dur="5.0">It checks XML caption parsing without relying on YouTube.</text>
+  <text start="9.0" dur="6.0">The content is deliberately short and artificial for smoke tests.</text>
+</transcript>

@@ -100,6 +100,18 @@ python3 scripts/audit_kb_state.py
 
 Direct YouTube import defaults to full transcripts only. `fetch_quality=partial` may dry-run with a warning, but import requires `--allow-partial-transcript` and at least 800 visible transcript characters. `fetch_quality=metadata_only`, no captions, empty/too-short transcript, login/cookie/paywall/private access, or blocked fetches never write KB entries.
 
+### YouTube automatic transcript providers (v0.3.82)
+
+`scripts/youtube_to_kb.py` now tries a provider chain before giving up: direct `captionTracks` (`original`, `vtt`, `srv3`, `ttml`, `json3`), subtitle-only `yt-dlp`, optional `youtube-transcript-api`, then metadata-only diagnostics. It still never downloads video files, never uses cookies/login state, and never turns a description into a transcript.
+
+Automatic captions can produce `fetch_quality=full`, but they are marked `transcript_kind: auto` and `transcript_needs_review: true`. Importing full automatic captions requires explicit `--allow-auto-captions`; metadata-only remains blocked.
+
+```bash
+python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --dry-run
+python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-auto-captions --import
+python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --caption-provider yt-dlp --dry-run
+```
+
 ### 7. 微信公众号：当前真实能力
 
 **两条可用通道**（都不登录微信、不扫码、不读 cookie）：
@@ -316,6 +328,7 @@ hermes-knowledge-base/
 | **v0.3.77** | **新增普通网页文章入库路线**（`scripts/web_article_to_kb.py`，公开网页 URL → capture → KB） | 统一入口 `generic_web_url` 接入；YouTube/PDF 仍返回 `BLOCKED_UNSUPPORTED` |
 | **v0.3.79** | **新增 YouTube 字幕/转录稿入库路线**（`scripts/youtube_to_kb.py`，YouTube URL → metadata + transcript → KB） | 统一入口 `youtube_url` 接入；无字幕、字幕过短、需登录或不可公开获取时 hard stop；PDF 仍返回 `BLOCKED_UNSUPPORTED` |
 | **v0.3.81** | **新增 YouTube fetch quality gate**（`full` / `partial` / `metadata_only`） | 默认只入库 full transcript；partial 需要 `--allow-partial-transcript` 且满足 800 字符阈值；metadata-only 不入库 |
+| **v0.3.82** | **新增 YouTube automatic transcript providers**（direct captionTracks / subtitle-only yt-dlp / optional transcript API） | 自动字幕需 `--allow-auto-captions` 才可入库；provider_attempts 写入 capture 与 material report；metadata-only 仍不入库 |
 
 ---
 

@@ -1,0 +1,37 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:08.000
+This synthetic subtitle file stands in for a subtitle-only yt-dlp fallback result.
+
+00:00:08.000 --> 00:00:17.000
+It verifies that the importer can accept a provider result without downloading a video file or requiring browser cookies.
+
+00:00:17.000 --> 00:00:27.000
+The fallback still has to satisfy the same transcript quality gate that applies to direct caption tracks.
+
+00:00:27.000 --> 00:00:38.000
+That means the visible transcript text must be long enough to support a knowledge base entry and later human review.
+
+00:00:38.000 --> 00:00:49.000
+Automatic captions are useful, but they remain marked as needing review because speech recognition can miss names and numbers.
+
+00:00:49.000 --> 00:01:00.000
+Manual captions remain preferable when available, since they are usually more stable and closer to the published material.
+
+00:01:00.000 --> 00:01:11.000
+When the direct caption endpoint returns empty text, a subtitle-only backend provides another public and non-invasive route.
+
+00:01:11.000 --> 00:01:22.000
+The route records every provider attempt so a reader can see which fallback succeeded and which ones were unavailable.
+
+00:01:22.000 --> 00:01:34.000
+If all transcript providers fail, the importer must report metadata only and refuse to write a half finished entry.
+
+00:01:34.000 --> 00:01:46.000
+This is the important boundary: metadata and description text are useful for diagnostics but are not a transcript body.
+
+00:01:46.000 --> 00:01:58.000
+The same router also needs to keep ordinary web article imports and WeChat article imports unchanged while YouTube improves.
+
+00:01:58.000 --> 00:02:10.000
+With this provider chain, the system has a better chance of finding public subtitles while still being honest about failure.

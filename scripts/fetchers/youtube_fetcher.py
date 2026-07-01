@@ -23,7 +23,11 @@ class YouTubeFetcher(BaseFetcher):
         except Exception as exc:
             return self.blocked(str(exc), metadata={"error_status": "BLOCKED_FETCH_FAILED"})
 
-        import_allowed, import_block_reason, warning = youtube.evaluate_import_quality(capture, allow_partial=False)
+        import_allowed, import_block_reason, warning = youtube.evaluate_import_quality(
+            capture,
+            allow_partial=False,
+            allow_auto_captions=False,
+        )
         capture["transcript_char_count"] = youtube.transcript_char_count(capture)
         capture["import_allowed"] = import_allowed
         capture["import_block_reason"] = import_block_reason
@@ -39,6 +43,7 @@ class YouTubeFetcher(BaseFetcher):
             "video_id": capture.get("video_id", ""),
             "transcript_kind": capture.get("transcript_kind", ""),
             "transcript_language": capture.get("transcript_language", ""),
+            "provider_attempts": capture.get("provider_attempts", []),
         }
         images = []
         if capture.get("thumbnail_url"):
@@ -61,6 +66,7 @@ class YouTubeFetcher(BaseFetcher):
                 preferred_language="",
                 prefer_auto=False,
                 allow_auto=True,
+                caption_provider=os.environ.get("HERMES_YOUTUBE_CAPTION_PROVIDER", "auto"),
             )
         return youtube.fetch_youtube_capture(
             source,
@@ -68,4 +74,5 @@ class YouTubeFetcher(BaseFetcher):
             prefer_auto=False,
             allow_auto=True,
             timeout=20,
+            caption_provider=os.environ.get("HERMES_YOUTUBE_CAPTION_PROVIDER", "auto"),
         )

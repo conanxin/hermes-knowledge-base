@@ -87,6 +87,13 @@ def build_arg_parser() -> argparse.ArgumentParser:
     mode.add_argument("--dry-run", action="store_true", help="route and validate without writing KB entries")
     mode.add_argument("--import", dest="do_import", action="store_true", help="run supported import routes")
     parser.add_argument("--allow-partial-transcript", action="store_true", help="YouTube only: allow importing partial transcripts; metadata-only fetches remain blocked")
+    parser.add_argument("--allow-auto-captions", action="store_true", help="YouTube only: allow importing full automatic captions; they are marked needs_review")
+    parser.add_argument(
+        "--caption-provider",
+        choices=["auto", "direct", "yt-dlp", "transcript-api"],
+        default="auto",
+        help="YouTube only: transcript provider chain to use",
+    )
     return parser
 
 
@@ -214,6 +221,7 @@ def base_result(item: dict[str, Any], status: str = "") -> dict[str, Any]:
         "import_allowed": "",
         "import_block_reason": "",
         "warning": "",
+        "provider_attempts": [],
     }
 
 
@@ -299,6 +307,9 @@ def load_capture_fields(result: dict[str, Any]) -> None:
         result["import_allowed"] = bool(data.get("import_allowed"))
     result["import_block_reason"] = data.get("import_block_reason", "") or result.get("import_block_reason", "")
     result["warning"] = data.get("warning", "") or result.get("warning", "")
+    attempts = data.get("provider_attempts") or data.get("raw", {}).get("provider_attempts", [])
+    if isinstance(attempts, list):
+        result["provider_attempts"] = attempts
 
 
 def apply_fetch_result(result: dict[str, Any], fetch_result: dict[str, Any] | None) -> None:
@@ -313,13 +324,18 @@ def apply_fetch_result(result: dict[str, Any], fetch_result: dict[str, Any] | No
     metadata = fetch_result.get("metadata", {}) if isinstance(fetch_result.get("metadata"), dict) else {}
     capture = metadata.get("capture", {}) if isinstance(metadata.get("capture"), dict) else {}
     if capture:
+        has_route_capture = bool(result.get("capture_json_path"))
         result["transcript_language"] = capture.get("transcript_language", "") or result.get("transcript_language", "")
         result["transcript_kind"] = capture.get("transcript_kind", "") or result.get("transcript_kind", "")
         result["transcript_char_count"] = int(capture.get("transcript_char_count") or result.get("transcript_char_count") or 0)
-        if "import_allowed" in capture:
+        if "import_allowed" in capture and result.get("import_allowed") == "" and not has_route_capture:
             result["import_allowed"] = bool(capture.get("import_allowed"))
-        result["import_block_reason"] = capture.get("import_block_reason", "") or result.get("import_block_reason", "")
-        result["warning"] = capture.get("warning", "") or result.get("warning", "")
+        if not has_route_capture:
+            result["import_block_reason"] = result.get("import_block_reason", "") or capture.get("import_block_reason", "")
+            result["warning"] = result.get("warning", "") or capture.get("warning", "")
+        attempts = capture.get("provider_attempts") or capture.get("raw", {}).get("provider_attempts", [])
+        if isinstance(attempts, list):
+            result["provider_attempts"] = attempts
 
 
 def status_from_fetch_block(fetch_result: dict[str, Any]) -> str:
@@ -335,18 +351,27 @@ def status_from_fetch_block(fetch_result: dict[str, Any]) -> str:
     return STATUS_BLOCKED_INCOMPLETE_TEXT
 
 
-def fetch_material(item: dict[str, Any], retries: int = 1) -> dict[str, Any] | None:
+def fetch_material(item: dict[str, Any], retries: int = 1, caption_provider: str = "auto") -> dict[str, Any] | None:
     fetcher = fetcher_for(item.get("route_kind", ""), item.get("route_flag", ""))
     if not fetcher:
         return None
     last: dict[str, Any] | None = None
-    for attempt in range(retries + 1):
-        last = fetcher.fetch(item["input"])
-        metadata = last.get("metadata", {}) if isinstance(last.get("metadata"), dict) else {}
-        if last.get("status") != "blocked" or metadata.get("error_status") != STATUS_BLOCKED_FETCH_FAILED:
-            return last
-        if attempt >= retries:
-            return last
+    old_caption_provider = os.environ.get("HERMES_YOUTUBE_CAPTION_PROVIDER")
+    if item.get("route_kind") == "youtube" and caption_provider:
+        os.environ["HERMES_YOUTUBE_CAPTION_PROVIDER"] = caption_provider
+    try:
+        for attempt in range(retries + 1):
+            last = fetcher.fetch(item["input"])
+            metadata = last.get("metadata", {}) if isinstance(last.get("metadata"), dict) else {}
+            if last.get("status") != "blocked" or metadata.get("error_status") != STATUS_BLOCKED_FETCH_FAILED:
+                return last
+            if attempt >= retries:
+                return last
+    finally:
+        if old_caption_provider is None:
+            os.environ.pop("HERMES_YOUTUBE_CAPTION_PROVIDER", None)
+        else:
+            os.environ["HERMES_YOUTUBE_CAPTION_PROVIDER"] = old_caption_provider
     return last
 
 
@@ -410,11 +435,21 @@ def run_single_web(item: dict[str, Any], dry_run: bool) -> dict[str, Any]:
     return result
 
 
-def run_single_youtube(item: dict[str, Any], dry_run: bool, allow_partial_transcript: bool = False) -> dict[str, Any]:
+def run_single_youtube(
+    item: dict[str, Any],
+    dry_run: bool,
+    allow_partial_transcript: bool = False,
+    allow_auto_captions: bool = False,
+    caption_provider: str = "auto",
+) -> dict[str, Any]:
     result = base_result(item)
     cmd = [sys.executable, str(YOUTUBE_SCRIPT), item["route_flag"], item["input"]]
     if allow_partial_transcript:
         cmd.append("--allow-partial-transcript")
+    if allow_auto_captions:
+        cmd.append("--allow-auto-captions")
+    if caption_provider:
+        cmd.extend(["--caption-provider", caption_provider])
     cmd.append("--dry-run" if dry_run else "--import")
     proc = run_command(cmd)
     result["route"] = "youtube_to_kb.py"
@@ -600,12 +635,19 @@ def write_reports(results: list[dict[str, Any]], gates: list[dict[str, Any]], dr
         "",
         "## Inputs",
         "",
-        "| # | Input | Inferred type | Route | Fetch | Quality | Transcript chars | Import allowed | Status | Title | KB path | Failure reason |",
-        "|---:|---|---|---|---|---|---:|---|---|---|---|---|",
+        "| # | Input | Inferred type | Route | Fetch | Quality | Transcript chars | Import allowed | Providers | Status | Title | KB path | Failure reason |",
+        "|---:|---|---|---|---|---|---:|---|---|---|---|---|---|",
     ])
     for idx, result in enumerate(results, 1):
+        provider_bits = []
+        for attempt in (result.get("provider_attempts") or [])[:3]:
+            if isinstance(attempt, dict):
+                provider_bits.append(f"{attempt.get('provider', '')}:{attempt.get('status', '')}")
+        provider_summary = ", ".join(provider_bits)
+        if len(result.get("provider_attempts") or []) > 3:
+            provider_summary += f", +{len(result.get('provider_attempts') or []) - 3}"
         lines.append(
-            "| {idx} | {input} | {itype} | {route} | {fetch} | {quality} | {chars} | {allowed} | {status} | {title} | {kb} | {reason} |".format(
+            "| {idx} | {input} | {itype} | {route} | {fetch} | {quality} | {chars} | {allowed} | {providers} | {status} | {title} | {kb} | {reason} |".format(
                 idx=idx,
                 input=(result.get("input", "")[:80]).replace("|", "\\|"),
                 itype=result.get("inferred_type", ""),
@@ -614,6 +656,7 @@ def write_reports(results: list[dict[str, Any]], gates: list[dict[str, Any]], dr
                 quality=result.get("fetch_quality", ""),
                 chars=result.get("transcript_char_count", 0),
                 allowed=result.get("import_allowed", ""),
+                providers=provider_summary.replace("|", "\\|"),
                 status=result.get("status", ""),
                 title=(result.get("title", "")[:40]).replace("|", "\\|"),
                 kb=(result.get("kb_article_path", "")[:45]).replace("|", "\\|"),
@@ -629,7 +672,13 @@ def write_reports(results: list[dict[str, Any]], gates: list[dict[str, Any]], dr
     return md_path, json_path
 
 
-def route_inputs(values: list[str], dry_run: bool, allow_partial_transcript: bool = False) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+def route_inputs(
+    values: list[str],
+    dry_run: bool,
+    allow_partial_transcript: bool = False,
+    allow_auto_captions: bool = False,
+    caption_provider: str = "auto",
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     inferred = [infer_input(value, index=i) for i, value in enumerate(values)]
     results_by_index: dict[int, dict[str, Any]] = {}
 
@@ -640,7 +689,7 @@ def route_inputs(values: list[str], dry_run: bool, allow_partial_transcript: boo
 
     runnable_supported: list[dict[str, Any]] = []
     for item in supported:
-        fetch_result = fetch_material(item)
+        fetch_result = fetch_material(item, caption_provider=caption_provider)
         item["_fetch_result"] = fetch_result
         if fetch_result and fetch_result.get("status") == "blocked":
             result = base_result(item, status_from_fetch_block(fetch_result))
@@ -669,6 +718,8 @@ def route_inputs(values: list[str], dry_run: bool, allow_partial_transcript: boo
             item,
             dry_run=dry_run,
             allow_partial_transcript=allow_partial_transcript,
+            allow_auto_captions=allow_auto_captions,
+            caption_provider=caption_provider,
         )
 
     results = [results_by_index[i] for i in sorted(results_by_index)]
@@ -697,7 +748,13 @@ def main() -> int:
         print("ERROR: no inputs found", file=sys.stderr)
         return 1
 
-    results, gates = route_inputs(values, dry_run=dry_run, allow_partial_transcript=bool(args.allow_partial_transcript))
+    results, gates = route_inputs(
+        values,
+        dry_run=dry_run,
+        allow_partial_transcript=bool(args.allow_partial_transcript),
+        allow_auto_captions=bool(args.allow_auto_captions),
+        caption_provider=args.caption_provider,
+    )
     md_path, json_path = write_reports(results, gates, dry_run=dry_run)
     summary = summarize(results)
     output = {

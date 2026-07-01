@@ -17,7 +17,10 @@ import datetime as dt
 import hashlib
 import html
 import json
+import os
 import re
+import shutil
+import subprocess
 import sys
 import unicodedata
 import urllib.parse
@@ -53,10 +56,21 @@ STATUS_FAILED_IMPORT = "FAILED_IMPORT"
 MIN_TRANSCRIPT_CHARS = 800
 MIN_TRANSCRIPT_WORDS = 80
 MIN_TRANSCRIPT_CJK = 80
+MAX_DIRECT_CAPTION_TRACKS = 8
 
 FETCH_QUALITY_FULL = "full"
 FETCH_QUALITY_PARTIAL = "partial"
 FETCH_QUALITY_METADATA_ONLY = "metadata_only"
+
+CAPTION_PROVIDER_AUTO = "auto"
+CAPTION_PROVIDER_DIRECT = "direct"
+CAPTION_PROVIDER_YTDLP = "yt-dlp"
+CAPTION_PROVIDER_TRANSCRIPT_API = "transcript-api"
+
+PROVIDER_DIRECT = "direct_captionTracks"
+PROVIDER_YTDLP = "yt-dlp"
+PROVIDER_TRANSCRIPT_API = "youtube-transcript-api"
+PROVIDER_METADATA = "metadata"
 
 
 class YouTubeImportError(Exception):
@@ -79,6 +93,13 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--prefer-auto-captions", action="store_true", help="prefer automatic captions over manual captions")
     parser.add_argument("--no-auto-captions", action="store_true", help="block if only automatic captions are available")
     parser.add_argument("--allow-partial-transcript", action="store_true", help="allow importing a partial transcript; metadata-only fetches are still blocked")
+    parser.add_argument("--allow-auto-captions", action="store_true", help="allow importing full automatic captions; they are marked needs_review")
+    parser.add_argument(
+        "--caption-provider",
+        choices=[CAPTION_PROVIDER_AUTO, CAPTION_PROVIDER_DIRECT, CAPTION_PROVIDER_YTDLP, CAPTION_PROVIDER_TRANSCRIPT_API],
+        default=CAPTION_PROVIDER_AUTO,
+        help="caption provider chain to use; auto tries direct captionTracks, yt-dlp, then youtube-transcript-api",
+    )
     parser.add_argument("--timeout", type=int, default=20, help="HTTP timeout in seconds")
     parser.add_argument("--transcript-file", help="local .vtt/.srt/.txt transcript to use with the video metadata")
 
@@ -183,7 +204,7 @@ def _content_hash(text: str) -> str:
     return hashlib.sha256(visible.encode("utf-8", errors="replace")).hexdigest()
 
 
-def _request_text(url: str, timeout: int) -> str:
+def _request_text_with_status(url: str, timeout: int) -> tuple[int, str]:
     try:
         import requests  # type: ignore
     except ImportError as exc:
@@ -197,9 +218,14 @@ def _request_text(url: str, timeout: int) -> str:
         resp = requests.get(url, headers=headers, timeout=timeout)
     except Exception as exc:
         raise YouTubeImportError(STATUS_BLOCKED_FETCH_FAILED, f"network error fetching YouTube URL: {exc}") from exc
-    if resp.status_code != 200:
-        raise YouTubeImportError(STATUS_BLOCKED_FETCH_FAILED, f"non-200 HTTP status from YouTube: {resp.status_code}")
-    return resp.text
+    return resp.status_code, resp.text
+
+
+def _request_text(url: str, timeout: int) -> str:
+    status_code, text = _request_text_with_status(url, timeout=timeout)
+    if status_code != 200:
+        raise YouTubeImportError(STATUS_BLOCKED_FETCH_FAILED, f"non-200 HTTP status from YouTube: {status_code}")
+    return text
 
 
 def _extract_balanced_json(text: str, marker: str) -> dict[str, Any]:
@@ -349,26 +375,61 @@ def rank_caption_tracks(tracks: list[dict[str, Any]], preferred: str, prefer_aut
 
     def score(track: dict[str, Any]) -> tuple[int, int, int]:
         lang = str(track.get("language", "")).lower()
-        try:
-            lang_score = langs.index(lang)
-        except ValueError:
-            lang_score = 99
+        lang_score = 99
+        for index, wanted in enumerate(langs):
+            if lang == wanted or lang.startswith(f"{wanted}-") or wanted.startswith(f"{lang}-"):
+                lang_score = index
+                break
         kind = track.get("kind")
         kind_score = 0 if (kind == "auto" and prefer_auto) or (kind == "manual" and not prefer_auto) else 1
-        return (kind_score, lang_score, 0 if lang.startswith(tuple(langs)) else 1)
+        return (lang_score, kind_score, 0 if lang_score < 99 else 1)
 
     return sorted(candidates, key=score)
 
 
-def _caption_url(base_url: str) -> str:
+def _provider_attempt(
+    provider: str,
+    status: str,
+    *,
+    language: str = "",
+    kind: str = "",
+    fmt: str = "",
+    char_count: int = 0,
+    reason: str = "",
+    http_status: int | None = None,
+    file_path: str = "",
+) -> dict[str, Any]:
+    attempt: dict[str, Any] = {
+        "provider": provider,
+        "status": status,
+        "language": language,
+        "kind": kind,
+        "format": fmt,
+        "char_count": int(char_count or 0),
+        "reason": reason,
+    }
+    if http_status is not None:
+        attempt["http_status"] = int(http_status)
+    if file_path:
+        attempt["file_path"] = file_path
+    return attempt
+
+
+def _segments_char_count(segments: list[dict[str, Any]]) -> int:
+    return len(re.sub(r"\s+", " ", " ".join(str(seg.get("text", "")) for seg in segments)).strip())
+
+
+def _caption_url(base_url: str, fmt: str | None = "vtt") -> str:
+    if fmt in {"", "original", None}:
+        return base_url
     parsed = urllib.parse.urlparse(base_url)
     query = urllib.parse.parse_qs(parsed.query)
-    query["fmt"] = ["vtt"]
+    query["fmt"] = [str(fmt)]
     return urllib.parse.urlunparse(parsed._replace(query=urllib.parse.urlencode(query, doseq=True)))
 
 
 def fetch_caption_text(track: dict[str, Any], timeout: int) -> str:
-    return _request_text(_caption_url(str(track["base_url"])), timeout=timeout)
+    return _request_text(_caption_url(str(track["base_url"]), "vtt"), timeout=timeout)
 
 
 def parse_vtt(text: str) -> list[dict[str, Any]]:
@@ -411,7 +472,49 @@ def parse_xml_transcript(text: str) -> list[dict[str, Any]]:
         caption = _clean_text(node.text or "")
         if caption:
             segments.append({"start": start, "text": caption})
+    for node in root.findall(".//{*}p"):
+        start = _timestampish_to_seconds(node.attrib.get("begin", "") or node.attrib.get("start", ""))
+        caption = _clean_text(" ".join("".join(node.itertext()).split()))
+        if caption:
+            segments.append({"start": start, "text": caption})
     return _dedupe_segments(segments)
+
+
+def parse_json3_transcript(text: str) -> list[dict[str, Any]]:
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError:
+        return []
+    events = data.get("events", []) if isinstance(data, dict) else []
+    segments: list[dict[str, Any]] = []
+    for event in events:
+        if not isinstance(event, dict):
+            continue
+        parts = event.get("segs") or []
+        if not isinstance(parts, list):
+            continue
+        caption = _clean_text("".join(str(part.get("utf8", "")) for part in parts if isinstance(part, dict)))
+        if not caption:
+            continue
+        start_ms = event.get("tStartMs") or 0
+        try:
+            start = float(start_ms) / 1000.0
+        except (TypeError, ValueError):
+            start = 0.0
+        segments.append({"start": start, "text": caption})
+    return _dedupe_segments(segments)
+
+
+def parse_caption_text(text: str, fmt: str) -> list[dict[str, Any]]:
+    raw = text.lstrip("\ufeff\r\n\t ")
+    fmt = (fmt or "original").lower()
+    if fmt == "json3" or raw.startswith("{"):
+        return parse_json3_transcript(text)
+    if fmt in {"srv3", "ttml"} or raw.startswith("<"):
+        return parse_xml_transcript(text)
+    if fmt == "vtt" or raw.startswith("WEBVTT") or "-->" in text:
+        return parse_vtt(text) or parse_srt(text)
+    return parse_vtt(text) or parse_xml_transcript(text) or parse_json3_transcript(text)
 
 
 def parse_srt(text: str) -> list[dict[str, Any]]:
@@ -448,6 +551,10 @@ def parse_transcript_file(path: Path) -> list[dict[str, Any]]:
         return parse_vtt(raw_text)
     if suffix == ".srt" or "-->" in raw_text:
         return parse_srt(raw_text) or parse_vtt(raw_text)
+    if suffix == ".json" or suffix == ".json3":
+        return parse_json3_transcript(raw_text)
+    if suffix in {".xml", ".srv3", ".ttml"} or raw_text.lstrip().startswith("<"):
+        return parse_xml_transcript(raw_text)
     return parse_plain_transcript(raw_text)
 
 
@@ -459,6 +566,28 @@ def _timestamp_to_seconds(value: str) -> float:
             return int(parts[0]) * 3600 + int(parts[1]) * 60 + float(parts[2])
         return int(parts[0]) * 60 + float(parts[1])
     except (ValueError, IndexError):
+        return 0.0
+
+
+def _timestampish_to_seconds(value: str) -> float:
+    value = (value or "").strip().replace(",", ".")
+    if not value:
+        return 0.0
+    if value.endswith("ms"):
+        try:
+            return float(value[:-2]) / 1000.0
+        except ValueError:
+            return 0.0
+    if value.endswith("s"):
+        try:
+            return float(value[:-1])
+        except ValueError:
+            return 0.0
+    if ":" in value:
+        return _timestamp_to_seconds(value)
+    try:
+        return float(value)
+    except ValueError:
         return 0.0
 
 
@@ -531,45 +660,480 @@ def fetch_youtube_metadata(url: str, timeout: int) -> tuple[dict[str, Any], dict
     return metadata, player, tracks
 
 
-def fetch_youtube_capture(url: str, preferred_language: str, prefer_auto: bool, allow_auto: bool, timeout: int) -> dict[str, Any]:
-    metadata, _player, tracks = fetch_youtube_metadata(url, timeout=timeout)
-    tried: list[str] = []
+def _direct_caption_formats() -> list[str]:
+    return ["original", "vtt", "srv3", "ttml", "json3"]
+
+
+def _try_direct_caption_tracks(
+    metadata: dict[str, Any],
+    tracks: list[dict[str, Any]],
+    preferred_language: str,
+    prefer_auto: bool,
+    allow_auto: bool,
+    timeout: int,
+    attempts: list[dict[str, Any]],
+) -> dict[str, Any] | None:
     try:
         ranked_tracks = rank_caption_tracks(tracks, preferred_language, prefer_auto=prefer_auto, allow_auto=allow_auto)
     except YouTubeImportError as exc:
-        return build_partial_capture(metadata, f"caption discovery fallback: {exc.reason}", raw={
-            "caption_track_count": len(tracks),
-            "metadata_source": "youtube_watch_page",
-            "caption_attempts": [exc.reason],
-        })
-    for track in ranked_tracks:
-        label = f"{track.get('language', '')}/{track.get('kind', '')}/{track.get('name', '')}"
-        try:
-            caption_text = fetch_caption_text(track, timeout=timeout)
-        except YouTubeImportError as exc:
-            tried.append(f"{label}: fetch failed: {exc.reason}")
-            continue
-        if not caption_text.strip():
-            tried.append(f"{label}: caption endpoint returned empty text")
-            continue
-        segments = parse_vtt(caption_text) or parse_xml_transcript(caption_text)
+        attempts.append(_provider_attempt(
+            PROVIDER_DIRECT,
+            "empty",
+            reason=exc.reason,
+            char_count=0,
+        ))
+        return None
+
+    for track in ranked_tracks[:MAX_DIRECT_CAPTION_TRACKS]:
+        language = str(track.get("language") or "")
+        kind = str(track.get("kind") or "manual")
+        for fmt in _direct_caption_formats():
+            try:
+                status_code, caption_text = _request_text_with_status(_caption_url(str(track["base_url"]), fmt), timeout=timeout)
+            except YouTubeImportError as exc:
+                attempts.append(_provider_attempt(
+                    PROVIDER_DIRECT,
+                    "failed",
+                    language=language,
+                    kind=kind,
+                    fmt=fmt,
+                    reason=exc.reason,
+                ))
+                continue
+            if status_code != 200:
+                attempts.append(_provider_attempt(
+                    PROVIDER_DIRECT,
+                    "failed",
+                    language=language,
+                    kind=kind,
+                    fmt=fmt,
+                    http_status=status_code,
+                    reason=f"non-200 HTTP status from caption endpoint: {status_code}",
+                ))
+                continue
+            if not caption_text.strip():
+                attempts.append(_provider_attempt(
+                    PROVIDER_DIRECT,
+                    "empty",
+                    language=language,
+                    kind=kind,
+                    fmt=fmt,
+                    http_status=status_code,
+                    reason="caption endpoint returned empty text",
+                ))
+                continue
+            segments = parse_caption_text(caption_text, fmt)
+            char_count = _segments_char_count(segments)
+            if not segments:
+                attempts.append(_provider_attempt(
+                    PROVIDER_DIRECT,
+                    "empty",
+                    language=language,
+                    kind=kind,
+                    fmt=fmt,
+                    http_status=status_code,
+                    char_count=0,
+                    reason="caption text was unparsable",
+                ))
+                continue
+            attempts.append(_provider_attempt(
+                PROVIDER_DIRECT,
+                "ok",
+                language=language,
+                kind=kind,
+                fmt=fmt,
+                http_status=status_code,
+                char_count=char_count,
+            ))
+            try:
+                return build_capture(metadata, track, segments, raw={
+                    "caption_track_count": len(tracks),
+                    "metadata_source": "youtube_watch_page",
+                    "provider_attempts": list(attempts),
+                    "caption_attempts": [a.get("reason", "") for a in attempts if a.get("reason")],
+                })
+            except YouTubeImportError as exc:
+                attempts.append(_provider_attempt(
+                    PROVIDER_DIRECT,
+                    "failed",
+                    language=language,
+                    kind=kind,
+                    fmt=fmt,
+                    http_status=status_code,
+                    char_count=char_count,
+                    reason=exc.reason,
+                ))
+                continue
+    return None
+
+
+def _yt_dlp_command() -> list[str] | None:
+    if os.environ.get("HERMES_YTDLP_FORCE_UNAVAILABLE"):
+        return None
+    exe = shutil.which("yt-dlp")
+    if exe:
+        return [exe]
+    try:
+        import yt_dlp  # type: ignore  # noqa: F401
+    except Exception:
+        return None
+    return [sys.executable, "-m", "yt_dlp"]
+
+
+def _lang_priority_value(language: str, kind: str) -> tuple[int, int, str]:
+    lang = (language or "").lower()
+    manual_score = 0 if kind == "manual" else 1
+    if lang in {"zh-hans", "zh-cn", "zh"} or lang.startswith("zh"):
+        lang_score = 0
+    elif lang.startswith("en"):
+        lang_score = 1
+    else:
+        lang_score = 99
+    return (manual_score, lang_score, lang)
+
+
+def _language_from_subtitle_file(path: Path, video_id: str) -> str:
+    name = path.name
+    stem = name[:-4] if name.lower().endswith(".vtt") else path.stem
+    if stem.startswith(video_id):
+        stem = stem[len(video_id):].lstrip(".-_")
+    parts = [p for p in re.split(r"[._-]+", stem) if p]
+    joined = "-".join(parts)
+    if "zh-Hans" in name or "zh_hans" in name.lower():
+        return "zh-Hans"
+    if "zh-CN" in name or "zh_cn" in name.lower():
+        return "zh-CN"
+    if joined.lower().startswith("zh"):
+        return "zh"
+    if joined.lower().startswith("en"):
+        return "en"
+    return parts[0] if parts else ""
+
+
+def _subtitle_kind_for_language(language: str, info: dict[str, Any]) -> str:
+    manual = info.get("subtitles") if isinstance(info.get("subtitles"), dict) else {}
+    auto = info.get("automatic_captions") if isinstance(info.get("automatic_captions"), dict) else {}
+    lang = language or ""
+    if lang in manual or lang.lower() in {str(k).lower() for k in manual.keys()}:
+        return "manual"
+    if lang in auto or lang.lower() in {str(k).lower() for k in auto.keys()}:
+        return "auto"
+    return "auto"
+
+
+def _run_yt_dlp(cmd: list[str], timeout: int) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        cmd,
+        cwd=KB_HOME,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=max(timeout, 30),
+    )
+
+
+def _try_ytdlp_provider(
+    url: str,
+    metadata: dict[str, Any],
+    preferred_language: str,
+    attempts: list[dict[str, Any]],
+    timeout: int,
+) -> dict[str, Any] | None:
+    fixture_subtitle = os.environ.get("HERMES_YTDLP_FIXTURE_SUBTITLE", "")
+    if fixture_subtitle:
+        path = Path(fixture_subtitle)
+        segments = parse_transcript_file(path) if path.exists() else []
+        language = os.environ.get("HERMES_YTDLP_FIXTURE_LANGUAGE", preferred_language or "en")
+        kind = os.environ.get("HERMES_YTDLP_FIXTURE_KIND", "auto")
+        char_count = _segments_char_count(segments)
+        attempts.append(_provider_attempt(
+            PROVIDER_YTDLP,
+            "ok" if segments else "empty",
+            language=language,
+            kind=kind,
+            fmt=path.suffix.lstrip(".") or "vtt",
+            char_count=char_count,
+            file_path=str(path),
+            reason="" if segments else "fixture subtitle was empty or unparsable",
+        ))
         if not segments:
-            tried.append(f"{label}: caption text was unparsable")
-            continue
+            return None
+        track = {"language": language, "kind": kind, "name": "yt-dlp fixture"}
+        try:
+            return build_capture(metadata, track, segments, raw={
+                "metadata_source": "fixture",
+                "provider_attempts": list(attempts),
+                "caption_attempts": [a.get("reason", "") for a in attempts if a.get("reason")],
+                "transcript_source": "yt-dlp-fixture",
+            })
+        except YouTubeImportError as exc:
+            attempts.append(_provider_attempt(
+                PROVIDER_YTDLP,
+                "failed",
+                language=language,
+                kind=kind,
+                fmt=path.suffix.lstrip(".") or "vtt",
+                char_count=char_count,
+                file_path=str(path),
+                reason=exc.reason,
+            ))
+            return None
+
+    exe = _yt_dlp_command()
+    if not exe:
+        attempts.append(_provider_attempt(PROVIDER_YTDLP, "unavailable", reason="provider_unavailable"))
+        return None
+
+    video_id = str(metadata.get("video_id") or parse_video_id(url))
+    info: dict[str, Any] = {}
+    try:
+        dump = _run_yt_dlp(exe + ["--dump-json", "--skip-download", url], timeout=timeout)
+        if dump.returncode == 0 and dump.stdout.strip():
+            lines = [line for line in dump.stdout.splitlines() if line.strip().startswith("{")]
+            if lines:
+                info = json.loads(lines[-1])
+    except Exception as exc:
+        attempts.append(_provider_attempt(PROVIDER_YTDLP, "failed", reason=f"metadata dump failed: {exc}"))
+
+    out_dir = KB_HOME / "tmp" / "youtube_subs" / f"{video_id or 'youtube'}-{os.getpid()}"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_template = (out_dir / "%(id)s.%(ext)s").as_posix()
+    cmd = exe + [
+        "--skip-download",
+        "--write-subs",
+        "--write-auto-subs",
+        "--sub-langs",
+        "zh-Hans,zh-CN,zh,en.*",
+        "--sub-format",
+        "vtt",
+        "-o",
+        out_template,
+        url,
+    ]
+    try:
+        proc = _run_yt_dlp(cmd, timeout=max(timeout, 60))
+    except Exception as exc:
+        attempts.append(_provider_attempt(PROVIDER_YTDLP, "failed", reason=f"subtitle fetch failed: {exc}"))
+        return None
+
+    subtitle_files = sorted(out_dir.glob("*.vtt"))
+    if not subtitle_files:
+        reason = (proc.stderr or proc.stdout or "yt-dlp produced no subtitle files").strip()[-300:]
+        attempts.append(_provider_attempt(PROVIDER_YTDLP, "empty", reason=reason))
+        return None
+
+    candidates: list[tuple[tuple[int, int, str], Path, str, str, list[dict[str, Any]]]] = []
+    for path in subtitle_files:
+        language = _language_from_subtitle_file(path, video_id)
+        kind = _subtitle_kind_for_language(language, info)
+        segments = parse_transcript_file(path)
+        char_count = _segments_char_count(segments)
+        attempts.append(_provider_attempt(
+            PROVIDER_YTDLP,
+            "ok" if segments else "empty",
+            language=language,
+            kind=kind,
+            fmt="vtt",
+            char_count=char_count,
+            file_path=path.relative_to(KB_HOME).as_posix(),
+            reason="" if segments else "subtitle file was empty or unparsable",
+        ))
+        if segments:
+            candidates.append((_lang_priority_value(language, kind), path, language, kind, segments))
+    if not candidates:
+        return None
+    _score, path, language, kind, segments = sorted(candidates, key=lambda item: item[0])[0]
+    track = {"language": language or preferred_language or "en", "kind": kind, "name": path.name}
+    try:
         return build_capture(metadata, track, segments, raw={
-            "caption_track_count": len(tracks),
             "metadata_source": "youtube_watch_page",
-            "caption_attempts": tried + [f"{label}: ok"],
+            "provider_attempts": list(attempts),
+            "caption_attempts": [a.get("reason", "") for a in attempts if a.get("reason")],
+            "transcript_source": "yt-dlp",
+            "transcript_file": path.relative_to(KB_HOME).as_posix(),
         })
-    reason = "; ".join(tried) if tried else "no usable caption tracks after filtering"
+    except YouTubeImportError as exc:
+        attempts.append(_provider_attempt(
+            PROVIDER_YTDLP,
+            "failed",
+            language=track["language"],
+            kind=track["kind"],
+            fmt="vtt",
+            char_count=_segments_char_count(segments),
+            file_path=path.relative_to(KB_HOME).as_posix(),
+            reason=exc.reason,
+        ))
+        return None
+
+
+def _try_transcript_api_provider(
+    metadata: dict[str, Any],
+    preferred_language: str,
+    attempts: list[dict[str, Any]],
+) -> dict[str, Any] | None:
+    try:
+        from youtube_transcript_api import YouTubeTranscriptApi  # type: ignore
+    except Exception:
+        attempts.append(_provider_attempt(PROVIDER_TRANSCRIPT_API, "unavailable", reason="provider_unavailable"))
+        return None
+
+    video_id = str(metadata.get("video_id") or "")
+    languages = _language_priority(preferred_language)
+    try:
+        api = YouTubeTranscriptApi()
+        try:
+            transcript_list = api.list(video_id)  # type: ignore[attr-defined]
+        except AttributeError:
+            transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)  # type: ignore[attr-defined]
+        selected = None
+        kind = "manual"
+        for lang in languages:
+            try:
+                selected = transcript_list.find_manually_created_transcript([lang])
+                kind = "manual"
+                break
+            except Exception:
+                pass
+        if selected is None:
+            for lang in languages:
+                try:
+                    selected = transcript_list.find_generated_transcript([lang])
+                    kind = "auto"
+                    break
+                except Exception:
+                    pass
+        if selected is None:
+            attempts.append(_provider_attempt(PROVIDER_TRANSCRIPT_API, "empty", reason="no preferred transcript language available"))
+            return None
+        fetched = selected.fetch()
+        language = getattr(selected, "language_code", "") or preferred_language or "en"
+    except Exception:
+        try:
+            fetched = YouTubeTranscriptApi.get_transcript(video_id, languages=languages)  # type: ignore[attr-defined]
+            language = preferred_language or languages[0]
+            kind = "auto"
+        except Exception as exc:
+            attempts.append(_provider_attempt(PROVIDER_TRANSCRIPT_API, "failed", reason=str(exc)[:300]))
+            return None
+
+    segments: list[dict[str, Any]] = []
+    for item in fetched:
+        if not isinstance(item, dict):
+            continue
+        caption = _clean_text(str(item.get("text", "")))
+        if caption:
+            try:
+                start = float(item.get("start") or 0.0)
+            except (TypeError, ValueError):
+                start = 0.0
+            segments.append({"start": start, "text": caption})
+    segments = _dedupe_segments(segments)
+    char_count = _segments_char_count(segments)
+    attempts.append(_provider_attempt(
+        PROVIDER_TRANSCRIPT_API,
+        "ok" if segments else "empty",
+        language=language,
+        kind=kind,
+        fmt="text",
+        char_count=char_count,
+        reason="" if segments else "transcript-api returned no text",
+    ))
+    if not segments:
+        return None
+    track = {"language": language, "kind": kind, "name": "youtube-transcript-api"}
+    try:
+        return build_capture(metadata, track, segments, raw={
+            "metadata_source": "youtube_watch_page",
+            "provider_attempts": list(attempts),
+            "caption_attempts": [a.get("reason", "") for a in attempts if a.get("reason")],
+            "transcript_source": "youtube-transcript-api",
+        })
+    except YouTubeImportError as exc:
+        attempts.append(_provider_attempt(
+            PROVIDER_TRANSCRIPT_API,
+            "failed",
+            language=language,
+            kind=kind,
+            fmt="text",
+            char_count=char_count,
+            reason=exc.reason,
+        ))
+        return None
+
+
+def _provider_chain(caption_provider: str) -> list[str]:
+    if caption_provider == CAPTION_PROVIDER_DIRECT:
+        return [CAPTION_PROVIDER_DIRECT]
+    if caption_provider == CAPTION_PROVIDER_YTDLP:
+        return [CAPTION_PROVIDER_YTDLP]
+    if caption_provider == CAPTION_PROVIDER_TRANSCRIPT_API:
+        return [CAPTION_PROVIDER_TRANSCRIPT_API]
+    return [CAPTION_PROVIDER_DIRECT, CAPTION_PROVIDER_YTDLP, CAPTION_PROVIDER_TRANSCRIPT_API]
+
+
+def _summarize_attempts(attempts: list[dict[str, Any]]) -> str:
+    if not attempts:
+        return "no transcript provider attempts were made"
+    parts: list[str] = []
+    for attempt in attempts:
+        provider = attempt.get("provider", "")
+        status = attempt.get("status", "")
+        lang = attempt.get("language", "")
+        kind = attempt.get("kind", "")
+        fmt = attempt.get("format", "")
+        reason = attempt.get("reason", "")
+        label = "/".join(part for part in [provider, lang, kind, fmt] if part)
+        parts.append(f"{label}: {status}{f' ({reason})' if reason else ''}")
+    return "; ".join(parts)
+
+
+def fetch_youtube_capture(
+    url: str,
+    preferred_language: str,
+    prefer_auto: bool,
+    allow_auto: bool,
+    timeout: int,
+    caption_provider: str = CAPTION_PROVIDER_AUTO,
+) -> dict[str, Any]:
+    metadata, _player, tracks = fetch_youtube_metadata(url, timeout=timeout)
+    attempts: list[dict[str, Any]] = []
+    for provider in _provider_chain(caption_provider):
+        capture: dict[str, Any] | None = None
+        if provider == CAPTION_PROVIDER_DIRECT:
+            capture = _try_direct_caption_tracks(metadata, tracks, preferred_language, prefer_auto, allow_auto, timeout, attempts)
+        elif provider == CAPTION_PROVIDER_YTDLP:
+            capture = _try_ytdlp_provider(url, metadata, preferred_language, attempts, timeout)
+        elif provider == CAPTION_PROVIDER_TRANSCRIPT_API:
+            capture = _try_transcript_api_provider(metadata, preferred_language, attempts)
+        if capture:
+            return capture
+    reason = _summarize_attempts(attempts)
+    attempts.append(_provider_attempt(
+        PROVIDER_METADATA,
+        "ok",
+        kind="metadata",
+        fmt="text",
+        char_count=len(_clean_text(" ".join([metadata.get("title", ""), metadata.get("description", "")]))),
+        reason="all transcript providers failed; metadata only",
+    ))
     return build_partial_capture(metadata, reason, raw={
         "caption_track_count": len(tracks),
         "metadata_source": "youtube_watch_page",
-        "caption_attempts": tried,
+        "caption_attempts": [a.get("reason", "") for a in attempts if a.get("reason")],
+        "provider_attempts": attempts,
     })
 
 
-def load_fixture_capture(url: str, metadata_path: Path, transcript_path: Path | None, preferred_language: str, prefer_auto: bool, allow_auto: bool) -> dict[str, Any]:
+def load_fixture_capture(
+    url: str,
+    metadata_path: Path,
+    transcript_path: Path | None,
+    preferred_language: str,
+    prefer_auto: bool,
+    allow_auto: bool,
+    caption_provider: str = CAPTION_PROVIDER_AUTO,
+) -> dict[str, Any]:
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
     video_id = metadata.get("video_id") or parse_video_id(url)
     metadata.setdefault("video_id", video_id)
@@ -581,19 +1145,52 @@ def load_fixture_capture(url: str, metadata_path: Path, transcript_path: Path | 
     metadata.setdefault("duration", metadata.get("duration_seconds", 0))
     metadata.setdefault("duration_hms", _format_duration(metadata.get("duration")))
     tracks = metadata.get("caption_tracks") or []
+    fixture_preferred_language = preferred_language or str(metadata.get("transcript_language") or "")
     if transcript_path is None:
-        return build_partial_capture(metadata, "fixture metadata has no transcript file", raw={"metadata_source": "fixture"})
+        attempts: list[dict[str, Any]] = []
+        should_try_ytdlp_fixture = (
+            os.environ.get("HERMES_YTDLP_FIXTURE_SUBTITLE", "")
+            or os.environ.get("HERMES_YTDLP_FORCE_UNAVAILABLE", "")
+            or caption_provider == CAPTION_PROVIDER_YTDLP
+        )
+        if caption_provider in {CAPTION_PROVIDER_AUTO, CAPTION_PROVIDER_YTDLP} and should_try_ytdlp_fixture:
+            capture = _try_ytdlp_provider(url, metadata, preferred_language, attempts, timeout=20)
+            if capture:
+                return capture
+        attempts.append(_provider_attempt(
+            PROVIDER_METADATA,
+            "ok",
+            kind="metadata",
+            fmt="text",
+            char_count=len(_clean_text(" ".join([metadata.get("title", ""), metadata.get("description", "")]))),
+            reason="fixture metadata has no transcript file",
+        ))
+        return build_partial_capture(metadata, "fixture metadata has no transcript file", raw={
+            "metadata_source": "fixture",
+            "provider_attempts": attempts,
+        })
     if not tracks:
         tracks = [{
-            "language": metadata.get("transcript_language") or preferred_language or "en",
+            "language": fixture_preferred_language or "en",
             "kind": metadata.get("transcript_kind") or "manual",
             "name": "fixture",
         }]
-    track = select_caption_track(tracks, preferred_language, prefer_auto=prefer_auto, allow_auto=allow_auto)
+    track = select_caption_track(tracks, fixture_preferred_language, prefer_auto=prefer_auto, allow_auto=allow_auto)
     segments = parse_transcript_file(transcript_path)
     if not segments:
         return build_partial_capture(metadata, "fixture transcript file was empty or unparsable", raw={"metadata_source": "fixture"})
-    capture = build_capture(metadata, track, segments, raw={"metadata_source": "fixture"})
+    capture = build_capture(metadata, track, segments, raw={
+        "metadata_source": "fixture",
+        "provider_attempts": [_provider_attempt(
+            PROVIDER_DIRECT,
+            "ok",
+            language=str(track.get("language", "")),
+            kind=str(track.get("kind", "")),
+            fmt=transcript_path.suffix.lstrip(".") or "text",
+            char_count=_segments_char_count(segments),
+            file_path=str(transcript_path),
+        )],
+    })
     quality_override = str(metadata.get("fetch_quality_override") or "").strip()
     if quality_override in {FETCH_QUALITY_FULL, FETCH_QUALITY_PARTIAL, FETCH_QUALITY_METADATA_ONLY}:
         capture["fetch_quality"] = quality_override
@@ -623,6 +1220,15 @@ def load_local_transcript_capture(url: str, transcript_path: Path, preferred_lan
         "metadata_source": "youtube_watch_page",
         "transcript_source": "local_file",
         "transcript_file": str(transcript_path),
+        "provider_attempts": [_provider_attempt(
+            "local_file",
+            "ok",
+            language=str(track.get("language", "")),
+            kind="local",
+            fmt=transcript_path.suffix.lstrip(".") or "text",
+            char_count=_segments_char_count(segments),
+            file_path=str(transcript_path),
+        )],
     })
 
 
@@ -634,6 +1240,7 @@ def build_capture(metadata: dict[str, Any], track: dict[str, Any], segments: lis
     validate_transcript(transcript_md, source_language)
     transcript_text = re.sub(r"\[[0-9:]+\]", " ", transcript_md)
     transcript_text = re.sub(r"\s+", " ", transcript_text).strip()
+    transcript_kind = track.get("kind") or "manual"
     capture = {
         "title": metadata.get("title", ""),
         "channel": metadata.get("channel") or metadata.get("author", "Unknown"),
@@ -655,7 +1262,8 @@ def build_capture(metadata: dict[str, Any], track: dict[str, Any], segments: lis
         "source_language": source_language,
         "translation_language": "zh-CN",
         "transcript_language": track.get("language") or source_language,
-        "transcript_kind": track.get("kind") or "manual",
+        "transcript_kind": transcript_kind,
+        "transcript_needs_review": transcript_kind == "auto",
         "transcript_track_name": track.get("name", ""),
         "transcript_segments": segments,
         "content_markdown": transcript_md,
@@ -664,6 +1272,7 @@ def build_capture(metadata: dict[str, Any], track: dict[str, Any], segments: lis
         "content_hash": _content_hash(transcript_text),
         "fetch_quality": FETCH_QUALITY_FULL,
         "fetch_reason": "",
+        "provider_attempts": raw.get("provider_attempts", []),
         "raw": raw,
     }
     if not capture["title"]:
@@ -699,7 +1308,7 @@ def build_partial_capture(metadata: dict[str, Any], reason: str, raw: dict[str, 
         "",
     ])
     content_md = "\n".join(parts).strip()
-    quality = FETCH_QUALITY_PARTIAL if description else FETCH_QUALITY_METADATA_ONLY
+    quality = FETCH_QUALITY_METADATA_ONLY
     source_language = detect_language("", " ".join([title, description]))
     transcript_text = re.sub(r"\s+", " ", " ".join([title, description, reason])).strip()
     if not transcript_text:
@@ -726,6 +1335,7 @@ def build_partial_capture(metadata: dict[str, Any], reason: str, raw: dict[str, 
         "translation_language": "zh-CN",
         "transcript_language": "",
         "transcript_kind": "none",
+        "transcript_needs_review": False,
         "transcript_track_name": "",
         "transcript_segments": [],
         "content_markdown": content_md,
@@ -734,6 +1344,7 @@ def build_partial_capture(metadata: dict[str, Any], reason: str, raw: dict[str, 
         "content_hash": _content_hash(transcript_text),
         "fetch_quality": quality,
         "fetch_reason": reason,
+        "provider_attempts": raw.get("provider_attempts", []),
         "raw": raw,
     }
     return capture
@@ -753,12 +1364,18 @@ def transcript_char_count(capture: dict[str, Any]) -> int:
     return len(visible)
 
 
-def evaluate_import_quality(capture: dict[str, Any], allow_partial: bool) -> tuple[bool, str, str]:
+def evaluate_import_quality(capture: dict[str, Any], allow_partial: bool, allow_auto_captions: bool = False) -> tuple[bool, str, str]:
     quality = str(capture.get("fetch_quality") or FETCH_QUALITY_FULL)
     char_count = transcript_char_count(capture)
+    transcript_kind = str(capture.get("transcript_kind") or "")
     if quality == FETCH_QUALITY_FULL:
         if char_count < MIN_TRANSCRIPT_CHARS:
             return False, f"transcript visible text below minimum ({char_count} chars < {MIN_TRANSCRIPT_CHARS})", ""
+        if transcript_kind == "auto":
+            warning = "automatic captions need review"
+            if not allow_auto_captions:
+                return False, "auto captions require --allow-auto-captions", warning
+            return True, "", warning
         return True, "", ""
     if quality == FETCH_QUALITY_PARTIAL:
         warning = "transcript is partial / needs review"
@@ -977,6 +1594,7 @@ content_hash: "{_yaml_quote(capture.get('content_hash', ''))}"
 is_translation_mirror: {str(is_mirror).lower()}
 transcript_language: "{_yaml_quote(capture.get('transcript_language', ''))}"
 transcript_kind: "{_yaml_quote(capture.get('transcript_kind', ''))}"
+transcript_needs_review: {str(bool(capture.get('transcript_needs_review'))).lower()}
 transcript_char_count: {int(capture.get('transcript_char_count') or transcript_char_count(capture))}
 video_id: "{_yaml_quote(capture.get('video_id', ''))}"
 duration: {int(capture.get('duration') or 0)}
@@ -1121,7 +1739,6 @@ def build_capture_from_args(args: argparse.Namespace) -> dict[str, Any]:
     metadata_file = args.metadata_file or ""
     transcript_file = args.transcript_file or ""
     # Environment hooks let material_to_kb.py smoke tests route YouTube offline.
-    import os
     metadata_file = metadata_file or os.environ.get("HERMES_YOUTUBE_FIXTURE_METADATA", "")
     transcript_file = transcript_file or os.environ.get("HERMES_YOUTUBE_FIXTURE_TRANSCRIPT", "")
     if metadata_file:
@@ -1133,6 +1750,7 @@ def build_capture_from_args(args: argparse.Namespace) -> dict[str, Any]:
             preferred_language=args.language,
             prefer_auto=args.prefer_auto_captions,
             allow_auto=not args.no_auto_captions,
+            caption_provider=args.caption_provider,
         )
     if transcript_file:
         return load_local_transcript_capture(
@@ -1149,6 +1767,7 @@ def build_capture_from_args(args: argparse.Namespace) -> dict[str, Any]:
         prefer_auto=args.prefer_auto_captions,
         allow_auto=not args.no_auto_captions,
         timeout=args.timeout,
+        caption_provider=args.caption_provider,
     )
 
 
@@ -1164,6 +1783,7 @@ def _print_capture_summary(capture: dict[str, Any], capture_path: Path) -> None:
     print(f"  fetch_quality: {capture.get('fetch_quality', FETCH_QUALITY_FULL)}", file=sys.stderr)
     print(f"  transcript_char_count: {capture.get('transcript_char_count', transcript_char_count(capture))}", file=sys.stderr)
     print(f"  import_allowed: {str(bool(capture.get('import_allowed'))).lower()}", file=sys.stderr)
+    print(f"  provider_attempts: {len(capture.get('provider_attempts') or [])}", file=sys.stderr)
     if capture.get("import_block_reason"):
         print(f"  import_block_reason: {capture.get('import_block_reason')}", file=sys.stderr)
     if capture.get("warning"):
@@ -1178,6 +1798,7 @@ def main() -> int:
         import_allowed, import_block_reason, warning = evaluate_import_quality(
             capture,
             allow_partial=bool(args.allow_partial_transcript),
+            allow_auto_captions=bool(args.allow_auto_captions),
         )
         capture["transcript_char_count"] = transcript_char_count(capture)
         capture["import_allowed"] = import_allowed

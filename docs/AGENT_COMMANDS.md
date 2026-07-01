@@ -46,6 +46,20 @@ python3 scripts/material_to_kb.py --input-list tmp/materials.txt --import
 - no captions, empty/too-short transcript, login/cookie/paywall/private access, or blocked fetch must not write a KB entry.
 - Material reports must preserve `fetch_status`, `fetch_quality`, `fetch_reason`, `transcript_language`, `transcript_kind`, `transcript_char_count`, `import_allowed`, and `import_block_reason`.
 
+### YouTube automatic transcript providers (v0.3.82)
+
+- Provider chain: direct `captionTracks` (`original`, `vtt`, `srv3`, `ttml`, `json3`) -> subtitle-only `yt-dlp` -> optional `youtube-transcript-api` -> metadata-only diagnostics.
+- Do not download video files. Do not use cookies, browser login state, paywall bypasses, or private video access.
+- `metadata_only` is reportable but never importable. Do not treat the video description as a transcript.
+- Full automatic captions are allowed only when the operator explicitly passes `--allow-auto-captions`; they must remain marked `transcript_kind: auto` and `transcript_needs_review: true`.
+- Every YouTube dry-run/import report should preserve `provider_attempts` with provider, status, language, kind, format, char_count, and reason.
+
+```bash
+python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --dry-run
+python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-auto-captions --import
+python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --caption-provider yt-dlp --dry-run
+```
+
 ### 普通网页文章入库入口（v0.3.77）
 
 用户可以直接说：

@@ -1,0 +1,4 @@
+Language Name            Formats
+en       English         vtt, ttml, srv3, json3
+zh-Hans  Chinese         vtt, ttml, srv3, json3
+en-orig  English (auto)  vtt, ttml, srv3, json3
