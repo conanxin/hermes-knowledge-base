@@ -5,7 +5,7 @@
 > **Workflow**: [`docs/workflows/material-kb-import-workflow.md`](../workflows/material-kb-import-workflow.md)  
 > **入口脚本**: `scripts/material_to_kb.py`  
 > **创建时间**: 2026-07-01  
-> **任务标签**: `v0.3.76-unified-material-kb-import-router`; `v0.3.77-generic-web-article-import-route`; `v0.3.79-youtube-transcript-kb-import-route`
+> **任务标签**: `v0.3.76-unified-material-kb-import-router`; `v0.3.77-generic-web-article-import-route`; `v0.3.79-youtube-transcript-kb-import-route`; `v0.3.86-pdf-local-document-kb-import-route`
 
 ---
 
@@ -86,9 +86,11 @@ notes/article.md
 | 微信公众号 HTML / MD / TXT | `.html`, `.htm`, `.md`, `.markdown`, `.txt` | 支持 | `wechat_url_to_kb.py` local file mode；批量走 `wechat_batch_import.py` |
 | YouTube URL | `youtube.com`, `youtu.be` | 支持，前提是能获取字幕 / transcript | `scripts/youtube_to_kb.py` |
 | 普通网页 URL | 其他 `http://` / `https://` | 支持 | `scripts/web_article_to_kb.py` |
-| PDF | 本地 `.pdf` | 当前返回 `BLOCKED_UNSUPPORTED` | PDF import/OCR route 尚未接入统一入口 |
+| 本地 PDF（可提取文本层） | `.pdf` 后缀 | 支持（v0.3.86 起） | `scripts/pdf_to_kb.py` |
+| 本地 PDF（扫描版 / 无文本层） | `.pdf` 后缀但 pymupdf 提不到文本 | 阻塞返回 `BLOCKED_NEEDS_OCR` | `scripts/pdf_to_kb.py` 写入失败 capture，不入库 |
+| 其他未知后缀 | — | `BLOCKED_UNSUPPORTED` | 不引入临时抓取器 |
 
-统一入口不会临时发明抓取器。没有稳定脚本的类型必须明确返回 `BLOCKED_UNSUPPORTED`，并写入失败原因。v0.3.77 起普通网页 URL 已接入公开 HTTP 抓取路线；v0.3.79 起 YouTube URL 已接入字幕/转录稿路线。两条路线都不登录、不读 cookie、不绕过 paywall 或访问限制，不完整正文/字幕会 hard stop。
+统一入口不会临时发明抓取器。没有稳定脚本的类型必须明确返回 `BLOCKED_UNSUPPORTED`，并写入失败原因。v0.3.77 起普通网页 URL 已接入公开 HTTP 抓取路线；v0.3.79 起 YouTube URL 已接入字幕/转录稿路线；v0.3.86 起本地可提取文本 PDF 接入 `pdf_to_kb.py`。三条路线都不登录、不读 cookie、不绕过 paywall 或访问限制，不完整正文/字幕/扫描版 PDF 会 hard stop。
 
 ---
 
@@ -126,6 +128,41 @@ v0.3.84 adds a fetch-result handoff to the YouTube subprocess:
   or empty results still cause the subprocess to refetch so a fresh attempt is logged.
 - Material items gain `handoff_used: true` and `fetch_result_json_path` when the handoff is
   used. The handoff file is gitignored under `tmp/material_fetches/`.
+
+## v0.3.86 本地 PDF 路线
+
+新增 `scripts/pdf_to_kb.py`，统一入口会把 `.pdf` 路由进去：
+
+```bash
+python3 scripts/material_to_kb.py --input "<file.pdf>" --dry-run
+python3 scripts/material_to_kb.py --input "<file.pdf>" --import
+python3 scripts/material_to_kb.py --input-list tmp/materials.txt --import
+```
+
+也可以直接调子脚本：
+
+```bash
+python3 scripts/pdf_to_kb.py --pdf-file "<file.pdf>" --dry-run
+python3 scripts/pdf_to_kb.py --pdf-file "<file.pdf>" --import
+```
+
+提取后端：**PyMuPDF (pymupdf)**，完全本地，不联网。
+
+| PDF 类型 | 行为 |
+|---|---|
+| 可提取文本层 PDF | `DRY_RUN_OK` 或 `IMPORTED` |
+| 扫描版 / 图像版 PDF | `BLOCKED_NEEDS_OCR` (exit 4)，不写半成品 |
+| 文本层残缺 | `BLOCKED_INCOMPLETE_TEXT`，可加 `--allow-partial-text` 放宽 |
+| 重复 PDF (sha256 / path / (title, author, page_count) 命中已有条目) | `SKIPPED_DUPLICATE` |
+
+入库产出 6 文件：`content/articles/YYYY/<slug>/{metadata.yaml, source.md, translation.zh-CN.md, summary.md, notes.md, raw_payload.json}`。docs / site HTML 由统一入口的 `update_site.py` 增量生成。
+
+- **不内置 OCR**：扫描版永远不会被当作 full capture 入库。
+- **不伪造文本**：`--allow-partial-text` 也只是把硬阈值放宽，仍然是基于真实提取的文本。
+- **不下载 PDF**：必须用户已经在本地。
+- **不读 cookie / 登录态**：纯本地库调用。
+
+详见 [`docs/commands/pdf-kb-import-command.md`](pdf-kb-import-command.md) 与 [`docs/workflows/pdf-kb-import-workflow.md`](../workflows/pdf-kb-import-workflow.md)。
 
 v0.3.84 also adds inbox overwrite protection for `inbox/raw/youtube/*.json`:
 

@@ -122,8 +122,8 @@ def smoke_1_inference_rules() -> bool:
                 "generic web route unaffected", str(web))
     ok &= check(wechat["inferred_type"] == "wechat_url" and wechat["route_kind"] == "wechat",
                 "WeChat route unaffected", str(wechat))
-    ok &= check(pdf["status"] if "status" in pdf else pdf["supported"] is False,
-                "PDF remains unsupported at inference layer", str(pdf))
+    ok &= check(pdf.get("inferred_type") == "pdf_file" and pdf.get("route") == "pdf_to_kb.py",
+                "PDF now routes to pdf_to_kb.py (v0.3.86)", str(pdf))
     return ok
 
 
@@ -426,15 +426,18 @@ def smoke_12_material_router_youtube_route() -> bool:
     return ok
 
 
-def smoke_13_pdf_still_unsupported() -> bool:
-    print("\n=== Smoke 13: PDF remains unsupported ===")
+def smoke_13_pdf_route_supported() -> bool:
+    print("\n=== Smoke 13: PDF routes to pdf_to_kb.py (v0.3.86) ===")
     code, out, err = run([TEST_PY, str(ROUTER_SCRIPT), "--input", PDF_FIXTURE, "--dry-run"])
-    ok = check(code == 0, "router exits 0 for unsupported PDF", f"exit={code}\nstderr tail: {err[-300:]}")
+    ok = check(code == 0, "router exits 0 for supported PDF", f"exit={code}\nstderr tail: {err[-300:]}")
     data = parse_router_stdout(out)
     item = data.get("items", [{}])[0]
-    ok &= check(item.get("status") == "BLOCKED_UNSUPPORTED", "PDF status is BLOCKED_UNSUPPORTED", str(item))
-    ok &= check("PDF import/OCR route not implemented yet" in item.get("failure_reason", ""),
-                "PDF unsupported reason preserved")
+    ok &= check(item.get("status") in {"DRY_RUN_OK", "SKIPPED_DUPLICATE"},
+                "PDF dry-run returns DRY_RUN_OK or SKIPPED_DUPLICATE", str(item))
+    ok &= check(item.get("inferred_type") == "pdf_file",
+                "PDF inferred_type is pdf_file", str(item.get("inferred_type")))
+    ok &= check(item.get("route") == "pdf_to_kb.py",
+                "PDF route is pdf_to_kb.py", str(item.get("route")))
     return ok
 
 
@@ -465,7 +468,7 @@ def main() -> int:
         smoke_10_short_transcript_blocked(),
         smoke_11_duplicate_video_id(),
         smoke_12_material_router_youtube_route(),
-        smoke_13_pdf_still_unsupported(),
+        smoke_13_pdf_route_supported(),
         smoke_14_quality_gates(),
     ])
     print("\n" + "=" * 60)

@@ -2,6 +2,72 @@
 
 All notable changes to the Hermes Knowledge Base project.
 
+## v0.3.86 — PDF / Local Document KB Import Route
+
+### Summary
+
+本地 PDF（可提取文本层）接入统一材料入口，由 `scripts/pdf_to_kb.py` 用 PyMuPDF 本地提取。扫描版 PDF 不再被静默当作"文本路径"处理，而是返回 `BLOCKED_NEEDS_OCR` 并硬停，不写半成品 KB 条目。
+
+### Added
+
+- `scripts/pdf_to_kb.py`（869 行）— PDF text-layer 路线，支持 dry-run / import / `--allow-partial-text`。
+- `tests/run_pdf_import_smoke.py`（291 行）— 26/26 checks PASS，覆盖 fixture / dedup / scanned / router。
+- `tests/fixtures/generate_sample_pdf.py` + `tests/fixtures/pdf_sample_document.pdf` + `tests/fixtures/pdf_scanned_fixture.pdf`。
+- `docs/commands/pdf-kb-import-command.md` + `docs/workflows/pdf-kb-import-workflow.md` — 完整命令与工作流文档。
+- `tests/run_material_router_smoke.py` 增加 PDF 路由端到端断言。
+
+### Changed
+
+- `scripts/material_to_kb.py` — `.pdf` 路由从 `BLOCKED_UNSUPPORTED` 改为 `pdf_file` → `pdf_to_kb.py`。
+- `docs/commands/material-kb-import-command.md` — 增加 v0.3.86 PDF 路线段落。
+- `docs/AGENT_COMMANDS.md` — 顶部状态表更新 PDF 行；`README.md` 增加 PDF 文本层路线行。
+- `scripts/pdf_to_kb.py` — 在 5 个 `[pdf] status: ...` 行后追加大写 `STATUS:` 行，方便统一入口 `parse_status_line` 解析。
+
+### Hard Guarantees
+
+- **不下载 PDF**：必须用户已下载到本地。
+- **不读 cookie / 登录态 / 网络凭据**：纯本地 PyMuPDF 调用。
+- **不内置 OCR**：扫描版（`total_chars == 0` 或空页比例 ≥0.6 且 `total_chars < page_count×10`）返回 `BLOCKED_NEEDS_OCR`，不写半成品。
+- **不伪造文本**：`--allow-partial-text` 仅放宽硬阈值，仍是基于真实提取的文本。
+- **去重三键**：pdf_sha256 + (title, author, page_count) + content_hash（嵌入 `raw_payload.json`）。
+- **统一状态行**：5 个退出路径都打印 `STATUS: {STATE}` 大写行，与 youtube / web / wechat 子脚本一致。
+
+### Status Constants
+
+`DRY_RUN_OK` / `IMPORTED` / `SKIPPED_DUPLICATE` / `BLOCKED_NEEDS_OCR` / `BLOCKED_INCOMPLETE_TEXT` / `BLOCKED_UNSUPPORTED` / `FAILED_IMPORT` / `FAILED_GATE`。
+
+### Commits
+
+- (final hash written by Stage L)
+
+### Related
+
+- 扫描版 PDF 暂未接 OCR（`docs/commands/pdf-ocr-kb-import-command.md` 是占位文档）。
+- v0.3.85 YouTube real handoff e2e 报告（`reports/youtube_real_handoff_e2e_regression_v0.3.85_20260701.md`）记录环境拿不到 full transcript 的状况，本版不动 YouTube。
+
+---
+
+## v0.3.85 — YouTube Real Handoff E2E Regression
+
+### Summary
+
+YouTube 11 个候选 URL（Steve Jobs / Ken Robinson / Tim Urban / Rick Astley 等）全失败：9 个 region-locked + 6 个 empty captions / 429，0 个 `full` transcript → 0 imports。
+
+### Status
+
+`BLOCKED_NO_FULL_TRANSCRIPT_AVAILABLE`。Handoff 链路本身已由 `smoke_6_router_handoff_passes_fetch_result` 覆盖。
+
+### Files Changed
+
+- 仅 `reports/youtube_real_handoff_e2e_regression_v0.3.85_20260701.md` + `CHANGELOG.md`。
+- 无 KB / docs / site / source 改动。
+
+### Commit / Push
+
+- `d1f2351` pushed.
+
+---
+
 ## v0.3.25 — Release and Changelog Consolidation
 
 ### Added

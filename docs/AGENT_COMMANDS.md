@@ -34,7 +34,8 @@ python3 scripts/material_to_kb.py --input-list tmp/materials.txt --import
 | 微信公众号 HTML / MD / TXT | 支持，路由到 WeChat local file mode |
 | 普通网页 URL | 支持，路由到 `web_article_to_kb.py` |
 | YouTube URL | 支持，路由到 `youtube_to_kb.py`；前提是能获取可用字幕 / transcript |
-| PDF | 只有仓库存在稳定路线时才支持；当前统一入口返回 `BLOCKED_UNSUPPORTED` |
+| 本地 PDF（可提取文本层） | 支持（v0.3.86），路由到 `pdf_to_kb.py`（PyMuPDF 提取） |
+| 本地 PDF（扫描版 / 无文本层） | 阻塞返回 `BLOCKED_NEEDS_OCR`，不写半成品 |
 
 详见 [docs/commands/material-kb-import-command.md](commands/material-kb-import-command.md) 与 [docs/workflows/material-kb-import-workflow.md](workflows/material-kb-import-workflow.md)。
 
@@ -88,7 +89,7 @@ python3 scripts/web_article_to_kb.py --url "<URL>" --import
 - 只抓公开 HTTP(S) 页面。
 - 不登录、不读 cookie、不绕过 paywall 或访问限制。
 - robots.txt 禁止抓取、正文缺失、正文截断或仅能抽到摘要时必须 `BLOCKED_*`，不得写半成品 KB 条目。
-- YouTube 走 `youtube_to_kb.py` 专门路线；PDF 仍不通过普通网页路线伪造支持。
+- YouTube 走 `youtube_to_kb.py` 专门路线；本地 PDF（v0.3.86 起）走 `pdf_to_kb.py` 专门路线；不通过普通网页路线伪造支持。
 
 详见 [docs/commands/web-article-kb-import-command.md](commands/web-article-kb-import-command.md) 与 [docs/workflows/web-article-kb-import-workflow.md](workflows/web-article-kb-import-workflow.md)。
 

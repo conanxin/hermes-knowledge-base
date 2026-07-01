@@ -38,6 +38,7 @@ WECHAT_SINGLE_SCRIPT = SCRIPTS_DIR / "wechat_url_to_kb.py"
 WECHAT_BATCH_SCRIPT = SCRIPTS_DIR / "wechat_batch_import.py"
 WEB_ARTICLE_SCRIPT = SCRIPTS_DIR / "web_article_to_kb.py"
 YOUTUBE_SCRIPT = SCRIPTS_DIR / "youtube_to_kb.py"
+PDF_SCRIPT = SCRIPTS_DIR / "pdf_to_kb.py"
 LOCALIZE_SCRIPT = SCRIPTS_DIR / "localize_article_images.py"
 
 STATUS_IMPORTED = "IMPORTED"
@@ -184,8 +185,10 @@ def infer_input(value: str, index: int = 0) -> dict[str, Any]:
     elif suffix == ".pdf":
         item.update({
             "inferred_type": "pdf_file",
-            "route": "unsupported",
-            "failure_reason": "PDF import/OCR route not implemented yet",
+            "route": "pdf_to_kb.py",
+            "route_kind": "pdf",
+            "route_flag": "--pdf-file",
+            "supported": True,
         })
     else:
         item.update({
@@ -352,6 +355,10 @@ def status_from_fetch_block(fetch_result: dict[str, Any]) -> str:
 
 
 def fetch_material(item: dict[str, Any], retries: int = 1, caption_provider: str = "auto") -> dict[str, Any] | None:
+    # Local PDF (v0.3.86) doesn't go through the URL fetch layer -- the
+    # importer reads the file directly, classifies, and extracts inline.
+    if item.get("route_kind") == "pdf":
+        return None
     fetcher = fetcher_for(item.get("route_kind", ""), item.get("route_flag", ""))
     if not fetcher:
         return None
@@ -425,6 +432,33 @@ def run_single_web(item: dict[str, Any], dry_run: bool) -> dict[str, Any]:
     result["duplicate_of"] = parse_duplicate_of(proc.stdout, proc.stderr)
     load_capture_fields(result)
     apply_fetch_result(result, item.get("_fetch_result"))
+    if result["status"] == STATUS_IMPORTED:
+        kb_path = parse_imported_path(proc.stdout, proc.stderr)
+        result["kb_article_path"] = kb_path
+        if kb_path:
+            slug = kb_path.rstrip("/").split("/")[-1]
+            result["docs_item_path"] = f"docs/items/{slug}/index.html"
+            result["site_item_path"] = f"site/items/{slug}/index.html"
+    return result
+
+
+def run_single_pdf(item: dict[str, Any], dry_run: bool) -> dict[str, Any]:
+    """PDF local-file import (v0.3.86).
+
+    Thin wrapper: builds the canonical cmd and parses the subprocess outputs
+    like run_single_web / run_single_youtube do. PDFs are not URL fetchers, so
+    there is no fetch-stage pass; the importer classifies and extracts in one
+    subprocess call.
+    """
+    result = base_result(item)
+    cmd = [sys.executable, str(PDF_SCRIPT), item["route_flag"], item["input"]]
+    cmd.append("--dry-run" if dry_run else "--import")
+    proc = run_command(cmd)
+    result["route"] = "pdf_to_kb.py"
+    result["capture_json_path"] = parse_capture_path(proc.stdout, proc.stderr)
+    result["status"], result["failure_reason"] = status_from_single_exit(proc, dry_run)
+    result["duplicate_of"] = parse_duplicate_of(proc.stdout, proc.stderr)
+    load_capture_fields(result)
     if result["status"] == STATUS_IMPORTED:
         kb_path = parse_imported_path(proc.stdout, proc.stderr)
         result["kb_article_path"] = kb_path
@@ -763,6 +797,7 @@ def route_inputs(
     wechat_items = [item for item in runnable_supported if item.get("route_kind") == "wechat"]
     web_items = [item for item in runnable_supported if item.get("route_kind") == "web"]
     youtube_items = [item for item in runnable_supported if item.get("route_kind") == "youtube"]
+    pdf_items = [item for item in runnable_supported if item.get("route_kind") == "pdf"]
 
     if len(wechat_items) > 1:
         for result, item in zip(run_batch_wechat(wechat_items, dry_run=dry_run), wechat_items):
@@ -783,6 +818,9 @@ def route_inputs(
             caption_provider=caption_provider,
             fetch_result=item.get("_fetch_result"),
         )
+
+    for item in pdf_items:
+        results_by_index[item["index"]] = run_single_pdf(item, dry_run=dry_run)
 
     results = [results_by_index[i] for i in sorted(results_by_index)]
     gates: list[dict[str, Any]] = []

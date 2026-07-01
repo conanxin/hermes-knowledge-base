@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke tests for the unified material import router (v0.3.76-v0.3.79).
+"""Smoke tests for the unified material import router (v0.3.76-v0.3.86).
 
 Runs offline against local fixtures, a local HTTP server, and unsupported
 placeholder routes.
@@ -9,7 +9,10 @@ Verifies:
 2. Local HTML and Markdown are recognized as local_text_article.
 3. Generic web URLs are recognized and routed to web_article_to_kb.py.
 4. YouTube URLs are recognized and routed to youtube_to_kb.py.
-5. Local PDFs return BLOCKED_UNSUPPORTED when no stable route is wired.
+5. Local PDFs (text-layer) are routed to pdf_to_kb.py in v0.3.86.
+   The pre-v0.3.86 behaviour was BLOCKED_UNSUPPORTED; that branch is no
+   longer reachable for any real .pdf input. We keep the "unsupported
+   unknown suffix" coverage but route it via a bogus path instead.
 6. input-list skips blank lines and # comments.
 7. dry-run does not write KB entries.
 8. Mixed batches do not stop on BLOCKED_UNSUPPORTED.
@@ -123,7 +126,10 @@ def smoke_1_inference_rules() -> bool:
         (MD_FIXTURE, "local_text_article", True),
         (GENERIC_URL, "generic_web_url", True),
         (YOUTUBE_URL, "youtube_url", True),
-        (PDF_FIXTURE, "pdf_file", False),
+        # PDF is now supported via pdf_to_kb.py (v0.3.86).
+        (PDF_FIXTURE, "pdf_file", True),
+        # Truly-unknown suffix remains unsupported.
+        ("/tmp/nonexistent-unknown-suffix.xyz", "unknown", False),
     ]
     ok = True
     for idx, (value, expected_type, supported) in enumerate(cases):
@@ -202,15 +208,21 @@ def smoke_2_input_list_and_reports() -> bool:
                 "YouTube routed to youtube_to_kb.py", yt_item["route"])
     ok &= check(yt_item["status"] in {"DRY_RUN_OK", "SKIPPED_DUPLICATE"},
                 "YouTube dry-run completed", yt_item["status"])
-    ok &= check(pdf_item["status"] == "BLOCKED_UNSUPPORTED",
-                "PDF returns BLOCKED_UNSUPPORTED", pdf_item.get("failure_reason", ""))
-    ok &= check("PDF import/OCR route not implemented yet" in pdf_item.get("failure_reason", ""),
-                "PDF unsupported reason is explicit")
+    # PDF: v0.3.86 routes to pdf_to_kb.py; expect DRY_RUN_OK or SKIPPED_DUPLICATE.
+    ok &= check(pdf_item["inferred_type"] == "pdf_file",
+                "PDF inferred as pdf_file", pdf_item["inferred_type"])
+    ok &= check(pdf_item["route"] == "pdf_to_kb.py",
+                "PDF routed to pdf_to_kb.py", pdf_item["route"])
+    ok &= check(pdf_item["status"] in {"DRY_RUN_OK", "SKIPPED_DUPLICATE"},
+                "PDF dry-run completed", pdf_item["status"])
+    ok &= check(pdf_item["status"] != "BLOCKED_UNSUPPORTED",
+                "PDF is no longer BLOCKED_UNSUPPORTED (v0.3.86)",
+                pdf_item.get("status", ""))
 
-    ok &= check(summary.get("blocked_unsupported") == 1,
-                "unsupported PDF counted without aborting batch", str(summary))
-    ok &= check(summary.get("dry_run_ok", 0) + summary.get("skipped_duplicate", 0) == 4,
-                "supported dry-run items counted", str(summary))
+    ok &= check(summary.get("blocked_unsupported", 0) == 0,
+                "no BLOCKED_UNSUPPORTED in supported batch", str(summary))
+    ok &= check(summary.get("dry_run_ok", 0) + summary.get("skipped_duplicate", 0) == 5,
+                "all five supported dry-run items counted", str(summary))
 
     md_report = REPO_ROOT / data.get("report_markdown", "")
     json_report = REPO_ROOT / data.get("report_json", "")
@@ -222,8 +234,8 @@ def smoke_2_input_list_and_reports() -> bool:
                     "json report has summary total=5")
     if md_report.exists():
         text = md_report.read_text(encoding="utf-8")
-        ok &= check("BLOCKED_UNSUPPORTED" in text and "web_article_to_kb.py" in text and "youtube_to_kb.py" in text,
-                    "markdown report includes statuses and inferred types")
+        ok &= check("web_article_to_kb.py" in text and "youtube_to_kb.py" in text and "pdf_to_kb.py" in text,
+                    "markdown report includes web/youtube/pdf routes")
     return ok
 
 
@@ -267,7 +279,7 @@ def smoke_4_no_remote_mmbiz_in_generated_html() -> bool:
 
 def main() -> int:
     print("=" * 60)
-    print("Material import router smoke tests (v0.3.76-v0.3.79)")
+    print("Material import router smoke tests (v0.3.76-v0.3.86)")
     print("=" * 60)
     results = [
         smoke_1_inference_rules(),
