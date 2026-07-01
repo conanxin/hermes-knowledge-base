@@ -1,12 +1,12 @@
 评点是中国古典小说独有的鉴赏传统，经金圣叹、脂砚斋而发扬光大，其将批者的妙语附在小说字里行间，兼具文化与美学意义。金庸小说的根脉深处，也流淌着中国古典小说的血液。本专栏便从中国传统评点学视角，对金庸小说逐一复盘，细读金庸江湖的叙事美学与技法得失。
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/BicvaBbUPLjMMpraP7HPe2gickMvzfOiaSL1OJWAtOZAJ4E4oeDlGU2U8gWe4RmRlor3JuN4oBeVPtGFt3yqCYdibNQOJRFjaF32kCkQUXNrCH0/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-001.jpg)
 
 《倚天屠龙记》（新修版），广州出版社， 2013年4月版
 
 通俗武侠小说的主角要么奇遇连连、要么快意恩仇，像《倚天屠龙记》这样，主角张无忌从一登场就处处吃瘪、常常受骗的情况并不多见。尤其在第十六回张无忌学得九阳神功成年以前，更是饱经磨难。有网友总结：“受苦受难释小龙（2003版《倚天屠龙记》中少年张无忌的扮演者），左拥右抱苏有朋（2003版中成年张无忌扮演者）”，的确，成年前的张无忌几乎是一个坎接着一个坎，吃一堑再吃一堑，不是被骗就是在被骗的路上。
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/BicvaBbUPLjOibMnyLWPR923iadDYicUQib7LibX2I8iaThU2X45XOSj9aOywXFWOx5XXRicZA8ibLooP7KiaR8Brm6DzjFYwldiaD3fGf5F41UAVpALSo/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-002.jpg)
 
 2003版电视剧《倚天屠龙记》中的张无忌与赵敏
 
@@ -24,7 +24,7 @@
 
 经历了这一连串的欺骗与逼迫，元末的江湖才显露出了它复杂的真容：表面上正气凛然之人，内心也许肮脏不堪；表面上邪魅诡怪之人，却可能有勇气、胆魄和大义。
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/BicvaBbUPLjOerF4qIfUngwzCOW1IZzK3sIBjEneoeA0S1aibCLzPxiaoiazrU5FI0KJTdVEDU3ciaGyP2ZqHRjsZGyYSgA1BZd9sueLB63I3sho/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-003.jpg)
 
 1994版电视剧《倚天屠龙记》剧照
 
@@ -38,7 +38,7 @@
 
 张无忌的特殊性在于，他生长于冰火岛，人生的前十年他从未亲身体会这些世俗世界的规则，所以他有着一颗赤子之心，所以他总是被骗。也就是在这一次次被骗的过程中，读者随着张无忌一起体会和感受着元末这个秩序崩塌、人心不古的江湖，而也只有怀揣着赤子之心的人们，才能改天换地，开辟一个新的秩序。
 
-![图片](https://mmbiz.qpic.cn/mmbiz_jpg/UxpugYk6ciaqKUcDNs6XsibCsqBpz5OOXsVISjibzPdMUpdGKI3IcPnsIQfAwErx0SDBNf1FxEcVluPo1AGBTcXCQ/640?wx_fmt=other&wxfrom=5&wx_lazy=1&wx_co=1&tp=webp#imgIndex=17)
+![图片](assets/image-004.webp)
 
 **微时代的首选书单**
 **责任编辑：**

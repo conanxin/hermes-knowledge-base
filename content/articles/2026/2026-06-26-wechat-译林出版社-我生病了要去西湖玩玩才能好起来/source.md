@@ -18,7 +18,7 @@
 
 几百年后，这本图文并茂的明代旅行图书辗转流至法国国家图书馆。 南京大学的学者李晓愚寻访至此，被其美妙绝伦的刊刻和精美的六色套印插图所叹服，决定对其进行研究。此后，她一部部地寻访流落到海外的插图古籍，开启了一段跨越十几年的海外中华插图古籍寻绎之旅。
 
-![](https://mmbiz.qpic.cn/mmbiz_jpg/HEIbvuy653oGg1GTYjw1E2AWygMtncNrsibbdLJE2Gb6GgkIbjibUuq8Ckz4Aic4AZn9ANk0TgYGogSWsGttfJUwtGqbiaFIWUqgk0FT8cibB9eU/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-001.jpg)
 
 01
 
@@ -30,13 +30,13 @@
 
 在装帧设计上，陈昌锡采取了诗、书、画三者结合的设计形式。一般的书籍多采用统一规范化的字体，即“宋体字”，它是在明代为适应印刷术需要而产生的。不过在讲求精致品味的文人看来，这种拘紧刻板的字体显得有些庸俗。
 
-![](https://mmbiz.qpic.cn/mmbiz_png/HEIbvuy653rXdyJPx254p41CjAFCOGBEIxVeJOhhxHA7rspaCeClrBPgoSmz7ck3zDfFaae0uCkB6rArygKfYX0GLyBVIP4ju8fAMOBQ8q0/640?wx_fmt=png&from=appmsg)
+![](assets/image-002.png)
 
 明刊本《新镌海内奇观》中使用的宋体字
 
 为了提升书籍的艺术品位，陈昌锡在《湖山胜概》中以个性化的书法摹写替代了标准化的印刷字体，邀请当时颇有名气的书家来执笔。面对不同书风的作品，读者除了可以感受到书法艺术的审美趣味，还能体会到书家强烈的个性特征，这无疑提升了书籍的艺术品位。
 
-![](https://mmbiz.qpic.cn/mmbiz_png/HEIbvuy653ocO6542bwRyf9hzhicGL34WdabKH9HMtwrY8pWQces95um2RcWQLP6TqzdHZTV6qC9hVFhdB7SUalZue3qVRapMurQf35g4hg8/640?wx_fmt=png&from=appmsg)
+![](assets/image-003.png)
 
 明代吴僧明纲为《湖山胜概》题写的诗词
 
@@ -44,7 +44,7 @@
 
 除了书法，《湖山胜概》还特别注重图像的视觉感染力。其线条工整细致，画面极富雅丽生趣。书中的版画部分采用了六彩套印的技术，这是当时非常先进的一种印刷手段。
 
-![](https://mmbiz.qpic.cn/mmbiz_png/HEIbvuy653p4y0LSYewl0gC5KHzj82H95KuETLDR73YLAIEZDQsjZN2T0vn6x3IxUt6xeDiaa4VRSwTlZ62SmKUfy2nbupjvIpzlZF2U2icDk/640?wx_fmt=png&from=appmsg)
+![](assets/image-004.png)
 
 《湖山胜概》之“云居雪松”
 
@@ -62,33 +62,33 @@
 
 明人撰写过许多旅行笔记，我们从文字内容中可以领略很多当时旅游风尚的点滴。但是《湖山胜概》中的图像却有一种神奇的力量，可以让人更加生动地“想象过去”：比如，他们旅行时选取何种交通方式，穿什么衣服，带何种装备，有哪些娱乐活动，等等。
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_png/HEIbvuy653rGbsFhupAvmOTA2k9icQvy7D7z5Bfo4xxCUn4jcl2ibAzMXCpU1mvx06X36um46BsicRAianWpnNVmXhzKoaWBULJ75kHwkE5NGA4/640?wx_fmt=png&from=appmsg)
+![](assets/image-005.png)
 
 明人的出行工具“竹兜子”
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_png/HEIbvuy653q2XTXduvoOBCFHvAb3tVxfgmjgfx9x9h7v8lKicmG3BISymoyjib2WvUtG8Q9QtMTUTxkBuqQjxsPPKfOibOMgbXnVYPsibnzbDb0/640?wx_fmt=png&from=appmsg)
+![](assets/image-006.png)
 
 晚明士人出行常身着“道服”，塑造出一种超然散淡的隐逸形象
 
-![](https://mmbiz.qpic.cn/mmbiz_png/HEIbvuy653rZ28OzWcic9qQoIiaPWich46VdVBd2WXel0R48SF249eyicS74hia5ZlVTgQ2sFibFFVzv7svat7XLO4lqoibYq27ESAMCIdSL05Mcgo/640?wx_fmt=png&from=appmsg)
+![](assets/image-007.png)
 
 明人用的手杖，又称“扶老”，适用于辅助山间行走
 
 我们来看看明人出行时戴的帽子。其中最流行的帽子可以说是“瓜皮帽”了。《湖山胜概》的插图中有位男士就戴着这款帽子。这款帽子据说是明朝开国皇帝朱元璋亲自设计的，由六块黑缎子或绒布连缀制成。它原本有个相当大气的名字——“六合一统帽”。因为它的形状像半个西瓜皮，民间俗称“瓜皮帽”。
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_png/HEIbvuy653pUVnouYKmYzbeSdWyUfdLIor8WkiaVdvYgAzeUxgXSqrYXlbvgwL4RIQ1YNY8LYagOX80nXvBSD7rnz0ibEhbDmst6icRibVrjy4M/640?wx_fmt=png&from=appmsg)
+![](assets/image-008.png)
 
 头戴“六合一统帽”的男子
 
 除了“六合一统帽”之外，《湖山胜概》的插图中还出现了好几款其他样式的帽子。通过这些图画，我们可以把握明代男子的穿搭时尚。
 
-![](https://mmbiz.qpic.cn/mmbiz_jpg/HEIbvuy653pbuHcxJp3Wktuq4mEm5OYajzFkVTUTbIVnGEyzcKGqiaS649NBBx34QM6v7cWicBc6NTSSKcrDgDXNwXnKxicQbblxiaUic2HtENAY/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-009.jpg)
 
-![](https://mmbiz.qpic.cn/mmbiz_jpg/HEIbvuy653rBfXnaQo8coIoKHRlXCPceAiaWSDyxrq4oemPdynibic8N0CzedIic1y198O92aws6owgLRtgjTprfnvdJENrKxOjNVatKry3jVIc/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-010.jpg)
 
-![](https://mmbiz.qpic.cn/mmbiz_jpg/HEIbvuy653p2fxXP8ib3LZT7a5qTgU25n99DUHZluHTXWtBJ9ppz3YpYfQJyticEImdNnx6ic39aHGQtrsuuYxrXzuOyS7ia8icSZXpC2AaVB7Ig/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-011.jpg)
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/HEIbvuy653pCzMQG20zHvDxvslZE6CJ1tgiasicISm7J3eLzyHf0dBEDaADR6lib1yggn1eQc4rQTSxVCibPQibtdPdZgeN6ORkmUTVgLuWGNcZI/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-012.jpg)
 
 左右滑动查看图集
 
@@ -102,7 +102,7 @@
 
 这本书图画数量很大，全书共130余幅风景画，图画质量精美，全书绘制工整，镌刻精妙，笔笔传神，刀刀得法。
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_png/HEIbvuy653pB7DEq5pe8Isnky5UEl6oEdk8eNn6CW7MFpDHiaaAmpvP980OQGy5fCX4VWcsqibpfAQOXNYqGVGe96W60KnkFf0j3qpKMeq7hE/640?wx_fmt=png&from=appmsg)
+![](assets/image-013.png)
 
 《新镌海内奇观》之“花港观鱼”
 
@@ -118,20 +118,20 @@
 
 《瀛海寻珍：海外藏中华插图古籍览胜》所收古籍，除了以上提到的两本，还包括 世界上最古老的印本《金刚般若波罗蜜经》（英国国家图书馆藏）、五代十国的袖珍经卷《宝箧印经》（哈佛大学福格艺术博物馆藏）、明刊孤本《异域图志》（英国剑桥大学图书馆藏）等，都具有极高的文物价值、文献价值和美学价值，堪称“书籍之为艺术”的典范。
 
-![](https://mmbiz.qpic.cn/mmbiz_jpg/HEIbvuy653o898AW9g5sl9qiaG3t0BMYnFwFPGWbnscNArH2uD9ZoibqARhHYnRkYMrWQAu8u3dE5JY8FxtPFvA4CU7YNl2tJ8ibTZmz340PsU/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-014.jpg)
 
 这些插图古籍此前几乎都未见影印，其中不少是世间罕见甚至独一无二的孤本。 它们因种种原因流落海外，深藏在博物馆、图书馆或私人藏书家手中，普通人难得一见。
 
 而李晓愚教授在十几年间一部一部地寻访和研究，唤醒了这些沉睡百年乃至千年的古籍珍品，揭开了它们的神秘面纱，呈现了传统文化中精妙的视觉世界。 如中国美术学院教授范景中所言：“漂洋过海的珍本，经十余年寻绎梳理，终得以另一种方式‘回归故里’。从此，不必远涉巴黎、伦敦、东京，亦能与国宝欣然相晤。”
 
-![](https://mmbiz.qpic.cn/mmbiz_jpg/HEIbvuy653pswicNRDCeBEK8aEFVbABiaOkaJib0fpkNW2jPianT4bFyYotKuIQ4P4XCxcFCyJcwf0icSaUVP9sgCnCc5pwcYy45myxvF2xBI8FM/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-015.jpg)
 
 于是我们才知道：世界上最古老的印本《金刚般若波罗蜜经》，乃是一个普通书生为双亲祈福所刊印；杭州雷峰塔倒下后才被发现的袖珍经卷《宝箧印经》，竟是吴越国王钱俶为积累功德而供入塔中；《异域图志》里古人想象出来的“人 + 动物”的魔幻拼接，反映出“夷狄禽兽论”的古老观念。
 
-![](https://mmbiz.qpic.cn/mmbiz_jpg/HEIbvuy653oE86Mib2dTCWnwO8zJKtoEz4Wibo3SbY91yWn3V9JVHC8j4lqicQqLcrvNiakoa5ujZkn94OA601dahyGraym4IHOuuxpWLSBHnzY/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-016.jpg)
 
 这本书论述的插图古籍涉及古人生活的方方面面： 从外交、科学，到居家、娱乐、旅游、育儿。一部一景，它展示的不只是书籍的胜景，更是古人生活世界的胜景。 李晓愚在书中说：“我希望这些插图古籍的研究，可以让今天的读者与我们的古人多一分亲近。”
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/HEIbvuy653ouBPjKSsIMamHxY8Hvh2ZLNmrI3oamqjlibozql2lRTYIuic1XQTeQy6wKn2icSVeTesGv03N4uYcf6Yicqiadeu2ZrSE7aYnzXWaI/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-017.jpg)
 
 《瀛海寻珍：海外藏中华插图古籍览胜》中呈现的这些古老典籍是脆弱的，也是坚韧的。它们穿越了百年乃至千年的时光，历经重重艰险，来到我们这个时代。古籍记录了古人的生活，传递着他们的愿望、信仰、情感。有了它们，我们才能真真切切地触摸中华历史、感知古典文明。

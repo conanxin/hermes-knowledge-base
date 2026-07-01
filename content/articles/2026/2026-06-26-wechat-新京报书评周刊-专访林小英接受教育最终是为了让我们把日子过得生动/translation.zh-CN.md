@@ -1,4 +1,4 @@
-![](https://mmbiz.qpic.cn/mmbiz_gif/CKYhgyUnM1CPnTWDh2N7T9XakUwC7zKU3JrMFlJxctAV2n8ZEnNaXpn98kViahZFtp6UTBa5NrWI0q1vGRpWkXg/640?wx_fmt=gif&wxfrom=5&wx_lazy=1)
+![](assets/image-001.gif)
 
 近年来，“优绩主义” （meritocracy） 一词在互联网上引发着持久的讨论。从教育界到职场，几乎人人都在批评“优绩主义者”。但在批判之前，却似乎鲜有人深入地讨论过这个词的内涵与历史。
 
@@ -8,7 +8,7 @@
 
 我们又是否可能走出优绩主义？本期专题，我们通过专访多位学者和写作者，试图探讨这些问题。
 
-![](https://mmbiz.qpic.cn/mmbiz_jpg/e4gsaHJicKEZzfPmaicKicQWudibPIpcqRZwhxn4c0iajyDQ8Xa6Ny9PMQn8QSrMwEHdX1CCdT26aVyDmzLwnEY7sZPGnEaCcmV7obHxEUXaDl8w/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-002.jpg)
 
 本文内容出自新京报·书评周刊6月12日专题《反思“优绩主义”：我们如何理解“优秀”》的B06版。
 
@@ -25,7 +25,7 @@ B08「中文学术书摘」阅读史和技术伦理研究两则
 [走出优绩主义，为什么这么难？](https://mp.weixin.qq.com/s?__biz=MjM5NTUxOTc4Mw==&mid=2650651226&idx=1&sn=a4a9e86362e99f8d46cbe2a686242b9a&scene=21#wechat_redirect)
 [陆千一：倾听职校生们的表达](https://mp.weixin.qq.com/s?__biz=MjM5NTUxOTc4Mw==&mid=2650651226&idx=2&sn=338b1882a5b40178732335ef22b8e675&scene=21#wechat_redirect)
 
-![](https://mmbiz.qpic.cn/mmbiz_gif/CKYhgyUnM1CPnTWDh2N7T9XakUwC7zKUHIRvfCJhVwy8cVjKupR9wgz5sib5BI7QlMsqMMQR1PkEAUvVUpvqpfA/640?wx_fmt=gif)
+![](assets/image-003.gif)
 
 采访 / 刘亚光
 
@@ -37,11 +37,11 @@ B08「中文学术书摘」阅读史和技术伦理研究两则
 
 以下为本刊与林小英的对话：
 
-![](https://mmbiz.qpic.cn/mmbiz_jpg/e4gsaHJicKEYHoH0nFibDkdsNlicxx4iaWRQicBMhcoeg0l9f5qxwicT0Om1dQwaWl6pM0b0sOKcZ9DouvuItqzyoGZDKYd5r3sg4ictZFZmWXzPkY/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-004.jpg)
 
 林小英，北京大学教育学院副教授，主要研究领域为：教育政策研究、质性教育研究、教师专业发展，曾出版专著《县中的孩子：中国县域教育生态》等。
 
-![](https://mmbiz.qpic.cn/mmbiz_png/stC2VvpclaP49Aic2gwv4ibibfdAP2VOicU2mf1ia7GhuUrL287bFFnxzOibxStiaDFhvhzo47QrvXbnSdvaykS06hryA/640?wx_fmt=png)
+![](assets/image-005.png)
 
 **审计文化与优绩主义**
 
@@ -53,7 +53,7 @@ B08「中文学术书摘」阅读史和技术伦理研究两则
 
 贤能主义同时强调的是才华和品德，即你的能力应该服务于公共善。就像张载讲的，为天地立心，为生民立命，为往世继绝学，为万世开太平。这和现在优绩主义中提倡的那种原子式的、专注于与他人竞争和比较的个人是完全不同的。 所以，我认为从中国本土的历史出发去考察优绩主义概念，在今天也是非常必要的。因为这看起来只是一个翻译问题，实际上翻译问题能带来观念的陷阱。优绩主义让现在很多人痛苦，可能和我们对它的理解本身出了问题有关。
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/e4gsaHJicKEaic8adgFLibrick3icOPticYKakOeicyZInHDZ412OSOvkJaBDDuKKMXrrcYPA2N6DfPpgac8hqCQdAbMLXC2FLkugkAAKo8H6MB7mk/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-006.jpg)
 
 《 才华贵族：优绩制如何塑造了现代世界 》
 
@@ -75,7 +75,7 @@ B08「中文学术书摘」阅读史和技术伦理研究两则
 
 因此我们说， 21 世纪也兴起了一种“逢进必考”的文化，一定程度上，它当然也加剧了竞争。 优绩主义从此也不再仅仅是学校里面的事情，它和你晋升、跳槽，都有关系，都要按照可通约的成绩来。现在出现的更值得担心的事情恐怕是，每个个体都成为了一个自我审计的主体，执行着一套自我会计程序，达到自我监控：每年、每个季度我的工作指标有没有完成？到了某个年龄我是不是应该达到一定的职位？必须算的明明白白，我们才觉得日子能过得下去。
 
-![](https://mmbiz.qpic.cn/mmbiz_png/stC2VvpclaP49Aic2gwv4ibibfdAP2VOicU224H8Ze154IcwCOM6e32tS1uqSXjJ6nR8HOnJ2K3CdKUpBxiblbEM25g/640?wx_fmt=png)
+![](assets/image-007.png)
 
 **优绩主义很难共情失败者**
 
@@ -93,7 +93,7 @@ B08「中文学术书摘」阅读史和技术伦理研究两则
 
 同时，当你好不容易成为了最后的赢家，你当然就很难共情失败者，因为你的成果过于来之不易了。所以说，优绩主义为什么在今天饱受诟病，会蜕变成如伍尔德里奇所说的一种新的特权？我想，这里面其实也是个人性的问题：早期的成功者永远会面对一个去进一步扩大自己优势的诱惑。 因为这个优绩制的环境没变，在一个优绩制的社会中，向下坠落的通道永远是打开的，在上面的人永远怕坠落。成功者知道自己曾经的艰难，他们更担心自己再次处于失败者的位置。 美国精英大学的 “赞助式入学”就是一个典型的例子。反过来，某种程度上，现在我们很喜欢底层逆袭的故事，这本质上也反映出优绩主义的深刻影响。
 
-![](https://mmbiz.qpic.cn/mmbiz_png/stC2VvpclaP49Aic2gwv4ibibfdAP2VOicU2GDjYyKjRSLicBy9jdhsc9kZr8LLUENiagwhjV7rAAjBMIkQHpbnxjnDg/640?wx_fmt=png)
+![](assets/image-008.png)
 
 **优绩主义与学习的“功利化”**
 
@@ -125,22 +125,22 @@ B08「中文学术书摘」阅读史和技术伦理研究两则
 
 我自己有一个可能很 “狭隘”的观点。 我认为我们接受高等教育，最后如果不是要去当一个哲学家的话，终归是为了我们更好地活着，为了把日子生动、可爱地活下去 ，而不是受过教育之后，只懂得如何在心里划分鄙视链、恐惧与他人交往。这背离了我们接受教育的初衷。
 
-![](https://mmbiz.qpic.cn/mmbiz_gif/CKYhgyUnM1AWVTMd52TJFR4hVYjmzrhrDddNGL7ysjpH1yu8zcVsYByibQ91FfGQ7V1WpujlOpNnESamLpfRic3g/640?wx_fmt=gif)
+![](assets/image-009.gif)
 
 本文为独家原创文章。采写：刘亚光 ；编辑：罗东，刘亚光；校对：翟永军，李立军。封面图为电影《银河补习班》剧照。 未经新京报书面授权不得转载，欢迎转发至朋友圈。
 
-![](https://mmbiz.qpic.cn/mmbiz_jpg/stC2VvpclaMwXDEibkRGYxphF0tH7NbX1ficnibM04AtCeSmvAoBloP8Y3QbqMcxsRvCFwYYl3Ft3h3m6mXjvVaHQ/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1)
+![](assets/image-010.jpg)
 
 最近微信公众号又改版啦
 大家记得将「新京报书评周刊」
 **设置为星标**
 不错过每一篇精彩文章～🌟
 
-![](https://mmbiz.qpic.cn/mmbiz_png/CKYhgyUnM1CKEf4W7yRwYhpvwZt1WPrdyFd4riaBOmkcO2WLfPqAtmXbGUBWxmrcN4LZTqR7XicC6d29yDPU1BkQ/640?wx_fmt=png)
+![](assets/image-011.png)
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/e4gsaHJicKEY5IrCmkSSU9bnGTTVRrFiaVibib4SHuMPC5j3O3v0ZV6BNCgxRfM2YVAR9aNBupoKj44h4m2TibQ7Q1M83CLLEPMdTiclicQOjJf3l8/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-012.jpg)
 
-![](https://mmbiz.qpic.cn/mmbiz_jpg/e4gsaHJicKEbUibv7fMMWDRmtPjM2vcqy8ibq25gLYfIh97I7icOwQW4ickuoIicnbkLsf2kibibuFgbMV6lrAfVUIImJZ370VCbWoiczDQboYJ5c958/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-013.jpg)
 
 点击阅读原文
 查看合订本信息

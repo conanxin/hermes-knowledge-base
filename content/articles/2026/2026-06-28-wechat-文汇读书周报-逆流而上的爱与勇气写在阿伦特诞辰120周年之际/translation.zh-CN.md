@@ -1,9 +1,9 @@
-![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/CwNL4Q2TsKLQgJEFPzcGHWAL6iaGeWLrhJHtibscFPjU5ejaLNAPE3u56ZHAPCibbsCpXQApk1dk4wD6NS6jicjG2TExHy3bupuQ0O9ib7AH19Gs/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-001.jpg)
 
 《文汇报》第四版读书
 2026年6月28日
 
-![](https://mmbiz.qpic.cn/mmbiz_png/CwNL4Q2TsKLr35d7w9yQibkia0Y6N4RvjaIKzrchYkJngPGld7rl5J2V1xGj58ge2XYDgbAGcONhcGOibS1gXDmk7LUzsO0g7frojDoKH0oDDc/640?wx_fmt=png&from=appmsg)
+![](assets/image-002.png)
 
 书人茶话
 
@@ -14,7 +14,7 @@
 
 今年是汉娜·阿伦特（1906—1975）诞辰120周年，出版界已出版了各类相关著作以示纪念。然而，纪念阿伦特不是把她供进殿堂，而是继续和她“对话”——学会思考，敢于判断，不放弃在世界上作为人的责任。 ——编者
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_png/CwNL4Q2TsKKIMGLEsKaNFM7f3qCAuPUj50NaL6ict0tHicgVLsxbw2GKSMn5sDhibJaPXXbsic36VavticHos94SG7sUEn3kic0bmYhv4cicSNiaWZU/640?wx_fmt=png&from=appmsg)
+![](assets/image-003.png)
 
 汉娜·阿伦特
 
@@ -28,7 +28,7 @@
 
 阿伦特最重要的作品有《人的境况》 （上海人民出版社2021年出版） 、《论革命》 （译林出版社2019年出版） 、《心智生命》（未完成）和随笔集《过去与未来之间》 （译林出版社2011年出版） 等，她对于我们共同栖身的这个世界有着最深切的情感，她强调彼此之间的羁绊和连带才构成了这个世界的“复数性”，也强调人的诞生性永远在赋予这个世界以一种开端启新的能量，也因此指出对于我们出生前就已存在、我们死去后仍旧存在的共同世界的一种不可推卸的伦理责任。而在《过去与未来之间》一书里，她对于何为自由、何为权威、历史的概念、文化和教育的危机等都做出了极为精辟的分析和阐述。她在《何为权威》一文里的一句话，我一直铭记在心头：“除非经由记忆之路，人类将不能达到纵深。”而对于过去事物的有意识的遗忘或者黑暗记忆的被系统性清除，其实带来的就是我们依托生存的地基的摇晃松动甚至土崩瓦解。
 
-![](https://mmbiz.qpic.cn/mmbiz_png/CwNL4Q2TsKKrQPQly0qBhEPkM3uqntSeHH3j2c29mUOrTBktsgbo8zHnYHicpXp0ov5IZEBZUiaTfID6Mvf7c3EHeofiaPoviakIWFabXQhafWg/640?wx_fmt=png&from=appmsg)
+![](assets/image-004.png)
 
 汉娜·阿伦特
 
@@ -40,9 +40,9 @@
 
 对现代世界的荒诞、虚无和残破充满戒备、疏离甚至怨恨，是战后欧美相当多知识人的一种共同的精神现象，而阿伦特却始终保持着一种理智上的澄明清澈和观念上的独立不羁，她从不为时代浪潮所席卷而去。就像诸多的阿伦特传记所始终强调的她爱这个世界、同时反抗这个世界的恶所彰显的那样，阿伦特对于这个世界始终充满着眷恋之情。这种深情和爱的哲学或许在她于海德堡大学完成的研究奥古斯丁的基督教思想的博士论文《爱与圣奥古斯丁》 （漓江出版社2019年出版） 中就已经埋下了伏笔。这本书揭示了阿伦特政治思考背后的生命哲学和生命沉思的底色，她对人之为人的本性与命运在20岁刚出头的年龄就有着完整而透彻的思考，你不得不承认这是一个早慧的天才女性：“只有人，而非其他有死的生物，在朝向他的终极源头而生的同时，也趋向他终极的死亡大限而活。由于他能透过回忆和期待，把他整个人生汇聚于当前，人就参与到永恒当中，从而甚至在此生也是‘幸福的’。”可以说，阿伦特对于政治的理解都是从对于人心和人性的理解出发，而这种思考的特质起源于她早年的这部博士论文。2025年翻译出版的《理解集（1930-1954）》 （上海人民出版社2025年出版） 中的多篇文章也充分印证了这一点。而论文集《五十年后：阿伦特在中国》 （上海人民出版社2025年出版） 更是荟萃了中国学者对于阿伦特作品和思想的多元解读和深切诠释。
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/CwNL4Q2TsKLTh7TZScicnteicunnnB4GCuTPh7u28R6CglnbLYuzMshO5RaKIJNKv8DMlDQHJZRKvicc2IjfJmKWWflE5B4aGlvjgUcJ79CYCY/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-005.jpg)
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/CwNL4Q2TsKJqic5CydiacMcW7yVX91WQBCiaOWYsozdw8oq1NsDTE8zL9XnaOiaXbTex4GdWBJfmtJpicvbaKLEopHCb2PkKicBj654p7NshEmADw/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-006.jpg)
 
 阅读阿伦特，构成了过去与未来的永恒对话
 
@@ -50,7 +50,7 @@
 
 记得2007年到2008年在加拿大不列颠哥伦比亚大学访学时，我在图书馆借阅并复印了阿伦特的一部分英文作品。而时隔十年之后，我到美国哈佛燕京学社访学，因为有优厚的待遇，所以就几乎购买了阿伦特所有的英文作品带回上海。在我个人接触、阅读阿伦特的作品和了解其政治思想的过程中，除了依托阿伦特著作的台湾译本《黑暗时代群像》和《心智生命》进入她的学术生命，消除了近20年前一些佶屈聱牙、言不及义的大陆译本给我带来的“阅读理解痛苦”，上海学者王寅丽教授扮演了一个关键角色。王教授博士毕业于复旦大学哲学学院，后长期在华东师大哲学系任教，前些年调到上海科技大学工作。我在学生时代就有幸结识她，她的博士论文也是研究阿伦特，后来长期从事阿伦特作品的翻译。她每有这方面的译作就会慷慨馈赠于我，包括《人的境况》《过去与未来之间》以及最近的《爱与圣奥古斯丁》等。每次跟她聊天讨论阿伦特的人生与思想，都是我生命中极为愉快的体验。前些年她应邀写作一本面向一般知识公众的传记《阿伦特：爱、思考和行动》 （华中科技大学出版社2021年出版） ，还坚持邀请我撰写序言。我在序言里写了这样一段话：“阿伦特的思想与写作乃至行动构成了一个具有持久和深刻意义的参照，换言之，阅读阿伦特，其实也就是在反省我们的历史记忆、政治经验与心智生命。这种阅读构成了一种过去与未来之间永恒的对话，也形成了一种作为个体性的自我与广阔的人文世界之间的积极互动。阿伦特，正如一个智性而优雅的燃灯者，照亮了被灰霾所遮蔽的历史世界及在这个世界踟蹰独行的思想者。”在人类世界面临二战之后最纷乱复杂的至暗时刻，阅读、理解和借助阿伦特的思想来关切、思考甚至改变这个下沉时代，就显得尤其必要和重要了。
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/CwNL4Q2TsKLFswm7dxc5aw74LxacPDy56sgiapkPicdicUicAIqhl6XRMPbanJzDSqC81EFZqnZB60Ql67Nd2NpNTcouCNtrMbBb2jxorvZX9Bg/640?wx_fmt=jpeg&from=appmsg)
+![](assets/image-007.jpg)
 
 **蒋楚婷**
 
@@ -69,8 +69,8 @@
 
 袁琭璐 yll@whb.cn
 
-![](https://mmbiz.qpic.cn/sz_mmbiz_png/Kf4egnTibSCSrfvhiaUYy8RziaLRnXib5khbfoDQiad21VbDaE1P3VMRwamXWELWNhQGmmjsvqHs8GqetZyXN0PUc1Q/640?wx_fmt=png&from=appmsg)
+![](assets/image-008.png)
 
 WENHUI  BOOK REVIEW SINCE 1985
 
-![](https://mmbiz.qpic.cn/mmbiz_png/CwNL4Q2TsKJoCzx9ibLouCtqgZ5uvPMJvh2QRqKbv8Haeiaqt9nQj9e3x0fHPEASOwD2fIsha0GoYGKsWqeU1pQEfyhGpXmCHicWJWknPTvgdQ/640?wx_fmt=png&from=appmsg)
+![](assets/image-009.png)

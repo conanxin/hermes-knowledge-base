@@ -1327,6 +1327,16 @@ def generate_item_pages() -> int:
         out_dir = ITEMS_DIR / slug
         out_dir.mkdir(parents=True, exist_ok=True)
         (out_dir / "index.html").write_text(html_doc, encoding="utf-8")
+
+        # v0.3.74: Copy article assets/ (localized images) to site/items/<slug>/assets/
+        article_assets = content_root / posix_path / "assets"
+        if article_assets.is_dir():
+            import shutil
+            dest_assets = out_dir / "assets"
+            if dest_assets.exists():
+                shutil.rmtree(dest_assets)
+            shutil.copytree(article_assets, dest_assets)
+
         generated += 1
     print(f"Generated {generated} item pages under {ITEMS_DIR} (skipped: {skipped}).")
     return 0
