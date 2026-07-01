@@ -38,7 +38,7 @@ All notable changes to the Hermes Knowledge Base project.
 
 ### Commits
 
-- (final hash written by Stage L)
+- `f1864ca` — Add PDF / local document KB import route (v0.3.86)
 
 ### Related
 
