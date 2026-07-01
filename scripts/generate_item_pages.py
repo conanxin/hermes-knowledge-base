@@ -103,6 +103,11 @@ def slug_from_path(path: str) -> str:
 _INLINE_CODE_RE = re.compile(r"`([^`]+)`")
 _BOLD_RE = re.compile(r"\*\*([^*]+)\*\*")
 _ITALIC_RE = re.compile(r"(?<!\*)\*([^*\n]+)\*(?!\*)")
+# v0.3.72: image regex MUST run before _LINK_RE since ![alt](url) is a
+# superset of [text](url) syntactically. The URL group accepts empty string
+# so that broken ![]() references are consumed (and dropped) rather than
+# left as raw markdown text.
+_IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)\s]*)\)")
 _LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)\s]+)\)")
 _FOOTNOTE_RE = re.compile(r"\[\^([^\]]+)\]")
 
@@ -120,6 +125,20 @@ def _apply_inline(text: str) -> str:
 
     # Inline code: `code` → <code>code</code>
     s = _INLINE_CODE_RE.sub(r"<code>\1</code>", s)
+
+    # v0.3.72: Images: ![alt](url) → <img src="..." alt="..." loading="lazy">
+    # MUST run before _LINK_RE so the leading `!` is consumed here, not left
+    # as literal text. Handles empty alt (![](url)) and non-empty alt.
+    def _image_sub(m: re.Match) -> str:
+        alt, url = m.group(1), m.group(2)
+        # v0.3.72: drop broken ![]() references with empty URL entirely.
+        if not url:
+            return ""
+        url = url.replace("&amp;", "&")
+        alt_attr = f' alt="{html.escape(alt, quote=True)}"' if alt else ""
+        return f'<img src="{html.escape(url, quote=True)}"{alt_attr} loading="lazy">'
+
+    s = _IMAGE_RE.sub(_image_sub, s)
 
     # Links: [text](url) → <a> (do after escaping, since URL may contain
     # legitimate & that html.escape turned into &amp;)
@@ -484,6 +503,38 @@ def _safe_load_yaml(path: Path) -> Dict[str, Any]:
     return result
 
 
+def _detect_translation_mirror(meta: Dict[str, Any], sections: Dict[str, str]) -> bool:
+    """v0.3.72: detect if this is a Chinese-original article whose
+    translation.zh-CN.md is just a mirror of source.md.
+
+    Detection priority:
+    1. Explicit metadata flag `is_translation_mirror: true` → True.
+    2. Heuristic: language == "zh-CN" AND translation_language == "zh-CN"
+       AND both source and translation exist AND their visible text is
+       >= 90% similar (difflib ratio). → True.
+    Otherwise → False.
+    """
+    # 1. Explicit flag.
+    if meta.get("is_translation_mirror") is True:
+        return True
+    # 2. Heuristic.
+    lang = str(meta.get("language", "")).strip()
+    trans_lang = str(meta.get("translation_language", "")).strip()
+    if lang != "zh-CN" or trans_lang != "zh-CN":
+        return False
+    source_body = sections.get("source", "")
+    trans_body = sections.get("translation", "")
+    if not source_body or not trans_body:
+        return False
+    # Quick length-based pre-filter: if lengths differ by > 30%, not a mirror.
+    if abs(len(source_body) - len(trans_body)) / max(len(source_body), len(trans_body), 1) > 0.3:
+        return False
+    # Full similarity check.
+    import difflib
+    ratio = difflib.SequenceMatcher(None, source_body, trans_body).ratio()
+    return ratio >= 0.85
+
+
 def load_record_body(record: Dict[str, Any], content_root: Path) -> Dict[str, Any]:
     """Load metadata + type-specific body files for a record.
 
@@ -521,12 +572,26 @@ def load_record_body(record: Dict[str, Any], content_root: Path) -> Dict[str, An
     if tracks_path.exists():
         tracks_data = _load_tracks_yaml(tracks_path)
 
+    # v0.3.72: Detect "Chinese mirror" articles — where the original is
+    # already in Chinese and translation.zh-CN.md is just a cleaned mirror of
+    # source.md. For these, the "中文翻译" section is redundant and should be
+    # suppressed; "source" should be relabeled as "正文 / 中文原文" and become
+    # the primary body.
+    is_mirror = _detect_translation_mirror(meta, sections)
+    if is_mirror:
+        # Drop the translation section — it's a duplicate of source.
+        if "translation" in sections:
+            del sections["translation"]
+        if "translation" in missing:
+            missing.remove("translation")
+
     return {
         "metadata": meta,
         "sections": sections,
         "missing": missing,
         "type": record_type,
         "tracks_data": tracks_data,
+        "is_translation_mirror": is_mirror,
     }
 
 
@@ -995,10 +1060,6 @@ SECTION_OPEN_BY_TYPE: Dict[str, set[str]] = {
 }
 
 
-def _section_open(record_type: str, key: str) -> bool:
-    return key in SECTION_OPEN_BY_TYPE.get(record_type, set())
-
-
 def _build_source_btn(source_url: Any) -> str:
     """Return HTML for the 原文链接 button if source_url is non-empty."""
     if not source_url:
@@ -1056,8 +1117,12 @@ def _build_description(meta: Dict[str, Any], record: Dict[str, Any]) -> str:
     return f"{title_zh} — {author}".strip(" —")
 
 
-def _primary_body_key(record_type: str) -> str:
+def _primary_body_key(record_type: str, is_mirror: bool = False) -> str:
     """The section key that holds the main body text (used for TOC)."""
+    if is_mirror:
+        # v0.3.72: for Chinese-mirror articles, "source" is the primary body
+        # (translation was suppressed as a duplicate).
+        return "source"
     return {
         "article": "translation",
         "resource_collection": "collection",
@@ -1066,11 +1131,26 @@ def _primary_body_key(record_type: str) -> str:
     }.get(record_type, "source")
 
 
+def _section_open(record_type: str, key: str, is_mirror: bool = False) -> bool:
+    """v0.3.72: accept is_mirror; for mirror articles, 'source' is open."""
+    if is_mirror:
+        return key in {"summary", "source"}
+    return key in SECTION_OPEN_BY_TYPE.get(record_type, set())
+
+
+def _section_label(key: str, is_mirror: bool = False) -> str:
+    """v0.3.72: for mirror articles, relabel 'source' as '正文 / 中文原文'."""
+    if is_mirror and key == "source":
+        return "正文 / 中文原文"
+    return SECTION_LABELS.get(key, key)
+
+
 def _build_sections_html(
     sections: Dict[str, str],
     missing: List[str],
     record_type: str,
     track_cards: Optional[Dict[int, str]] = None,
+    is_mirror: bool = False,
 ) -> Tuple[str, List[Tuple[int, str, str]]]:
     """Render all body sections, accumulating a page TOC.
 
@@ -1080,6 +1160,11 @@ def _build_sections_html(
     secondary) do NOT contribute to the TOC to keep it focused on the
     main content.
 
+    v0.3.72: when is_mirror=True (Chinese-mirror article), the translation
+    section has already been suppressed in load_record_body; "source"
+    becomes the primary body, is relabeled "正文 / 中文原文", and is open
+    by default.
+
     `track_cards` (optional): when provided, cards are inserted into
     H2 headings that match "#NNN. ..." pattern. Only the primary body
     section receives track cards (avoids duplication if the same
@@ -1088,7 +1173,7 @@ def _build_sections_html(
     Returns (sections_html, page_toc).
     """
     out: List[str] = []
-    primary_key = _primary_body_key(record_type)
+    primary_key = _primary_body_key(record_type, is_mirror=is_mirror)
     page_toc: List[Tuple[int, str, str]] = []
     rendered_keys: set[str] = set()
 
@@ -1103,13 +1188,13 @@ def _build_sections_html(
             tag = ""
             if not body_md.strip():
                 tag = '<span class="section-tag">空</span>'
-            elif not _section_open(record_type, key):
+            elif not _section_open(record_type, key, is_mirror=is_mirror):
                 tag = '<span class="section-tag section-tag-collapsed">默认折叠</span>'
-            open_attr = " open" if _section_open(record_type, key) else ""
+            open_attr = " open" if _section_open(record_type, key, is_mirror=is_mirror) else ""
             out.append(
                 TEMPLATE_SECTION.format(
                     key=key,
-                    label=SECTION_LABELS.get(key, key),
+                    label=_section_label(key, is_mirror=is_mirror),
                     body=body_html or "<p class='placeholder'>暂无该部分</p>",
                     tag=tag,
                     open_attr=open_attr,
@@ -1117,7 +1202,7 @@ def _build_sections_html(
             )
             rendered_keys.add(key)
     for key in missing:
-        label = SECTION_LABELS.get(key, key)
+        label = _section_label(key, is_mirror=is_mirror)
         # Missing sections: render closed.
         out.append(
             TEMPLATE_SECTION.format(
@@ -1169,9 +1254,11 @@ def render_record_page(record: Dict[str, Any], body: Dict[str, Any]) -> str:
         # giving readers a one-line "how playable is this article?" view.
         track_coverage_summary = _build_track_coverage_summary(tracks_data["tracks"])
 
+    is_mirror = body.get("is_translation_mirror", False)
     sections_html, page_toc = _build_sections_html(
         body["sections"], body["missing"], record_type,
         track_cards=track_cards,
+        is_mirror=is_mirror,
     )
     toc_html = _build_toc_html(page_toc)
 

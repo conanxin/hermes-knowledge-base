@@ -1375,3 +1375,20 @@ body.detail-page {
   .track-filter-bar { flex-direction: column; align-items: flex-start; }
   .track-filter-buttons { margin-left: 0; }
 }
+
+/* ====================================================================
+   v0.3.72: Image rendering in markdown-body
+   WeChat articles contain many inline images. These styles ensure they
+   are readable: fit within the content width, rounded corners, lazy load.
+   ==================================================================== */
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 8px 0;
+  display: block;
+}
+.markdown-body p:has(> img:only-child) {
+  text-align: center;
+  margin: 12px 0;
+}

@@ -1889,6 +1889,7 @@
     },
     "content_kind": "wechat_official_article",
     "dedupe_key": "wechat:GkZeHHlEUUXXutxPckcrPg:北京热门徒步线路top10",
+    "is_translation_mirror": true,
     "source_platform": "wechat_official_account",
     "wechat": {
       "account_name": "两步路",

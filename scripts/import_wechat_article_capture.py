@@ -255,6 +255,7 @@ type: "article"
 content_kind: "wechat_official_article"
 source_platform: "wechat_official_account"
 dedupe_key: "{dedupe_key}"
+is_translation_mirror: true
 topics:
 {format_yaml_list(topics, indent=2)}
 tags:
