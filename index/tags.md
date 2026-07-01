@@ -1588,6 +1588,10 @@
 
 - Ken Liu on AI and Freedom
 
+## 两步路
+
+- 北京热门徒步线路TOP10！
+
 ## 个人知识库
 
 - Karpathy Second Brain 实现指南
@@ -1606,6 +1610,10 @@
 - Hermes Agent UI P0 Implementation Spec
 - Hermes Agent UI Self-Audit v1
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
+
+## 京郊
+
+- 北京热门徒步线路TOP10！
 
 ## 亿万富翁
 
@@ -1630,6 +1638,7 @@
 ## 公众号
 
 - 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
+- 北京热门徒步线路TOP10！
 
 ## 公共语言
 
@@ -1666,6 +1675,10 @@
 ## 剧本写作
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
+## 北京
+
+- 北京热门徒步线路TOP10！
 
 ## 反动现代主义
 
@@ -1744,6 +1757,14 @@
 
 - The People Are Never Right
 
+## 徒步
+
+- 北京热门徒步线路TOP10！
+
+## 徒步线路
+
+- 北京热门徒步线路TOP10！
+
 ## 怀特海
 
 - AI 没有意识，但它正在成为我们的无意识
@@ -1755,6 +1776,10 @@
 ## 感知训练
 
 - Your AI Is Not a Tool
+
+## 户外
+
+- 北京热门徒步线路TOP10！
 
 ## 技术-法西斯主义
 

@@ -1,0 +1,40 @@
+title: "北京热门徒步线路TOP10！"
+title_zh: "北京热门徒步线路TOP10！"
+source_url: "https://mp.weixin.qq.com/s/GkZeHHlEUUXXutxPckcrPg"
+source_site: "两步路"
+author: "两步路线路"
+published_date: "2026-06-30"
+captured_date: "2026-07-01"
+language: "zh-CN"
+translation_language: "zh-CN"
+status: "translated"
+type: "article"
+content_kind: "wechat_official_article"
+source_platform: "wechat_official_account"
+dedupe_key: "wechat:GkZeHHlEUUXXutxPckcrPg:北京热门徒步线路top10"
+topics:
+  - "户外"
+  - "徒步"
+  - "北京"
+  - "京郊"
+  - "自然地理"
+tags:
+  - "两步路"
+  - "徒步"
+  - "北京"
+  - "京郊"
+  - "户外"
+  - "徒步线路"
+  - "公众号"
+word_count:
+  source: 4589
+  translation: 4589
+wechat:
+  account_name: "两步路"
+  url_params:
+    # no params extracted
+capture:
+  tool: "wechat_url_to_kb.py"
+  captured_at: "2026-07-01T09:59:40"
+  version: "1.1"
+path: "content/articles/2026/2026-06-30-wechat-两步路-北京热门徒步线路top10/"
