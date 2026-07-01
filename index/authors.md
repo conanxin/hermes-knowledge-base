@@ -12,6 +12,10 @@
 
 - Karpathy Second Brain 实现指南
 
+## Ali Abdaal
+
+- Financial Freedom is Easy, After You Learn This
+
 ## Amit Shekhar
 
 - Transformer 解码机制解析

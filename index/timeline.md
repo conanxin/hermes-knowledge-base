@@ -3,6 +3,7 @@
 ## 2026-07
 
 - 北京热门徒步线路TOP10！
+- Financial Freedom is Easy, After You Learn This
 
 ## 2026-06
 

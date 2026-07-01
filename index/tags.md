@@ -8,6 +8,10 @@
 
 - The 100 greatest songs of the 1960s
 
+## 12 hours per week
+
+- Financial Freedom is Easy, After You Learn This
+
 ## 18th century literature
 
 - A Modest Proposal
@@ -28,6 +32,10 @@
 ## 421.news
 
 - The People Are Never Right
+
+## 80/20 Pareto
+
+- Financial Freedom is Easy, After You Learn This
 
 ## A Modest Proposal
 
@@ -123,6 +131,10 @@
 
 - Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
 
+## Ali Abdaal
+
+- Financial Freedom is Easy, After You Learn This
+
 ## All That We See or Seem
 
 - Ken Liu on AI and Freedom
@@ -163,6 +175,10 @@
 ## Archive
 
 - 灵感资源库
+
+## Asset vs Income
+
+- Financial Freedom is Easy, After You Learn This
 
 ## Attention
 
@@ -233,6 +249,10 @@
 
 - An "infovore" shares his chats
 
+## Creator Economy
+
+- Financial Freedom is Easy, After You Learn This
+
 ## DSPy
 
 - Hermes Agent Self-Evolution
@@ -261,6 +281,10 @@
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 
+## Digital Product
+
+- Financial Freedom is Easy, After You Learn This
+
 ## Documentation
 
 - Nia Docs — 把整个 Web 变成文件系统
@@ -272,6 +296,10 @@
 ## E.T.
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
+
+## Easy Mode
+
+- Financial Freedom is Easy, After You Learn This
 
 ## Elements of Product Design
 
@@ -294,6 +322,10 @@
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 
+## Energy Management
+
+- Financial Freedom is Easy, After You Learn This
+
 ## Erik Hoel
 
 - AI 没有意识，但它正在成为我们的无意识
@@ -310,6 +342,10 @@
 ## Filesystem
 
 - Nia Docs — 把整个 Web 变成文件系统
+
+## Financial Freedom
+
+- Financial Freedom is Easy, After You Learn This
 
 ## Francisco Varela
 
@@ -382,6 +418,10 @@
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
 
+## Human Capital
+
+- Financial Freedom is Easy, After You Learn This
+
 ## Humility
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
@@ -413,6 +453,10 @@
 ## Irish history
 
 - A Modest Proposal
+
+## Ivan Zhao
+
+- Financial Freedom is Easy, After You Learn This
 
 ## J.D. Vance
 
@@ -484,6 +528,10 @@
 
 - Ken Liu on AI and Freedom
 
+## Khan Academy
+
+- Financial Freedom is Easy, After You Learn This
+
 ## King Crimson
 
 - The 100 greatest songs of the 1960s
@@ -517,6 +565,10 @@
 ## Leo Szilard
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
+## Lifestyle Business
+
+- Financial Freedom is Easy, After You Learn This
 
 ## Long Term Benefit Trust
 
@@ -570,6 +622,10 @@
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
+## Multiple Income Streams
+
+- Financial Freedom is Easy, After You Learn This
+
 ## Myles Horton
 
 - We May Be Entering A Second Axial Age
@@ -598,6 +654,10 @@
 
 - Nia Docs — 把整个 Web 变成文件系统
 
+## Notion
+
+- Financial Freedom is Easy, After You Learn This
+
 ## NousResearch
 
 - Hermes Agent Self-Evolution
@@ -609,6 +669,10 @@
 ## One Useful Thing
 
 - Sign of the future: GPT-5.5
+
+## Online Education
+
+- Financial Freedom is Easy, After You Learn This
 
 ## OpenAI
 
@@ -653,6 +717,10 @@
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
 - The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
+
+## Pareto Principle
+
+- Financial Freedom is Easy, After You Learn This
 
 ## Paste Magazine
 
@@ -714,6 +782,10 @@
 - Wiki 代替 RAG 的可行性评估
 - Nia Docs — 把整个 Web 变成文件系统
 
+## Reinvestment
+
+- Financial Freedom is Easy, After You Learn This
+
 ## Richard Dawkins
 
 - Don't dethrone consciousness!
@@ -725,6 +797,10 @@
 ## SaaSpocalypse
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
+## Salman Khan
+
+- Financial Freedom is Easy, After You Learn This
 
 ## Sam Altman
 
@@ -745,6 +821,10 @@
 ## Serge Gainsbourg
 
 - The 100 greatest songs of the 1960s
+
+## Service Business
+
+- Financial Freedom is Easy, After You Learn This
 
 ## Shape of AI
 
@@ -768,6 +848,10 @@
 ## Steven Spielberg
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
+
+## System Over Willpower
+
+- Financial Freedom is Easy, After You Learn This
 
 ## TDR
 
@@ -855,6 +939,10 @@
 ## Unqualified Reservations
 
 - The People Are Never Right
+
+## Value-first
+
+- Financial Freedom is Easy, After You Learn This
 
 ## Walt Whitman
 
@@ -2041,6 +2129,10 @@
 
 - Ken Liu on AI and Freedom
 
+## 能量管理
+
+- Financial Freedom is Easy, After You Learn This
+
 ## 自动化
 
 - 一键把 YouTube 视频加入知识库
@@ -2101,6 +2193,14 @@
 ## 语言衰退
 
 - Owning Our Words: Sounding the Depths of Language
+
+## 财务自由
+
+- Financial Freedom is Easy, After You Learn This
+
+## 资产型收入
+
+- Financial Freedom is Easy, After You Learn This
 
 ## 资源库
 

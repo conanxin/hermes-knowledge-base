@@ -22,19 +22,19 @@
 
 <!-- KB_STATE_START — auto-updated by scripts/audit_kb_state.py -->
 <!-- Run `python3 scripts/audit_kb_state.py` to refresh; do not edit manually. -->
-<!-- Real total = 54 items. Last refreshed: 2026-06-29 (v0.3.60). -->
+<!-- Real total = 56 items. Last refreshed: 2026-07-01 (v0.3.70). -->
 
 | 类型 | 数量 | 说明 | 目录 |
 |------|------|------|------|
-| article | 25 | 外部文章（含 wechat 子集），有 source_url，需翻译 | `content/articles/` |
+| article | 26 | 外部文章（含 wechat 子集），有 source_url，需翻译 | `content/articles/` |
 | essay | 8 | 散文 / 自传性长文，与 article 同等需要翻译 | `content/articles/` |
 | note | 9 | 中文笔记，无翻译，来源 `legacy-knowledge` 或 `notes` | `content/legacy-knowledge/`, `content/notes/` |
 | resource_collection | 5 | 资源集合（结构化列表，无翻译） | `content/resource_collections/` |
 | project | 4 | 项目文档（有 source_url，无翻译） | `content/projects/` |
-| video | 1 | YouTube 视频知识包（transcript + cards + analysis） | `content/articles/` |
+| video | 2 | YouTube 视频知识包（transcript + cards + analysis） | `content/articles/` |
 | academic_paper | 1 | 学术论文（tandfonline 等） | `content/papers/` |
 | interview | 1 | 长访谈（视频/播客转录） | `content/articles/` |
-| **总计** | **54** | — | — |
+| **总计** | **56** | — | — |
 
 <!-- KB_STATE_END -->
 
@@ -283,7 +283,8 @@ hermes-knowledge-base/
 | v0.3.67 | `word_count.translation` 漂移刷新（7→0 WARN） | 详细见 `reports/word_count_metadata_refresh_v0.3.67_20260629.md` |
 | **v0.3.68** | **本版本：local divergence 治理 + tags/topics soft-WARN policy 文档化** | 详细见 `reports/local_divergence_and_soft_warn_policy_v0.3.68_20260629.md` |
 | **v0.3.69** | **新增微信公众号 URL 直接入库通道**（`scripts/wechat_url_to_kb.py`，公开 URL/HTML/MD/TXT → capture → KB） | 不登录、不扫码、不读 cookie；详见 `reports/wechat_url_direct_kb_import_v0.3.69_20260701.md` |
+| **v0.3.70** | **YouTube 视频解读入库：Ali Abdaal "Financial Freedom is Easy"** | 第 2 条 video 类型;详见 `reports/youtube_video_brief_kb_import_v0.3.70_20260701.md` |
 
 ---
 
-*Last refreshed for v0.3.69 on 2026-07-01.*
+*Last refreshed for v0.3.70 on 2026-07-01.*
