@@ -2,7 +2,7 @@
 """Unified material -> Hermes KB import router.
 
 This is a thin router. It detects the material type, delegates supported
-WeChat routes to the existing import scripts, and reports unsupported routes
+routes to the existing import scripts, and reports unsupported routes
 explicitly instead of inventing new importers.
 
 Supported CLI:
@@ -32,6 +32,7 @@ REPORTS_DIR = KB_HOME / "reports"
 WECHAT_SINGLE_SCRIPT = SCRIPTS_DIR / "wechat_url_to_kb.py"
 WECHAT_BATCH_SCRIPT = SCRIPTS_DIR / "wechat_batch_import.py"
 WEB_ARTICLE_SCRIPT = SCRIPTS_DIR / "web_article_to_kb.py"
+YOUTUBE_SCRIPT = SCRIPTS_DIR / "youtube_to_kb.py"
 LOCALIZE_SCRIPT = SCRIPTS_DIR / "localize_article_images.py"
 
 STATUS_IMPORTED = "IMPORTED"
@@ -143,8 +144,10 @@ def infer_input(value: str, index: int = 0) -> dict[str, Any]:
         elif is_youtube_url(value):
             item.update({
                 "inferred_type": "youtube_url",
-                "route": "unsupported",
-                "failure_reason": "YouTube import route not implemented yet in unified router",
+                "route": "youtube_to_kb.py",
+                "route_kind": "youtube",
+                "route_flag": "--url",
+                "supported": True,
             })
         else:
             item.update({
@@ -317,6 +320,26 @@ def run_single_web(item: dict[str, Any], dry_run: bool) -> dict[str, Any]:
     cmd.append("--dry-run" if dry_run else "--import")
     proc = run_command(cmd)
     result["route"] = "web_article_to_kb.py"
+    result["capture_json_path"] = parse_capture_path(proc.stdout, proc.stderr)
+    result["status"], result["failure_reason"] = status_from_single_exit(proc, dry_run)
+    result["duplicate_of"] = parse_duplicate_of(proc.stdout, proc.stderr)
+    load_capture_fields(result)
+    if result["status"] == STATUS_IMPORTED:
+        kb_path = parse_imported_path(proc.stdout, proc.stderr)
+        result["kb_article_path"] = kb_path
+        if kb_path:
+            slug = kb_path.rstrip("/").split("/")[-1]
+            result["docs_item_path"] = f"docs/items/{slug}/index.html"
+            result["site_item_path"] = f"site/items/{slug}/index.html"
+    return result
+
+
+def run_single_youtube(item: dict[str, Any], dry_run: bool) -> dict[str, Any]:
+    result = base_result(item)
+    cmd = [sys.executable, str(YOUTUBE_SCRIPT), item["route_flag"], item["input"]]
+    cmd.append("--dry-run" if dry_run else "--import")
+    proc = run_command(cmd)
+    result["route"] = "youtube_to_kb.py"
     result["capture_json_path"] = parse_capture_path(proc.stdout, proc.stderr)
     result["status"], result["failure_reason"] = status_from_single_exit(proc, dry_run)
     result["duplicate_of"] = parse_duplicate_of(proc.stdout, proc.stderr)
@@ -533,6 +556,7 @@ def route_inputs(values: list[str], dry_run: bool) -> tuple[list[dict[str, Any]]
 
     wechat_items = [item for item in supported if item.get("route_kind") == "wechat"]
     web_items = [item for item in supported if item.get("route_kind") == "web"]
+    youtube_items = [item for item in supported if item.get("route_kind") == "youtube"]
 
     if len(wechat_items) > 1:
         for result, item in zip(run_batch_wechat(wechat_items, dry_run=dry_run), wechat_items):
@@ -543,6 +567,9 @@ def route_inputs(values: list[str], dry_run: bool) -> tuple[list[dict[str, Any]]
 
     for item in web_items:
         results_by_index[item["index"]] = run_single_web(item, dry_run=dry_run)
+
+    for item in youtube_items:
+        results_by_index[item["index"]] = run_single_youtube(item, dry_run=dry_run)
 
     results = [results_by_index[i] for i in sorted(results_by_index)]
     gates: list[dict[str, Any]] = []

@@ -8,6 +8,44 @@
 
 ---
 
+## v0.3.79 Direct Transcript Route
+
+For a plain YouTube URL, use the direct transcript importer first:
+
+```bash
+python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --dry-run
+python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --import
+```
+
+The unified material router now delegates YouTube URLs to the same script:
+
+```bash
+python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --dry-run
+python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --import
+```
+
+This route creates the standard KB six-file bundle from public metadata and a usable transcript:
+
+- `metadata.yaml`
+- `source.md`
+- `translation.zh-CN.md`
+- `summary.md`
+- `notes.md`
+- `raw_payload.json`
+
+Hard-stop cases:
+
+- no captions / transcript available
+- transcript is empty or too short
+- video requires login, cookies, subscription, private access, or another unavailable state
+- metadata cannot be fetched from the public page
+
+The script does not download video files and does not fabricate transcript text. English transcripts are marked `needs_translation_review` unless a real translation pass has been completed.
+
+The older workflow below remains useful when a complete YouTube Video Brief output directory already exists.
+
+---
+
 ## 工作流名称
 
 **YouTube Video KB Import** — 一键把 YouTube 视频解读产物加入 Hermes Knowledge Base

@@ -99,7 +99,7 @@ python3 scripts/web_article_to_kb.py --url "<URL>" --import
 |---|---|---|---|
 | `generic_web_url` | 非 WeChat、非 YouTube 的 HTTP(S) URL | `web_article_to_kb.py` | 支持 |
 
-批量 input-list 中，一个普通网页失败不能中断整批；YouTube / PDF 仍保持 `BLOCKED_UNSUPPORTED`。
+批量 input-list 中，一个普通网页失败不能中断整批；YouTube URL 走 `youtube_to_kb.py` 专门路线，PDF 仍保持 `BLOCKED_UNSUPPORTED`。
 
 ---
 

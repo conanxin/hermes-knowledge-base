@@ -1,6 +1,6 @@
 # Material KB Import Workflow
 
-> **版本**: 1.1 (`v0.3.77`)
+> **版本**: 1.2 (`v0.3.79`)
 > **创建时间**: 2026-07-01  
 > **入口命令**: [`docs/commands/material-kb-import-command.md`](../commands/material-kb-import-command.md)  
 > **入口脚本**: `scripts/material_to_kb.py`
@@ -23,7 +23,7 @@
 <materials.txt>
 ```
 
-agent 先使用 `scripts/material_to_kb.py` 判断材料类型，再路由到仓库已经存在且稳定的导入能力。没有稳定路线的类型必须返回 `BLOCKED_UNSUPPORTED`，不能临时拼一个半成品抓取器。v0.3.77 起普通网页 URL 路由到 `scripts/web_article_to_kb.py`。
+agent 先使用 `scripts/material_to_kb.py` 判断材料类型，再路由到仓库已经存在且稳定的导入能力。没有稳定路线的类型必须返回 `BLOCKED_UNSUPPORTED`，不能临时拼一个半成品抓取器。v0.3.77 起普通网页 URL 路由到 `scripts/web_article_to_kb.py`；v0.3.79 起 YouTube URL 路由到 `scripts/youtube_to_kb.py`。
 
 ---
 
@@ -33,7 +33,7 @@ agent 先使用 `scripts/material_to_kb.py` 判断材料类型，再路由到仓
 git status --short
 git branch --show-current
 git fetch origin main --tags
-python3 scripts/check_task_preflight.py --planned-tag v0.3.77-generic-web-article-import-route --classify-dirty --json
+python3 scripts/check_task_preflight.py --planned-tag v0.3.79-youtube-transcript-kb-import-route --classify-dirty --json
 ```
 
 要求：
@@ -87,13 +87,14 @@ python3 scripts/material_to_kb.py --input "<URL_OR_FILE>" --import
 python3 scripts/material_to_kb.py --input-list tmp/materials.txt --import
 ```
 
-当前 v0.3.77 的真实导入路线包括：
+当前 v0.3.79 的真实导入路线包括：
 
 - 微信公众号 URL
 - 微信公众号 HTML / Markdown / TXT
 - 普通网页 URL
+- YouTube URL（前提是可获取字幕 / transcript）
 
-YouTube、PDF 如果没有仓库内稳定脚本，必须保留 `BLOCKED_UNSUPPORTED`。
+PDF 如果没有仓库内稳定脚本，必须保留 `BLOCKED_UNSUPPORTED`。YouTube 如果无字幕、字幕过短、需要登录或无法公开获取 transcript，必须返回 `BLOCKED_INCOMPLETE_TEXT` / `BLOCKED_UNSUPPORTED`，不得写半成品条目。
 
 ---
 
@@ -138,7 +139,7 @@ python3 tests/run_material_router_smoke.py
 |---|---|---|---|
 | `wechat_url` | `mp.weixin.qq.com` / `weixin.qq.com` | `wechat_url_to_kb.py` 或 `wechat_batch_import.py` | 支持 |
 | `local_text_article` | `.html` / `.htm` / `.md` / `.markdown` / `.txt` | `wechat_url_to_kb.py` local file mode 或 batch | 支持 |
-| `youtube_url` | `youtube.com` / `youtu.be` | 未接入稳定脚本 | `BLOCKED_UNSUPPORTED` |
+| `youtube_url` | `youtube.com` / `youtu.be` | `youtube_to_kb.py` | 支持，有字幕才入库 |
 | `generic_web_url` | 其他 HTTP(S) URL | `web_article_to_kb.py` | 支持 |
 | `pdf_file` | 本地 `.pdf` | 未接入稳定脚本 | `BLOCKED_UNSUPPORTED` |
 

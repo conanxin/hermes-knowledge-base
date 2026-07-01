@@ -1,0 +1,5 @@
+# comments and blank lines are skipped
+
+__YOUTUBE_URL__
+https://example.com/material-router-youtube-web
+tests/fixtures/material_router_sample.pdf

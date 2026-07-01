@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke tests for the unified material import router (v0.3.76/v0.3.77).
+"""Smoke tests for the unified material import router (v0.3.76-v0.3.79).
 
 Runs offline against local fixtures, a local HTTP server, and unsupported
 placeholder routes.
@@ -8,7 +8,7 @@ Verifies:
 1. WeChat URLs are recognized as wechat_url.
 2. Local HTML and Markdown are recognized as local_text_article.
 3. Generic web URLs are recognized and routed to web_article_to_kb.py.
-4. YouTube URLs return BLOCKED_UNSUPPORTED when no stable route is wired.
+4. YouTube URLs are recognized and routed to youtube_to_kb.py.
 5. Local PDFs return BLOCKED_UNSUPPORTED when no stable route is wired.
 6. input-list skips blank lines and # comments.
 7. dry-run does not write KB entries.
@@ -46,6 +46,10 @@ WEB_FIXTURE_NAME = "web_sample_article.html"
 YOUTUBE_URL = "https://youtu.be/material-router-smoke"
 GENERIC_URL = "https://example.com/material-router-smoke"
 PDF_FIXTURE = "tests/fixtures/material_router_sample.pdf"
+YOUTUBE_METADATA_FIXTURE = REPO_ROOT / "tests" / "fixtures" / "youtube_sample_metadata.json"
+YOUTUBE_TRANSCRIPT_FIXTURE = REPO_ROOT / "tests" / "fixtures" / "youtube_sample_transcript.vtt"
+ENV["HERMES_YOUTUBE_FIXTURE_METADATA"] = str(YOUTUBE_METADATA_FIXTURE)
+ENV["HERMES_YOUTUBE_FIXTURE_TRANSCRIPT"] = str(YOUTUBE_TRANSCRIPT_FIXTURE)
 
 
 def run(cmd: list[str], cwd: Path = REPO_ROOT) -> tuple[int, str, str]:
@@ -118,7 +122,7 @@ def smoke_1_inference_rules() -> bool:
         (HTML_FIXTURE, "local_text_article", True),
         (MD_FIXTURE, "local_text_article", True),
         (GENERIC_URL, "generic_web_url", True),
-        (YOUTUBE_URL, "youtube_url", False),
+        (YOUTUBE_URL, "youtube_url", True),
         (PDF_FIXTURE, "pdf_file", False),
     ]
     ok = True
@@ -172,8 +176,8 @@ def smoke_2_input_list_and_reports() -> bool:
 
     html_item = item_by_input(items, HTML_FIXTURE)
     md_item = item_by_input(items, MD_FIXTURE)
-    yt_item = item_by_input(items, YOUTUBE_URL)
     web_item = item_by_input(items, web_url)
+    yt_item = item_by_input(items, YOUTUBE_URL)
     pdf_item = item_by_input(items, PDF_FIXTURE)
 
     ok &= check(html_item["inferred_type"] == "local_text_article",
@@ -192,18 +196,20 @@ def smoke_2_input_list_and_reports() -> bool:
     ok &= check(web_item["status"] in {"DRY_RUN_OK", "SKIPPED_DUPLICATE"},
                 "generic web dry-run completed", web_item["status"])
 
-    ok &= check(yt_item["status"] == "BLOCKED_UNSUPPORTED",
-                "YouTube returns BLOCKED_UNSUPPORTED", yt_item.get("failure_reason", ""))
-    ok &= check("YouTube import route not implemented yet" in yt_item.get("failure_reason", ""),
-                "YouTube unsupported reason is explicit")
+    ok &= check(yt_item["inferred_type"] == "youtube_url",
+                "YouTube inferred as youtube_url")
+    ok &= check(yt_item["route"] == "youtube_to_kb.py",
+                "YouTube routed to youtube_to_kb.py", yt_item["route"])
+    ok &= check(yt_item["status"] in {"DRY_RUN_OK", "SKIPPED_DUPLICATE"},
+                "YouTube dry-run completed", yt_item["status"])
     ok &= check(pdf_item["status"] == "BLOCKED_UNSUPPORTED",
                 "PDF returns BLOCKED_UNSUPPORTED", pdf_item.get("failure_reason", ""))
     ok &= check("PDF import/OCR route not implemented yet" in pdf_item.get("failure_reason", ""),
                 "PDF unsupported reason is explicit")
 
-    ok &= check(summary.get("blocked_unsupported") == 2,
-                "unsupported items counted without aborting batch", str(summary))
-    ok &= check(summary.get("dry_run_ok", 0) + summary.get("skipped_duplicate", 0) == 3,
+    ok &= check(summary.get("blocked_unsupported") == 1,
+                "unsupported PDF counted without aborting batch", str(summary))
+    ok &= check(summary.get("dry_run_ok", 0) + summary.get("skipped_duplicate", 0) == 4,
                 "supported dry-run items counted", str(summary))
 
     md_report = REPO_ROOT / data.get("report_markdown", "")
@@ -216,7 +222,7 @@ def smoke_2_input_list_and_reports() -> bool:
                     "json report has summary total=5")
     if md_report.exists():
         text = md_report.read_text(encoding="utf-8")
-        ok &= check("BLOCKED_UNSUPPORTED" in text and "web_article_to_kb.py" in text,
+        ok &= check("BLOCKED_UNSUPPORTED" in text and "web_article_to_kb.py" in text and "youtube_to_kb.py" in text,
                     "markdown report includes statuses and inferred types")
     return ok
 
@@ -261,7 +267,7 @@ def smoke_4_no_remote_mmbiz_in_generated_html() -> bool:
 
 def main() -> int:
     print("=" * 60)
-    print("Material import router smoke tests (v0.3.76/v0.3.77)")
+    print("Material import router smoke tests (v0.3.76-v0.3.79)")
     print("=" * 60)
     results = [
         smoke_1_inference_rules(),

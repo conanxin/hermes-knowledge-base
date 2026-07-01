@@ -18,7 +18,7 @@ Available commands in Hermes Knowledge Base.
 
 **Output**: Material import markdown + JSON report; KB entry only when the routed stable importer supports the material.
 
-**Safety boundaries**: Generic web URLs use `web_article_to_kb.py`; unsupported YouTube and PDF routes return `BLOCKED_UNSUPPORTED` instead of inventing a half-built importer.
+**Safety boundaries**: Generic web URLs use `web_article_to_kb.py`; YouTube URLs use `youtube_to_kb.py` only when a usable transcript is available; PDF routes return `BLOCKED_UNSUPPORTED` instead of inventing a half-built importer.
 
 **Documentation**: `docs/commands/material-kb-import-command.md`
 
@@ -58,13 +58,15 @@ Available commands in Hermes Knowledge Base.
 
 ### youtube-kb-import
 
-**Purpose**: Import an existing video knowledge package into Hermes Knowledge Base.
+**Purpose**: Import a YouTube transcript URL, or an existing video knowledge package, into Hermes Knowledge Base.
 
 **Shortest call**: `解读这个 YouTube 视频并加入 Hermes 知识库：<YOUTUBE_URL>`
 
 **When to use**: When you have a complete knowledge package and want to archive it.
 
 **Output**: KB entry + index update + site publish
+
+**Direct script**: `python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --dry-run`
 
 **Documentation**: `docs/commands/youtube-kb-import-command.md`
 

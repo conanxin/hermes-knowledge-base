@@ -9,6 +9,37 @@
 
 ---
 
+## v0.3.79 直接 URL 路线
+
+从 v0.3.79 起，仓库提供最小稳定脚本：
+
+```bash
+python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --dry-run
+python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --import
+```
+
+统一入口也会自动路由：
+
+```bash
+python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --dry-run
+python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --import
+```
+
+支持 `youtube.com/watch?v=...`、`youtu.be/...`、`youtube.com/shorts/...`。脚本只获取公开 metadata 与字幕 / transcript，不下载视频文件、不登录、不读取 cookie。没有字幕、字幕为空或过短、需要登录/访问受限时返回 `BLOCKED_INCOMPLETE_TEXT` 或 `BLOCKED_UNSUPPORTED`，不写半成品 KB 条目。
+
+当前输出为标准 6 文件：
+
+- `metadata.yaml`
+- `source.md`
+- `translation.zh-CN.md`
+- `summary.md`
+- `notes.md`
+- `raw_payload.json`
+
+英文字幕会标记 `needs_translation_review`，不会伪装成完整人工翻译。旧的 YouTube Video Brief 产物入库流程仍保留在下文，适合已有完整知识包的情况。
+
+---
+
 ## 一句话说明
 
 基于已完成的 YouTube Video Brief 产物，自动完成知识库入库、能力说明补充、索引更新和站点发布。

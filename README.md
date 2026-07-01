@@ -89,7 +89,7 @@ python3 scripts/audit_kb_state.py
 
 | 能力 | 触发命令（最短） | 文档 | 注意事项 |
 |---|---|---|---|
-| 统一材料入口 | 「解读并入库这个材料：<URL 或 本地文件>」<br>「批量解读并入库这些材料：<materials.txt>」 | [docs/commands/material-kb-import-command.md](docs/commands/material-kb-import-command.md), [docs/workflows/material-kb-import-workflow.md](docs/workflows/material-kb-import-workflow.md) | v0.3.77 起：微信公众号 URL/HTML/MD/TXT 支持；普通网页 URL 支持；YouTube、PDF 仍在无稳定路线时返回 `BLOCKED_UNSUPPORTED` |
+| 统一材料入口 | 「解读并入库这个材料：<URL 或 本地文件>」<br>「批量解读并入库这些材料：<materials.txt>」 | [docs/commands/material-kb-import-command.md](docs/commands/material-kb-import-command.md), [docs/workflows/material-kb-import-workflow.md](docs/workflows/material-kb-import-workflow.md) | v0.3.79 起：微信公众号 URL/HTML/MD/TXT、普通网页 URL、YouTube URL（需可获取字幕 / transcript）支持；PDF 仍返回 `BLOCKED_UNSUPPORTED` |
 | 普通网页文章 | 「解读并入库这个网页文章：<url>」 | [docs/commands/web-article-kb-import-command.md](docs/commands/web-article-kb-import-command.md), [docs/workflows/web-article-kb-import-workflow.md](docs/workflows/web-article-kb-import-workflow.md) | 只抓公开 HTTP(S) 正文；不登录、不读 cookie、不绕过 paywall；正文不完整则 `BLOCKED_*` |
 | URL 文章 | 「入库并完整翻译：<url>」 | [docs/AGENT_COMMANDS.md](docs/AGENT_COMMANDS.md) | 默认 `content_type=article`、zh-CN、自动 commit/push |
 | 本地 PDF | 「把这个本地 PDF OCR 识别、完整翻译并加入 Hermes 知识库：<abs-path>」 | [docs/import-recipes/PDF_OCR_LOCAL.md](docs/import-recipes/PDF_OCR_LOCAL.md), [docs/workflows/pdf-ocr-kb-import-workflow.md](docs/workflows/pdf-ocr-kb-import-workflow.md) | 必须**绝对路径**；PDF 本身不入仓，只留 `source.local-ref.txt` |
@@ -310,7 +310,8 @@ hermes-knowledge-base/
 | **v0.3.71** | **新增微信公众号批量入库 + 三层去重**（`scripts/wechat_batch_import.py`，URL 列表/多文件 → 去重 → manifest 报告） | 详见 `reports/wechat_batch_import_dedup_report_v0.3.71_20260701.md` |
 | **v0.3.76** | **新增统一材料入库路由器**（`scripts/material_to_kb.py`，URL/本地文件 → 已有稳定入库脚本） | WeChat URL/HTML/MD/TXT 支持；YouTube/普通网页/PDF 未接入稳定脚本时返回 `BLOCKED_UNSUPPORTED` |
 | **v0.3.77** | **新增普通网页文章入库路线**（`scripts/web_article_to_kb.py`，公开网页 URL → capture → KB） | 统一入口 `generic_web_url` 接入；YouTube/PDF 仍返回 `BLOCKED_UNSUPPORTED` |
+| **v0.3.79** | **新增 YouTube 字幕/转录稿入库路线**（`scripts/youtube_to_kb.py`，YouTube URL → metadata + transcript → KB） | 统一入口 `youtube_url` 接入；无字幕、字幕过短、需登录或不可公开获取时 hard stop；PDF 仍返回 `BLOCKED_UNSUPPORTED` |
 
 ---
 
-*Last refreshed for v0.3.77 on 2026-07-01.*
+*Last refreshed for v0.3.79 on 2026-07-01.*

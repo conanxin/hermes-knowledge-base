@@ -3,7 +3,7 @@
 tests/fixtures/wechat_sample_article.html
 tests/fixtures/wechat_chinese_with_images.md
 
-# Unsupported routes should not stop the batch.
+# Supported and unsupported routes should not stop the batch.
 https://youtu.be/material-router-smoke
 https://example.com/material-router-smoke
 tests/fixtures/material_router_sample.pdf

@@ -1,0 +1,37 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:08.000
+Welcome to this synthetic talk about building a durable knowledge base from video transcripts.
+
+00:00:08.000 --> 00:00:17.000
+The first idea is simple: never pretend that a video has text when no transcript is available.
+
+00:00:17.000 --> 00:00:27.000
+The importer should collect metadata, choose a caption track, and preserve enough timing information for later review.
+
+00:00:27.000 --> 00:00:38.000
+Manual captions are preferred because they are usually more stable, but automatic captions are useful when they are the only public source.
+
+00:00:38.000 --> 00:00:49.000
+The second idea is routing. A unified material router should identify YouTube URLs and delegate them to a dedicated transcript importer.
+
+00:00:49.000 --> 00:01:00.000
+It should not route a video through a generic web article parser, because video pages and article pages have different completeness tests.
+
+00:01:00.000 --> 00:01:11.000
+The third idea is deduplication. A video identifier is stronger than a title because titles can change after publication.
+
+00:01:11.000 --> 00:01:22.000
+Source URLs, canonical URLs, title plus channel plus published date, and transcript hashes all add useful protection.
+
+00:01:22.000 --> 00:01:34.000
+When a duplicate is found, the script should report the existing knowledge base path and skip creating a new entry.
+
+00:01:34.000 --> 00:01:46.000
+The final idea is honest status reporting. A failed transcript fetch is not a partial success.
+
+00:01:46.000 --> 00:01:58.000
+If the transcript is empty, too short, blocked, or unavailable, the importer must stop before writing a half finished bundle.
+
+00:01:58.000 --> 00:02:10.000
+With these boundaries, a transcript route can be small, predictable, and useful without pretending to be a full video understanding engine.

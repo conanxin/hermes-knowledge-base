@@ -1,0 +1,28 @@
+{
+  "video_id": "ytfixture123",
+  "title": "Synthetic YouTube Talk: Building a Durable Knowledge Base",
+  "channel": "Hermes Test Channel",
+  "author": "Hermes Test Channel",
+  "channel_url": "https://www.youtube.com/@hermes-test",
+  "published_date": "2026-07-01",
+  "upload_date": "2026-07-01",
+  "duration": 372,
+  "duration_hms": "06:12",
+  "view_count": 12345,
+  "description": "A synthetic fixture video about transcript import boundaries, routing, and durable knowledge management.",
+  "thumbnail_url": "https://i.ytimg.com/vi/ytfixture123/hqdefault.jpg",
+  "transcript_language": "en",
+  "transcript_kind": "manual",
+  "caption_tracks": [
+    {
+      "language": "en",
+      "kind": "manual",
+      "name": "English"
+    },
+    {
+      "language": "zh-CN",
+      "kind": "auto",
+      "name": "Chinese auto"
+    }
+  ]
+}
