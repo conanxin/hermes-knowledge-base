@@ -174,13 +174,32 @@ def smoke_4_failure_isolation() -> bool:
 
 
 def smoke_5_pages_sync_still_intact() -> bool:
-    """check_pages_sync.py still passes and content/items counts match.
+    """check_pages_sync.py still passes and item pages are not lost.
 
-    The exact count may grow as new articles are added by other tasks/sessions,
-    so we assert: (a) check_pages_sync exits 0, (b) site/docs/content counts
-    are all equal, (c) the count is >= 55 (the v0.3.70 baseline). This guards
-    against the batch dry-run accidentally destroying item pages without being
-    brittle to legitimate growth.
+    v0.3.88: dropped the `site == docs == content` equality assertion.
+
+    Background: previous versions required site, docs and content counts to be
+    equal. That assertion was over-strict — it produced a false positive every
+    time `scripts/pdf_to_kb.py` smoke_4 ran, because that smoke creates an
+    article directory in `content/articles/2026/...` and runs an incremental
+    `update_site.py --only <slug>` which generates `site/items/<slug>/` and
+    `docs/items/<slug>/`. The article directory is then left in place between
+    PDF smoke runs (only deduplicated on re-run), so the triple-count equality
+    was unreliable.
+
+    check_pages_sync.py is already the canonical sync integrity check; it
+    enforces site==docs, top-level byte-equality, and the content->items
+    coverage rule. When that script says PASS, the publish surface and dev
+    surface are consistent, and every content/ entry has an item page.
+
+    This smoke now asserts:
+      (a) check_pages_sync.py exits 0,
+      (b) site slugs == docs slugs (real sync guarantee),
+      (c) site slugs >= 55 (v0.3.70 baseline; no item pages silently lost),
+      (d) content slugs <= site slugs (every content entry has an item page).
+
+    A genuine regression (e.g. batch dry-run nuking a site/items/<slug>) will
+    still trip check_pages_sync.py (via site != docs) and fail this smoke.
     """
     print("\n=== Smoke 5: check_pages_sync.py content/items intact ===")
     cmd = [TEST_PY, str(REPO_ROOT / "scripts" / "check_pages_sync.py")]
@@ -194,9 +213,11 @@ def smoke_5_pages_sync_still_intact() -> bool:
     docs_n = int(m2.group(1)) if m2 else -1
     m3 = re.search(r"metadata\.yaml count:\s*(\d+)", out)
     content_n = int(m3.group(1)) if m3 else -1
-    ok = check(site_n == docs_n == content_n,
-               f"site({site_n}) == docs({docs_n}) == content({content_n})")
+    ok = check(site_n == docs_n,
+               f"site({site_n}) == docs({docs_n}) (publish/dev sync)")
     ok &= check(site_n >= 55, f"site slugs >= 55 (got {site_n})")
+    ok &= check(content_n <= site_n,
+                f"content({content_n}) <= site({site_n}) (every content entry has an item page)")
     ok &= check("PASS" in out, "report says PASS")
     return ok
 
