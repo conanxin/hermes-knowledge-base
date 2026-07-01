@@ -81,6 +81,31 @@ def parse_router_stdout(stdout: str) -> dict:
     return json.loads(stdout)
 
 
+def _clear_inbox_for_video(video_id: str) -> int:
+    """Remove inbox/raw/youtube/*.json captures with this video_id. Test-only.
+
+    Returns the number of files removed. Used by smoke tests that need a clean
+    inbox to demonstrate the importer's provider_attempts behavior; the canonical
+    production code path must keep inbox state.
+    """
+    inbox = REPO_ROOT / "inbox" / "raw" / "youtube"
+    if not inbox.exists():
+        return 0
+    removed = 0
+    for candidate in inbox.glob("*.json"):
+        try:
+            data = json.loads(candidate.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(data, dict):
+            continue
+        if data.get("video_id") != video_id:
+            continue
+        candidate.unlink()
+        removed += 1
+    return removed
+
+
 def smoke_1_inference_rules() -> bool:
     print("\n=== Smoke 1: router inference rules ===")
     router = load_module(ROUTER_SCRIPT, "material_to_kb")
@@ -205,6 +230,12 @@ def smoke_5_ytdlp_fallback_and_auto_gate() -> bool:
 def smoke_6_ytdlp_unavailable_is_reported() -> bool:
     print("\n=== Smoke 6: unavailable yt-dlp provider is reported ===")
     env = {**ENV, "HERMES_YTDLP_FORCE_UNAVAILABLE": "1"}
+    # v0.3.84 overwrite protection: clear inbox for this video_id first so the
+    # new metadata_only capture is actually written (otherwise the existing full
+    # capture is reused and the test cannot observe the unavailable provider).
+    removed = _clear_inbox_for_video(YOUTUBE_URL.rsplit("/", 1)[-1])
+    if removed:
+        print(f"         (cleared {removed} pre-existing captures for the test)")
     code, out, err = run([
         TEST_PY,
         str(YOUTUBE_SCRIPT),

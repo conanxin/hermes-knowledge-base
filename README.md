@@ -133,6 +133,26 @@ Hard guarantees the chain keeps regardless of which providers are present:
 - **Auto captions stay flagged for review.** `transcript_kind: auto` +
   `transcript_needs_review: true`; import requires `--allow-auto-captions`.
 
+### Fetch-result handoff + inbox overwrite protection (v0.3.84)
+
+`material_to_kb.py` runs the in-process YouTube fetch layer first. When the fetch is `full` (or
+`partial` when allowed), the router serializes the capture to
+`tmp/material_fetches/youtube_<video_id>_<timestamp>.json` and passes
+`--fetch-result-json <path>` to the YouTube subprocess. The subprocess loads the handoff and
+**skips refetch**, which prevents the 429-throttling race that turns a real full transcript into
+a `metadata_only` one when the second call hits YouTube's rate limit.
+
+A handoff is only written for `full` / `partial`; `metadata_only`, `blocked`, or empty results
+still cause the subprocess to refetch so a fresh attempt is logged. The handoff file lives under
+the gitignored `tmp/material_fetches/` directory.
+
+The canonical `inbox/raw/youtube/*.json` capture is also protected from being overwritten by a
+weaker capture with the same `video_id`:
+
+- Quality rank: `full` (4) > `partial` (3) > `metadata_only` (2) > `blocked` (1) > `none` (0).
+- A weaker capture is refused; the existing path is returned and `overwrite: false` is recorded
+  on the subprocess stderr summary along with the `existing_quality` / `new_quality` / reason.
+
 ### 7. 微信公众号：当前真实能力
 
 **两条可用通道**（都不登录微信、不扫码、不读 cookie）：
@@ -351,7 +371,8 @@ hermes-knowledge-base/
 | **v0.3.81** | **新增 YouTube fetch quality gate**（`full` / `partial` / `metadata_only`） | 默认只入库 full transcript；partial 需要 `--allow-partial-transcript` 且满足 800 字符阈值；metadata-only 不入库 |
 | **v0.3.82** | **新增 YouTube automatic transcript providers**（direct captionTracks / subtitle-only yt-dlp / optional transcript API） | 自动字幕需 `--allow-auto-captions` 才可入库；provider_attempts 写入 capture 与 material report；metadata-only 仍不入库 |
 | **v0.3.83** | **YouTube provider 环境可选补齐**（`yt-dlp` + `youtube-transcript-api`） | 不下载视频；不使用 cookie / 登录态；full transcript 才入库；auto captions 标记 `needs_review`；不写半成品条目；详见 `reports/youtube_provider_env_real_import_v0.3.83_20260701.md` |
+| **v0.3.84** | **Fetch-result handoff + inbox overwrite 保护**（`material_to_kb.py` → `youtube_to_kb.py`） | 路由层把 in-process full / partial capture 写到 `tmp/material_fetches/youtube_<vid>_<ts>.json` 并 `--fetch-result-json` 传入，subprocess 跳过 refetch 避免 429 退化；inbox 同 video_id 上遇到低 rank 拒绝覆盖，决策记 `overwrite_decision` + stderr |
 
 ---
 
-*Last refreshed for v0.3.83 on 2026-07-01.*
+*Last refreshed for v0.3.84 on 2026-07-01.*

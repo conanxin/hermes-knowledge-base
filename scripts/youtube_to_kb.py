@@ -22,6 +22,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 import unicodedata
 import urllib.parse
 import xml.etree.ElementTree as ET
@@ -38,6 +39,22 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 import import_wechat_article_capture as kb_helpers  # type: ignore
+
+# Quality ranking: higher rank beats lower rank. Used by overwrite protection.
+QUALITY_RANK = {
+    "full": 4,
+    "partial": 3,
+    "metadata_only": 2,
+    "blocked": 1,
+    "none": 0,
+}
+
+
+def _quality_rank(value: str | None) -> int:
+    """Return numeric rank for a fetch_quality value; unknown → 0."""
+    if not value:
+        return 0
+    return QUALITY_RANK.get(str(value).lower(), 0)
 
 BROWSER_UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -105,6 +122,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
 
     # Offline smoke-test hooks. They are intentionally undocumented in user docs.
     parser.add_argument("--metadata-file", help=argparse.SUPPRESS)
+    # v0.3.84: fetch result handoff from material_to_kb.py fetch layer; skips refetch.
+    parser.add_argument(
+        "--fetch-result-json",
+        default="",
+        help=argparse.SUPPRESS,
+    )
     return parser
 
 
@@ -1718,8 +1741,125 @@ def _unique_capture_path(capture: dict[str, Any]) -> Path:
     raise YouTubeImportError(STATUS_FAILED_IMPORT, "could not allocate unique capture path")
 
 
+def _find_existing_capture_for_video_id(video_id: str) -> tuple[Path | None, dict[str, Any] | None]:
+    """Return (path, capture) of an existing inbox capture matching `video_id`, or (None, None).
+
+    Walks `inbox/raw/youtube/*.json` and returns the highest-quality match. Only
+    consider files that actually exist and parse as JSON.
+    """
+    if not video_id or not INBOX_YOUTUBE.exists():
+        return None, None
+    best_path: Path | None = None
+    best_capture: dict[str, Any] | None = None
+    best_rank = -1
+    for candidate in INBOX_YOUTUBE.glob("*.json"):
+        try:
+            data = json.loads(candidate.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(data, dict):
+            continue
+        if data.get("video_id") != video_id:
+            continue
+        rank = _quality_rank(data.get("fetch_quality", ""))
+        if rank > best_rank:
+            best_rank = rank
+            best_path = candidate
+            best_capture = data
+    return best_path, best_capture
+
+
+def _normalize_handoff_capture(data: dict[str, Any]) -> dict[str, Any]:
+    """Treat a fetch-result dict as a YouTube capture dictionary.
+
+    material_to_kb.py stores the fetcher return value as
+        {title, text, images, metadata, status, reason, fetch_quality}
+    while the YouTube script expects a capture dict
+        {video_id, title, channel, transcript_text, content_markdown, fetch_quality,
+         transcript_language, transcript_kind, transcript_char_count, provider_attempts, ...}
+
+    The captured `metadata.capture` sub-dict may already be in capture shape (full
+    fetch) or the metadata itself may already be capture-shaped. Be permissive.
+    """
+    if not isinstance(data, dict):
+        return {}
+    metadata = data.get("metadata") if isinstance(data.get("metadata"), dict) else {}
+    candidate_capture = metadata.get("capture") if isinstance(metadata, dict) else None
+    if isinstance(candidate_capture, dict) and candidate_capture.get("video_id"):
+        return candidate_capture
+    if data.get("video_id"):
+        return data
+    return {}
+
+
+def load_fetch_result_json(path: str | Path) -> dict[str, Any]:
+    """Read a fetch-result JSON file written by material_to_kb.py fetch layer.
+
+    Returns a YouTube capture dictionary. Raises YouTubeImportError on bad input
+    so the caller can degrade to the normal refetch path.
+    """
+    if not path:
+        raise YouTubeImportError(STATUS_FAILED_IMPORT, "fetch-result-json path is empty")
+    src = Path(path)
+    if not src.is_absolute():
+        src = KB_HOME / src
+    if not src.exists():
+        raise YouTubeImportError(STATUS_FAILED_IMPORT, f"fetch-result-json does not exist: {src}")
+    try:
+        raw = json.loads(src.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise YouTubeImportError(STATUS_FAILED_IMPORT, f"fetch-result-json is not valid JSON: {exc}") from exc
+    capture = _normalize_handoff_capture(raw)
+    if not capture.get("video_id"):
+        raise YouTubeImportError(
+            STATUS_FAILED_IMPORT,
+            "fetch-result-json does not contain a YouTube capture (missing video_id)",
+        )
+    # Mark provenance so downstream readers know this capture came from a handoff.
+    capture.setdefault("fetch_source", "fetch-result-handoff")
+    capture.setdefault("handoff_used", True)
+    capture.setdefault("handoff_source_path", str(src))
+    return capture
+
+
 def write_capture(capture: dict[str, Any]) -> Path:
+    """Write capture JSON to inbox/raw/youtube/ with overwrite protection.
+
+    Quality rank: full > partial > metadata_only > blocked. If a capture with the
+    same `video_id` already exists and has an equal-or-higher quality, the new
+    capture is NOT written. The choice (path, existing quality, new quality) is
+    captured on the capture dict under `overwrite_decision` for audit.
+    """
     INBOX_YOUTUBE.mkdir(parents=True, exist_ok=True)
+    decision: dict[str, Any] = {
+        "existing_path": "",
+        "existing_quality": "",
+        "new_quality": capture.get("fetch_quality", ""),
+        "overwrite": True,
+        "reason": "no existing capture for video_id; normal write",
+    }
+    video_id = capture.get("video_id", "")
+    existing_path, existing_capture = _find_existing_capture_for_video_id(video_id)
+    if existing_path is not None and existing_capture is not None:
+        existing_quality = existing_capture.get("fetch_quality", "")
+        existing_rank = _quality_rank(existing_quality)
+        new_quality = capture.get("fetch_quality", "")
+        new_rank = _quality_rank(new_quality)
+        decision = {
+            "existing_path": existing_path.relative_to(KB_HOME).as_posix(),
+            "existing_quality": existing_quality,
+            "new_quality": new_quality,
+            "overwrite": new_rank >= existing_rank,
+            "reason": (
+                f"new quality {new_quality!r} (rank {new_rank}) >= existing {existing_quality!r} (rank {existing_rank}); overwrite allowed"
+                if new_rank >= existing_rank
+                else f"new quality {new_quality!r} (rank {new_rank}) < existing {existing_quality!r} (rank {existing_rank}); overwrite refused"
+            ),
+        }
+        capture["overwrite_decision"] = decision
+        if new_rank < existing_rank:
+            return existing_path
+    capture["overwrite_decision"] = decision
     path = _unique_capture_path(capture)
     path.write_text(json.dumps(capture, ensure_ascii=False, indent=2), encoding="utf-8")
     return path
@@ -1736,6 +1876,10 @@ def write_kb_entry(capture: dict[str, Any], bundle: dict[str, str]) -> Path:
 
 
 def build_capture_from_args(args: argparse.Namespace) -> dict[str, Any]:
+    # v0.3.84: fetch-result handoff short-circuit. material_to_kb.py fetch layer
+    # already produced a YouTube capture; reuse it instead of refetching.
+    if getattr(args, "fetch_result_json", ""):
+        return load_fetch_result_json(args.fetch_result_json)
     metadata_file = args.metadata_file or ""
     transcript_file = args.transcript_file or ""
     # Environment hooks let material_to_kb.py smoke tests route YouTube offline.
@@ -1788,6 +1932,15 @@ def _print_capture_summary(capture: dict[str, Any], capture_path: Path) -> None:
         print(f"  import_block_reason: {capture.get('import_block_reason')}", file=sys.stderr)
     if capture.get("warning"):
         print(f"  warning: {capture.get('warning')}", file=sys.stderr)
+    if capture.get("handoff_used"):
+        print(f"  handoff_used: true", file=sys.stderr)
+        print(f"  handoff_source_path: {capture.get('handoff_source_path', '')}", file=sys.stderr)
+    overwrite_decision = capture.get("overwrite_decision") or {}
+    if overwrite_decision:
+        print(f"  overwrite: {str(bool(overwrite_decision.get('overwrite'))).lower()}", file=sys.stderr)
+        print(f"  existing_quality: {overwrite_decision.get('existing_quality') or '(none)'}", file=sys.stderr)
+        print(f"  new_quality: {overwrite_decision.get('new_quality') or '(none)'}", file=sys.stderr)
+        print(f"  overwrite_reason: {overwrite_decision.get('reason', '')}", file=sys.stderr)
 
 
 def main() -> int:

@@ -441,8 +441,21 @@ def run_single_youtube(
     allow_partial_transcript: bool = False,
     allow_auto_captions: bool = False,
     caption_provider: str = "auto",
+    fetch_result: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    """YouTube single-item import, with optional fetch-result handoff (v0.3.84).
+
+    If `fetch_result` looks like a YouTube `full` capture, write it to
+    `tmp/material_fetches/youtube_<video_id>_<timestamp>.json` and pass
+    `--fetch-result-json` to the subprocess so it skips refetch (and avoids the
+    429 / metadata_only downgrade). For weaker captures (partial / metadata_only /
+    blocked), the subprocess refetches as before, and the canonical
+    `inbox/raw/youtube/` capture inherits the project's overwrite protection.
+    """
     result = base_result(item)
+    result["handoff_used"] = False
+    result["fetch_result_json_path"] = ""
+    handoff_path = _write_youtube_handoff(item, fetch_result)
     cmd = [sys.executable, str(YOUTUBE_SCRIPT), item["route_flag"], item["input"]]
     if allow_partial_transcript:
         cmd.append("--allow-partial-transcript")
@@ -450,6 +463,10 @@ def run_single_youtube(
         cmd.append("--allow-auto-captions")
     if caption_provider:
         cmd.extend(["--caption-provider", caption_provider])
+    if handoff_path:
+        cmd.extend(["--fetch-result-json", str(handoff_path)])
+        result["handoff_used"] = True
+        result["fetch_result_json_path"] = str(handoff_path)
     cmd.append("--dry-run" if dry_run else "--import")
     proc = run_command(cmd)
     result["route"] = "youtube_to_kb.py"
@@ -466,6 +483,50 @@ def run_single_youtube(
             result["docs_item_path"] = f"docs/items/{slug}/index.html"
             result["site_item_path"] = f"site/items/{slug}/index.html"
     return result
+
+
+def _write_youtube_handoff(item: dict[str, Any], fetch_result: dict[str, Any] | None) -> Path | None:
+    """Persist a YouTube fetch-layer result to `tmp/material_fetches/`, or return None.
+
+    Returns the path only when the fetch result carries a YouTube capture-shaped
+    dict (full quality by policy; partial counts too if the caller wanted it, but
+    metadata_only / blocked / missing data are rejected so the importer refetches
+    fresh rather than carry over junk).
+    """
+    if not isinstance(fetch_result, dict):
+        return None
+    metadata = fetch_result.get("metadata") if isinstance(fetch_result.get("metadata"), dict) else {}
+    candidate_capture = metadata.get("capture") if isinstance(metadata, dict) else None
+    capture: dict[str, Any] = {}
+    if isinstance(candidate_capture, dict) and candidate_capture.get("video_id"):
+        capture = candidate_capture
+    elif fetch_result.get("video_id"):
+        capture = fetch_result
+    if not capture:
+        return None
+    if not capture.get("video_id"):
+        return None
+    fetch_quality = str(capture.get("fetch_quality") or fetch_result.get("fetch_quality") or "")
+    if fetch_quality not in {"full", "partial"}:
+        return None
+    video_id = str(capture.get("video_id"))
+    safe_id = re.sub(r"[^A-Za-z0-9_-]", "_", video_id)[:64] or "fetch"
+    handoff_dir = KB_HOME / "tmp" / "material_fetches"
+    handoff_dir.mkdir(parents=True, exist_ok=True)
+    timestamp = dt.datetime.now().strftime("%Y%m%dT%H%M%S")
+    out = handoff_dir / f"youtube_{safe_id}_{timestamp}.json"
+    envelope = {
+        "url": item.get("input", ""),
+        "video_id": video_id,
+        "fetch_quality": fetch_quality,
+        "captured_at": dt.datetime.now().isoformat(timespec="seconds"),
+        "metadata": {
+            "capture": capture,
+            "source_platform": "youtube",
+        },
+    }
+    out.write_text(json.dumps(envelope, ensure_ascii=False, indent=2), encoding="utf-8")
+    return out
 
 
 def parse_batch_report_paths(stdout: str, stderr: str) -> tuple[str, str]:
@@ -720,6 +781,7 @@ def route_inputs(
             allow_partial_transcript=allow_partial_transcript,
             allow_auto_captions=allow_auto_captions,
             caption_provider=caption_provider,
+            fetch_result=item.get("_fetch_result"),
         )
 
     results = [results_by_index[i] for i in sorted(results_by_index)]

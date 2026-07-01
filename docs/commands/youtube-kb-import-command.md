@@ -88,6 +88,31 @@ Hard guarantees enforced across the provider chain:
   without browser authentication.
 - **`full` transcript only is importable.** fetch_quality `full` with `transcript_char_count >= 800`
   is the import gate; `partial`, `metadata_only`, blocked, or empty results never write a KB entry.
+
+### v0.3.84 fetch-result handoff + inbox overwrite protection
+
+`material_to_kb.py` runs the in-process YouTube fetch layer first. When that fetch returns a
+**full** (or partial when allowed) capture, the router serializes it to
+`tmp/material_fetches/youtube_<video_id>_<timestamp>.json` and passes
+`--fetch-result-json <path>` to the YouTube subprocess. The subprocess loads the handoff and
+**skips refetch**, which prevents the 429 throttling that turns a real full transcript into a
+metadata_only one when the second call hits YouTube's rate limit.
+
+A handoff is **only** written when the fetch result is `full` or `partial`. `metadata_only`,
+`blocked`, or empty results still cause the subprocess to refetch so a fresh attempt is logged.
+
+The canonical `inbox/raw/youtube/*.json` capture is also protected from being overwritten by a
+weaker capture with the same `video_id`:
+
+- Quality rank: `full` (4) > `partial` (3) > `metadata_only` (2) > `blocked` (1) > `none` (0).
+- If a newer capture has a lower rank than the existing one, the subprocess returns the existing
+  capture path instead of overwriting it.
+- The decision (existing path, existing/new quality, overwrite bool, reason) is recorded on the
+  capture as `overwrite_decision` and on the subprocess stderr summary.
+
+The handoff file is intentionally placed under `tmp/material_fetches/` so it stays out of git
+(see `.gitignore`); every run writes a fresh timestamped file, and the inbox keeps the best
+quality capture.
 - **Auto captions are flagged for review.** `transcript_kind: auto` is stored alongside
   `transcript_needs_review: true`, and import requires `--allow-auto-captions`.
 

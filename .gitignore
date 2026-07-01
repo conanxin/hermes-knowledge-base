@@ -11,6 +11,7 @@ reports/runtime/
 *~
 tmp/
 tmp/youtube_subs/
+tmp/material_fetches/
 
 # Ignore OS files
 .DS_Store

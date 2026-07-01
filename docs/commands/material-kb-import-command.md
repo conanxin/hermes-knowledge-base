@@ -114,6 +114,25 @@ Automatic captions can be `fetch_quality=full`, but import requires explicit
 `transcript_needs_review: true`. Material JSON reports include `provider_attempts`
 for every YouTube input.
 
+v0.3.84 adds a fetch-result handoff to the YouTube subprocess:
+
+- `material_to_kb.py` runs the in-process fetch layer first. When the fetch is `full` (or
+  `partial` when allowed) the router serializes the capture to
+  `tmp/material_fetches/youtube_<video_id>_<timestamp>.json` and passes
+  `--fetch-result-json <path>` to the YouTube subprocess. The subprocess loads the handoff
+  and skips refetch, which prevents 429 throttling turning a real full transcript into
+  `metadata_only` on the second call.
+- A handoff is **only** written for `full` / `partial` results; `metadata_only`, `blocked`,
+  or empty results still cause the subprocess to refetch so a fresh attempt is logged.
+- Material items gain `handoff_used: true` and `fetch_result_json_path` when the handoff is
+  used. The handoff file is gitignored under `tmp/material_fetches/`.
+
+v0.3.84 also adds inbox overwrite protection for `inbox/raw/youtube/*.json`:
+
+- Quality rank: `full` (4) > `partial` (3) > `metadata_only` (2) > `blocked` (1) > `none` (0).
+- A weaker capture (lower rank) for an existing `video_id` is refused; the existing capture
+  path is returned instead, with `overwrite: false` recorded on the subprocess stderr summary.
+
 ---
 
 ## 报告

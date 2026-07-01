@@ -397,6 +397,31 @@ Hard guarantees enforced across the chain (mirrors the command doc and `material
 Recorded in the capture and material report per attempt: provider, status, language, kind,
 format, char_count, reason.
 
+### v0.3.84 fetch-result handoff + inbox overwrite protection
+
+`material_to_kb.py` (the unified router) runs the in-process YouTube fetch layer first, and
+when the result is `full` (or `partial` when allowed) it serializes the capture to
+`tmp/material_fetches/youtube_<video_id>_<timestamp>.json` and passes
+`--fetch-result-json <path>` to the YouTube subprocess. The subprocess loads the handoff and
+skips refetch, which prevents the 429 throttling that turns a real full transcript into a
+metadata_only one when the second call hits YouTube's rate limit.
+
+A handoff is only written for `full` / `partial` results; `metadata_only`, `blocked`, or empty
+results still cause the subprocess to refetch so a fresh attempt is logged. The handoff file is
+gitignored under `tmp/material_fetches/`.
+
+The canonical `inbox/raw/youtube/*.json` capture is also protected from being overwritten by a
+weaker capture with the same `video_id`:
+
+- Quality rank: `full` (4) > `partial` (3) > `metadata_only` (2) > `blocked` (1) > `none` (0).
+- If a newer capture has a lower rank than the existing one, the subprocess returns the
+  existing capture path instead of overwriting it.
+- The decision (existing path, existing/new quality, overwrite bool, reason) is recorded on the
+  capture as `overwrite_decision` and on the subprocess stderr summary.
+
+This means a flaky network / rate-limit run that re-tries a previously-imported video can no
+longer silently downgrade a full-quality inbox capture to metadata_only.
+
 ## 维护说明
 
 - 每次执行成功后，更新报告中的 `commit` 和 `push` 字段

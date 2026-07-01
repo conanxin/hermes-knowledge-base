@@ -64,6 +64,31 @@ def parse_router_stdout(stdout: str) -> dict:
     return json.loads(stdout[start:])
 
 
+def _clear_inbox_for_video(video_id: str) -> int:
+    """Remove inbox/raw/youtube/*.json captures with this video_id. Test-only.
+
+    v0.3.84 inbox overwrite protection makes the smoke tests need a clean inbox
+    to observe the current capture's behavior; this helper gives them that
+    without touching any production code path.
+    """
+    inbox = REPO_ROOT / "inbox" / "raw" / "youtube"
+    if not inbox.exists():
+        return 0
+    removed = 0
+    for candidate in inbox.glob("*.json"):
+        try:
+            data = json.loads(candidate.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(data, dict):
+            continue
+        if data.get("video_id") != video_id:
+            continue
+        candidate.unlink()
+        removed += 1
+    return removed
+
+
 def smoke_1_wechat_fetch() -> bool:
     print("\n=== Smoke 1: WeChat fetcher returns text ===")
     result = WeChatFetcher(route_flag="--html-file").fetch(str(WECHAT_FIXTURE))
@@ -117,6 +142,12 @@ def smoke_4_router_uses_fetch_layer() -> bool:
         "HERMES_YOUTUBE_FIXTURE_METADATA": str(YOUTUBE_METADATA),
     }
     env.pop("HERMES_YOUTUBE_FIXTURE_TRANSCRIPT", None)
+    # v0.3.84 overwrite protection: clear inbox for this video_id so the router
+    # actually sees a fresh metadata_only capture in the inbox file (without this
+    # the test reads a stale full capture left over by earlier runs and fails).
+    removed = _clear_inbox_for_video("ytfixture123")
+    if removed:
+        print(f"         (cleared {removed} pre-existing captures for the test)")
     before = metadata_count()
     code, out, err = run([TEST_PY, str(ROUTER_SCRIPT), "--input", YOUTUBE_URL, "--dry-run"], env=env)
     after = metadata_count()
@@ -169,9 +200,61 @@ def smoke_5_youtube_ytdlp_fixture_fallback() -> bool:
     return ok
 
 
+def smoke_6_router_handoff_passes_fetch_result() -> bool:
+    """v0.3.84: material router writes a fetch-result handoff file and reuses it
+    in the YouTube subprocess instead of refetching. This avoids 429 throttling
+    when the in-process fetch already succeeded.
+    """
+    print("\n=== Smoke 6: material router writes fetch-result handoff to YouTube subprocess ===")
+    env = {
+        **ENV,
+        "HERMES_YOUTUBE_FIXTURE_METADATA": str(YOUTUBE_METADATA),
+        "HERMES_YTDLP_FIXTURE_SUBTITLE": str(YTDLP_TRANSCRIPT),
+        "HERMES_YTDLP_FIXTURE_KIND": "manual",
+        "HERMES_YTDLP_FIXTURE_LANGUAGE": "en",
+    }
+    # Clean handoff dir + inbox for the test video_id so we observe only this run.
+    video_id = "ytfixture123"
+    removed_inbox = _clear_inbox_for_video(video_id)
+    handoff_dir = REPO_ROOT / "tmp" / "material_fetches"
+    removed_handoff = 0
+    if handoff_dir.exists():
+        for f in handoff_dir.glob(f"youtube_*{video_id}*.json"):
+            f.unlink()
+            removed_handoff += 1
+    if removed_inbox or removed_handoff:
+        print(f"         (cleared {removed_inbox} inbox + {removed_handoff} handoff files)")
+    before = metadata_count()
+    code, out, err = run([TEST_PY, str(ROUTER_SCRIPT), "--input", YOUTUBE_URL, "--dry-run"], env=env)
+    after = metadata_count()
+    data = parse_router_stdout(out)
+    item = data.get("items", [{}])[0]
+    handoff_files = list(handoff_dir.glob(f"youtube_*{video_id}*.json")) if handoff_dir.exists() else []
+    ok = check(code == 0, "router exits 0 with handoff", f"exit={code}\nstderr tail: {err[-300:]}")
+    ok &= check(len(handoff_files) == 1, "router wrote exactly one handoff file", str(handoff_files))
+    ok &= check(item.get("handoff_used") is True, "router item records handoff_used true", str(item))
+    ok &= check(bool(item.get("fetch_result_json_path")), "router item records fetch_result_json_path", str(item))
+    ok &= check(item.get("fetch_quality") == "full", "handoff preserves full quality", str(item))
+    ok &= check(item.get("status") == "DRY_RUN_OK", "handoff dry-run is reportable", str(item))
+    ok &= check(before == after, "handoff dry-run does not write KB entry", f"before={before}, after={after}")
+    # Check the inner subprocess's capture file records handoff provenance.
+    cap_path = item.get("capture_json_path", "")
+    cap_full = (REPO_ROOT / cap_path) if cap_path else None
+    if cap_full and cap_full.exists():
+        cap_data = json.loads(cap_full.read_text(encoding="utf-8"))
+        handoff_in_capture = cap_data.get("handoff_used") is True and bool(cap_data.get("handoff_source_path"))
+        ok &= check(handoff_in_capture, "subprocess capture records handoff provenance", str({
+            "handoff_used": cap_data.get("handoff_used"),
+            "handoff_source_path": cap_data.get("handoff_source_path"),
+        }))
+    else:
+        ok &= check(False, "subprocess capture file exists for handoff run", str(cap_path))
+    return ok
+
+
 def main() -> int:
     print("=" * 60)
-    print("Material fetch layer smoke tests (v0.3.80)")
+    print("Material fetch layer smoke tests (v0.3.80, handoff in v0.3.84)")
     print("=" * 60)
     results = [
         smoke_1_wechat_fetch(),
@@ -179,6 +262,7 @@ def main() -> int:
         smoke_3_youtube_metadata_fallback(),
         smoke_4_router_uses_fetch_layer(),
         smoke_5_youtube_ytdlp_fixture_fallback(),
+        smoke_6_router_handoff_passes_fetch_result(),
     ]
     print("\n" + "=" * 60)
     passed = sum(results)

@@ -1,6 +1,6 @@
 # Material KB Import Workflow
 
-> **版本**: 1.4 (`v0.3.82`)
+> **版本**: 1.5 (`v0.3.84`)
 > **创建时间**: 2026-07-01  
 > **入口命令**: [`docs/commands/material-kb-import-command.md`](../commands/material-kb-import-command.md)  
 > **入口脚本**: `scripts/material_to_kb.py`
@@ -145,6 +145,25 @@ python -m pip install --user --break-system-packages --upgrade yt-dlp youtube-tr
   `metadata_only` / blocked / 空字幕 一律不写 KB 条目
 - auto captions 记 `transcript_kind: auto` + `transcript_needs_review: true`，导入需
   `--allow-auto-captions`
+
+### v0.3.84 fetch-result handoff + inbox overwrite protection
+
+`material_to_kb.py` 跑过 in-process YouTube fetch layer 后，若结果是 `full`（或被允许时的
+`partial`）会把 capture 序列化到 `tmp/material_fetches/youtube_<video_id>_<timestamp>.json`，
+并把 `--fetch-result-json <path>` 传给 YouTube subprocess。subprocess 加载 handoff 后跳过
+refetch，从而避免「第一次拿到 full、第二次 429 后退化为 metadata_only」的问题。
+
+只对 `full` / `partial` 写 handoff；`metadata_only` / blocked / 空结果仍让 subprocess refetch
+（这样新的 attempt 仍被记录）。handoff 文件 gitignored，不进仓库。
+
+`inbox/raw/youtube/*.json` 也加了 overwrite 保护：
+
+- 质量 rank：`full` (4) > `partial` (3) > `metadata_only` (2) > `blocked` (1) > `none` (0)
+- 同一 `video_id` 上遇到更低 rank 的新 capture，subprocess 拒绝覆盖、返回原 capture 路径
+- 决策（existing path / quality / overwrite bool / reason）记在 capture 的 `overwrite_decision`
+  和 subprocess stderr summary 上
+
+材料报告里 item 新增 `handoff_used: true` 和 `fetch_result_json_path` 两个字段用于审计。
 
 ---
 
