@@ -1,6 +1,6 @@
 # Material KB Import Workflow
 
-> **版本**: 1.0 (`v0.3.76`)  
+> **版本**: 1.1 (`v0.3.77`)
 > **创建时间**: 2026-07-01  
 > **入口命令**: [`docs/commands/material-kb-import-command.md`](../commands/material-kb-import-command.md)  
 > **入口脚本**: `scripts/material_to_kb.py`
@@ -23,7 +23,7 @@
 <materials.txt>
 ```
 
-agent 先使用 `scripts/material_to_kb.py` 判断材料类型，再路由到仓库已经存在且稳定的导入能力。没有稳定路线的类型必须返回 `BLOCKED_UNSUPPORTED`，不能临时拼一个半成品抓取器。
+agent 先使用 `scripts/material_to_kb.py` 判断材料类型，再路由到仓库已经存在且稳定的导入能力。没有稳定路线的类型必须返回 `BLOCKED_UNSUPPORTED`，不能临时拼一个半成品抓取器。v0.3.77 起普通网页 URL 路由到 `scripts/web_article_to_kb.py`。
 
 ---
 
@@ -33,7 +33,7 @@ agent 先使用 `scripts/material_to_kb.py` 判断材料类型，再路由到仓
 git status --short
 git branch --show-current
 git fetch origin main --tags
-python3 scripts/check_task_preflight.py --planned-tag v0.3.76-unified-material-kb-import-router --classify-dirty --json
+python3 scripts/check_task_preflight.py --planned-tag v0.3.77-generic-web-article-import-route --classify-dirty --json
 ```
 
 要求：
@@ -87,12 +87,13 @@ python3 scripts/material_to_kb.py --input "<URL_OR_FILE>" --import
 python3 scripts/material_to_kb.py --input-list tmp/materials.txt --import
 ```
 
-当前 v0.3.76 的真实导入路线只有：
+当前 v0.3.77 的真实导入路线包括：
 
 - 微信公众号 URL
 - 微信公众号 HTML / Markdown / TXT
+- 普通网页 URL
 
-YouTube、普通网页、PDF 如果没有仓库内稳定脚本，必须保留 `BLOCKED_UNSUPPORTED`。
+YouTube、PDF 如果没有仓库内稳定脚本，必须保留 `BLOCKED_UNSUPPORTED`。
 
 ---
 
@@ -138,7 +139,7 @@ python3 tests/run_material_router_smoke.py
 | `wechat_url` | `mp.weixin.qq.com` / `weixin.qq.com` | `wechat_url_to_kb.py` 或 `wechat_batch_import.py` | 支持 |
 | `local_text_article` | `.html` / `.htm` / `.md` / `.markdown` / `.txt` | `wechat_url_to_kb.py` local file mode 或 batch | 支持 |
 | `youtube_url` | `youtube.com` / `youtu.be` | 未接入稳定脚本 | `BLOCKED_UNSUPPORTED` |
-| `generic_web_url` | 其他 HTTP(S) URL | 未接入稳定脚本 | `BLOCKED_UNSUPPORTED` |
+| `generic_web_url` | 其他 HTTP(S) URL | `web_article_to_kb.py` | 支持 |
 | `pdf_file` | 本地 `.pdf` | 未接入稳定脚本 | `BLOCKED_UNSUPPORTED` |
 
 ---
@@ -150,5 +151,6 @@ python3 tests/run_material_router_smoke.py
 - `check_kb.py` 或 `check_pages_sync.py` 失败。
 - 用户要求的材料类型尚未实现稳定导入路线。
 - 需要登录、扫码、cookie 或绕过访问限制才能获取正文。
+- 普通网页正文不完整、明显截断或 robots.txt 禁止抓取。
 
 发生停止时，状态应写为 `BLOCKED_*` 或 `FAILED_*`，并在报告中保留原因。

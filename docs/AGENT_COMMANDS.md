@@ -1,6 +1,6 @@
 # Agent Commands
 
-## 统一材料入库入口（v0.3.76）
+## 统一材料入库入口（v0.3.77）
 
 用户以后可以直接说：
 
@@ -25,17 +25,49 @@ python3 scripts/material_to_kb.py --input-list tmp/materials.txt --dry-run
 python3 scripts/material_to_kb.py --input-list tmp/materials.txt --import
 ```
 
-当前 v0.3.76 支持状态：
+当前 v0.3.77 支持状态：
 
 | 材料类型 | 状态 |
 |---|---|
 | 微信公众号 URL | 支持，路由到 `wechat_url_to_kb.py` / `wechat_batch_import.py` |
 | 微信公众号 HTML / MD / TXT | 支持，路由到 WeChat local file mode |
+| 普通网页 URL | 支持，路由到 `web_article_to_kb.py` |
 | YouTube URL | 只有仓库存在稳定路线时才支持；当前统一入口返回 `BLOCKED_UNSUPPORTED` |
-| 普通网页 URL | 只有仓库存在稳定路线时才支持；当前统一入口返回 `BLOCKED_UNSUPPORTED` |
 | PDF | 只有仓库存在稳定路线时才支持；当前统一入口返回 `BLOCKED_UNSUPPORTED` |
 
 详见 [docs/commands/material-kb-import-command.md](commands/material-kb-import-command.md) 与 [docs/workflows/material-kb-import-workflow.md](workflows/material-kb-import-workflow.md)。
+
+### 普通网页文章入库入口（v0.3.77）
+
+用户可以直接说：
+
+```text
+解读并入库这个网页文章：
+<URL>
+```
+
+也可以继续走统一入口：
+
+```text
+解读并入库这个材料：
+<URL>
+```
+
+底层命令：
+
+```bash
+python3 scripts/web_article_to_kb.py --url "<URL>" --dry-run
+python3 scripts/web_article_to_kb.py --url "<URL>" --import
+```
+
+硬边界：
+
+- 只抓公开 HTTP(S) 页面。
+- 不登录、不读 cookie、不绕过 paywall 或访问限制。
+- robots.txt 禁止抓取、正文缺失、正文截断或仅能抽到摘要时必须 `BLOCKED_*`，不得写半成品 KB 条目。
+- YouTube 与 PDF 仍不通过普通网页路线伪造支持。
+
+详见 [docs/commands/web-article-kb-import-command.md](commands/web-article-kb-import-command.md) 与 [docs/workflows/web-article-kb-import-workflow.md](workflows/web-article-kb-import-workflow.md)。
 
 ## 任务报告
 

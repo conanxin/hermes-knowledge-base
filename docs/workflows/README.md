@@ -13,7 +13,7 @@ Available workflows in Hermes Knowledge Base.
 **Input**: One URL/local file, or an input-list with one URL/path per line
 **Output**: Material import markdown + JSON report; KB entry when the routed importer supports it
 
-**Relationship**: Called by `material-kb-import` command. Reuses WeChat import scripts and returns `BLOCKED_UNSUPPORTED` for routes not yet implemented.
+**Relationship**: Called by `material-kb-import` command. Reuses WeChat import scripts, routes ordinary web URLs to `web_article_to_kb.py`, and returns `BLOCKED_UNSUPPORTED` for routes not yet implemented.
 
 **Documentation**: `docs/workflows/material-kb-import-workflow.md`
 
@@ -70,6 +70,19 @@ Available workflows in Hermes Knowledge Base.
 **Output**: KB entry with translation, summary, notes
 
 **Documentation**: See `docs/AGENT_COMMANDS.md`
+
+---
+
+### web-article-kb-import-workflow
+
+**Purpose**: Fetch, extract, deduplicate, and import a publicly accessible ordinary web article.
+
+**Input**: Non-WeChat, non-YouTube HTTP(S) article URL, or local HTML/Markdown/TXT for dry-run testing
+**Output**: Standard article six-file KB entry plus raw web capture JSON
+
+**Relationship**: Called by `web-article-kb-import` command and by `material-kb-import-workflow` for `generic_web_url`.
+
+**Documentation**: `docs/workflows/web-article-kb-import-workflow.md`
 
 ---
 

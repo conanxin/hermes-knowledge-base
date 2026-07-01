@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""Smoke tests for the unified material import router (v0.3.76).
+"""Smoke tests for the unified material import router (v0.3.76/v0.3.77).
 
-Runs offline against local fixtures and unsupported placeholder routes.
+Runs offline against local fixtures, a local HTTP server, and unsupported
+placeholder routes.
 
 Verifies:
 1. WeChat URLs are recognized as wechat_url.
 2. Local HTML and Markdown are recognized as local_text_article.
-3. YouTube URLs return BLOCKED_UNSUPPORTED when no stable route is wired.
-4. Generic web URLs return BLOCKED_UNSUPPORTED when no stable route is wired.
+3. Generic web URLs are recognized and routed to web_article_to_kb.py.
+4. YouTube URLs return BLOCKED_UNSUPPORTED when no stable route is wired.
 5. Local PDFs return BLOCKED_UNSUPPORTED when no stable route is wired.
 6. input-list skips blank lines and # comments.
 7. dry-run does not write KB entries.
@@ -26,6 +27,10 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
+import threading
+from functools import partial
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -36,6 +41,8 @@ ROUTER_SCRIPT = REPO_ROOT / "scripts" / "material_to_kb.py"
 MIXED_INPUTS = REPO_ROOT / "tests" / "fixtures" / "material_inputs_mixed.txt"
 HTML_FIXTURE = "tests/fixtures/wechat_sample_article.html"
 MD_FIXTURE = "tests/fixtures/wechat_chinese_with_images.md"
+WEB_FIXTURE_DIR = REPO_ROOT / "tests" / "fixtures"
+WEB_FIXTURE_NAME = "web_sample_article.html"
 YOUTUBE_URL = "https://youtu.be/material-router-smoke"
 GENERIC_URL = "https://example.com/material-router-smoke"
 PDF_FIXTURE = "tests/fixtures/material_router_sample.pdf"
@@ -89,6 +96,19 @@ def item_by_input(items: list[dict], value: str) -> dict:
     raise AssertionError(f"missing item for input: {value}")
 
 
+class QuietHandler(SimpleHTTPRequestHandler):
+    def log_message(self, format: str, *args) -> None:  # noqa: A003 - stdlib signature
+        return
+
+
+def start_fixture_server():
+    handler = partial(QuietHandler, directory=str(WEB_FIXTURE_DIR))
+    server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    return server, f"http://127.0.0.1:{server.server_address[1]}/{WEB_FIXTURE_NAME}"
+
+
 def smoke_1_inference_rules() -> bool:
     """Direct inference covers supported and unsupported material types."""
     print("\n=== Smoke 1: inference rules ===")
@@ -97,8 +117,8 @@ def smoke_1_inference_rules() -> bool:
         ("https://mp.weixin.qq.com/s/example", "wechat_url", True),
         (HTML_FIXTURE, "local_text_article", True),
         (MD_FIXTURE, "local_text_article", True),
+        (GENERIC_URL, "generic_web_url", True),
         (YOUTUBE_URL, "youtube_url", False),
-        (GENERIC_URL, "generic_web_url", False),
         (PDF_FIXTURE, "pdf_file", False),
     ]
     ok = True
@@ -116,12 +136,30 @@ def smoke_1_inference_rules() -> bool:
 def smoke_2_input_list_and_reports() -> bool:
     """Mixed dry-run produces a complete report and keeps KB count unchanged."""
     print("\n=== Smoke 2: mixed input-list dry-run ===")
-    if not check(MIXED_INPUTS.exists(), "mixed input-list fixture exists", str(MIXED_INPUTS)):
-        return False
+    server, web_url = start_fixture_server()
+    try:
+        with tempfile.TemporaryDirectory(prefix=".material-router-smoke-", dir=REPO_ROOT) as tmp:
+            input_list = Path(tmp) / "materials.txt"
+            input_list.write_text(
+                "\n".join([
+                    "# comments are skipped",
+                    "",
+                    HTML_FIXTURE,
+                    MD_FIXTURE,
+                    web_url,
+                    YOUTUBE_URL,
+                    PDF_FIXTURE,
+                    "",
+                ]),
+                encoding="utf-8",
+            )
+            before = metadata_count()
+            code, out, err = run([TEST_PY, str(ROUTER_SCRIPT), "--input-list", str(input_list), "--dry-run"])
+            after = metadata_count()
+    finally:
+        server.shutdown()
+        server.server_close()
 
-    before = metadata_count()
-    code, out, err = run([TEST_PY, str(ROUTER_SCRIPT), "--input-list", str(MIXED_INPUTS), "--dry-run"])
-    after = metadata_count()
     if not check(code == 0, "router exits 0", f"exit={code}\nstderr tail: {err[-300:]}"):
         return False
     data = parse_router_stdout(out)
@@ -135,7 +173,7 @@ def smoke_2_input_list_and_reports() -> bool:
     html_item = item_by_input(items, HTML_FIXTURE)
     md_item = item_by_input(items, MD_FIXTURE)
     yt_item = item_by_input(items, YOUTUBE_URL)
-    web_item = item_by_input(items, GENERIC_URL)
+    web_item = item_by_input(items, web_url)
     pdf_item = item_by_input(items, PDF_FIXTURE)
 
     ok &= check(html_item["inferred_type"] == "local_text_article",
@@ -147,22 +185,25 @@ def smoke_2_input_list_and_reports() -> bool:
     ok &= check(md_item["status"] in {"DRY_RUN_OK", "SKIPPED_DUPLICATE"},
                 "local Markdown dry-run completed", md_item["status"])
 
+    ok &= check(web_item["inferred_type"] == "generic_web_url",
+                "generic web inferred as generic_web_url")
+    ok &= check(web_item["route"] == "web_article_to_kb.py",
+                "generic web routed to web_article_to_kb.py", web_item["route"])
+    ok &= check(web_item["status"] in {"DRY_RUN_OK", "SKIPPED_DUPLICATE"},
+                "generic web dry-run completed", web_item["status"])
+
     ok &= check(yt_item["status"] == "BLOCKED_UNSUPPORTED",
                 "YouTube returns BLOCKED_UNSUPPORTED", yt_item.get("failure_reason", ""))
     ok &= check("YouTube import route not implemented yet" in yt_item.get("failure_reason", ""),
                 "YouTube unsupported reason is explicit")
-    ok &= check(web_item["status"] == "BLOCKED_UNSUPPORTED",
-                "generic web returns BLOCKED_UNSUPPORTED", web_item.get("failure_reason", ""))
-    ok &= check("generic web article import route not implemented yet" in web_item.get("failure_reason", ""),
-                "generic web unsupported reason is explicit")
     ok &= check(pdf_item["status"] == "BLOCKED_UNSUPPORTED",
                 "PDF returns BLOCKED_UNSUPPORTED", pdf_item.get("failure_reason", ""))
     ok &= check("PDF import/OCR route not implemented yet" in pdf_item.get("failure_reason", ""),
                 "PDF unsupported reason is explicit")
 
-    ok &= check(summary.get("blocked_unsupported") == 3,
+    ok &= check(summary.get("blocked_unsupported") == 2,
                 "unsupported items counted without aborting batch", str(summary))
-    ok &= check(summary.get("dry_run_ok", 0) + summary.get("skipped_duplicate", 0) == 2,
+    ok &= check(summary.get("dry_run_ok", 0) + summary.get("skipped_duplicate", 0) == 3,
                 "supported dry-run items counted", str(summary))
 
     md_report = REPO_ROOT / data.get("report_markdown", "")
@@ -175,7 +216,7 @@ def smoke_2_input_list_and_reports() -> bool:
                     "json report has summary total=5")
     if md_report.exists():
         text = md_report.read_text(encoding="utf-8")
-        ok &= check("BLOCKED_UNSUPPORTED" in text and "local_text_article" in text,
+        ok &= check("BLOCKED_UNSUPPORTED" in text and "web_article_to_kb.py" in text,
                     "markdown report includes statuses and inferred types")
     return ok
 
@@ -220,7 +261,7 @@ def smoke_4_no_remote_mmbiz_in_generated_html() -> bool:
 
 def main() -> int:
     print("=" * 60)
-    print("Material import router smoke tests (v0.3.76)")
+    print("Material import router smoke tests (v0.3.76/v0.3.77)")
     print("=" * 60)
     results = [
         smoke_1_inference_rules(),

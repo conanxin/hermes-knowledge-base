@@ -18,7 +18,7 @@ Available commands in Hermes Knowledge Base.
 
 **Output**: Material import markdown + JSON report; KB entry only when the routed stable importer supports the material.
 
-**Safety boundaries**: Unsupported YouTube, generic web, and PDF routes return `BLOCKED_UNSUPPORTED` instead of inventing a half-built importer.
+**Safety boundaries**: Generic web URLs use `web_article_to_kb.py`; unsupported YouTube and PDF routes return `BLOCKED_UNSUPPORTED` instead of inventing a half-built importer.
 
 **Documentation**: `docs/commands/material-kb-import-command.md`
 
@@ -83,6 +83,22 @@ Available commands in Hermes Knowledge Base.
 **Output**: KB entry with translation, summary, notes
 
 **Documentation**: `docs/AGENT_COMMANDS.md`
+
+---
+
+### web-article-kb-import
+
+**Purpose**: Import a publicly accessible ordinary web article into the knowledge base.
+
+**Shortest call**: `解读并入库这个网页文章：<URL>`
+
+**When to use**: When the material is a non-WeChat, non-YouTube HTTP(S) article page with publicly visible body text.
+
+**Output**: KB article entry with metadata, source, translation mirror or placeholder, summary, notes, and raw payload.
+
+**Safety boundaries**: No login, no cookie, no paywall bypass, no half-entry when full text cannot be verified.
+
+**Documentation**: `docs/commands/web-article-kb-import-command.md`
 
 ---
 

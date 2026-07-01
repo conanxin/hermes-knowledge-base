@@ -31,6 +31,7 @@ SCRIPTS_DIR = KB_HOME / "scripts"
 REPORTS_DIR = KB_HOME / "reports"
 WECHAT_SINGLE_SCRIPT = SCRIPTS_DIR / "wechat_url_to_kb.py"
 WECHAT_BATCH_SCRIPT = SCRIPTS_DIR / "wechat_batch_import.py"
+WEB_ARTICLE_SCRIPT = SCRIPTS_DIR / "web_article_to_kb.py"
 LOCALIZE_SCRIPT = SCRIPTS_DIR / "localize_article_images.py"
 
 STATUS_IMPORTED = "IMPORTED"
@@ -148,8 +149,10 @@ def infer_input(value: str, index: int = 0) -> dict[str, Any]:
         else:
             item.update({
                 "inferred_type": "generic_web_url",
-                "route": "unsupported",
-                "failure_reason": "generic web article import route not implemented yet",
+                "route": "web_article_to_kb.py",
+                "route_kind": "web",
+                "route_flag": "--url",
+                "supported": True,
             })
         return item
 
@@ -190,6 +193,7 @@ def base_result(item: dict[str, Any], status: str = "") -> dict[str, Any]:
         "site_item_path": "",
         "capture_json_path": "",
         "route_report_path": "",
+        "duplicate_of": "",
         "failure_reason": item.get("failure_reason", ""),
     }
 
@@ -242,6 +246,18 @@ def parse_imported_path(stdout: str, stderr: str) -> str:
     return match.group(1).strip() if match else ""
 
 
+def parse_status_line(stdout: str, stderr: str) -> str:
+    text = (stdout or "") + "\n" + (stderr or "")
+    matches = re.findall(r"STATUS:\s*([A-Z_]+)", text)
+    return matches[-1] if matches else ""
+
+
+def parse_duplicate_of(stdout: str, stderr: str) -> str:
+    text = (stdout or "") + "\n" + (stderr or "")
+    match = re.search(r"DUPLICATE_OF:\s*(.+?)(?:\r?\n|$)", text)
+    return match.group(1).strip() if match else ""
+
+
 def load_capture_fields(result: dict[str, Any]) -> None:
     cap = result.get("capture_json_path") or ""
     if not cap:
@@ -260,9 +276,15 @@ def load_capture_fields(result: dict[str, Any]) -> None:
 def status_from_single_exit(proc: subprocess.CompletedProcess[str], dry_run: bool) -> tuple[str, str]:
     text = (proc.stdout or "") + "\n" + (proc.stderr or "")
     if proc.returncode == 0:
+        parsed_status = normalize_status(parse_status_line(proc.stdout, proc.stderr), dry_run)
+        if parsed_status in SUMMARY_KEYS:
+            return parsed_status, ""
         return (STATUS_DRY_RUN_OK if dry_run else STATUS_IMPORTED), ""
     if proc.returncode == 1:
         lowered = text.lower()
+        parsed_status = parse_status_line(proc.stdout, proc.stderr)
+        if parsed_status in {STATUS_BLOCKED_UNSUPPORTED, STATUS_BLOCKED_FETCH_FAILED, STATUS_BLOCKED_INCOMPLETE_TEXT}:
+            return parsed_status, text[-500:]
         if any(token in lowered for token in ("network error", "non-200", "fetch", "file not found", "--url must")):
             return STATUS_BLOCKED_FETCH_FAILED, text[-500:]
         return STATUS_BLOCKED_INCOMPLETE_TEXT, text[-500:]
@@ -278,6 +300,26 @@ def run_single_wechat(item: dict[str, Any], dry_run: bool) -> dict[str, Any]:
     proc = run_command(cmd)
     result["capture_json_path"] = parse_capture_path(proc.stdout, proc.stderr)
     result["status"], result["failure_reason"] = status_from_single_exit(proc, dry_run)
+    load_capture_fields(result)
+    if result["status"] == STATUS_IMPORTED:
+        kb_path = parse_imported_path(proc.stdout, proc.stderr)
+        result["kb_article_path"] = kb_path
+        if kb_path:
+            slug = kb_path.rstrip("/").split("/")[-1]
+            result["docs_item_path"] = f"docs/items/{slug}/index.html"
+            result["site_item_path"] = f"site/items/{slug}/index.html"
+    return result
+
+
+def run_single_web(item: dict[str, Any], dry_run: bool) -> dict[str, Any]:
+    result = base_result(item)
+    cmd = [sys.executable, str(WEB_ARTICLE_SCRIPT), item["route_flag"], item["input"]]
+    cmd.append("--dry-run" if dry_run else "--import")
+    proc = run_command(cmd)
+    result["route"] = "web_article_to_kb.py"
+    result["capture_json_path"] = parse_capture_path(proc.stdout, proc.stderr)
+    result["status"], result["failure_reason"] = status_from_single_exit(proc, dry_run)
+    result["duplicate_of"] = parse_duplicate_of(proc.stdout, proc.stderr)
     load_capture_fields(result)
     if result["status"] == STATUS_IMPORTED:
         kb_path = parse_imported_path(proc.stdout, proc.stderr)
@@ -371,6 +413,8 @@ def run_batch_wechat(items: list[dict[str, Any]], dry_run: bool) -> list[dict[st
 def localize_imported_images(results: list[dict[str, Any]]) -> None:
     for result in results:
         if result.get("status") != STATUS_IMPORTED or not result.get("kb_article_path"):
+            continue
+        if "wechat" not in result.get("route", ""):
             continue
         cmd = [sys.executable, str(LOCALIZE_SCRIPT), "--article-path", result["kb_article_path"]]
         proc = run_command(cmd)
@@ -487,12 +531,18 @@ def route_inputs(values: list[str], dry_run: bool) -> tuple[list[dict[str, Any]]
     for item in unsupported:
         results_by_index[item["index"]] = base_result(item, STATUS_BLOCKED_UNSUPPORTED)
 
-    if len(supported) > 1:
-        for result, item in zip(run_batch_wechat(supported, dry_run=dry_run), supported):
+    wechat_items = [item for item in supported if item.get("route_kind") == "wechat"]
+    web_items = [item for item in supported if item.get("route_kind") == "web"]
+
+    if len(wechat_items) > 1:
+        for result, item in zip(run_batch_wechat(wechat_items, dry_run=dry_run), wechat_items):
             results_by_index[item["index"]] = result
-    elif len(supported) == 1:
-        item = supported[0]
+    elif len(wechat_items) == 1:
+        item = wechat_items[0]
         results_by_index[item["index"]] = run_single_wechat(item, dry_run=dry_run)
+
+    for item in web_items:
+        results_by_index[item["index"]] = run_single_web(item, dry_run=dry_run)
 
     results = [results_by_index[i] for i in sorted(results_by_index)]
     gates: list[dict[str, Any]] = []

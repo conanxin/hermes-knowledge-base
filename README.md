@@ -89,7 +89,8 @@ python3 scripts/audit_kb_state.py
 
 | 能力 | 触发命令（最短） | 文档 | 注意事项 |
 |---|---|---|---|
-| 统一材料入口 | 「解读并入库这个材料：<URL 或 本地文件>」<br>「批量解读并入库这些材料：<materials.txt>」 | [docs/commands/material-kb-import-command.md](docs/commands/material-kb-import-command.md), [docs/workflows/material-kb-import-workflow.md](docs/workflows/material-kb-import-workflow.md) | v0.3.76 起做最小可用路由：微信公众号 URL/HTML/MD/TXT 支持；YouTube、普通网页、PDF 只有仓库存在稳定路线时才接入，否则返回 `BLOCKED_UNSUPPORTED` |
+| 统一材料入口 | 「解读并入库这个材料：<URL 或 本地文件>」<br>「批量解读并入库这些材料：<materials.txt>」 | [docs/commands/material-kb-import-command.md](docs/commands/material-kb-import-command.md), [docs/workflows/material-kb-import-workflow.md](docs/workflows/material-kb-import-workflow.md) | v0.3.77 起：微信公众号 URL/HTML/MD/TXT 支持；普通网页 URL 支持；YouTube、PDF 仍在无稳定路线时返回 `BLOCKED_UNSUPPORTED` |
+| 普通网页文章 | 「解读并入库这个网页文章：<url>」 | [docs/commands/web-article-kb-import-command.md](docs/commands/web-article-kb-import-command.md), [docs/workflows/web-article-kb-import-workflow.md](docs/workflows/web-article-kb-import-workflow.md) | 只抓公开 HTTP(S) 正文；不登录、不读 cookie、不绕过 paywall；正文不完整则 `BLOCKED_*` |
 | URL 文章 | 「入库并完整翻译：<url>」 | [docs/AGENT_COMMANDS.md](docs/AGENT_COMMANDS.md) | 默认 `content_type=article`、zh-CN、自动 commit/push |
 | 本地 PDF | 「把这个本地 PDF OCR 识别、完整翻译并加入 Hermes 知识库：<abs-path>」 | [docs/import-recipes/PDF_OCR_LOCAL.md](docs/import-recipes/PDF_OCR_LOCAL.md), [docs/workflows/pdf-ocr-kb-import-workflow.md](docs/workflows/pdf-ocr-kb-import-workflow.md) | 必须**绝对路径**；PDF 本身不入仓，只留 `source.local-ref.txt` |
 | 微信公众号文章 | 「解读并入库这篇公众号文章：<mp.weixin.qq.com 链接>」<br>「解读并入库这个公众号文章本地文件：<path>」<br>「批量解读并入库这些公众号文章：<urls.txt 或多行 URL>」 | [docs/commands/wechat-url-kb-import-command.md](docs/commands/wechat-url-kb-import-command.md), [docs/commands/wechat-batch-kb-import-command.md](docs/commands/wechat-batch-kb-import-command.md), [docs/workflows/wechat-article-kb-import-workflow.md](docs/workflows/wechat-article-kb-import-workflow.md) | **v0.3.69 起支持公开 URL 直抓 + 本地文件兜底；v0.3.71 起支持批量 + 三层去重**（不登录、不扫码、不读 cookie）；OpenClaw 实时链路仍 disabled，详见 §7 |
@@ -308,7 +309,8 @@ hermes-knowledge-base/
 | **v0.3.70** | **YouTube 视频解读入库：Ali Abdaal "Financial Freedom is Easy"** | 第 2 条 video 类型；详见 `reports/youtube_video_brief_kb_import_v0.3.70_20260701.md` |
 | **v0.3.71** | **新增微信公众号批量入库 + 三层去重**（`scripts/wechat_batch_import.py`，URL 列表/多文件 → 去重 → manifest 报告） | 详见 `reports/wechat_batch_import_dedup_report_v0.3.71_20260701.md` |
 | **v0.3.76** | **新增统一材料入库路由器**（`scripts/material_to_kb.py`，URL/本地文件 → 已有稳定入库脚本） | WeChat URL/HTML/MD/TXT 支持；YouTube/普通网页/PDF 未接入稳定脚本时返回 `BLOCKED_UNSUPPORTED` |
+| **v0.3.77** | **新增普通网页文章入库路线**（`scripts/web_article_to_kb.py`，公开网页 URL → capture → KB） | 统一入口 `generic_web_url` 接入；YouTube/PDF 仍返回 `BLOCKED_UNSUPPORTED` |
 
 ---
 
-*Last refreshed for v0.3.76 on 2026-07-01.*
+*Last refreshed for v0.3.77 on 2026-07-01.*
