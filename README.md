@@ -91,12 +91,49 @@ python3 scripts/audit_kb_state.py
 |---|---|---|---|
 | URL 文章 | 「入库并完整翻译：<url>」 | [docs/AGENT_COMMANDS.md](docs/AGENT_COMMANDS.md) | 默认 `content_type=article`、zh-CN、自动 commit/push |
 | 本地 PDF | 「把这个本地 PDF OCR 识别、完整翻译并加入 Hermes 知识库：<abs-path>」 | [docs/import-recipes/PDF_OCR_LOCAL.md](docs/import-recipes/PDF_OCR_LOCAL.md), [docs/workflows/pdf-ocr-kb-import-workflow.md](docs/workflows/pdf-ocr-kb-import-workflow.md) | 必须**绝对路径**；PDF 本身不入仓，只留 `source.local-ref.txt` |
-| 微信公众号文章 | 见 §7 「公众号」专门说明 | [docs/workflows/wechat-article-kb-import-workflow.md](docs/workflows/wechat-article-kb-import-workflow.md), [docs/workflows/wechat-real-inbound-troubleshooting.md](docs/workflows/wechat-real-inbound-troubleshooting.md) | **Hermes 当前不直接绑定个人微信**；推荐标准 capture JSON → bridge dry-run/import 路线 |
+| 微信公众号文章 | 「解读并入库这篇公众号文章：<mp.weixin.qq.com 链接>」<br>「解读并入库这个公众号文章本地文件：<path>」 | [docs/commands/wechat-url-kb-import-command.md](docs/commands/wechat-url-kb-import-command.md), [docs/workflows/wechat-article-kb-import-workflow.md](docs/workflows/wechat-article-kb-import-workflow.md), [docs/workflows/wechat-real-inbound-troubleshooting.md](docs/workflows/wechat-real-inbound-troubleshooting.md) | **v0.3.69 起支持公开 URL 直抓 + 本地文件兜底**（不登录、不扫码、不读 cookie）；OpenClaw 实时链路仍 disabled，详见 §7 |
 | YouTube 视频 | 「预检这个 YouTube 视频：<url>」<br>「解读这个 YouTube 视频并加入 Hermes 知识库：<url>」 | [docs/YOUTUBE_CAPABILITIES.md](docs/YOUTUBE_CAPABILITIES.md), [docs/workflows/youtube-link-preflight-workflow.md](docs/workflows/youtube-link-preflight-workflow.md), [docs/workflows/youtube-video-brief-workflow.md](docs/workflows/youtube-video-brief-workflow.md) | 不登录、不读 cookie、不下载完整视频、私密视频直接 BLOCKED 并归档 |
 
 ### 7. 微信公众号：当前真实能力
 
-**Hermes 当前不直接绑定个人微信。** `@tencent-weixin/openclaw-weixin` 扩展自 2026-04-09 起处于 disabled 状态（详见 [docs/workflows/wechat-real-inbound-troubleshooting.md](docs/workflows/wechat-real-inbound-troubleshooting.md) §2）。"你转发一次落地到 KB"的全自动链路当前不通：
+**两条可用通道**（都不登录微信、不扫码、不读 cookie）：
+
+#### 通道 A（v0.3.69+，推荐）：公开 URL 直抓 + 本地文件兜底
+
+只给一个 `mp.weixin.qq.com` 链接，或浏览器另存的 HTML/Markdown/TXT，`scripts/wechat_url_to_kb.py` 抓取公开页面、解析正文、生成标准 capture JSON，再走同一条基线入库流程。
+
+最短命令（WorkBuddy 里直接说）：
+
+```
+解读并入库这篇公众号文章：
+<mp.weixin.qq.com 链接>
+```
+
+本地文件兜底：
+
+```
+解读并入库这个公众号文章本地文件：
+<本地 html/md/txt 路径>
+```
+
+底层脚本：
+
+```bash
+# dry-run（默认安全模式，不写 KB 条目）
+python3 scripts/wechat_url_to_kb.py --url "<mp.weixin.qq.com 链接>" --dry-run
+# 真的入库
+python3 scripts/wechat_url_to_kb.py --url "<mp.weixin.qq.com 链接>" --import
+# 本地文件四选一
+python3 scripts/wechat_url_to_kb.py --html-file <path> --import
+python3 scripts/wechat_url_to_kb.py --markdown-file <path> --import
+python3 scripts/wechat_url_to_kb.py --text-file <path> --import
+```
+
+抓不到完整正文（登录墙 / 拦截 / 截断）时 HARD STOP，提示用户另存为本地文件。详见 [docs/commands/wechat-url-kb-import-command.md](docs/commands/wechat-url-kb-import-command.md)。
+
+#### 通道 B（v0.3.62，OpenClaw 捕获包桥接）
+
+`@tencent-weixin/openclaw-weixin` 扩展自 2026-04-09 起处于 disabled 状态（详见 [docs/workflows/wechat-real-inbound-troubleshooting.md](docs/workflows/wechat-real-inbound-troubleshooting.md) §2），实时全自动链路不通，但可用已存在的 capture JSON 走桥接：
 
 - ❌ 实时：WeChat → OpenClaw 网关 → capture JSON → KB（扩展 disabled，长轮询不注册）
 - ✅ 推荐：已绑定微信的 agent → 写入 standard capture JSON 到 `inbox/raw/wechat/` → 标准 capture JSON → Hermes KB dry-run/import
@@ -245,7 +282,8 @@ hermes-knowledge-base/
 | v0.3.66 | README §9 目录树去重 + preflight `--classify-dirty` flag | 详细见 `reports/readme_polish_preflight_dirty_split_v0.3.66_20260629.md` |
 | v0.3.67 | `word_count.translation` 漂移刷新（7→0 WARN） | 详细见 `reports/word_count_metadata_refresh_v0.3.67_20260629.md` |
 | **v0.3.68** | **本版本：local divergence 治理 + tags/topics soft-WARN policy 文档化** | 详细见 `reports/local_divergence_and_soft_warn_policy_v0.3.68_20260629.md` |
+| **v0.3.69** | **新增微信公众号 URL 直接入库通道**（`scripts/wechat_url_to_kb.py`，公开 URL/HTML/MD/TXT → capture → KB） | 不登录、不扫码、不读 cookie；详见 `reports/wechat_url_direct_kb_import_v0.3.69_20260701.md` |
 
 ---
 
-*Last refreshed for v0.3.65 on 2026-06-29.*
+*Last refreshed for v0.3.69 on 2026-07-01.*

@@ -329,6 +329,100 @@ python3 scripts/check_translation_residue.py # WARN-only
 **可复用 prompt**：[templates/prompts/import_pdf_ocr_prompt.md](../templates/prompts/import_pdf_ocr_prompt.md)
 **已知良好案例**：`content/articles/2026/2026-06-29-le-guin-carrier-bag-theory-of-fiction/`（commit `bdb1bc8`）
 
+### 2d. 微信公众号 URL 直接入库流程（v0.3.69+）
+
+**触发语**（任一即可）：
+
+- "解读并入库这篇公众号文章：`<mp.weixin.qq.com 链接>`"
+- "把这个公众号文章加入知识库：`<mp.weixin.qq.com 链接>`"
+- "解读并入库这个公众号文章本地文件：`<本地 html/md/txt 路径>`"
+
+**入口脚本**：`scripts/wechat_url_to_kb.py`
+**基线脚本**：`scripts/import_wechat_article_capture.py`（capture JSON → KB 条目）
+**必须加载**：[docs/commands/wechat-url-kb-import-command.md](commands/wechat-url-kb-import-command.md) 与 [docs/workflows/wechat-article-kb-import-workflow.md](workflows/wechat-article-kb-import-workflow.md) §"v1.1 新增"。
+
+**最短命令**：
+
+```
+解读并入库这篇公众号文章：
+<mp.weixin.qq.com 链接>
+```
+
+本地文件兜底：
+
+```
+解读并入库这个公众号文章本地文件：
+<本地 html/md/txt 路径>
+```
+
+**底层调用**：
+
+```bash
+# dry-run（默认安全模式）
+python3 scripts/wechat_url_to_kb.py --url "<链接>" --dry-run
+# 真的入库
+python3 scripts/wechat_url_to_kb.py --url "<链接>" --import
+# 本地文件四选一
+python3 scripts/wechat_url_to_kb.py --html-file <path> --import
+python3 scripts/wechat_url_to_kb.py --markdown-file <path> --import
+python3 scripts/wechat_url_to_kb.py --text-file <path> --import
+```
+
+**默认输出结构**（与其它 article 入库一致的 6 文件，无 `source.local-ref.txt`）：
+
+```
+content/articles/YYYY/YYYY-MM-DD-wechat-<account-slug>-<title-slug>/
+├── metadata.yaml            # content_kind: wechat_official_article
+├── source.md                # 原文 Markdown 全文
+├── translation.zh-CN.md     # 中文原文按 schema 兼容（清洗 WeChat 页脚后镜像 source）
+├── summary.md               # 9 段结构化摘要（一句话总结/核心问题/主要观点/论证结构/关键概念/背景补充/摘录句子/KB 关联/阅读提示）
+├── notes.md                 # 结构化阅读笔记（接受/反思/联想/行动/摘录/概念/结构/提醒/提示）
+└── raw_payload.json         # 原始 capture JSON 备份
+```
+
+中间产物：`inbox/raw/wechat/YYYY-MM-DD-<slug>.json`
+
+**硬约束**：
+
+1. **不登录微信、不扫码、不读 cookie、不绕过微信访问限制、不启用 OpenClaw `@tencent-weixin/openclaw-weixin`**
+2. 只抓公开页面；抓不到完整正文即 HARD STOP，不写半成品条目
+3. **不做 `project`，不创建 `conanxin.github.io/projects` 页面**，只做 `article`
+4. 中文原文用 `translation.zh-CN.md` 兼容处理（清洗后镜像 source），不得因"中文无需翻译"导致 `check_kb.py` 失败
+
+**Hard-stop 规则**：
+
+- 抓不到完整正文 / 页面要求登录 / 只返回摘要 / 正文明显截断 / 只有标题
+- 微信拦截公开访问（命中"请在微信客户端打开"等阻断短语）
+- 无法确认标题和正文对应
+- `import_wechat_article_capture.py` 校验失败（exit 1）
+- `check_kb.py` 失败
+
+遇到硬停止时提示用户：
+
+> 这个链接无法直接抓全文，请在浏览器中另存为 HTML / Markdown / TXT 后再交给 WorkBuddy。
+
+**质量门禁**：
+
+```bash
+python3 -m py_compile scripts/*.py
+python3 scripts/check_kb.py            # PASS 必填
+python3 scripts/update_site.py         # PASS 必填
+python3 scripts/audit_kb_state.py      # PASS 必填
+python3 scripts/check_pages_sync.py    # PASS 必填
+```
+
+**最小测试**（不需要真实抓微信）：
+
+```bash
+python3 scripts/wechat_url_to_kb.py --html-file tests/fixtures/wechat_sample_article.html --dry-run
+python3 scripts/import_wechat_article_capture.py --dry-run <上一步生成的 capture.json>
+```
+
+两条都应输出 `STATUS: DRY_RUN_OK` / `STATUS: PASS`。
+
+**完整流程**：[docs/workflows/wechat-article-kb-import-workflow.md](workflows/wechat-article-kb-import-workflow.md)
+**用户入口命令**：[docs/commands/wechat-url-kb-import-command.md](commands/wechat-url-kb-import-command.md)
+
 ### 3. 质量检查
 
 ```bash

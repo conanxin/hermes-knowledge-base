@@ -1,9 +1,11 @@
 # WeChat Official Account Article KB Import — OpenClaw Workflow
 
-> **版本**: 1.0
+> **版本**: 1.1（v1.0 = OpenClaw 捕获包；v1.1 = 新增"公开 URL 直抓 + 本地文件兜底"通道，对应任务 `v0.3.69-wechat-url-direct-kb-import`）
 > **创建时间**: 2026-06-29
-> **来源**: 基于 OpenClaw @tencent-weixin/openclaw-weixin 能力
-> **基线脚本**: `scripts/import_wechat_article_capture.py`
+> **最近更新**: 2026-07-01
+> **来源**: 基于 OpenClaw @tencent-weixin/openclaw-weixin 能力 + `scripts/wechat_url_to_kb.py` 公开抓取通道
+> **基线脚本**: `scripts/import_wechat_article_capture.py`（捕获包 → KB 条目）
+> **入口脚本**: `scripts/wechat_url_to_kb.py`（URL/本地文件 → 捕获包 → 调用基线脚本）
 
 ---
 
@@ -13,7 +15,72 @@
 
 ## 一句话描述
 
-基于 OpenClaw 读取的微信公众号文章全文捕获包，自动完成知识库入库、索引更新和站点发布。
+两条入口，同一个落点：
+1. **OpenClaw 通道**（v1.0）：基于 OpenClaw 读取的微信公众号文章全文捕获包，自动完成知识库入库、索引更新和站点发布。
+2. **公开 URL / 本地文件通道**（v1.1，本节新增）：只给一个 `mp.weixin.qq.com` 链接或本地另存的 HTML/Markdown/TXT，`scripts/wechat_url_to_kb.py` 抓取公开页面、解析正文、生成标准 capture JSON，再交给同一条基线入库流程。**不登录、不扫码、不读 cookie、不绕过微信访问限制。**
+
+---
+
+## v1.1 新增：公开 URL 直抓 + 本地文件兜底
+
+### 最短命令（WorkBuddy 里直接说）
+
+```
+解读并入库这篇公众号文章：
+<mp.weixin.qq.com 链接>
+```
+
+WorkBuddy 翻译为：
+
+```bash
+python3 scripts/wechat_url_to_kb.py --url "<mp.weixin.qq.com 链接>" --import
+```
+
+### 本地文件兜底命令
+
+链接抓不到全文时，浏览器另存为 HTML/Markdown/TXT，然后说：
+
+```
+解读并入库这个公众号文章本地文件：
+<本地 html/md/txt 路径>
+```
+
+WorkBuddy 翻译为四选一：
+
+```bash
+python3 scripts/wechat_url_to_kb.py --html-file  <path> --import
+python3 scripts/wechat_url_to_kb.py --markdown-file <path> --import
+python3 scripts/wechat_url_to_kb.py --text-file <path> --import
+```
+
+### URL 通道执行步骤（替代 Step 0 ~ Step 2）
+
+```bash
+# Step A: 抓取 + 生成 capture JSON + 跑 import 脚本 dry-run（不写条目）
+python3 scripts/wechat_url_to_kb.py --url "<链接>" --dry-run
+
+# Step B: 真的入库
+python3 scripts/wechat_url_to_kb.py --url "<链接>" --import
+```
+
+`--import` 内部会：抓取 → 解析 → 写 `inbox/raw/wechat/YYYY-MM-DD-<slug>.json` → 调用 `scripts/import_wechat_article_capture.py`（无 `--dry-run`，写 KB 条目）。
+
+### 硬停止条件（HARD STOP，不写半成品）
+
+`wechat_url_to_kb.py` 在以下情况退出码 1，只生成报告，不写 KB 条目：
+
+- 获取不到完整正文 / 页面要求登录 / 页面只返回摘要
+- 正文明显截断（命中 `... / 阅读全文 / 前往阅读` 等标记）
+- 只有标题没有正文
+- 微信拦截公开访问（命中"请在微信客户端打开"等阻断短语）
+- 无法确认标题和正文对应
+- `import_wechat_article_capture.py` 校验失败（exit 1）
+
+遇到硬停止时脚本提示：
+
+> 这个链接无法直接抓全文，请在浏览器中另存为 HTML / Markdown / TXT 后再交给 WorkBuddy。
+
+详见 [`docs/commands/wechat-url-kb-import-command.md`](../commands/wechat-url-kb-import-command.md)。
 
 ---
 
@@ -21,16 +88,21 @@
 
 | 参数 | 必填 | 默认值 | 说明 |
 |------|------|--------|------|
-| `JSON 捕获包` | ✅ | — | OpenClaw 读取到的公众号文章全文，包含 title、source_url、account_name、author、published_date、captured_at、content_markdown |
-| `目标仓库` | ✅ | `~/hermes-knowledge-base` | Hermes Knowledge Base 本地路径 |
+| `JSON 捕获包` | OpenClaw 通道必填 | — | OpenClaw 读取到的公众号文章全文，包含 title、source_url、account_name、author、published_date、captured_at、content_markdown |
+| `公众号 URL` | URL 通道必填 | — | `mp.weixin.qq.com` 公开链接，由 `wechat_url_to_kb.py --url` 抓取 |
+| `本地文件` | 本地通道必填 | — | HTML / Markdown / TXT，由 `wechat_url_to_kb.py --html-file/--markdown-file/--text-file` 解析 |
+| `目标仓库` | ❌ | `~/hermes-knowledge-base` | Hermes Knowledge Base 本地路径 |
+
+> 三种入口最终都汇聚到同一条基线：`scripts/import_wechat_article_capture.py`。
 
 ---
 
 ## 前置条件
 
-1. **OpenClaw 已接入 @tencent-weixin/openclaw-weixin** — 能够读取公众号文章全文
+1. **OpenClaw 已接入 @tencent-weixin/openclaw-weixin**（仅 OpenClaw 通道需要；URL/本地文件通道不需要）
 2. **Hermes Knowledge Base 仓库已 clone** — 本地有 `~/hermes-knowledge-base` 且 remote 指向 `conanxin/hermes-knowledge-base`
 3. **仓库状态 clean** — 无未提交的修改（本任务除外）
+4. **Python 环境**：URL/HTML 通道需要 `requests` + `beautifulsoup4`；Markdown/TXT 通道只需标准库
 
 ---
 
@@ -151,6 +223,22 @@ git push origin HEAD
 
 ## 最短调用提示词
 
+### v1.1 URL 直抓（推荐，不需要 OpenClaw）
+
+```
+解读并入库这篇公众号文章：
+<mp.weixin.qq.com 链接>
+```
+
+### v1.1 本地文件兜底
+
+```
+解读并入库这个公众号文章本地文件：
+<本地 html/md/txt 路径>
+```
+
+### v1.0 OpenClaw 通道
+
 ```
 把这篇公众号文章加入 Hermes 知识库
 ```
@@ -213,8 +301,12 @@ PUSH: success 或 failed
 | 文档 | 路径 | 说明 |
 |------|------|------|
 | 本 Workflow | `docs/workflows/wechat-article-kb-import-workflow.md` | 本文档 |
-| 导入命令 | `docs/commands/wechat-article-kb-import-command.md` | 快捷命令 |
+| 导入命令（OpenClaw 通道） | `docs/commands/wechat-article-kb-import-command.md` | v1.0 快捷命令 |
+| 导入命令（URL/本地文件通道） | `docs/commands/wechat-url-kb-import-command.md` | v1.1 快捷命令 |
 | 导入 Prompt | `templates/prompts/import_wechat_article_prompt.md` | Agent 处理规则 |
+| 入口脚本 | `scripts/wechat_url_to_kb.py` | URL/本地文件 → capture JSON → 入库 |
+| 基线脚本 | `scripts/import_wechat_article_capture.py` | capture JSON → KB 条目 |
+| 测试 fixture | `tests/fixtures/wechat_sample_article.html` | 离线测试用公众号 HTML |
 
 ---
 

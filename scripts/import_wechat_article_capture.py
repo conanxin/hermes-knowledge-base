@@ -318,76 +318,206 @@ def infer_tags(content: str, title: str, account_name: str) -> list:
     return list(tags)[:12]
 
 
-def generate_summary_md(title: str, content: str, author: str, account_name: str) -> str:
-    """Generate summary.md content."""
-    # Extract first paragraph as summary if reasonable
-    paragraphs = [p.strip() for p in content.split("\n\n") if p.strip()]
-    first_para = paragraphs[0] if paragraphs else ""
-    # Limit first para length
-    if len(first_para) > 300:
-        first_para = first_para[:300] + "..."
+def _split_paragraphs(content: str) -> list:
+    """Split content into non-empty stripped paragraphs (headings kept inline)."""
+    return [p.strip() for p in content.split("\n\n") if p.strip()]
 
-    # Extract key sentences (heuristic: sentences with strong assertions)
-    key_sentences = []
-    for p in paragraphs[:5]:
+
+def _extract_key_sentences(paragraphs: list, max_count: int = 8) -> list:
+    """Heuristic: pick reasonably long, assertion-like sentences from the body."""
+    key = []
+    for p in paragraphs[:12]:
+        # Skip heading lines
+        if p.startswith("#"):
+            continue
         sentences = re.split(r"(?<=[。！？])", p)
         for s in sentences:
             s = s.strip()
-            if len(s) > 20 and len(s) < 150:
-                key_sentences.append(s)
-            if len(key_sentences) >= 5:
+            # Keep sentences that look like assertions: 20-180 chars, CJK-rich
+            if 20 <= len(s) <= 180 and count_cjk_chars(s) >= 10:
+                key.append(s)
+            if len(key) >= max_count:
                 break
-        if len(key_sentences) >= 5:
+        if len(key) >= max_count:
             break
+    return key
 
-    key_sentences_text = "\n".join(f"{i+1}. {s}" for i, s in enumerate(key_sentences[:5]))
+
+def _extract_headings(content: str) -> list:
+    """Extract markdown headings (## and ###) as the article's structural skeleton."""
+    heads = []
+    for line in content.splitlines():
+        m = re.match(r"^(#{2,4})\s+(.+)$", line.strip())
+        if m:
+            level = len(m.group(1))
+            heads.append(f"{'  ' * (level - 2)}- {m.group(2).strip()}")
+    return heads
+
+
+def _infer_core_concepts(content: str, title: str) -> list:
+    """Best-effort: surface candidate key concepts via high-frequency CJK 2-4 grams."""
+    text = title + " " + content
+    # Drop markdown noise
+    text = re.sub(r"[#*`\[\]()\-]", " ", text)
+    grams = {}
+    # Simple 2-char CJK n-gram counting
+    cjk = re.findall(r"[\u4e00-\u9fff]{2,6}", text)
+    for tok in cjk:
+        if len(tok) >= 2:
+            grams[tok] = grams.get(tok, 0) + 1
+    # Filter too-generic single grams; keep multi-char phrases with freq >= 2
+    candidates = [(g, c) for g, c in grams.items() if c >= 2 and len(g) >= 2]
+    candidates.sort(key=lambda x: (-x[1], -len(x[0])))
+    seen = set()
+    out = []
+    for g, _ in candidates:
+        # De-dup substrings: skip if a longer candidate already contains it
+        if any(g in s and g != s for s in seen):
+            continue
+        seen.add(g)
+        out.append(g)
+        if len(out) >= 8:
+            break
+    return out
+
+
+def generate_summary_md(title: str, content: str, author: str, account_name: str) -> str:
+    """Generate summary.md — structured analytical summary.
+
+    Covers the 9 required analysis facets:
+      一句话总结 · 文章核心问题 · 主要观点 · 论证结构 · 关键概念 ·
+      背景补充 · 值得摘录的句子 · 与知识库已有条目的可能关联 · 个人阅读提示
+
+    Heuristic fills are produced where the text supports them; interpretive
+    facets are emitted as clearly-marked scaffolds for the LLM operator
+    (WorkBuddy) to enrich after import. The scaffold itself is valid for
+    check_kb.py — no half-baked *factual* claims are invented.
+    """
+    paragraphs = _split_paragraphs(content)
+    first_para = paragraphs[0] if paragraphs else ""
+    if len(first_para) > 300:
+        first_para = first_para[:300] + "..."
+
+    key_sentences = _extract_key_sentences(paragraphs, max_count=6)
+    headings = _extract_headings(content)
+    concepts = _infer_core_concepts(content, title)
+
+    key_sentences_text = "\n".join(f"{i+1}. {s}" for i, s in enumerate(key_sentences[:6])) if key_sentences \
+        else "（正文较短，未提取到典型论点句；请人工补充）"
+    headings_text = "\n".join(headings) if headings else "（未检测到小标题；请人工补充）"
+    concepts_text = "、".join(concepts) if concepts else "（请人工补充）"
 
     return f'''# 摘要：{title}
 
 **作者**：{author or "未知"}
 **来源**：{account_name}
 
-## 核心内容
+## 一句话总结
 
-{first_para}
+（请用一句话概括全文主旨。提示：可结合下方"文章核心问题"与"主要观点"得出。）
 
-## 关键论点
+## 文章核心问题
+
+（作者试图回答的中心问题是什么？例如"在 X 条件下，Y 应当如何 Z"。请人工补充。）
+
+## 主要观点
 
 {key_sentences_text}
 
-## 一句话概括
+## 论证结构
 
-（待补充）
+文章的结构骨架（按小标题还原）：
+
+{headings_text}
+
+## 关键概念
+
+{concepts_text}
+
+## 背景补充
+
+（作者写作时的时代/行业/学术背景，以及读者需要的前置知识。请人工补充。）
+
+## 值得摘录的句子
+
+{key_sentences_text if key_sentences else "（请人工挑选最值得保留的 2-3 句）"}
+
+## 与知识库已有条目的可能关联
+
+（这篇和 KB 里已有的哪些条目主题相近、观点互补或对立？请人工或检索后补充。）
+
+## 个人阅读提示：这篇文章为什么值得保存
+
+（一句话说明你保存它的理由——是为了某个论点、某个案例、还是某种写法。请人工补充。）
+
+---
+
+## 附：首段原文（用于校对）
+
+{first_para}
 '''
 
 
 def generate_notes_md(title: str, content: str) -> str:
-    """Generate notes.md content."""
+    """Generate notes.md — structured reading notes scaffold.
+
+    Mirrors the 9-facet analysis structure of summary.md but organized as
+    personal reading notes (接受 / 反思 / 联想 / 行动 + 阅读提示).
+    Interpretive sections are scaffolds for the LLM operator to enrich.
+    """
+    paragraphs = _split_paragraphs(content)
+    key_sentences = _extract_key_sentences(paragraphs, max_count=4)
+    headings = _extract_headings(content)
+    concepts = _infer_core_concepts(content, title)
+
+    key_quotes = "\n".join(f"> {s}" for s in key_sentences[:4]) if key_sentences \
+        else "> （请人工挑选值得摘录的句子）"
+    headings_text = "\n".join(headings) if headings else "（未检测到小标题）"
+    concepts_text = "、".join(concepts[:6]) if concepts else "（请人工补充）"
+
     return f'''# 阅读笔记：{title}
 
-> 个人批注，结构按"接受 / 反思 / 联想 / 行动"四层组织。
+> 个人批注，结构按"接受 / 反思 / 联想 / 行动 + 阅读提示"组织。
+> 每一节都是 scaffold：脚本已尽可能用启发式填充可从正文提取的部分，
+> 解释性内容（如"我同意什么""联想到哪篇 KB 条目"）留给 WorkBuddy / 读者补全。
 
 ## 一、接受（作者说服我的部分）
 
-（待填写）
+（作者哪些观点/论证我认可？为什么？请人工补充。）
 
 ## 二、反思（我仍存疑或需要补充的部分）
 
-（待填写）
+（哪些论点证据不足、哪些结论我不同意、哪些前提值得追问？请人工补充。）
 
-## 三、联想（与其他文本的呼应）
+## 三、联想（与其他文本 / KB 条目的呼应）
 
-| 文本 | 呼应点 |
+| 文本 / KB 条目 | 呼应点 |
 |------|--------|
 | （待补充） | （待补充） |
 
 ## 四、行动（我打算做的事情）
 
-- [ ] （待填写）
+- [ ] （待填写：要读的下一篇 / 要做的实验 / 要写下的反驳 / 要更新的笔记）
 
-## 五、保留给未来自己的提醒
+## 五、值得摘录的句子
 
-> （待填写）
+{key_quotes}
+
+## 六、关键概念
+
+{concepts_text}
+
+## 七、文章结构（小标题还原）
+
+{headings_text}
+
+## 八、保留给未来自己的提醒
+
+> （请人工补充：下次重读这篇文章时，最该想起的一句话或一个判断。）
+
+## 九、个人阅读提示：这篇文章为什么值得保存
+
+> （请人工补充：一句话说明保存它的理由。）
 '''
 
 
