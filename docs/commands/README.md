@@ -4,6 +4,26 @@ Available commands in Hermes Knowledge Base.
 
 ---
 
+## Unified Import Commands
+
+### material-kb-import
+
+**Purpose**: Route a URL or local file to an existing stable Hermes KB import path.
+
+**Shortest call**: `解读并入库这个材料：<URL_OR_FILE>`
+
+**Batch call**: `批量解读并入库这些材料：<materials.txt>`
+
+**When to use**: First choice when the material may be a WeChat URL, saved WeChat HTML/Markdown/TXT, YouTube URL, generic web URL, or PDF.
+
+**Output**: Material import markdown + JSON report; KB entry only when the routed stable importer supports the material.
+
+**Safety boundaries**: Unsupported YouTube, generic web, and PDF routes return `BLOCKED_UNSUPPORTED` instead of inventing a half-built importer.
+
+**Documentation**: `docs/commands/material-kb-import-command.md`
+
+---
+
 ## YouTube Commands
 
 ### youtube-preflight
@@ -114,4 +134,4 @@ Available commands in Hermes Knowledge Base.
 
 ---
 
-*Last updated: 2026-06-29*
+*Last updated: 2026-07-01*

@@ -1,5 +1,42 @@
 # Agent Commands
 
+## 统一材料入库入口（v0.3.76）
+
+用户以后可以直接说：
+
+```text
+解读并入库这个材料：
+<URL 或 本地文件>
+```
+
+批量：
+
+```text
+批量解读并入库这些材料：
+<materials.txt>
+```
+
+agent 应优先走统一路由器：
+
+```bash
+python3 scripts/material_to_kb.py --input "<URL_OR_FILE>" --dry-run
+python3 scripts/material_to_kb.py --input "<URL_OR_FILE>" --import
+python3 scripts/material_to_kb.py --input-list tmp/materials.txt --dry-run
+python3 scripts/material_to_kb.py --input-list tmp/materials.txt --import
+```
+
+当前 v0.3.76 支持状态：
+
+| 材料类型 | 状态 |
+|---|---|
+| 微信公众号 URL | 支持，路由到 `wechat_url_to_kb.py` / `wechat_batch_import.py` |
+| 微信公众号 HTML / MD / TXT | 支持，路由到 WeChat local file mode |
+| YouTube URL | 只有仓库存在稳定路线时才支持；当前统一入口返回 `BLOCKED_UNSUPPORTED` |
+| 普通网页 URL | 只有仓库存在稳定路线时才支持；当前统一入口返回 `BLOCKED_UNSUPPORTED` |
+| PDF | 只有仓库存在稳定路线时才支持；当前统一入口返回 `BLOCKED_UNSUPPORTED` |
+
+详见 [docs/commands/material-kb-import-command.md](commands/material-kb-import-command.md) 与 [docs/workflows/material-kb-import-workflow.md](workflows/material-kb-import-workflow.md)。
+
 ## 任务报告
 
 **所有 agent 任务完成后必须按 [docs/REPORTING_TEMPLATE.md](REPORTING_TEMPLATE.md) 输出报告。** 三类任务对应三个模板:

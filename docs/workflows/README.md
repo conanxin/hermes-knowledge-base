@@ -4,6 +4,21 @@ Available workflows in Hermes Knowledge Base.
 
 ---
 
+## Unified Import Workflows
+
+### material-kb-import-workflow
+
+**Purpose**: Infer the material type and route it to an existing stable KB importer.
+
+**Input**: One URL/local file, or an input-list with one URL/path per line
+**Output**: Material import markdown + JSON report; KB entry when the routed importer supports it
+
+**Relationship**: Called by `material-kb-import` command. Reuses WeChat import scripts and returns `BLOCKED_UNSUPPORTED` for routes not yet implemented.
+
+**Documentation**: `docs/workflows/material-kb-import-workflow.md`
+
+---
+
 ## YouTube Workflows
 
 ### youtube-video-brief-workflow
@@ -95,4 +110,4 @@ Available workflows in Hermes Knowledge Base.
 
 ---
 
-*Last updated: 2026-06-29*
+*Last updated: 2026-07-01*
