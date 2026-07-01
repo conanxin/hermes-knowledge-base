@@ -21,6 +21,7 @@ agent 应优先走统一路由器：
 ```bash
 python3 scripts/material_to_kb.py --input "<URL_OR_FILE>" --dry-run
 python3 scripts/material_to_kb.py --input "<URL_OR_FILE>" --import
+python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-partial-transcript --import
 python3 scripts/material_to_kb.py --input-list tmp/materials.txt --dry-run
 python3 scripts/material_to_kb.py --input-list tmp/materials.txt --import
 ```
@@ -36,6 +37,14 @@ python3 scripts/material_to_kb.py --input-list tmp/materials.txt --import
 | PDF | 只有仓库存在稳定路线时才支持；当前统一入口返回 `BLOCKED_UNSUPPORTED` |
 
 详见 [docs/commands/material-kb-import-command.md](commands/material-kb-import-command.md) 与 [docs/workflows/material-kb-import-workflow.md](workflows/material-kb-import-workflow.md)。
+
+### YouTube transcript quality gate (v0.3.81)
+
+- `full` transcript: import is allowed when visible transcript text is at least 800 chars.
+- `partial` transcript: dry-run is allowed with warning; import requires explicit `--allow-partial-transcript` and still must pass the 800-char threshold.
+- `metadata_only`: reportable in dry-run, but never imported into KB.
+- no captions, empty/too-short transcript, login/cookie/paywall/private access, or blocked fetch must not write a KB entry.
+- Material reports must preserve `fetch_status`, `fetch_quality`, `fetch_reason`, `transcript_language`, `transcript_kind`, `transcript_char_count`, `import_allowed`, and `import_block_reason`.
 
 ### 普通网页文章入库入口（v0.3.77）
 

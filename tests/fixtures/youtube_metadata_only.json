@@ -1,0 +1,17 @@
+{
+  "video_id": "ytmetadataonly",
+  "title": "Synthetic Metadata Only YouTube Video",
+  "channel": "Hermes Test Channel",
+  "author": "Hermes Test Channel",
+  "channel_url": "https://www.youtube.com/@hermes-test",
+  "published_date": "2026-07-01",
+  "upload_date": "2026-07-01",
+  "duration": 180,
+  "duration_hms": "03:00",
+  "view_count": 42,
+  "description": "",
+  "thumbnail_url": "https://i.ytimg.com/vi/ytmetadataonly/hqdefault.jpg",
+  "transcript_language": "en",
+  "transcript_kind": "manual",
+  "caption_tracks": []
+}

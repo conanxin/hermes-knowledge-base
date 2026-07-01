@@ -96,6 +96,10 @@ python3 scripts/audit_kb_state.py
 | 微信公众号文章 | 「解读并入库这篇公众号文章：<mp.weixin.qq.com 链接>」<br>「解读并入库这个公众号文章本地文件：<path>」<br>「批量解读并入库这些公众号文章：<urls.txt 或多行 URL>」 | [docs/commands/wechat-url-kb-import-command.md](docs/commands/wechat-url-kb-import-command.md), [docs/commands/wechat-batch-kb-import-command.md](docs/commands/wechat-batch-kb-import-command.md), [docs/workflows/wechat-article-kb-import-workflow.md](docs/workflows/wechat-article-kb-import-workflow.md) | **v0.3.69 起支持公开 URL 直抓 + 本地文件兜底；v0.3.71 起支持批量 + 三层去重**（不登录、不扫码、不读 cookie）；OpenClaw 实时链路仍 disabled，详见 §7 |
 | YouTube 视频 | 「预检这个 YouTube 视频：<url>」<br>「解读这个 YouTube 视频并加入 Hermes 知识库：<url>」 | [docs/YOUTUBE_CAPABILITIES.md](docs/YOUTUBE_CAPABILITIES.md), [docs/workflows/youtube-link-preflight-workflow.md](docs/workflows/youtube-link-preflight-workflow.md), [docs/workflows/youtube-video-brief-workflow.md](docs/workflows/youtube-video-brief-workflow.md) | 不登录、不读 cookie、不下载完整视频、私密视频直接 BLOCKED 并归档 |
 
+### YouTube transcript quality gate (v0.3.81)
+
+Direct YouTube import defaults to full transcripts only. `fetch_quality=partial` may dry-run with a warning, but import requires `--allow-partial-transcript` and at least 800 visible transcript characters. `fetch_quality=metadata_only`, no captions, empty/too-short transcript, login/cookie/paywall/private access, or blocked fetches never write KB entries.
+
 ### 7. 微信公众号：当前真实能力
 
 **两条可用通道**（都不登录微信、不扫码、不读 cookie）：
@@ -311,7 +315,8 @@ hermes-knowledge-base/
 | **v0.3.76** | **新增统一材料入库路由器**（`scripts/material_to_kb.py`，URL/本地文件 → 已有稳定入库脚本） | WeChat URL/HTML/MD/TXT 支持；YouTube/普通网页/PDF 未接入稳定脚本时返回 `BLOCKED_UNSUPPORTED` |
 | **v0.3.77** | **新增普通网页文章入库路线**（`scripts/web_article_to_kb.py`，公开网页 URL → capture → KB） | 统一入口 `generic_web_url` 接入；YouTube/PDF 仍返回 `BLOCKED_UNSUPPORTED` |
 | **v0.3.79** | **新增 YouTube 字幕/转录稿入库路线**（`scripts/youtube_to_kb.py`，YouTube URL → metadata + transcript → KB） | 统一入口 `youtube_url` 接入；无字幕、字幕过短、需登录或不可公开获取时 hard stop；PDF 仍返回 `BLOCKED_UNSUPPORTED` |
+| **v0.3.81** | **新增 YouTube fetch quality gate**（`full` / `partial` / `metadata_only`） | 默认只入库 full transcript；partial 需要 `--allow-partial-transcript` 且满足 800 字符阈值；metadata-only 不入库 |
 
 ---
 
-*Last refreshed for v0.3.79 on 2026-07-01.*
+*Last refreshed for v0.3.81 on 2026-07-01.*

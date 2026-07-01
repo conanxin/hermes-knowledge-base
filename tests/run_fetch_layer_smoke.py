@@ -103,6 +103,9 @@ def smoke_3_youtube_partial_fallback() -> bool:
     ok &= check(result.get("fetch_quality") in {"partial", "metadata_only"}, "YouTube quality is partial or metadata_only")
     ok &= check(len(result.get("text", "")) > 80, "YouTube fallback returns metadata/description text")
     ok &= check("transcript" in result.get("reason", "").lower(), "YouTube fallback records transcript reason")
+    capture = result.get("metadata", {}).get("capture", {})
+    ok &= check(capture.get("import_allowed") is False, "YouTube fallback import_allowed false", str(capture))
+    ok &= check(bool(capture.get("import_block_reason")), "YouTube fallback records import block reason", str(capture))
     return ok
 
 
@@ -123,6 +126,8 @@ def smoke_4_router_uses_fetch_layer() -> bool:
     ok &= check(item.get("fetch_status") == "partial", "router records partial fetch", str(item))
     ok &= check(item.get("fetch_quality") in {"partial", "metadata_only"}, "router records fallback quality", str(item))
     ok &= check(item.get("status") == "DRY_RUN_OK", "router allows partial dry-run", str(item))
+    ok &= check(item.get("import_allowed") is False, "router records fallback import_allowed false", str(item))
+    ok &= check(bool(item.get("import_block_reason")), "router records fallback import block reason", str(item))
     ok &= check(before == after, "dry-run does not write KB entry", f"before={before}, after={after}")
     ok &= check((REPO_ROOT / data.get("report_markdown", "")).exists(), "markdown report generated")
     ok &= check((REPO_ROOT / data.get("report_json", "")).exists(), "json report generated")

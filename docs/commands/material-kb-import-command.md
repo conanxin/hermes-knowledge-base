@@ -30,6 +30,7 @@
 ```bash
 python3 scripts/material_to_kb.py --input "<URL_OR_FILE>" --dry-run
 python3 scripts/material_to_kb.py --input "<URL_OR_FILE>" --import
+python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-partial-transcript --import
 python3 scripts/material_to_kb.py --input-list tmp/materials.txt --dry-run
 python3 scripts/material_to_kb.py --input-list tmp/materials.txt --import
 ```
@@ -69,6 +70,18 @@ notes/article.md
 
 ---
 
+## YouTube Quality Gate
+
+v0.3.81 adds an import quality gate for `youtube_to_kb.py` and the unified material router.
+
+- `fetch_quality=full`: dry-run and import are allowed when visible transcript text is at least 800 chars.
+- `fetch_quality=partial`: dry-run is allowed with a warning; import is blocked unless `--allow-partial-transcript` is explicitly set and the transcript still passes the minimum length gate.
+- `fetch_quality=metadata_only`: dry-run may report metadata, but import is always `BLOCKED_INCOMPLETE_TEXT`.
+- blocked fetches, empty captions, no transcript body, login/cookie/paywall/private access, and text below the threshold never write KB entries.
+- Material reports include `fetch_status`, `fetch_quality`, `fetch_reason`, `transcript_language`, `transcript_kind`, `transcript_char_count`, `import_allowed`, and `import_block_reason`.
+
+---
+
 ## 报告
 
 每次运行都会生成两份报告：
@@ -92,6 +105,14 @@ reports/material_import_YYYYMMDD_HHMMSS.json
 - `capture_json_path`
 - `route_report_path`
 - `failure_reason`
+- `fetch_status`
+- `fetch_quality`
+- `fetch_reason`
+- `transcript_language`
+- `transcript_kind`
+- `transcript_char_count`
+- `import_allowed`
+- `import_block_reason`
 
 状态值包括：
 

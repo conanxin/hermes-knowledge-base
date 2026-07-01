@@ -1,6 +1,6 @@
 # Material KB Import Workflow
 
-> **版本**: 1.2 (`v0.3.79`)
+> **版本**: 1.3 (`v0.3.81`)
 > **创建时间**: 2026-07-01  
 > **入口命令**: [`docs/commands/material-kb-import-command.md`](../commands/material-kb-import-command.md)  
 > **入口脚本**: `scripts/material_to_kb.py`
@@ -79,6 +79,7 @@ dry-run 不应写入 KB 条目。
 
 ```bash
 python3 scripts/material_to_kb.py --input "<URL_OR_FILE>" --import
+python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-partial-transcript --import
 ```
 
 或：
@@ -98,7 +99,25 @@ PDF 如果没有仓库内稳定脚本，必须保留 `BLOCKED_UNSUPPORTED`。You
 
 ---
 
-## Step 3: 统一报告
+## Step 3: YouTube Quality Gate
+
+For YouTube inputs, `material_to_kb.py` delegates to `youtube_to_kb.py` and preserves the
+quality gate fields in the material report.
+
+| fetch_quality | Dry-run | Import default | Import with `--allow-partial-transcript` |
+|---|---|---|---|
+| `full` | allowed | allowed when visible transcript text is at least 800 chars | allowed |
+| `partial` | allowed with warning | `BLOCKED_INCOMPLETE_TEXT` | allowed only when visible transcript text is at least 800 chars |
+| `metadata_only` | reportable only | `BLOCKED_INCOMPLETE_TEXT` | blocked |
+| blocked fetch | blocked | blocked | blocked |
+
+Record these fields in the markdown and JSON report: `fetch_status`, `fetch_quality`,
+`fetch_reason`, `transcript_language`, `transcript_kind`, `transcript_char_count`,
+`import_allowed`, and `import_block_reason`.
+
+---
+
+## Step 4: 统一报告
 
 每次运行都会写：
 
@@ -111,7 +130,7 @@ reports/material_import_YYYYMMDD_HHMMSS.json
 
 ---
 
-## Step 4: 门禁
+## Step 5: 门禁
 
 如果本次有真实 `IMPORTED`：
 

@@ -50,7 +50,7 @@ STATUS_BLOCKED_FETCH_FAILED = "BLOCKED_FETCH_FAILED"
 STATUS_BLOCKED_INCOMPLETE_TEXT = "BLOCKED_INCOMPLETE_TEXT"
 STATUS_FAILED_IMPORT = "FAILED_IMPORT"
 
-MIN_TRANSCRIPT_CHARS = 320
+MIN_TRANSCRIPT_CHARS = 800
 MIN_TRANSCRIPT_WORDS = 80
 MIN_TRANSCRIPT_CJK = 80
 
@@ -78,11 +78,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--language", default="", help="preferred transcript language, e.g. zh-CN or en")
     parser.add_argument("--prefer-auto-captions", action="store_true", help="prefer automatic captions over manual captions")
     parser.add_argument("--no-auto-captions", action="store_true", help="block if only automatic captions are available")
+    parser.add_argument("--allow-partial-transcript", action="store_true", help="allow importing a partial transcript; metadata-only fetches are still blocked")
     parser.add_argument("--timeout", type=int, default=20, help="HTTP timeout in seconds")
+    parser.add_argument("--transcript-file", help="local .vtt/.srt/.txt transcript to use with the video metadata")
 
     # Offline smoke-test hooks. They are intentionally undocumented in user docs.
     parser.add_argument("--metadata-file", help=argparse.SUPPRESS)
-    parser.add_argument("--transcript-file", help=argparse.SUPPRESS)
     return parser
 
 
@@ -413,6 +414,43 @@ def parse_xml_transcript(text: str) -> list[dict[str, Any]]:
     return _dedupe_segments(segments)
 
 
+def parse_srt(text: str) -> list[dict[str, Any]]:
+    segments: list[dict[str, Any]] = []
+    blocks = re.split(r"\n\s*\n", text.replace("\r\n", "\n").replace("\r", "\n").strip())
+    time_re = re.compile(r"(?P<start>\d{1,2}:\d{2}:\d{2}[,.]\d{1,3})\s+-->\s+(?P<end>\d{1,2}:\d{2}:\d{2}[,.]\d{1,3})")
+    for block in blocks:
+        lines = [line.strip() for line in block.splitlines() if line.strip()]
+        if not lines:
+            continue
+        time_index = next((i for i, line in enumerate(lines) if time_re.search(line)), -1)
+        if time_index < 0:
+            continue
+        match = time_re.search(lines[time_index])
+        if not match:
+            continue
+        caption = _clean_text(" ".join(lines[time_index + 1:]))
+        if caption:
+            segments.append({"start": _timestamp_to_seconds(match.group("start")), "text": caption})
+    return _dedupe_segments(segments)
+
+
+def parse_plain_transcript(text: str) -> list[dict[str, Any]]:
+    paragraphs = [re.sub(r"\s+", " ", p).strip() for p in re.split(r"\n\s*\n", text) if p.strip()]
+    if len(paragraphs) <= 1:
+        paragraphs = [line.strip() for line in text.splitlines() if line.strip()]
+    return [{"start": float(i * 30), "text": _clean_text(paragraph)} for i, paragraph in enumerate(paragraphs) if _clean_text(paragraph)]
+
+
+def parse_transcript_file(path: Path) -> list[dict[str, Any]]:
+    raw_text = path.read_text(encoding="utf-8")
+    suffix = path.suffix.lower()
+    if suffix == ".vtt" or raw_text.lstrip().startswith("WEBVTT"):
+        return parse_vtt(raw_text)
+    if suffix == ".srt" or "-->" in raw_text:
+        return parse_srt(raw_text) or parse_vtt(raw_text)
+    return parse_plain_transcript(raw_text)
+
+
 def _timestamp_to_seconds(value: str) -> float:
     value = value.replace(",", ".")
     parts = value.split(":")
@@ -480,7 +518,7 @@ def validate_transcript(markdown: str, source_language: str) -> None:
         raise YouTubeImportError(STATUS_BLOCKED_INCOMPLETE_TEXT, f"too few transcript words ({words} < {MIN_TRANSCRIPT_WORDS})")
 
 
-def fetch_youtube_capture(url: str, preferred_language: str, prefer_auto: bool, allow_auto: bool, timeout: int) -> dict[str, Any]:
+def fetch_youtube_metadata(url: str, timeout: int) -> tuple[dict[str, Any], dict[str, Any], list[dict[str, Any]]]:
     video_id = parse_video_id(url)
     if not video_id:
         raise YouTubeImportError(STATUS_BLOCKED_FETCH_FAILED, "could not parse YouTube video id")
@@ -490,6 +528,11 @@ def fetch_youtube_capture(url: str, preferred_language: str, prefer_auto: bool, 
         raise YouTubeImportError(STATUS_BLOCKED_FETCH_FAILED, "could not extract ytInitialPlayerResponse")
     metadata = _metadata_from_player(player, source_url=url, video_id=video_id)
     tracks = _caption_tracks(player)
+    return metadata, player, tracks
+
+
+def fetch_youtube_capture(url: str, preferred_language: str, prefer_auto: bool, allow_auto: bool, timeout: int) -> dict[str, Any]:
+    metadata, _player, tracks = fetch_youtube_metadata(url, timeout=timeout)
     tried: list[str] = []
     try:
         ranked_tracks = rank_caption_tracks(tracks, preferred_language, prefer_auto=prefer_auto, allow_auto=allow_auto)
@@ -547,11 +590,40 @@ def load_fixture_capture(url: str, metadata_path: Path, transcript_path: Path | 
             "name": "fixture",
         }]
     track = select_caption_track(tracks, preferred_language, prefer_auto=prefer_auto, allow_auto=allow_auto)
-    raw_text = transcript_path.read_text(encoding="utf-8")
-    segments = parse_vtt(raw_text) or parse_xml_transcript(raw_text)
+    segments = parse_transcript_file(transcript_path)
     if not segments:
         return build_partial_capture(metadata, "fixture transcript file was empty or unparsable", raw={"metadata_source": "fixture"})
-    return build_capture(metadata, track, segments, raw={"metadata_source": "fixture"})
+    capture = build_capture(metadata, track, segments, raw={"metadata_source": "fixture"})
+    quality_override = str(metadata.get("fetch_quality_override") or "").strip()
+    if quality_override in {FETCH_QUALITY_FULL, FETCH_QUALITY_PARTIAL, FETCH_QUALITY_METADATA_ONLY}:
+        capture["fetch_quality"] = quality_override
+        capture["fetch_reason"] = metadata.get("fetch_reason") or "fixture quality override"
+    return capture
+
+
+def load_local_transcript_capture(url: str, transcript_path: Path, preferred_language: str, prefer_auto: bool, allow_auto: bool, timeout: int) -> dict[str, Any]:
+    metadata, _player, tracks = fetch_youtube_metadata(url, timeout=timeout)
+    segments = parse_transcript_file(transcript_path)
+    if not segments:
+        raise YouTubeImportError(STATUS_BLOCKED_INCOMPLETE_TEXT, "local transcript file was empty or unparsable")
+    track: dict[str, Any]
+    if tracks:
+        try:
+            track = select_caption_track(tracks, preferred_language, prefer_auto=prefer_auto, allow_auto=allow_auto)
+        except YouTubeImportError:
+            track = {}
+    else:
+        track = {}
+    track = {
+        "language": preferred_language or track.get("language") or metadata.get("transcript_language") or "en",
+        "kind": "local",
+        "name": transcript_path.name,
+    }
+    return build_capture(metadata, track, segments, raw={
+        "metadata_source": "youtube_watch_page",
+        "transcript_source": "local_file",
+        "transcript_file": str(transcript_path),
+    })
 
 
 def build_capture(metadata: dict[str, Any], track: dict[str, Any], segments: list[dict[str, Any]], raw: dict[str, Any]) -> dict[str, Any]:
@@ -588,6 +660,7 @@ def build_capture(metadata: dict[str, Any], track: dict[str, Any], segments: lis
         "transcript_segments": segments,
         "content_markdown": transcript_md,
         "transcript_text": transcript_text,
+        "transcript_char_count": len(transcript_text),
         "content_hash": _content_hash(transcript_text),
         "fetch_quality": FETCH_QUALITY_FULL,
         "fetch_reason": "",
@@ -657,12 +730,46 @@ def build_partial_capture(metadata: dict[str, Any], reason: str, raw: dict[str, 
         "transcript_segments": [],
         "content_markdown": content_md,
         "transcript_text": transcript_text,
+        "transcript_char_count": 0,
         "content_hash": _content_hash(transcript_text),
         "fetch_quality": quality,
         "fetch_reason": reason,
         "raw": raw,
     }
     return capture
+
+
+def transcript_char_count(capture: dict[str, Any]) -> int:
+    if capture.get("transcript_kind") == "none":
+        return 0
+    if isinstance(capture.get("transcript_char_count"), int):
+        return int(capture.get("transcript_char_count") or 0)
+    segments = capture.get("transcript_segments")
+    if isinstance(segments, list) and segments:
+        visible = " ".join(str(seg.get("text", "")) for seg in segments if isinstance(seg, dict))
+    else:
+        visible = str(capture.get("transcript_text") or "")
+    visible = re.sub(r"\s+", " ", visible).strip()
+    return len(visible)
+
+
+def evaluate_import_quality(capture: dict[str, Any], allow_partial: bool) -> tuple[bool, str, str]:
+    quality = str(capture.get("fetch_quality") or FETCH_QUALITY_FULL)
+    char_count = transcript_char_count(capture)
+    if quality == FETCH_QUALITY_FULL:
+        if char_count < MIN_TRANSCRIPT_CHARS:
+            return False, f"transcript visible text below minimum ({char_count} chars < {MIN_TRANSCRIPT_CHARS})", ""
+        return True, "", ""
+    if quality == FETCH_QUALITY_PARTIAL:
+        warning = "transcript is partial / needs review"
+        if not allow_partial:
+            return False, "partial transcript requires --allow-partial-transcript", warning
+        if char_count < MIN_TRANSCRIPT_CHARS:
+            return False, f"partial transcript visible text below minimum ({char_count} chars < {MIN_TRANSCRIPT_CHARS})", warning
+        return True, "", warning
+    if quality == FETCH_QUALITY_METADATA_ONLY:
+        return False, "metadata-only YouTube fetch has no transcript body", ""
+    return False, f"unsupported YouTube fetch quality: {quality}", ""
 
 
 def _captured_date(capture: dict[str, Any]) -> str:
@@ -870,6 +977,7 @@ content_hash: "{_yaml_quote(capture.get('content_hash', ''))}"
 is_translation_mirror: {str(is_mirror).lower()}
 transcript_language: "{_yaml_quote(capture.get('transcript_language', ''))}"
 transcript_kind: "{_yaml_quote(capture.get('transcript_kind', ''))}"
+transcript_char_count: {int(capture.get('transcript_char_count') or transcript_char_count(capture))}
 video_id: "{_yaml_quote(capture.get('video_id', ''))}"
 duration: {int(capture.get('duration') or 0)}
 duration_hms: "{_yaml_quote(capture.get('duration_hms', ''))}"
@@ -1026,6 +1134,15 @@ def build_capture_from_args(args: argparse.Namespace) -> dict[str, Any]:
             prefer_auto=args.prefer_auto_captions,
             allow_auto=not args.no_auto_captions,
         )
+    if transcript_file:
+        return load_local_transcript_capture(
+            args.url,
+            Path(transcript_file),
+            preferred_language=args.language,
+            prefer_auto=args.prefer_auto_captions,
+            allow_auto=not args.no_auto_captions,
+            timeout=args.timeout,
+        )
     return fetch_youtube_capture(
         args.url,
         preferred_language=args.language,
@@ -1045,7 +1162,12 @@ def _print_capture_summary(capture: dict[str, Any], capture_path: Path) -> None:
     print(f"  transcript_language: {capture.get('transcript_language')}", file=sys.stderr)
     print(f"  transcript_kind: {capture.get('transcript_kind')}", file=sys.stderr)
     print(f"  fetch_quality: {capture.get('fetch_quality', FETCH_QUALITY_FULL)}", file=sys.stderr)
-    print(f"  transcript_chars: {len(capture.get('content_markdown', ''))}", file=sys.stderr)
+    print(f"  transcript_char_count: {capture.get('transcript_char_count', transcript_char_count(capture))}", file=sys.stderr)
+    print(f"  import_allowed: {str(bool(capture.get('import_allowed'))).lower()}", file=sys.stderr)
+    if capture.get("import_block_reason"):
+        print(f"  import_block_reason: {capture.get('import_block_reason')}", file=sys.stderr)
+    if capture.get("warning"):
+        print(f"  warning: {capture.get('warning')}", file=sys.stderr)
 
 
 def main() -> int:
@@ -1053,8 +1175,19 @@ def main() -> int:
     dry_run = not args.do_import
     try:
         capture = build_capture_from_args(args)
+        import_allowed, import_block_reason, warning = evaluate_import_quality(
+            capture,
+            allow_partial=bool(args.allow_partial_transcript),
+        )
+        capture["transcript_char_count"] = transcript_char_count(capture)
+        capture["import_allowed"] = import_allowed
+        capture["import_block_reason"] = import_block_reason
+        if warning:
+            capture["warning"] = warning
         capture_path = write_capture(capture)
         _print_capture_summary(capture, capture_path)
+        if not dry_run and not import_allowed:
+            raise YouTubeImportError(STATUS_BLOCKED_INCOMPLETE_TEXT, import_block_reason)
 
         index = build_existing_index()
         dup_layer, duplicate_of, dup_reason = find_duplicate(capture, index)
@@ -1075,6 +1208,12 @@ def main() -> int:
                 print(f"    - {name} ({len(text)} chars)")
             print(f"  Dedupe key: youtube:{capture.get('video_id', '')}")
             print(f"  Content hash: {capture.get('content_hash')}")
+            print(f"TRANSCRIPT_CHAR_COUNT: {capture.get('transcript_char_count', 0)}")
+            print(f"IMPORT_ALLOWED: {str(import_allowed).lower()}")
+            if import_block_reason:
+                print(f"IMPORT_BLOCK_REASON: {import_block_reason}")
+            if warning:
+                print(f"WARNING: {warning}")
             print("\nSTATUS: DRY_RUN_OK")
             return 0
 

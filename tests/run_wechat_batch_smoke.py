@@ -65,7 +65,7 @@ def _find_latest_manifest(prefix: str = "wechat_batch_import_") -> Path | None:
 
 
 def smoke_1_batch_multi_local_fixtures() -> bool:
-    """Batch --input with two local fixtures → both DRY_RUN_OK (or DUPLICATE)."""
+    """Batch --input with two local fixtures -> both DRY_RUN_OK (or DUPLICATE)."""
     print("\n=== Smoke 1: batch --input multiple local fixtures (dry-run) ===")
     if not BATCH_URLS.exists():
         return check(False, "fixture exists", str(BATCH_URLS))
@@ -88,7 +88,7 @@ def smoke_1_batch_multi_local_fixtures() -> bool:
 
 
 def smoke_2_duplicate_detection() -> bool:
-    """Same fixture twice → second one is DRY_RUN_DUPLICATE."""
+    """Same fixture twice -> second one is DRY_RUN_DUPLICATE."""
     print("\n=== Smoke 2: duplicate detection (Layer 3 content hash) ===")
     if not BATCH_DUP.exists():
         return check(False, "fixture exists", str(BATCH_DUP))
@@ -174,7 +174,7 @@ def smoke_4_failure_isolation() -> bool:
 
 
 def smoke_5_pages_sync_still_intact() -> bool:
-    """check_pages_sync.py still passes and content↔items counts match.
+    """check_pages_sync.py still passes and content/items counts match.
 
     The exact count may grow as new articles are added by other tasks/sessions,
     so we assert: (a) check_pages_sync exits 0, (b) site/docs/content counts
@@ -182,7 +182,7 @@ def smoke_5_pages_sync_still_intact() -> bool:
     against the batch dry-run accidentally destroying item pages without being
     brittle to legitimate growth.
     """
-    print("\n=== Smoke 5: check_pages_sync.py content↔items intact ===")
+    print("\n=== Smoke 5: check_pages_sync.py content/items intact ===")
     cmd = [TEST_PY, str(REPO_ROOT / "scripts" / "check_pages_sync.py")]
     code, out, _err = run(cmd)
     if not check(code == 0, "check_pages_sync.py exits 0", f"exit={code}"):

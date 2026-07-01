@@ -23,6 +23,13 @@ class YouTubeFetcher(BaseFetcher):
         except Exception as exc:
             return self.blocked(str(exc), metadata={"error_status": "BLOCKED_FETCH_FAILED"})
 
+        import_allowed, import_block_reason, warning = youtube.evaluate_import_quality(capture, allow_partial=False)
+        capture["transcript_char_count"] = youtube.transcript_char_count(capture)
+        capture["import_allowed"] = import_allowed
+        capture["import_block_reason"] = import_block_reason
+        if warning:
+            capture["warning"] = warning
+
         text = capture.get("content_markdown", "") or capture.get("transcript_text", "")
         quality = capture.get("fetch_quality") or QUALITY_FULL
         status_reason = capture.get("fetch_reason", "")

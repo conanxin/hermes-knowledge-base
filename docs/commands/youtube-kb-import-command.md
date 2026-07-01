@@ -16,6 +16,8 @@
 ```bash
 python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --dry-run
 python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --import
+python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --allow-partial-transcript --import
+python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --transcript-file "<file.vtt|file.srt|file.txt>" --dry-run
 ```
 
 统一入口也会自动路由：
@@ -23,7 +25,30 @@ python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --import
 ```bash
 python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --dry-run
 python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --import
+python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-partial-transcript --import
 ```
+
+### v0.3.81 transcript quality gate
+
+The direct YouTube route now records `fetch_status`, `fetch_quality`, `fetch_reason`,
+`transcript_language`, `transcript_kind`, `transcript_char_count`, `import_allowed`, and
+`import_block_reason` in the capture JSON and material import reports.
+
+| fetch_quality | Dry-run | Import default | Import with `--allow-partial-transcript` |
+|---|---|---|---|
+| `full` | allowed | allowed when transcript visible text is at least 800 chars | allowed |
+| `partial` | allowed with warning | `BLOCKED_INCOMPLETE_TEXT` | allowed only when transcript visible text is at least 800 chars |
+| `metadata_only` | reportable | `BLOCKED_INCOMPLETE_TEXT` | still blocked |
+| blocked fetch | blocked | blocked | blocked |
+
+Rules:
+
+- Default import only accepts a full transcript.
+- Partial transcript import requires explicit `--allow-partial-transcript` and still must pass the minimum text threshold.
+- Metadata-only fallback never becomes a KB entry.
+- No captions, empty captions, unusable transcript, login/cookie/paywall/private access, or text below the threshold must stop before writing `content/articles`.
+- The script does not download YouTube video files and does not fabricate transcript text.
+- `--transcript-file` is a local fallback for a user-supplied `.vtt`, `.srt`, or `.txt` transcript; it records `transcript_kind: local` and does not pretend the file came from YouTube captions.
 
 支持 `youtube.com/watch?v=...`、`youtu.be/...`、`youtube.com/shorts/...`。脚本只获取公开 metadata 与字幕 / transcript，不下载视频文件、不登录、不读取 cookie。没有字幕、字幕为空或过短、需要登录/访问受限时返回 `BLOCKED_INCOMPLETE_TEXT` 或 `BLOCKED_UNSUPPORTED`，不写半成品 KB 条目。
 

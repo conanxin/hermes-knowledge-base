@@ -1,0 +1,31 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:12.000
+This synthetic partial transcript starts in the middle of a longer video and intentionally marks the capture as incomplete.
+
+00:00:12.000 --> 00:00:24.000
+The quality gate should allow a dry run because there is useful text for review, but it must not import by default.
+
+00:00:24.000 --> 00:00:36.000
+Operators need an explicit allow partial transcript flag before this material can become a durable knowledge base article.
+
+00:00:36.000 --> 00:00:48.000
+The flag does not mean the transcript is complete; it only records that a human accepted a partial source for a controlled case.
+
+00:00:48.000 --> 00:01:00.000
+The importer should still preserve metadata, language, transcript kind, character count, and a warning that review is required.
+
+00:01:00.000 --> 00:01:12.000
+If the transcript were shorter than the minimum threshold, the same flag would not be enough to create a knowledge base entry.
+
+00:01:12.000 --> 00:01:24.000
+This fixture therefore contains enough visible text to cross the import threshold while remaining clearly labeled as partial.
+
+00:01:24.000 --> 00:01:36.000
+It exercises the precise boundary between useful partial transcript material and weak metadata-only fallback text.
+
+00:01:36.000 --> 00:01:48.000
+The resulting report should say import is blocked without the flag and allowed with the flag, without changing web or WeChat routes.
+
+00:01:48.000 --> 00:02:00.000
+That behavior protects the knowledge base from thin video entries while keeping a deliberate escape hatch for reviewed partial transcripts.

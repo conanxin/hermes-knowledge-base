@@ -86,6 +86,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true", help="route and validate without writing KB entries")
     mode.add_argument("--import", dest="do_import", action="store_true", help="run supported import routes")
+    parser.add_argument("--allow-partial-transcript", action="store_true", help="YouTube only: allow importing partial transcripts; metadata-only fetches remain blocked")
     return parser
 
 
@@ -207,6 +208,12 @@ def base_result(item: dict[str, Any], status: str = "") -> dict[str, Any]:
         "fetch_quality": "",
         "fetch_reason": "",
         "fetch_text_chars": 0,
+        "transcript_language": "",
+        "transcript_kind": "",
+        "transcript_char_count": 0,
+        "import_allowed": "",
+        "import_block_reason": "",
+        "warning": "",
     }
 
 
@@ -284,6 +291,14 @@ def load_capture_fields(result: dict[str, Any]) -> None:
     result["title"] = data.get("title", "") or result.get("title", "")
     result["source_url"] = data.get("source_url", "") or result.get("source_url", "")
     result["fetch_quality"] = data.get("fetch_quality", "") or result.get("fetch_quality", "")
+    result["fetch_reason"] = data.get("fetch_reason", "") or result.get("fetch_reason", "")
+    result["transcript_language"] = data.get("transcript_language", "") or result.get("transcript_language", "")
+    result["transcript_kind"] = data.get("transcript_kind", "") or result.get("transcript_kind", "")
+    result["transcript_char_count"] = int(data.get("transcript_char_count") or result.get("transcript_char_count") or 0)
+    if "import_allowed" in data:
+        result["import_allowed"] = bool(data.get("import_allowed"))
+    result["import_block_reason"] = data.get("import_block_reason", "") or result.get("import_block_reason", "")
+    result["warning"] = data.get("warning", "") or result.get("warning", "")
 
 
 def apply_fetch_result(result: dict[str, Any], fetch_result: dict[str, Any] | None) -> None:
@@ -295,6 +310,16 @@ def apply_fetch_result(result: dict[str, Any], fetch_result: dict[str, Any] | No
     result["fetch_text_chars"] = len(fetch_result.get("text", "") or "")
     if not result.get("title"):
         result["title"] = fetch_result.get("title", "")
+    metadata = fetch_result.get("metadata", {}) if isinstance(fetch_result.get("metadata"), dict) else {}
+    capture = metadata.get("capture", {}) if isinstance(metadata.get("capture"), dict) else {}
+    if capture:
+        result["transcript_language"] = capture.get("transcript_language", "") or result.get("transcript_language", "")
+        result["transcript_kind"] = capture.get("transcript_kind", "") or result.get("transcript_kind", "")
+        result["transcript_char_count"] = int(capture.get("transcript_char_count") or result.get("transcript_char_count") or 0)
+        if "import_allowed" in capture:
+            result["import_allowed"] = bool(capture.get("import_allowed"))
+        result["import_block_reason"] = capture.get("import_block_reason", "") or result.get("import_block_reason", "")
+        result["warning"] = capture.get("warning", "") or result.get("warning", "")
 
 
 def status_from_fetch_block(fetch_result: dict[str, Any]) -> str:
@@ -385,9 +410,11 @@ def run_single_web(item: dict[str, Any], dry_run: bool) -> dict[str, Any]:
     return result
 
 
-def run_single_youtube(item: dict[str, Any], dry_run: bool) -> dict[str, Any]:
+def run_single_youtube(item: dict[str, Any], dry_run: bool, allow_partial_transcript: bool = False) -> dict[str, Any]:
     result = base_result(item)
     cmd = [sys.executable, str(YOUTUBE_SCRIPT), item["route_flag"], item["input"]]
+    if allow_partial_transcript:
+        cmd.append("--allow-partial-transcript")
     cmd.append("--dry-run" if dry_run else "--import")
     proc = run_command(cmd)
     result["route"] = "youtube_to_kb.py"
@@ -573,22 +600,24 @@ def write_reports(results: list[dict[str, Any]], gates: list[dict[str, Any]], dr
         "",
         "## Inputs",
         "",
-        "| # | Input | Inferred type | Route | Fetch | Quality | Status | Title | KB path | Failure reason |",
-        "|---:|---|---|---|---|---|---|---|---|---|",
+        "| # | Input | Inferred type | Route | Fetch | Quality | Transcript chars | Import allowed | Status | Title | KB path | Failure reason |",
+        "|---:|---|---|---|---|---|---:|---|---|---|---|---|",
     ])
     for idx, result in enumerate(results, 1):
         lines.append(
-            "| {idx} | {input} | {itype} | {route} | {fetch} | {quality} | {status} | {title} | {kb} | {reason} |".format(
+            "| {idx} | {input} | {itype} | {route} | {fetch} | {quality} | {chars} | {allowed} | {status} | {title} | {kb} | {reason} |".format(
                 idx=idx,
                 input=(result.get("input", "")[:80]).replace("|", "\\|"),
                 itype=result.get("inferred_type", ""),
                 route=(result.get("route", "")[:45]).replace("|", "\\|"),
                 fetch=result.get("fetch_status", ""),
                 quality=result.get("fetch_quality", ""),
+                chars=result.get("transcript_char_count", 0),
+                allowed=result.get("import_allowed", ""),
                 status=result.get("status", ""),
                 title=(result.get("title", "")[:40]).replace("|", "\\|"),
                 kb=(result.get("kb_article_path", "")[:45]).replace("|", "\\|"),
-                reason=(result.get("failure_reason", "")[:80]).replace("\n", " ").replace("|", "\\|"),
+                reason=((result.get("import_block_reason", "") or result.get("failure_reason", ""))[:80]).replace("\n", " ").replace("|", "\\|"),
             )
         )
     if gates:
@@ -600,7 +629,7 @@ def write_reports(results: list[dict[str, Any]], gates: list[dict[str, Any]], dr
     return md_path, json_path
 
 
-def route_inputs(values: list[str], dry_run: bool) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+def route_inputs(values: list[str], dry_run: bool, allow_partial_transcript: bool = False) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     inferred = [infer_input(value, index=i) for i, value in enumerate(values)]
     results_by_index: dict[int, dict[str, Any]] = {}
 
@@ -636,7 +665,11 @@ def route_inputs(values: list[str], dry_run: bool) -> tuple[list[dict[str, Any]]
         results_by_index[item["index"]] = run_single_web(item, dry_run=dry_run)
 
     for item in youtube_items:
-        results_by_index[item["index"]] = run_single_youtube(item, dry_run=dry_run)
+        results_by_index[item["index"]] = run_single_youtube(
+            item,
+            dry_run=dry_run,
+            allow_partial_transcript=allow_partial_transcript,
+        )
 
     results = [results_by_index[i] for i in sorted(results_by_index)]
     gates: list[dict[str, Any]] = []
@@ -664,7 +697,7 @@ def main() -> int:
         print("ERROR: no inputs found", file=sys.stderr)
         return 1
 
-    results, gates = route_inputs(values, dry_run=dry_run)
+    results, gates = route_inputs(values, dry_run=dry_run, allow_partial_transcript=bool(args.allow_partial_transcript))
     md_path, json_path = write_reports(results, gates, dry_run=dry_run)
     summary = summarize(results)
     output = {

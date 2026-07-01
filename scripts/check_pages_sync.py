@@ -204,8 +204,8 @@ def render_report(
             status = "OK"
         print(f"  {rel:<30} {src_h:<10} {dst_h:<10} {status}")
 
-    # --- Items site↔docs parity ---
-    print(f"\n[2/3] Item pages (site/items/ ↔ docs/items/)")
+    # --- Items site/docs parity ---
+    print(f"\n[2/3] Item pages (site/items/ <-> docs/items/)")
     print(f"  site slugs: {site_count}")
     print(f"  docs slugs: {docs_count}")
     if missing_in_docs_items or extra_in_docs_items or content_mismatches:
@@ -225,7 +225,7 @@ def render_report(
         print(f"  all {site_count} slugs present and byte-identical.")
 
     # --- Content completeness (v0.3.70) ---
-    print(f"\n[3/3] Content→items completeness (v0.3.70)")
+    print(f"\n[3/3] Content->items completeness (v0.3.70)")
     print(f"  content/ metadata.yaml count: {expected_count}")
     print(f"  site/items/ slug count:       {site_count}")
     print(f"  docs/items/ slug count:       {docs_count}")

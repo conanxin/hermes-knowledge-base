@@ -15,6 +15,8 @@ For a plain YouTube URL, use the direct transcript importer first:
 ```bash
 python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --dry-run
 python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --import
+python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --allow-partial-transcript --import
+python scripts/youtube_to_kb.py --url "<YOUTUBE_URL>" --transcript-file "<file.vtt|file.srt|file.txt>" --dry-run
 ```
 
 The unified material router now delegates YouTube URLs to the same script:
@@ -22,6 +24,7 @@ The unified material router now delegates YouTube URLs to the same script:
 ```bash
 python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --dry-run
 python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --import
+python scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-partial-transcript --import
 ```
 
 This route creates the standard KB six-file bundle from public metadata and a usable transcript:
@@ -41,6 +44,20 @@ Hard-stop cases:
 - metadata cannot be fetched from the public page
 
 The script does not download video files and does not fabricate transcript text. English transcripts are marked `needs_translation_review` unless a real translation pass has been completed.
+
+v0.3.81 quality gate:
+
+| fetch_quality | Dry-run | Import default | Import with `--allow-partial-transcript` |
+|---|---|---|---|
+| `full` | allowed | allowed when transcript visible text is at least 800 chars | allowed |
+| `partial` | allowed with warning | blocked | allowed only when transcript visible text is at least 800 chars |
+| `metadata_only` | reportable only | blocked | blocked |
+| blocked fetch | blocked | blocked | blocked |
+
+Material reports and capture JSON must include `fetch_status`, `fetch_quality`, `fetch_reason`,
+`transcript_language`, `transcript_kind`, `transcript_char_count`, `import_allowed`, and
+`import_block_reason`. A local transcript fallback may be used with `--transcript-file` when the
+user supplies a `.vtt`, `.srt`, or `.txt` transcript; it must be marked `transcript_kind: local`.
 
 The older workflow below remains useful when a complete YouTube Video Brief output directory already exists.
 
