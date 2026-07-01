@@ -3,7 +3,7 @@
     "title": "How Reverse Game Theory Could Solve The Housing Shortage",
     "title_zh": "逆向博弈论如何解决住房短缺问题",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-03-25-reverse-game-theory-housing-shortage",
+    "path": "content/articles/2026/2026-03-25-reverse-game-theory-housing-shortage",
     "author": "HennyGe Wichers",
     "source_url": "https://www.noemamag.com/the-architecture-of-cooperation/",
     "source_site": "Noema Magazine",
@@ -31,15 +31,15 @@
       "translation": 7079
     },
     "updated_date": "2026-06-21",
-    "slug": "content\\articles\\2026\\2026-03-25-reverse-game-theory-housing-shortage",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-03-25-reverse-game-theory-housing-shortage"
+    "slug": "2026-03-25-reverse-game-theory-housing-shortage",
+    "detail_url": "items/2026-03-25-reverse-game-theory-housing-shortage/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-03-25-reverse-game-theory-housing-shortage"
   },
   {
     "title": "Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK",
     "title_zh": "劳动过程中的泰勒主义与异化:以英国亚马逊仓库为例",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-16-taylorism-alienation-amazon-uk",
+    "path": "content/articles/2026/2026-06-16-taylorism-alienation-amazon-uk",
     "author": "Miao Miao; Hui Situ",
     "source_url": "https://link.springer.com/article/10.1007/s10551-026-06378-6",
     "source_site": "Journal of Business Ethics (Springer Nature)",
@@ -81,15 +81,15 @@
     "import_version": "v0.3.59",
     "license": "CC BY 4.0",
     "updated_date": "2026-06-27",
-    "slug": "content\\articles\\2026\\2026-06-16-taylorism-alienation-amazon-uk",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-16-taylorism-alienation-amazon-uk"
+    "slug": "2026-06-16-taylorism-alienation-amazon-uk",
+    "detail_url": "items/2026-06-16-taylorism-alienation-amazon-uk/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-16-taylorism-alienation-amazon-uk"
   },
   {
     "title": "AI 没有意识，但它正在成为我们的无意识",
     "title_zh": "AI 没有意识，但它正在成为我们的无意识",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-20-ai-unconscious-convivial-society",
+    "path": "content/articles/2026/2026-06-20-ai-unconscious-convivial-society",
     "author": "L. M. Sacasas (Michael)",
     "source_url": "https://theconvivialsociety.substack.com/p/ai-is-not-conscious-but-it-is-becoming",
     "source_site": "The Convivial Society",
@@ -124,15 +124,15 @@
       "translation": 6133
     },
     "updated_date": "2026-06-20",
-    "slug": "content\\articles\\2026\\2026-06-20-ai-unconscious-convivial-society",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-20-ai-unconscious-convivial-society"
+    "slug": "2026-06-20-ai-unconscious-convivial-society",
+    "detail_url": "items/2026-06-20-ai-unconscious-convivial-society/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-20-ai-unconscious-convivial-society"
   },
   {
     "title": "Don't dethrone consciousness!",
     "title_zh": "不要废黜意识！",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-20-dont-dethrone-consciousness-erik-hoel",
+    "path": "content/articles/2026/2026-06-20-dont-dethrone-consciousness-erik-hoel",
     "author": "Erik Hoel",
     "source_url": "https://www.theintrinsicperspective.com/p/dont-dethrone-consciousness",
     "source_site": "The Intrinsic Perspective",
@@ -167,15 +167,15 @@
       "translation": 8570
     },
     "updated_date": "2026-06-20",
-    "slug": "content\\articles\\2026\\2026-06-20-dont-dethrone-consciousness-erik-hoel",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-20-dont-dethrone-consciousness-erik-hoel"
+    "slug": "2026-06-20-dont-dethrone-consciousness-erik-hoel",
+    "detail_url": "items/2026-06-20-dont-dethrone-consciousness-erik-hoel/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-20-dont-dethrone-consciousness-erik-hoel"
   },
   {
     "title": "日本铁路如何在分裂中保持统一",
     "title_zh": "日本铁路如何在分裂中保持统一",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-20-jr-logo-japan-railways",
+    "path": "content/articles/2026/2026-06-20-jr-logo-japan-railways",
     "author": "Arun Venkatesan",
     "source_url": "https://arun.is/blog/jr-logo/",
     "source_site": "arun.is",
@@ -207,15 +207,15 @@
       "translation": 3268
     },
     "updated_date": "2026-06-20",
-    "slug": "content\\articles\\2026\\2026-06-20-jr-logo-japan-railways",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-20-jr-logo-japan-railways"
+    "slug": "2026-06-20-jr-logo-japan-railways",
+    "detail_url": "items/2026-06-20-jr-logo-japan-railways/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-20-jr-logo-japan-railways"
   },
   {
     "title": "An Oral History of Steven Spielberg, a Raider of a Lost Art",
     "title_zh": "史蒂文·斯皮尔伯格口述史：失落艺术的夺宝者",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-20-vulture-spielberg-oral-history",
+    "path": "content/articles/2026/2026-06-20-vulture-spielberg-oral-history",
     "author": "Bilge Ebiri",
     "source_url": "https://www.vulture.com/article/oral-history-of-steven-spielberg-and-his-movies.html",
     "source_site": "Vulture",
@@ -249,15 +249,15 @@
       "translation": 19557
     },
     "updated_date": "2026-06-20",
-    "slug": "content\\articles\\2026\\2026-06-20-vulture-spielberg-oral-history",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-20-vulture-spielberg-oral-history"
+    "slug": "2026-06-20-vulture-spielberg-oral-history",
+    "detail_url": "items/2026-06-20-vulture-spielberg-oral-history/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-20-vulture-spielberg-oral-history"
   },
   {
     "title": "Ken Liu on AI and Freedom",
     "title_zh": "Ken Liu 谈 AI 与自由",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-22-chinatalk-ken-liu-ai-freedom",
+    "path": "content/articles/2026/2026-06-22-chinatalk-ken-liu-ai-freedom",
     "author": "Ken Liu (guest), Jordan Schneider, Irene Zhang, Phoebe Chow",
     "source_url": "https://www.chinatalk.media/p/ken-liu-on-ai-and-freedom",
     "source_site": "ChinaTalk",
@@ -303,15 +303,15 @@
       "translation": 12139
     },
     "updated_date": "2026-06-22",
-    "slug": "content\\articles\\2026\\2026-06-22-chinatalk-ken-liu-ai-freedom",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-22-chinatalk-ken-liu-ai-freedom"
+    "slug": "2026-06-22-chinatalk-ken-liu-ai-freedom",
+    "detail_url": "items/2026-06-22-chinatalk-ken-liu-ai-freedom/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-22-chinatalk-ken-liu-ai-freedom"
   },
   {
     "title": "How to Earn a Billion Dollars",
     "title_zh": "如何赚得十亿美元",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-22-paulgraham-earn-billion",
+    "path": "content/articles/2026/2026-06-22-paulgraham-earn-billion",
     "author": "Paul Graham",
     "source_url": "https://paulgraham.com/earn.html",
     "source_site": "Paul Graham",
@@ -348,15 +348,15 @@
       "translation": 3303
     },
     "updated_date": "2026-06-22",
-    "slug": "content\\articles\\2026\\2026-06-22-paulgraham-earn-billion",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-22-paulgraham-earn-billion"
+    "slug": "2026-06-22-paulgraham-earn-billion",
+    "detail_url": "items/2026-06-22-paulgraham-earn-billion/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-22-paulgraham-earn-billion"
   },
   {
     "title": "Superlinear Returns",
     "title_zh": "超线性回报",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-22-paulgraham-superlinear-returns",
+    "path": "content/articles/2026/2026-06-22-paulgraham-superlinear-returns",
     "author": "Paul Graham",
     "source_url": "https://www.paulgraham.com/superlinear.html",
     "source_site": "Paul Graham",
@@ -393,15 +393,15 @@
       "translation": 6114
     },
     "updated_date": "2026-06-22",
-    "slug": "content\\articles\\2026\\2026-06-22-paulgraham-superlinear-returns",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-22-paulgraham-superlinear-returns"
+    "slug": "2026-06-22-paulgraham-superlinear-returns",
+    "detail_url": "items/2026-06-22-paulgraham-superlinear-returns/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-22-paulgraham-superlinear-returns"
   },
   {
     "title": "Your AI Is Not a Tool",
     "title_zh": "你的 AI 不是一个工具",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-22-your-ai-is-not-a-tool",
+    "path": "content/articles/2026/2026-06-22-your-ai-is-not-a-tool",
     "author": "L. M. Sacasas",
     "source_url": "https://theconvivialsociety.substack.com/p/your-ai-is-not-a-tool",
     "source_site": "The Convivial Society",
@@ -439,15 +439,15 @@
       "translation": 4194
     },
     "updated_date": "2026-06-22",
-    "slug": "content\\articles\\2026\\2026-06-22-your-ai-is-not-a-tool",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-22-your-ai-is-not-a-tool"
+    "slug": "2026-06-22-your-ai-is-not-a-tool",
+    "detail_url": "items/2026-06-22-your-ai-is-not-a-tool/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-22-your-ai-is-not-a-tool"
   },
   {
     "title": "We May Be Entering A Second Axial Age",
     "title_zh": "我们也许正在进入第二个轴心时代",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-23-second-axial-age-otto-scharmer",
+    "path": "content/articles/2026/2026-06-23-second-axial-age-otto-scharmer",
     "author": "Otto Scharmer",
     "source_url": "https://www.noemamag.com/we-may-be-entering-a-second-axial-age/",
     "source_site": "NOEMA Magazine",
@@ -494,15 +494,15 @@
       "translation": 5808
     },
     "updated_date": "2026-06-23",
-    "slug": "content\\articles\\2026\\2026-06-23-second-axial-age-otto-scharmer",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-23-second-axial-age-otto-scharmer"
+    "slug": "2026-06-23-second-axial-age-otto-scharmer",
+    "detail_url": "items/2026-06-23-second-axial-age-otto-scharmer/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-23-second-axial-age-otto-scharmer"
   },
   {
     "title": "The People Are Never Right",
     "title_zh": "人民从来不会正确",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-24-421news-the-people-are-never-right",
+    "path": "content/articles/2026/2026-06-24-421news-the-people-are-never-right",
     "author": "Juan Ruocco",
     "source_url": "https://www.421.news/en/curtis-yarvin-democracy-monarchy-neoreaction-neocameralism-en/",
     "source_site": "421.news",
@@ -545,15 +545,15 @@
     "related_project_note": "上一轮误生成的独立专题页（wrong route），保留作阅读体验更好的版本，但文章本体以本知识库目录为准。",
     "related_project_url": "https://conanxin.github.io/projects/yarvin-moldbug-cn/",
     "updated_date": "2026-06-24",
-    "slug": "content\\articles\\2026\\2026-06-24-421news-the-people-are-never-right",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-24-421news-the-people-are-never-right"
+    "slug": "2026-06-24-421news-the-people-are-never-right",
+    "detail_url": "items/2026-06-24-421news-the-people-are-never-right/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-24-421news-the-people-are-never-right"
   },
   {
     "title": "Andrew Hunter Murray: Writing Advice Better Than Your English Classes",
     "title_zh": "安德鲁·亨特·默里：比英语课更好的写作建议",
     "type": "interview",
-    "path": "content\\articles\\2026\\2026-06-24-how-i-write-andrew-hunter-murray",
+    "path": "content/articles/2026/2026-06-24-how-i-write-andrew-hunter-murray",
     "author": "David Perell",
     "source_url": "https://howiwrite.substack.com/p/andrew-hunter-murray-writing-advice",
     "source_site": "How I Write (Substack)",
@@ -602,15 +602,15 @@
     "date_published": "2026-06-10",
     "format": "podcast_transcript",
     "updated_date": "2026-06-24",
-    "slug": "content\\articles\\2026\\2026-06-24-how-i-write-andrew-hunter-murray",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-24-how-i-write-andrew-hunter-murray"
+    "slug": "2026-06-24-how-i-write-andrew-hunter-murray",
+    "detail_url": "items/2026-06-24-how-i-write-andrew-hunter-murray/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-24-how-i-write-andrew-hunter-murray"
   },
   {
     "title": "Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5",
     "title_zh": "安德鲁·斯坦顿：皮克斯讲故事的秘诀",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-24-how-i-write-andrew-stanton",
+    "path": "content/articles/2026/2026-06-24-how-i-write-andrew-stanton",
     "author": "David Perell",
     "source_url": "https://howiwrite.substack.com/p/andrew-stanton-storytelling-secrets",
     "source_site": "howiwrite.substack.com",
@@ -652,15 +652,15 @@
       "translation": 12726
     },
     "updated_date": "2026-06-24",
-    "slug": "content\\articles\\2026\\2026-06-24-how-i-write-andrew-stanton",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-24-how-i-write-andrew-stanton"
+    "slug": "2026-06-24-how-i-write-andrew-stanton",
+    "detail_url": "items/2026-06-24-how-i-write-andrew-stanton/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-24-how-i-write-andrew-stanton"
   },
   {
     "title": "Sign of the future: GPT-5.5",
     "title_zh": "未来的征兆：GPT-5.5",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-24-oneusefulthing-sign-of-the-future-gpt-55",
+    "path": "content/articles/2026/2026-06-24-oneusefulthing-sign-of-the-future-gpt-55",
     "author": "Ethan Mollick",
     "source_url": "https://www.oneusefulthing.org/p/sign-of-the-future-gpt-55",
     "source_site": "One Useful Thing",
@@ -694,15 +694,15 @@
       "translation": 2530
     },
     "updated_date": "2026-06-24",
-    "slug": "content\\articles\\2026\\2026-06-24-oneusefulthing-sign-of-the-future-gpt-55",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-24-oneusefulthing-sign-of-the-future-gpt-55"
+    "slug": "2026-06-24-oneusefulthing-sign-of-the-future-gpt-55",
+    "detail_url": "items/2026-06-24-oneusefulthing-sign-of-the-future-gpt-55/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-24-oneusefulthing-sign-of-the-future-gpt-55"
   },
   {
     "title": "Owning Our Words: Sounding the Depths of Language",
     "title_zh": "拥有我们的语言：探测语言的纵深",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-24-theconvivialsociety-owning-our-words",
+    "path": "content/articles/2026/2026-06-24-theconvivialsociety-owning-our-words",
     "author": "L. M. Sacasas",
     "source_url": "https://theconvivialsociety.substack.com/p/owning-our-words-sounding-the-depths",
     "source_site": "The Convivial Society",
@@ -737,15 +737,15 @@
       "translation": 2524
     },
     "updated_date": "2026-06-24",
-    "slug": "content\\articles\\2026\\2026-06-24-theconvivialsociety-owning-our-words",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-24-theconvivialsociety-owning-our-words"
+    "slug": "2026-06-24-theconvivialsociety-owning-our-words",
+    "detail_url": "items/2026-06-24-theconvivialsociety-owning-our-words/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-24-theconvivialsociety-owning-our-words"
   },
   {
     "title": "Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026",
     "title_zh": "让哈佛成为你最不重要的事：Conan O'Brien 哈佛 2026 毕业演讲",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-25-conan-harvard-commencement-2026",
+    "path": "content/articles/2026/2026-06-25-conan-harvard-commencement-2026",
     "author": "Conan O'Brien",
     "source_url": "https://www.youtube.com/watch?v=F3fCktnkBbc",
     "source_site": "YouTube / Harvard University",
@@ -795,15 +795,15 @@
     },
     "source_type": "youtube",
     "updated_date": "2026-06-25",
-    "slug": "content\\articles\\2026\\2026-06-25-conan-harvard-commencement-2026",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-25-conan-harvard-commencement-2026"
+    "slug": "2026-06-25-conan-harvard-commencement-2026",
+    "detail_url": "items/2026-06-25-conan-harvard-commencement-2026/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-25-conan-harvard-commencement-2026"
   },
   {
     "title": "The Old World Is Dying",
     "title_zh": "旧世界正在死去",
     "type": "essay",
-    "path": "content\\articles\\2026\\2026-06-25-jasmi-the-old-world-is-dying",
+    "path": "content/articles/2026/2026-06-25-jasmi-the-old-world-is-dying",
     "author": "Jasmine Sun",
     "source_url": "https://jasmi.news/p/2026-advice",
     "source_site": "jasmi.news (Substack)",
@@ -850,15 +850,15 @@
     "date_published": "2026-06-25",
     "format": "essay",
     "updated_date": "2026-06-25",
-    "slug": "content\\articles\\2026\\2026-06-25-jasmi-the-old-world-is-dying",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-25-jasmi-the-old-world-is-dying"
+    "slug": "2026-06-25-jasmi-the-old-world-is-dying",
+    "detail_url": "items/2026-06-25-jasmi-the-old-world-is-dying/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-25-jasmi-the-old-world-is-dying"
   },
   {
     "title": "No end in sight for global capitalism: The sinews of US structural power in the 21st century",
     "title_zh": "全球资本主义没有尽头：21世纪美国结构性力量的筋骨",
     "type": "academic_paper",
-    "path": "content\\articles\\2026\\2026-06-25-tandf-us-structural-power",
+    "path": "content/articles/2026/2026-06-25-tandf-us-structural-power",
     "author": "Sean Kenji Starrs and Robert Hunter Wade",
     "source_url": "https://www.tandfonline.com/doi/full/10.1080/2329194X.2026.2675224",
     "source_site": "Taylor & Francis (Review of International Political Economy)",
@@ -905,15 +905,15 @@
     "date_published": "2026",
     "format": "academic_paper",
     "updated_date": "2026-06-25",
-    "slug": "content\\articles\\2026\\2026-06-25-tandf-us-structural-power",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-25-tandf-us-structural-power"
+    "slug": "2026-06-25-tandf-us-structural-power",
+    "detail_url": "items/2026-06-25-tandf-us-structural-power/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-25-tandf-us-structural-power"
   },
   {
     "title": "YouTube Video Brief Workflow",
     "title_zh": "把 YouTube 视频变成中文知识包",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-25-youtube-video-brief-workflow",
+    "path": "content/articles/2026/2026-06-25-youtube-video-brief-workflow",
     "author": "OpenClaw Agent",
     "source_url": "",
     "source_site": "OpenClaw",
@@ -952,15 +952,15 @@
     "category": "workflow",
     "source_type": "workflow",
     "updated_date": "2026-06-25",
-    "slug": "content\\articles\\2026\\2026-06-25-youtube-video-brief-workflow",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-25-youtube-video-brief-workflow"
+    "slug": "2026-06-25-youtube-video-brief-workflow",
+    "detail_url": "items/2026-06-25-youtube-video-brief-workflow/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-25-youtube-video-brief-workflow"
   },
   {
     "title": "An \"infovore\" shares his chats",
     "title_zh": "一个\"信息饕餮\"分享他的对话",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-26-chatgptpro-tyler-cowen-infovore",
+    "path": "content/articles/2026/2026-06-26-chatgptpro-tyler-cowen-infovore",
     "author": "ChatGPT Pro Community (profile of Tyler Cowen)",
     "source_url": "https://chatgptpro.substack.com/p/tyler-cowen",
     "source_site": "ChatGPT Pro Community (Substack)",
@@ -1002,15 +1002,15 @@
       "translation": 1753
     },
     "updated_date": "2026-06-26",
-    "slug": "content\\articles\\2026\\2026-06-26-chatgptpro-tyler-cowen-infovore",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-26-chatgptpro-tyler-cowen-infovore"
+    "slug": "2026-06-26-chatgptpro-tyler-cowen-infovore",
+    "detail_url": "items/2026-06-26-chatgptpro-tyler-cowen-infovore/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-chatgptpro-tyler-cowen-infovore"
   },
   {
     "title": "Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview",
     "title_zh": "走进 Anthropic CEO Dario Amodei 的内心世界",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-26-dario-amodei-bloomberg-interview",
+    "path": "content/articles/2026/2026-06-26-dario-amodei-bloomberg-interview",
     "author": "Dario Amodei / Emily Chang",
     "source_url": "https://youtu.be/x2VHFgyawPE",
     "source_site": "Bloomberg Originals / YouTube",
@@ -1078,15 +1078,15 @@
     "source_type": "youtube",
     "transcript_missing": true,
     "updated_date": "2026-06-26",
-    "slug": "content\\articles\\2026\\2026-06-26-dario-amodei-bloomberg-interview",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-26-dario-amodei-bloomberg-interview"
+    "slug": "2026-06-26-dario-amodei-bloomberg-interview",
+    "detail_url": "items/2026-06-26-dario-amodei-bloomberg-interview/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-dario-amodei-bloomberg-interview"
   },
   {
     "title": "The Layers of AI experience",
     "title_zh": "AI 体验的层次：在表面之下做设计",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-26-emilycampbell-layers-of-ai-experience",
+    "path": "content/articles/2026/2026-06-26-emilycampbell-layers-of-ai-experience",
     "author": "Emily Campbell",
     "source_url": "https://emilycampbell.co/writing/layers-of-ai-experience",
     "source_site": "emilycampbell.co",
@@ -1125,15 +1125,15 @@
       "translation": 8801
     },
     "updated_date": "2026-06-26",
-    "slug": "content\\articles\\2026\\2026-06-26-emilycampbell-layers-of-ai-experience",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-26-emilycampbell-layers-of-ai-experience"
+    "slug": "2026-06-26-emilycampbell-layers-of-ai-experience",
+    "detail_url": "items/2026-06-26-emilycampbell-layers-of-ai-experience/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-emilycampbell-layers-of-ai-experience"
   },
   {
     "title": "How AI Will Change Us",
     "title_zh": "AI 将如何改变我们",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-26-noema-how-ai-will-change-us",
+    "path": "content/articles/2026/2026-06-26-noema-how-ai-will-change-us",
     "author": "Houda Nait El Barj",
     "source_url": "https://www.noemamag.com/how-ai-will-change-us/?utm_source=noematwitter&utm_medium=noemasocial",
     "source_site": "Noema Magazine",
@@ -1175,15 +1175,15 @@
       "translation": 5774
     },
     "updated_date": "2026-06-26",
-    "slug": "content\\articles\\2026\\2026-06-26-noema-how-ai-will-change-us",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-26-noema-how-ai-will-change-us"
+    "slug": "2026-06-26-noema-how-ai-will-change-us",
+    "detail_url": "items/2026-06-26-noema-how-ai-will-change-us/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-noema-how-ai-will-change-us"
   },
   {
     "title": "The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou",
     "title_zh": "Palantir 背后的哲学：Moira Weigel 与 Anthony Burton 对谈",
     "type": "video",
-    "path": "content\\articles\\2026\\2026-06-26-palantir-philosophy-weigel-burton",
+    "path": "content/articles/2026/2026-06-26-palantir-philosophy-weigel-burton",
     "author": "Moira Weigel / Anthony Burton / Alexis Papazoglou",
     "source_url": "https://youtu.be/0gCCDonmzUE",
     "source_site": "The Philosopher / YouTube",
@@ -1228,15 +1228,15 @@
     "category": "video",
     "source_type": "youtube",
     "updated_date": "2026-06-26",
-    "slug": "content\\articles\\2026\\2026-06-26-palantir-philosophy-weigel-burton",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-26-palantir-philosophy-weigel-burton"
+    "slug": "2026-06-26-palantir-philosophy-weigel-burton",
+    "detail_url": "items/2026-06-26-palantir-philosophy-weigel-burton/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-palantir-philosophy-weigel-burton"
   },
   {
     "title": "The 100 greatest songs of the 1960s",
     "title_zh": "1960 年代最伟大的 100 首歌（#100–#51）",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-26-paste-greatest-songs-1960s",
+    "path": "content/articles/2026/2026-06-26-paste-greatest-songs-1960s",
     "author": "Matt Mitchell (Paste staff and contributors: Mariam Abdel-Razek, Casey Epstein-Gross, Grant Sharples, Cassidy Sollazzo, Miranda Wollen, Elise Soutar, Nathan Stevens, Sam Rosenberg, Derrick Rossignol, Matt Melis)",
     "source_url": "https://www.pastemagazine.com/music/best-songs/the-greatest-songs-of-the-1960s",
     "source_site": "Paste Magazine",
@@ -1323,15 +1323,15 @@
     },
     "translation_notes": "check_translation_residue.py returned suspicious_count=85 (KB 最高).\n这是音乐目录型长名单文章的必然产物：50 首歌名 + 50+ 艺人名 + 30+ 专辑名\n全部为不可译专名（保留为英文）。无真正漏译段。\n详见 reports/paste_1960s_listicle_quality_fix_20260626.md §6.\n",
     "updated_date": "2026-06-26",
-    "slug": "content\\articles\\2026\\2026-06-26-paste-greatest-songs-1960s",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-26-paste-greatest-songs-1960s"
+    "slug": "2026-06-26-paste-greatest-songs-1960s",
+    "detail_url": "items/2026-06-26-paste-greatest-songs-1960s/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-paste-greatest-songs-1960s"
   },
   {
     "title": "一键把 YouTube 视频加入知识库",
     "title_zh": "一键把 YouTube 视频加入知识库",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-26-youtube-kb-import-command",
+    "path": "content/articles/2026/2026-06-26-youtube-kb-import-command",
     "author": "OpenClaw Agent",
     "source_url": "",
     "source_site": "OpenClaw",
@@ -1371,15 +1371,15 @@
     "category": "workflow",
     "source_type": "workflow",
     "updated_date": "2026-06-26",
-    "slug": "content\\articles\\2026\\2026-06-26-youtube-kb-import-command",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-26-youtube-kb-import-command"
+    "slug": "2026-06-26-youtube-kb-import-command",
+    "detail_url": "items/2026-06-26-youtube-kb-import-command/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-youtube-kb-import-command"
   },
   {
     "title": "先预检，再解读 YouTube 视频",
     "title_zh": "先预检，再解读 YouTube 视频",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-26-youtube-link-preflight-failure-archive",
+    "path": "content/articles/2026/2026-06-26-youtube-link-preflight-failure-archive",
     "author": "OpenClaw Agent",
     "source_url": "",
     "source_site": "OpenClaw",
@@ -1419,15 +1419,15 @@
     "category": "workflow",
     "source_type": "workflow",
     "updated_date": "2026-06-26",
-    "slug": "content\\articles\\2026\\2026-06-26-youtube-link-preflight-failure-archive",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-26-youtube-link-preflight-failure-archive"
+    "slug": "2026-06-26-youtube-link-preflight-failure-archive",
+    "detail_url": "items/2026-06-26-youtube-link-preflight-failure-archive/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-youtube-link-preflight-failure-archive"
   },
   {
     "title": "Compensation",
     "title_zh": "论补偿",
     "type": "essay",
-    "path": "content\\articles\\2026\\2026-06-27-emerson-compensation",
+    "path": "content/articles/2026/2026-06-27-emerson-compensation",
     "author": "Ralph Waldo Emerson",
     "source_url": "https://www.gutenberg.org/files/2944/2944-h/2944-h.htm",
     "source_site": "Project Gutenberg",
@@ -1458,7 +1458,7 @@
       "source": 7700,
       "translation": 4571
     },
-    "slug": "content\\articles\\2026\\2026-06-27-emerson-compensation",
+    "slug": "2026-06-27-emerson-compensation",
     "anthology_boundary_check": "PASS",
     "excluded_sections": [
       "I. HISTORY",
@@ -1484,14 +1484,14 @@
     "summary": "Emerson's 1841 essay on the moral law of compensation — the doctrine that every gain is matched by an equivalent loss, every pain by a corresponding pleasure, and that the universe is governed by a balance between polarities. A companion piece to Self-Reliance, applying transcendentalist metaphysics to ethics.",
     "summary_zh": "爱默生 1841 年散文，论述道德补偿原则——每一份获得必对应等量的失去，每一份痛苦必对应相应的快乐，宇宙由两极之间的平衡所主宰。本文是《论自立》的姊妹篇，将超验主义形而上学应用于伦理学。",
     "updated_date": "2026-06-27",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-27-emerson-compensation"
+    "detail_url": "items/2026-06-27-emerson-compensation/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-27-emerson-compensation"
   },
   {
     "title": "Self-Reliance",
     "title_zh": "论自立",
     "type": "essay",
-    "path": "content\\articles\\2026\\2026-06-27-emerson-self-reliance",
+    "path": "content/articles/2026/2026-06-27-emerson-self-reliance",
     "author": "Ralph Waldo Emerson",
     "source_url": "https://www.gutenberg.org/files/2944/2944-h/2944-h.htm",
     "source_site": "gutenberg.org",
@@ -1546,15 +1546,15 @@
     "source_collection": "Essays, First Series",
     "source_gutenberg_id": "2944",
     "updated_date": "2026-06-27",
-    "slug": "content\\articles\\2026\\2026-06-27-emerson-self-reliance",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-27-emerson-self-reliance"
+    "slug": "2026-06-27-emerson-self-reliance",
+    "detail_url": "items/2026-06-27-emerson-self-reliance/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-27-emerson-self-reliance"
   },
   {
     "title": "A Modest Proposal",
     "title_zh": "一个温和的建议",
     "type": "essay",
-    "path": "content\\articles\\2026\\2026-06-27-swift-modest-proposal",
+    "path": "content/articles/2026/2026-06-27-swift-modest-proposal",
     "author": "Jonathan Swift",
     "source_url": "https://www.gutenberg.org/files/1080/1080-h/1080-h.htm",
     "source_site": "Project Gutenberg",
@@ -1590,15 +1590,15 @@
     "import_method": "short_command_preflight_e2e_regression",
     "import_version": "v0.3.39",
     "updated_date": "2026-06-27",
-    "slug": "content\\articles\\2026\\2026-06-27-swift-modest-proposal",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-27-swift-modest-proposal"
+    "slug": "2026-06-27-swift-modest-proposal",
+    "detail_url": "items/2026-06-27-swift-modest-proposal/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-27-swift-modest-proposal"
   },
   {
     "title": "On the Duty of Civil Disobedience",
     "title_zh": "论公民不服从",
     "type": "essay",
-    "path": "content\\articles\\2026\\2026-06-27-thoreau-civil-disobedience",
+    "path": "content/articles/2026/2026-06-27-thoreau-civil-disobedience",
     "author": "Henry David Thoreau",
     "source_url": "https://www.gutenberg.org/files/71/71-h/71-h.htm",
     "source_site": "Project Gutenberg",
@@ -1631,21 +1631,21 @@
       "source": 1500,
       "translation": 1353
     },
-    "slug": "content\\articles\\2026\\2026-06-27-thoreau-civil-disobedience",
+    "slug": "2026-06-27-thoreau-civil-disobedience",
     "import_date": "2026-06-27",
     "import_version": "v0.3.45-real-article-import-template-validation",
     "kb_entry_id": "2026-06-27-thoreau-civil-disobedience",
     "summary": "Thoreau's classic essay arguing that citizens have a moral duty to resist unjust government, based on conscience rather than majority rule.",
     "summary_zh": "梭罗的经典散文，论证公民有道德义务抵抗不公正的政府，基于良心而非多数统治。",
     "updated_date": "2026-06-27",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-27-thoreau-civil-disobedience"
+    "detail_url": "items/2026-06-27-thoreau-civil-disobedience/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-27-thoreau-civil-disobedience"
   },
   {
     "title": "Walking",
     "title_zh": "步行",
     "type": "essay",
-    "path": "content\\articles\\2026\\2026-06-27-thoreau-walking",
+    "path": "content/articles/2026/2026-06-27-thoreau-walking",
     "author": "Henry David Thoreau",
     "source_url": "https://www.gutenberg.org/files/1022/1022-h/1022-h.htm",
     "source_site": "Project Gutenberg",
@@ -1680,21 +1680,21 @@
       "source": 12100,
       "translation": 5584
     },
-    "slug": "content\\articles\\2026\\2026-06-27-thoreau-walking",
+    "slug": "2026-06-27-thoreau-walking",
     "import_date": "2026-06-27",
     "import_version": "v0.3.54-normal-article-import-production",
     "kb_entry_id": "2026-06-27-thoreau-walking",
     "summary": "Thoreau's 1862 essay celebrating walking as an art, a religious act, and a westward pilgrimage toward Wildness — arguing that in Wildness lies the preservation of the world, and that every true walk is a crusade to reclaim the Holy Land from the Infidels.",
     "summary_zh": "梭罗 1862 年的散文，将步行视为艺术、宗教行动与朝向野性的朝圣之旅——主张野性之中蕴藏着对世界的保存，每一次的真正步行都是一场从异教徒手中夺回圣地的十字军东征。",
     "updated_date": "2026-06-27",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-27-thoreau-walking"
+    "detail_url": "items/2026-06-27-thoreau-walking/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-27-thoreau-walking"
   },
   {
     "title": "携手之外：国际学习科学年会（ISLS） 2026 的五条主线",
     "title_zh": "携手之外：国际学习科学年会（ISLS） 2026 的五条主线",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-28-wechat-可可乐博-携手之外国际学习科学年会isls-2026-的五条主线",
+    "path": "content/articles/2026/2026-06-28-wechat-可可乐博-携手之外国际学习科学年会isls-2026-的五条主线",
     "author": "辛海洋",
     "source_url": "https://mp.weixin.qq.com/s?__biz=MzUzNjY5Mjg3Ng==&amp;mid=2247488455&amp;idx=1&amp;sn=57adb2175a91308128061541871f010d&amp;scene=21#wechat_redirect",
     "source_site": "可可乐博",
@@ -1739,15 +1739,15 @@
       }
     },
     "updated_date": "2026-06-29",
-    "slug": "content\\articles\\2026\\2026-06-28-wechat-可可乐博-携手之外国际学习科学年会isls-2026-的五条主线",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-28-wechat-可可乐博-携手之外国际学习科学年会isls-2026-的五条主线"
+    "slug": "2026-06-28-wechat-可可乐博-携手之外国际学习科学年会isls-2026-的五条主线",
+    "detail_url": "items/2026-06-28-wechat-可可乐博-携手之外国际学习科学年会isls-2026-的五条主线/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-28-wechat-可可乐博-携手之外国际学习科学年会isls-2026-的五条主线"
   },
   {
     "title": "The Carrier Bag Theory of Fiction",
     "title_zh": "故事的承载袋理论",
     "type": "essay",
-    "path": "content\\articles\\2026\\2026-06-29-le-guin-carrier-bag-theory-of-fiction",
+    "path": "content/articles/2026/2026-06-29-le-guin-carrier-bag-theory-of-fiction",
     "author": "Ursula K. Le Guin",
     "source_url": null,
     "source_site": "local-pdf",
@@ -1793,15 +1793,15 @@
     "source": "Dancing at the Edge of World (Grove Press, 1986), pp. 164-170",
     "source_pdf_sha256": null,
     "updated_date": "2026-06-29",
-    "slug": "content\\articles\\2026\\2026-06-29-le-guin-carrier-bag-theory-of-fiction",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-29-le-guin-carrier-bag-theory-of-fiction"
+    "slug": "2026-06-29-le-guin-carrier-bag-theory-of-fiction",
+    "detail_url": "items/2026-06-29-le-guin-carrier-bag-theory-of-fiction/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-29-le-guin-carrier-bag-theory-of-fiction"
   },
   {
     "title": "Why I Write",
     "title_zh": "我为什么写作",
     "type": "essay",
-    "path": "content\\articles\\2026\\2026-06-29-orwell-foundation-why-i-write",
+    "path": "content/articles/2026/2026-06-29-orwell-foundation-why-i-write",
     "author": "George Orwell",
     "source_url": "https://www.orwellfoundation.com/the-orwell-foundation/orwell/essays-and-other-works/why-i-write/",
     "source_site": "The Orwell Foundation",
@@ -1836,7 +1836,7 @@
       "source": 2848,
       "translation": 4297
     },
-    "slug": "content\\articles\\2026\\2026-06-29-orwell-foundation-why-i-write",
+    "slug": "2026-06-29-orwell-foundation-why-i-write",
     "copyright_notice": "Material remains under copyright in some jurisdictions (including the US); reproduced with permission of the Orwell Estate.",
     "extraction_scope": "full_essay",
     "import_date": "2026-06-29",
@@ -1846,14 +1846,14 @@
     "summary": "Orwell's 1946 essay on the four motives for writing — sheer egoism, aesthetic enthusiasm, historical impulse, and political purpose — and how his Burmese police years, poverty, Hitler, and the Spanish Civil War pushed him from a natural novelist into a political writer.",
     "summary_zh": "奥威尔 1946 年的散文，谈写作的四大动机——纯粹的自我主义、美学热情、历史冲动与政治目的——以及他在缅甸当警察、贫困、希特勒与西班牙内战的经历，如何把他从一个天然的小说家推向政治写作者。",
     "updated_date": "2026-06-29",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-29-orwell-foundation-why-i-write"
+    "detail_url": "items/2026-06-29-orwell-foundation-why-i-write/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-29-orwell-foundation-why-i-write"
   },
   {
     "title": "北京热门徒步线路TOP10！",
     "title_zh": "北京热门徒步线路TOP10！",
     "type": "article",
-    "path": "content\\articles\\2026\\2026-06-30-wechat-两步路-北京热门徒步线路top10",
+    "path": "content/articles/2026/2026-06-30-wechat-两步路-北京热门徒步线路top10",
     "author": "两步路线路",
     "source_url": "https://mp.weixin.qq.com/s/GkZeHHlEUUXXutxPckcrPg",
     "source_site": "两步路",
@@ -1879,8 +1879,8 @@
       "公众号"
     ],
     "word_count": {
-      "source": 4589,
-      "translation": 4589
+      "source": 3208,
+      "translation": 3208
     },
     "capture": {
       "tool": "wechat_url_to_kb.py",
@@ -1895,15 +1895,15 @@
       "url_params": null
     },
     "updated_date": "2026-07-01",
-    "slug": "content\\articles\\2026\\2026-06-30-wechat-两步路-北京热门徒步线路top10",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\articles\\2026\\2026-06-30-wechat-两步路-北京热门徒步线路top10"
+    "slug": "2026-06-30-wechat-两步路-北京热门徒步线路top10",
+    "detail_url": "items/2026-06-30-wechat-两步路-北京热门徒步线路top10/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-30-wechat-两步路-北京热门徒步线路top10"
   },
   {
     "title": "灵感资源库",
     "title_zh": "灵感资源库",
     "type": "note",
-    "path": "content\\legacy-knowledge\\2026-03-19-inspiration-archive",
+    "path": "content/legacy-knowledge/2026-03-19-inspiration-archive",
     "author": "Hermes Agent",
     "source_url": "",
     "source_site": "",
@@ -1936,15 +1936,15 @@
     "legacy_source_path": "~/.hermes/workspace/inspiration-archive/resources.jsonl",
     "migration_note": "从旧 Wiki 迁移。原文为 JSONL 结构化资源列表，无翻译。无单一来源 URL，为 Hermes Agent  curated 资源。",
     "updated_date": "2026-03-19",
-    "slug": "content\\legacy-knowledge\\2026-03-19-inspiration-archive",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\legacy-knowledge\\2026-03-19-inspiration-archive"
+    "slug": "2026-03-19-inspiration-archive",
+    "detail_url": "items/2026-03-19-inspiration-archive/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/legacy-knowledge/2026-03-19-inspiration-archive"
   },
   {
     "title": "Karpathy 的 LLM Wiki：AI 知识管理新范式",
     "title_zh": "Karpathy 的 LLM Wiki：AI 知识管理新范式",
     "type": "note",
-    "path": "content\\legacy-knowledge\\2026-04-07-karpathy-llm-wiki",
+    "path": "content/legacy-knowledge/2026-04-07-karpathy-llm-wiki",
     "author": "@elliotchen100 (艾略特)",
     "source_url": "https://x.com/elliotchen100/status/2040981753490477403",
     "source_site": "Twitter / X",
@@ -1976,15 +1976,15 @@
     "legacy_source_path": "~/.hermes/wiki/research/karpathy-llm-wiki.md",
     "migration_note": "从旧 Wiki 迁移。原文为中文笔记，无翻译。来源 URL 为 Twitter 推文。",
     "updated_date": "2026-04-07",
-    "slug": "content\\legacy-knowledge\\2026-04-07-karpathy-llm-wiki",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\legacy-knowledge\\2026-04-07-karpathy-llm-wiki"
+    "slug": "2026-04-07-karpathy-llm-wiki",
+    "detail_url": "items/2026-04-07-karpathy-llm-wiki/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/legacy-knowledge/2026-04-07-karpathy-llm-wiki"
   },
   {
     "title": "Karpathy Second Brain 实现指南",
     "title_zh": "Karpathy Second Brain 实现指南",
     "type": "note",
-    "path": "content\\legacy-knowledge\\2026-04-07-karpathy-second-brain-guide",
+    "path": "content/legacy-knowledge/2026-04-07-karpathy-second-brain-guide",
     "author": "@godofprompt",
     "source_url": "https://x.com/godofprompt/status/2041265656893489419",
     "source_site": "Twitter / X",
@@ -2018,15 +2018,15 @@
     "legacy_source_path": "~/.hermes/wiki/research/karpathy-second-brain-guide.md",
     "migration_note": "从旧 Wiki 迁移。原文为中文笔记，无翻译。来源 URL 为 Twitter 推文。包含完整的 7 步构建流程和 Prompt 库。",
     "updated_date": "2026-04-07",
-    "slug": "content\\legacy-knowledge\\2026-04-07-karpathy-second-brain-guide",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\legacy-knowledge\\2026-04-07-karpathy-second-brain-guide"
+    "slug": "2026-04-07-karpathy-second-brain-guide",
+    "detail_url": "items/2026-04-07-karpathy-second-brain-guide/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/legacy-knowledge/2026-04-07-karpathy-second-brain-guide"
   },
   {
     "title": "Transformer 解码机制解析",
     "title_zh": "Transformer 解码机制解析",
     "type": "note",
-    "path": "content\\legacy-knowledge\\2026-04-07-transformer-decoding",
+    "path": "content/legacy-knowledge/2026-04-07-transformer-decoding",
     "author": "Amit Shekhar",
     "source_url": "https://x.com/amitiitbhu/status/2041479290580287543",
     "source_site": "Twitter / X",
@@ -2059,15 +2059,15 @@
     "legacy_source_path": "~/.hermes/wiki/research/transformer-decoding.md",
     "migration_note": "从旧 Wiki 迁移。原文为中文技术笔记，无翻译。来源 URL 为 Twitter 推文。",
     "updated_date": "2026-04-07",
-    "slug": "content\\legacy-knowledge\\2026-04-07-transformer-decoding",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\legacy-knowledge\\2026-04-07-transformer-decoding"
+    "slug": "2026-04-07-transformer-decoding",
+    "detail_url": "items/2026-04-07-transformer-decoding/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/legacy-knowledge/2026-04-07-transformer-decoding"
   },
   {
     "title": "Wiki 代替 RAG 的可行性评估",
     "title_zh": "Wiki 代替 RAG 的可行性评估",
     "type": "note",
-    "path": "content\\legacy-knowledge\\2026-04-07-wiki-vs-rag-analysis",
+    "path": "content/legacy-knowledge/2026-04-07-wiki-vs-rag-analysis",
     "author": "Hermes Agent",
     "source_url": "",
     "source_site": "",
@@ -2100,15 +2100,15 @@
     "legacy_source_path": "~/.hermes/wiki/research/wiki-vs-rag-analysis.md",
     "migration_note": "从旧 Wiki 迁移。原文为中文分析笔记，无翻译。无单一来源 URL，为 Hermes Agent 原创分析。",
     "updated_date": "2026-04-07",
-    "slug": "content\\legacy-knowledge\\2026-04-07-wiki-vs-rag-analysis",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\legacy-knowledge\\2026-04-07-wiki-vs-rag-analysis"
+    "slug": "2026-04-07-wiki-vs-rag-analysis",
+    "detail_url": "items/2026-04-07-wiki-vs-rag-analysis/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/legacy-knowledge/2026-04-07-wiki-vs-rag-analysis"
   },
   {
     "title": "Hermes Agent Task Report Template",
     "title_zh": "Hermes Agent 任务报告模板",
     "type": "note",
-    "path": "content\\notes\\2026\\2026-06-26-hermes-agent-task-report-template",
+    "path": "content/notes/2026/2026-06-26-hermes-agent-task-report-template",
     "author": "Conan Xin",
     "source_url": "https://www.shapeof.ai/",
     "source_site": "shapeof.ai",
@@ -2148,15 +2148,15 @@
     "category": "template",
     "source_type": "derived",
     "updated_date": "2026-06-26",
-    "slug": "content\\notes\\2026\\2026-06-26-hermes-agent-task-report-template",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\notes\\2026\\2026-06-26-hermes-agent-task-report-template"
+    "slug": "2026-06-26-hermes-agent-task-report-template",
+    "detail_url": "items/2026-06-26-hermes-agent-task-report-template/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/notes/2026/2026-06-26-hermes-agent-task-report-template"
   },
   {
     "title": "Hermes Agent UI P0 Implementation Spec",
     "title_zh": "Hermes Agent UI P0 实施规范",
     "type": "note",
-    "path": "content\\notes\\2026\\2026-06-26-hermes-agent-ui-p0-implementation-spec",
+    "path": "content/notes/2026/2026-06-26-hermes-agent-ui-p0-implementation-spec",
     "author": "Conan Xin",
     "source_url": "https://www.shapeof.ai/",
     "source_site": "shapeof.ai",
@@ -2196,15 +2196,15 @@
     "category": "spec",
     "source_type": "derived",
     "updated_date": "2026-06-26",
-    "slug": "content\\notes\\2026\\2026-06-26-hermes-agent-ui-p0-implementation-spec",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\notes\\2026\\2026-06-26-hermes-agent-ui-p0-implementation-spec"
+    "slug": "2026-06-26-hermes-agent-ui-p0-implementation-spec",
+    "detail_url": "items/2026-06-26-hermes-agent-ui-p0-implementation-spec/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/notes/2026/2026-06-26-hermes-agent-ui-p0-implementation-spec"
   },
   {
     "title": "Hermes Agent UI Self-Audit v1",
     "title_zh": "Hermes Agent UI 第一轮自检审计",
     "type": "note",
-    "path": "content\\notes\\2026\\2026-06-26-hermes-agent-ui-self-audit-v1",
+    "path": "content/notes/2026/2026-06-26-hermes-agent-ui-self-audit-v1",
     "author": "Conan Xin",
     "source_url": "https://www.shapeof.ai/",
     "source_site": "shapeof.ai",
@@ -2243,15 +2243,15 @@
     "category": "audit",
     "source_type": "derived",
     "updated_date": "2026-06-26",
-    "slug": "content\\notes\\2026\\2026-06-26-hermes-agent-ui-self-audit-v1",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\notes\\2026\\2026-06-26-hermes-agent-ui-self-audit-v1"
+    "slug": "2026-06-26-hermes-agent-ui-self-audit-v1",
+    "detail_url": "items/2026-06-26-hermes-agent-ui-self-audit-v1/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/notes/2026/2026-06-26-hermes-agent-ui-self-audit-v1"
   },
   {
     "title": "Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)",
     "title_zh": "Hermes Agent UI 自检表",
     "type": "note",
-    "path": "content\\notes\\2026\\2026-06-26-hermes-agent-ui-shape-of-ai-checklist",
+    "path": "content/notes/2026/2026-06-26-hermes-agent-ui-shape-of-ai-checklist",
     "author": "Conan Xin",
     "source_url": "https://www.shapeof.ai/",
     "source_site": "shapeof.ai",
@@ -2289,15 +2289,15 @@
     "category": "framework",
     "source_type": "derived",
     "updated_date": "2026-06-26",
-    "slug": "content\\notes\\2026\\2026-06-26-hermes-agent-ui-shape-of-ai-checklist",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\notes\\2026\\2026-06-26-hermes-agent-ui-shape-of-ai-checklist"
+    "slug": "2026-06-26-hermes-agent-ui-shape-of-ai-checklist",
+    "detail_url": "items/2026-06-26-hermes-agent-ui-shape-of-ai-checklist/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/notes/2026/2026-06-26-hermes-agent-ui-shape-of-ai-checklist"
   },
   {
     "title": "Nia Docs — 把整个 Web 变成文件系统",
     "title_zh": "Nia Docs — 把整个 Web 变成文件系统",
     "type": "project",
-    "path": "content\\projects\\2026-04-07-nia-docs-filesystem",
+    "path": "content/projects/2026-04-07-nia-docs-filesystem",
     "author": "@arlanr (Nozomio Labs CEO)",
     "source_url": "https://x.com/arlanr/status/2041215978957389908",
     "source_site": "Twitter / X",
@@ -2330,15 +2330,15 @@
     "legacy_source_path": "~/.hermes/wiki/research/nia-docs-filesystem.md",
     "migration_note": "从旧 Wiki 迁移。原文为中文项目笔记，无翻译。来源 URL 为 Twitter 推文。",
     "updated_date": "2026-04-07",
-    "slug": "content\\projects\\2026-04-07-nia-docs-filesystem",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\projects\\2026-04-07-nia-docs-filesystem"
+    "slug": "2026-04-07-nia-docs-filesystem",
+    "detail_url": "items/2026-04-07-nia-docs-filesystem/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/projects/2026-04-07-nia-docs-filesystem"
   },
   {
     "title": "Hermes Agent Self-Evolution",
     "title_zh": "Hermes Agent 自我进化系统",
     "type": "project",
-    "path": "content\\projects\\2026-04-13-hermes-agent-self-evolution",
+    "path": "content/projects/2026-04-13-hermes-agent-self-evolution",
     "author": "NousResearch",
     "source_url": "https://github.com/NousResearch/hermes-agent-self-evolution",
     "source_site": "GitHub / NousResearch",
@@ -2371,15 +2371,15 @@
     "legacy_source_path": "~/.hermes/wiki/research/hermes-agent-self-evolution.md",
     "migration_note": "从旧 Wiki 迁移。原文为中文笔记，无翻译。来源 URL 为 GitHub 仓库。",
     "updated_date": "2026-04-07",
-    "slug": "content\\projects\\2026-04-13-hermes-agent-self-evolution",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\projects\\2026-04-13-hermes-agent-self-evolution"
+    "slug": "2026-04-13-hermes-agent-self-evolution",
+    "detail_url": "items/2026-04-13-hermes-agent-self-evolution/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/projects/2026-04-13-hermes-agent-self-evolution"
   },
   {
     "title": "Session Guard Phase 1: Pre-Request Sanitizer",
     "title_zh": "Session Guard 第一阶段：预请求审查器设计",
     "type": "project",
-    "path": "content\\projects\\2026-05-14-session-guard-sanitizer",
+    "path": "content/projects/2026-05-14-session-guard-sanitizer",
     "author": "Hermes Agent",
     "source_url": null,
     "source_site": null,
@@ -2415,15 +2415,15 @@
     "legacy_source_path": "~/.hermes/reports/session_guard/session_guard_1_pre_request_sanitizer_20260514_135621.md",
     "migration_note": "从旧知识库迁移的 Session Guard 预请求审查器设计报告。包含 sanitizer 函数设计、集成点、测试用例和回滚方案。",
     "updated_date": "2026-05-14",
-    "slug": "content\\projects\\2026-05-14-session-guard-sanitizer",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\projects\\2026-05-14-session-guard-sanitizer"
+    "slug": "2026-05-14-session-guard-sanitizer",
+    "detail_url": "items/2026-05-14-session-guard-sanitizer/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/projects/2026-05-14-session-guard-sanitizer"
   },
   {
     "title": "Hydro0x01 Local Hermes Security Audit",
     "title_zh": "Hydro0x01 本地 Hermes 安全审计报告",
     "type": "project",
-    "path": "content\\projects\\2026-05-18-hydro0x01-security-audit",
+    "path": "content/projects/2026-05-18-hydro0x01-security-audit",
     "author": "Hermes Agent",
     "source_url": null,
     "source_site": null,
@@ -2458,15 +2458,15 @@
     "legacy_source_path": "~/.hermes/reports/hydro0x01_audit/HYDRO0X01_LOCAL_HERMES_AUDIT.md",
     "migration_note": "从旧知识库迁移的 Hydro0x01 安全审计项目报告。包含架构审计、REST API 路由、MQTT 主题、数据库模型、构建验证和风险评估。",
     "updated_date": "2026-05-18",
-    "slug": "content\\projects\\2026-05-18-hydro0x01-security-audit",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\projects\\2026-05-18-hydro0x01-security-audit"
+    "slug": "2026-05-18-hydro0x01-security-audit",
+    "detail_url": "items/2026-05-18-hydro0x01-security-audit/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/projects/2026-05-18-hydro0x01-security-audit"
   },
   {
     "title": "ArXiv AI Agents 论文列表",
     "title_zh": "ArXiv AI Agents 相关论文",
     "type": "resource_collection",
-    "path": "content\\resource_collections\\2026-05-06-arxiv-ai-agents",
+    "path": "content/resource_collections/2026-05-06-arxiv-ai-agents",
     "author": "ArXiv 作者",
     "source_url": null,
     "source_site": null,
@@ -2498,15 +2498,15 @@
     "legacy_source_path": "~/.hermes/wiki/research/arxiv-ai-agents.md",
     "migration_note": "从旧知识库迁移的 ArXiv AI Agents 相关论文列表，包含 3 篇 2026 年 4 月发布的研究论文。",
     "updated_date": "2026-05-06",
-    "slug": "content\\resource_collections\\2026-05-06-arxiv-ai-agents",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\resource_collections\\2026-05-06-arxiv-ai-agents"
+    "slug": "2026-05-06-arxiv-ai-agents",
+    "detail_url": "items/2026-05-06-arxiv-ai-agents/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/resource_collections/2026-05-06-arxiv-ai-agents"
   },
   {
     "title": "ArXiv LLM Systems 论文列表",
     "title_zh": "ArXiv LLM Systems 论文列表",
     "type": "resource_collection",
-    "path": "content\\resource_collections\\2026-05-06-arxiv-llm-systems",
+    "path": "content/resource_collections/2026-05-06-arxiv-llm-systems",
     "author": "Hermes Agent",
     "source_url": null,
     "source_site": "",
@@ -2537,15 +2537,15 @@
     "legacy_source_path": "~/.hermes/wiki/research/arxiv-llm-systems.md",
     "migration_note": "从旧 Wiki 迁移。原文为中文整理的 ArXiv 论文列表，无单一来源 URL，无翻译。",
     "updated_date": "2026-05-06",
-    "slug": "content\\resource_collections\\2026-05-06-arxiv-llm-systems",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\resource_collections\\2026-05-06-arxiv-llm-systems"
+    "slug": "2026-05-06-arxiv-llm-systems",
+    "detail_url": "items/2026-05-06-arxiv-llm-systems/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/resource_collections/2026-05-06-arxiv-llm-systems"
   },
   {
     "title": "Hacker News ML 热门链接",
     "title_zh": "Hacker News 机器学习热门内容",
     "type": "resource_collection",
-    "path": "content\\resource_collections\\2026-05-14-hacker-news-ml",
+    "path": "content/resource_collections/2026-05-14-hacker-news-ml",
     "author": "Hacker News 社区",
     "source_url": null,
     "source_site": null,
@@ -2576,15 +2576,15 @@
     "legacy_source_path": "~/.hermes/wiki/research/hacker-news-ml.md",
     "migration_note": "从旧知识库迁移的 Hacker News ML 板块热门内容快照，包含 10 条机器学习相关热门链接。原始数据为 HN RSS 抓取结果。",
     "updated_date": "2026-05-14",
-    "slug": "content\\resource_collections\\2026-05-14-hacker-news-ml",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\resource_collections\\2026-05-14-hacker-news-ml"
+    "slug": "2026-05-14-hacker-news-ml",
+    "detail_url": "items/2026-05-14-hacker-news-ml/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/resource_collections/2026-05-14-hacker-news-ml"
   },
   {
     "title": "Awesome LLM Long Context 资源列表",
     "title_zh": "长上下文大语言模型精选资源",
     "type": "resource_collection",
-    "path": "content\\resource_collections\\2026-05-17-awesome-llm-long-context",
+    "path": "content/resource_collections/2026-05-17-awesome-llm-long-context",
     "author": "社区整理",
     "source_url": null,
     "source_site": null,
@@ -2616,15 +2616,15 @@
     "legacy_source_path": "~/.hermes/wiki/research/awesome-llm-long-context.md",
     "migration_note": "从旧知识库迁移的长上下文 LLM 资源列表，包含文档工具与学术文献两类资源。原始提取中存在重复链接，已做去重合并。",
     "updated_date": "2026-05-17",
-    "slug": "content\\resource_collections\\2026-05-17-awesome-llm-long-context",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\resource_collections\\2026-05-17-awesome-llm-long-context"
+    "slug": "2026-05-17-awesome-llm-long-context",
+    "detail_url": "items/2026-05-17-awesome-llm-long-context/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/resource_collections/2026-05-17-awesome-llm-long-context"
   },
   {
     "title": "The Shape of AI",
     "title_zh": "Shape of AI：AI 交互模式库",
     "type": "resource_collection",
-    "path": "content\\resource_collections\\2026-06-26-shape-of-ai-ux-patterns",
+    "path": "content/resource_collections/2026-06-26-shape-of-ai-ux-patterns",
     "author": "Emily Campbell",
     "source_url": "https://www.shapeof.ai/",
     "source_site": "shapeof.ai",
@@ -2655,12 +2655,12 @@
     "word_count": {
       "source": 135
     },
-    "slug": "content\\resource_collections\\2026-06-26-shape-of-ai-ux-patterns",
+    "slug": "2026-06-26-shape-of-ai-ux-patterns",
     "author_zh": "Emily Campbell",
     "category": "reference",
     "source_type": "website",
     "updated_date": "2026-06-26",
-    "detail_url": "",
-    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content\\resource_collections\\2026-06-26-shape-of-ai-ux-patterns"
+    "detail_url": "items/2026-06-26-shape-of-ai-ux-patterns/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/resource_collections/2026-06-26-shape-of-ai-ux-patterns"
   }
 ]

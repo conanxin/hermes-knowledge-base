@@ -85,8 +85,16 @@ SECTION_ORDER: List[str] = ["summary", "translation", "collection", "source", "n
 # Slug & URL helpers
 # ---------------------------------------------------------------------------
 def slug_from_path(path: str) -> str:
-    """Return the final path segment as the slug."""
-    return path.rstrip("/").split("/")[-1] if path else ""
+    """Return the final path segment as the slug.
+
+    Path-OS-agnostic: normalizes backslashes to forward slashes first so the
+    same slug is produced on Windows (content\\articles\\2026\\...) and on
+    Linux (content/articles/2026/...). v0.3.70 fix.
+    """
+    if not path:
+        return ""
+    posix_path = path.replace("\\", "/")
+    return posix_path.rstrip("/").split("/")[-1]
 
 
 # ---------------------------------------------------------------------------
@@ -1219,7 +1227,11 @@ def generate_item_pages() -> int:
             print(f"  Skipping record without path: {record.get('title_zh') or record.get('title')}")
             skipped += 1
             continue
-        if not path_str.startswith("content/"):
+        # v0.3.70: normalize to POSIX before the "content/" prefix check so
+        # Windows backslash paths (content\articles\...) are accepted. This was
+        # the root cause of "Generated 0 item pages" on Windows.
+        posix_path = path_str.replace("\\", "/")
+        if not posix_path.startswith("content/"):
             print(f"  Skipping record with non-content path: {path_str}")
             skipped += 1
             continue

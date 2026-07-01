@@ -79,11 +79,60 @@ def count_cjk_chars(text: str) -> int:
     return len(re.findall(r"[\u4e00-\u9fff]", text))
 
 
+# --- v0.3.70: visible-text extraction for inference & word counting ---
+#
+# Markdown link/image target URLs and HTML attribute values must NOT
+# participate in topic/tag inference or in word_count, otherwise a
+# hiking article whose image CDN path contains "/AI/" gets misclassified
+# as "人工智能", and the CJK word_count drifts because URL tokens like
+# "mmbiz", "jpg", "wx_fmt" are counted as English words.
+
+# Matches ![alt](url) and [text](url) — we keep only the alt/text label.
+_MD_LINK_RE = re.compile(r"!?\[([^\]]*)\]\([^)]*\)")
+# Matches bare URLs (http/https/ftp) that appear as plain text.
+_BARE_URL_RE = re.compile(r"https?://\S+|ftp://\S+", re.IGNORECASE)
+# Matches HTML <img ...> / <a href...> tags entirely (drop them).
+_HTML_TAG_RE = re.compile(r"<img\b[^>]*/?>|<a\b[^>]*>.*?</a>", re.IGNORECASE | re.DOTALL)
+# Matches HTML src="..." / href="..." attribute fragments (defensive —
+# in case a tag slipped through the previous regex).
+_ATTR_URL_RE = re.compile(r'\b(?:src|href|data-src)\s*=\s*["\'][^"\']*["\']', re.IGNORECASE)
+# Base64 data URIs (very long, no semantic value).
+_DATA_URI_RE = re.compile(r"data:[^;]+;base64,[A-Za-z0-9+/=]+", re.IGNORECASE)
+
+
+def extract_visible_text(text: str) -> str:
+    """Return text with all URLs / image targets / HTML attrs removed.
+
+    Used by infer_topics / infer_tags / count_words_mixed so that only
+    human-visible prose participates in classification and counting.
+    Keeps CJK characters, ASCII letters/digits, and basic punctuation.
+    """
+    if not text:
+        return ""
+    s = text
+    # Order matters: strip HTML tags first (so URLs inside them vanish),
+    # then markdown link/image targets (keep the label), then bare URLs,
+    # then any leftover src/href attribute fragments, then data URIs.
+    s = _HTML_TAG_RE.sub("", s)
+    s = _MD_LINK_RE.sub(r"\1", s)        # keep only the link label / image alt
+    s = _BARE_URL_RE.sub("", s)
+    s = _ATTR_URL_RE.sub("", s)
+    s = _DATA_URI_RE.sub("", s)
+    return s
+
+
 def count_words_mixed(text: str) -> int:
-    """Count words: CJK chars + English words."""
-    cjk = count_cjk_chars(text)
-    # Count English word-like tokens
-    english_words = len(re.findall(r"[a-zA-Z]+", text))
+    """Count words: CJK chars + English words, based on VISIBLE text only.
+
+    v0.3.70: strips markdown link/image URLs, bare URLs, HTML img/src/href
+    attributes and base64 data URIs before counting, so a Chinese article
+    with many image CDN URLs no longer reports a wildly inflated word
+    count (which previously caused word_count.translation drift > 30%).
+    """
+    visible = extract_visible_text(text)
+    cjk = count_cjk_chars(visible)
+    # Count English word-like tokens (len >= 2 to skip noise like "m", "s").
+    english_words = len(re.findall(r"[a-zA-Z]{2,}", visible))
     return cjk + english_words
 
 
@@ -256,22 +305,46 @@ def format_yaml_dict(d: dict, indent: int = 0) -> str:
 
 
 def infer_topics(content: str, title: str) -> list:
-    """Infer topics from content and title."""
-    # Simple heuristic: extract common Chinese domain words
+    """Infer topics from VISIBLE text of content and title.
+
+    v0.3.70 hardening:
+    - Inference runs on `extract_visible_text(...)` so URLs / image CDN
+      paths / Markdown link targets / HTML src/href attributes do NOT
+      participate. Previously a hiking article whose image URL contained
+      "/AI/" was misclassified as "人工智能".
+    - "人工智能" requires an explicit semantic keyword (人工智能 / 大模型 /
+      生成式 AI / LLM / ChatGPT / Claude / OpenAI / AI agent / 机器学习 /
+      深度学习), NOT a bare case-insensitive "AI" substring.
+    - Added 户外 / 徒步 / 自然地理 domain keywords.
+    """
+    # v0.3.70: operate on visible text only.
+    visible_title = extract_visible_text(title)
+    visible_content = extract_visible_text(content[:3000])
+    text = visible_title + " " + visible_content
+
     domain_keywords = {
-        "人工智能": ["人工智能", "AI", "大模型", "机器学习", "深度学习", "神经网络"],
-        "科技": ["科技", "技术", "互联网", "数字化", "算法", "编程", "代码"],
-        "商业": ["商业", "创业", "投资", "融资", "市场", "品牌", "营销", "战略"],
-        "产品": ["产品", "设计", "用户体验", "产品经理", "交互", "迭代"],
-        "文化": ["文化", "艺术", "文学", "电影", "音乐", "阅读", "写作"],
-        "社会": ["社会", "教育", "医疗", "城市", "公共", "政策", "治理"],
-        "生活": ["生活", "健康", "美食", "旅行", "家居", "运动", "心理"],
-        "哲学": ["哲学", "思想", "认知", "意识", "存在", "伦理", "道德"],
-        "历史": ["历史", "考古", "文明", "传统", "古代", "近代"],
-        "经济": ["经济", "金融", "货币", "贸易", "产业", "供应链"],
+        "人工智能": [
+            "人工智能", "大模型", "生成式 AI", "生成式AI", "生成式人工智能",
+            "LLM", "ChatGPT", "Claude", "OpenAI", "AI agent", "AI Agent",
+            "机器学习", "深度学习", "神经网络", "GPT-4", "GPT-5",
+            "语言模型", "prompt engineering", "提示工程",
+        ],
+        "科技": ["科技", "技术", "互联网", "数字化", "算法", "编程", "代码", "软件", "开源"],
+        "商业": ["商业", "创业", "投资", "融资", "市场", "品牌", "营销", "战略", "公司"],
+        "产品": ["产品", "设计", "用户体验", "产品经理", "交互", "迭代", "UX", "UI"],
+        "文化": ["文化", "艺术", "文学", "电影", "音乐", "阅读", "写作", "书评"],
+        "社会": ["社会", "教育", "医疗", "城市", "公共", "政策", "治理", "社区"],
+        "生活": ["生活", "健康", "美食", "旅行", "家居", "运动", "心理", "日常"],
+        "哲学": ["哲学", "思想", "认知", "意识", "存在", "伦理", "道德", "反思"],
+        "历史": ["历史", "考古", "文明", "传统", "古代", "近代", "史料"],
+        "经济": ["经济", "金融", "货币", "贸易", "产业", "供应链", "宏观"],
+        # v0.3.70: outdoor / hiking domain (was missing entirely).
+        "户外": ["徒步", "户外", "登山", "爬升", "穿越", "山脊", "古道", "营地",
+                "补给", "导航", "越野", "徒步路线", "徒步线路", "hiking"],
+        "自然地理": ["山脉", "海拔", "草甸", "峡谷", "河谷", "森林", "湖泊",
+                    "地貌", "地理", "自然", "生态", "植被", "气候"],
     }
     matched = []
-    text = title + " " + content[:2000]
     for topic, keywords in domain_keywords.items():
         for kw in keywords:
             if kw in text:
@@ -284,26 +357,44 @@ def infer_topics(content: str, title: str) -> list:
 
 
 def infer_tags(content: str, title: str, account_name: str) -> list:
-    """Infer tags from content and title."""
+    """Infer tags from VISIBLE text of content, title, and account name.
+
+    v0.3.70 hardening:
+    - Runs on `extract_visible_text(...)` so URLs / image paths do not
+      leak into tag inference.
+    - "AI" tag requires an explicit semantic keyword (same rule as
+      infer_topics), not a bare "AI" substring.
+    - Added 户外 / 徒步 / 京郊 / 路线 tags.
+    """
     tags = set()
-    text = title + " " + content[:2000]
+    visible_title = extract_visible_text(title)
+    visible_content = extract_visible_text(content[:3000])
+    text = visible_title + " " + visible_content
 
     # Add account as tag
     if account_name:
         tags.add(account_name)
 
-    # Common tech tags
+    # Semantic tag buckets. The "AI" bucket uses explicit keywords only —
+    # a bare "AI" substring inside a URL or filename must NOT trigger it.
     tech_tags = {
-        "AI": ["人工智能", "AI", "大模型", "ChatGPT", "Claude", "GPT"],
+        "AI": ["人工智能", "大模型", "生成式 AI", "生成式AI", "LLM",
+               "ChatGPT", "Claude", "OpenAI", "AI agent", "机器学习",
+               "深度学习", "GPT-4", "GPT-5", "语言模型"],
         "微信": ["微信", "公众号", "WeChat"],
         "互联网": ["互联网", "Web", "网络", "平台"],
         "创业": ["创业", "startup", "创始人"],
-        "投资": ["投资", " VC", "融资", "PE ", "IPO"],
+        "投资": ["投资", "VC", "融资", "PE", "IPO"],
         "阅读": ["阅读", "读书", "书评", "书单"],
         "写作": ["写作", "文章", "撰稿", "文案"],
         "认知": ["认知", "思维", "心智", "心理学"],
         "健康": ["健康", "养生", "医疗", "健身"],
         "教育": ["教育", "学习", "课程", "教学"],
+        # v0.3.70: outdoor / hiking tags
+        "徒步": ["徒步", "hiking", "徒步路线", "徒步线路"],
+        "户外": ["户外", "登山", "越野", "野外"],
+        "京郊": ["京郊", "北京周边", "北京户外"],
+        "路线": ["路线", "线路", "轨迹", "路网"],
     }
     for tag, keywords in tech_tags.items():
         for kw in keywords:

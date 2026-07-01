@@ -68,7 +68,10 @@ def scan_metadata():
         for key in sorted(data.keys()):
             if key not in ordered:
                 ordered[key] = data[key]
-        ordered["path"] = str(rel_path.parent)
+        # v0.3.70: always emit POSIX paths (forward slashes) in catalog.jsonl
+        # so downstream scripts (export_site_data, generate_item_pages,
+        # check_pages_sync) behave identically on Windows and Linux.
+        ordered["path"] = rel_path.parent.as_posix()
         records.append(ordered)
     return records
 

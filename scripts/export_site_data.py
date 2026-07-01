@@ -56,10 +56,17 @@ def get_updated_date(data):
 
 
 def slug_from_path(path: str) -> str:
-    """Return the final path segment as the slug."""
+    """Return the final path segment as the slug.
+
+    Path-OS-agnostic: normalizes backslashes to forward slashes first so the
+    same slug is produced on Windows (content\\articles\\2026\\...) and on
+    Linux (content/articles/2026/...). v0.3.70 fix.
+    """
     if not path:
         return ""
-    return path.rstrip("/").split("/")[-1]
+    # Normalize to POSIX so split("/") works on both Windows and POSIX.
+    posix_path = path.replace("\\", "/")
+    return posix_path.rstrip("/").split("/")[-1]
 
 
 def export_site_data():
@@ -86,16 +93,20 @@ def export_site_data():
             # Detail page support: derive slug, detail_url, github_url.
             path = filtered.get("path", "")
             slug = slug_from_path(path)
-            if slug and path.startswith("content/"):
+            # v0.3.70: normalize to POSIX before the "content/" prefix check
+            # so Windows backslash paths (content\articles\...) are accepted.
+            posix_path = path.replace("\\", "/")
+            if slug and posix_path.startswith("content/"):
                 filtered["slug"] = slug
                 filtered["detail_url"] = f"items/{slug}/"
-                filtered["github_url"] = GITHUB_REPO_BASE + path
+                # github_url uses POSIX paths (forward slashes) regardless of OS.
+                filtered["github_url"] = GITHUB_REPO_BASE + posix_path
             else:
                 # Non-content records (e.g. legacy or future virtual items)
                 # still get github_url so cards can always offer a fallback.
                 filtered["slug"] = slug
                 filtered["detail_url"] = ""
-                filtered["github_url"] = GITHUB_REPO_BASE + path if path else ""
+                filtered["github_url"] = GITHUB_REPO_BASE + posix_path if posix_path else ""
 
             records.append(filtered)
 
