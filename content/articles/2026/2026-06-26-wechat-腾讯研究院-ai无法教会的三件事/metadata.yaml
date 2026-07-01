@@ -1,0 +1,41 @@
+title: "AI无法教会的三件事"
+title_zh: "AI无法教会的三件事"
+source_url: "https://mp.weixin.qq.com/s/be9-vAYCkq_a_RkuZEpEiw"
+source_site: "腾讯研究院"
+author: "腾讯研究院"
+published_date: "2026-06-26"
+captured_date: "2026-07-01"
+language: "zh-CN"
+translation_language: "zh-CN"
+status: "translated"
+type: "article"
+content_kind: "wechat_official_article"
+source_platform: "wechat_official_account"
+dedupe_key: "wechat:be9-vAYCkq_a_RkuZEpEiw:ai无法教会的三件事"
+is_translation_mirror: true
+topics:
+  - "科技"
+  - "文化"
+  - "社会"
+  - "生活"
+  - "哲学"
+  - "历史"
+tags:
+  - "互联网"
+  - "健康"
+  - "认知"
+  - "写作"
+  - "腾讯研究院"
+  - "教育"
+word_count:
+  source: 3224
+  translation: 3224
+wechat:
+  account_name: "腾讯研究院"
+  url_params:
+    # no params extracted
+capture:
+  tool: "openclaw-weixin"
+  captured_at: "2026-07-01T11:28:58"
+  version: "1.0"
+path: "content/articles/2026/2026-06-26-wechat-腾讯研究院-ai无法教会的三件事/"

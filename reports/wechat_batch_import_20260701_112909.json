@@ -1,0 +1,111 @@
+{
+  "generated_at": "2026-07-01T11:29:09",
+  "mode": "import",
+  "total": 5,
+  "summary": {
+    "IMPORTED": 5
+  },
+  "gate_results": [
+    {
+      "name": "check_kb.py",
+      "exit": 0,
+      "stdout_tail": "\n==================================================\nKnowledge Base Check\n==================================================\nTotal items: 61\nPASS: 61\nFAIL: 0\n\nSTATUS: PASS\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "update_site.py",
+      "exit": 0,
+      "stdout_tail": "###############################\n\n==================================================\nRunning: scripts/check_pages_sync.py\n==================================================\n[5/5] scripts/check_pages_sync.py OK\n\n==================================================\nAll steps completed successfully.\nRun 'git status' to review changes before committing.\n==================================================\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "audit_kb_state.py",
+      "exit": 0,
+      "stdout_tail": "sy\\metadata.yaml\n  - topics count=12 outside soft range [3,8]: content\\articles\\2026\\2026-07-01-ali-abdaal-financial-freedom-easy\\metadata.yaml\n\n------------------------------------------------------------\nHARD FAILURES: 0\nWARNINGS: 28\n\n============================================================\nSTATUS: PASS_WITH_WARNINGS (28 warnings)\n============================================================\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "check_pages_sync.py",
+      "exit": 0,
+      "stdout_tail": "s: 61\n  all 61 slugs present and byte-identical.\n\n[3/3] Content→items completeness (v0.3.70)\n  content/ metadata.yaml count: 61\n  site/items/ slug count:       61\n  docs/items/ slug count:       61\n  every content/ entry has an item page in both site/ and docs/.\n\n============================================================\nSTATUS: PASS\n============================================================\n\n",
+      "stderr_tail": ""
+    }
+  ],
+  "items": [
+    {
+      "input": "https://mp.weixin.qq.com/s/3YC72QkVirX7AJpl58cnow",
+      "input_type": "--url",
+      "status": "IMPORTED",
+      "title": "逆流而上的爱与勇气——写在阿伦特诞辰120周年之际",
+      "account_name": "文汇读书周报",
+      "published_date": "2026-06-28",
+      "source_url": "https://mp.weixin.qq.com/s/3YC72QkVirX7AJpl58cnow",
+      "capture_json_path": "inbox/raw/wechat/2026-06-28-逆流而上的爱与勇气写在阿伦特诞辰120周年之际-2.json",
+      "kb_article_path": "D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-06-28-wechat-文汇读书周报-逆流而上的爱与勇气写在阿伦特诞辰120周年之际",
+      "docs_item_path": "docs/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-06-28-wechat-文汇读书周报-逆流而上的爱与勇气写在阿伦特诞辰120周年之际/index.html",
+      "site_item_path": "site/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-06-28-wechat-文汇读书周报-逆流而上的爱与勇气写在阿伦特诞辰120周年之际/index.html",
+      "failure_reason": "",
+      "duplicate_of": ""
+    },
+    {
+      "input": "https://mp.weixin.qq.com/s/XtJsfYmI0LrGyo42Yjc3PA",
+      "input_type": "--url",
+      "status": "IMPORTED",
+      "title": "从传统评点看金庸｜《倚天》篇：张无忌为什么总是被骗？",
+      "account_name": "澎湃翻书党",
+      "published_date": "2026-06-27",
+      "source_url": "https://mp.weixin.qq.com/s/XtJsfYmI0LrGyo42Yjc3PA",
+      "capture_json_path": "inbox/raw/wechat/2026-06-27-从传统评点看金庸倚天篇张无忌为什么总是被骗-2.json",
+      "kb_article_path": "D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-06-27-wechat-澎湃翻书党-从传统评点看金庸倚天篇张无忌为什么总是被骗",
+      "docs_item_path": "docs/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-06-27-wechat-澎湃翻书党-从传统评点看金庸倚天篇张无忌为什么总是被骗/index.html",
+      "site_item_path": "site/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-06-27-wechat-澎湃翻书党-从传统评点看金庸倚天篇张无忌为什么总是被骗/index.html",
+      "failure_reason": "",
+      "duplicate_of": ""
+    },
+    {
+      "input": "https://mp.weixin.qq.com/s/BwLPBh-f435DVn-ivvSohQ",
+      "input_type": "--url",
+      "status": "IMPORTED",
+      "title": "专访林小英：接受教育，最终是为了让我们把日子过得生动",
+      "account_name": "新京报书评周刊",
+      "published_date": "2026-06-26",
+      "source_url": "https://mp.weixin.qq.com/s/BwLPBh-f435DVn-ivvSohQ",
+      "capture_json_path": "inbox/raw/wechat/2026-06-26-专访林小英接受教育最终是为了让我们把日子过得生动-2.json",
+      "kb_article_path": "D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-06-26-wechat-新京报书评周刊-专访林小英接受教育最终是为了让我们把日子过得生动",
+      "docs_item_path": "docs/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-06-26-wechat-新京报书评周刊-专访林小英接受教育最终是为了让我们把日子过得生动/index.html",
+      "site_item_path": "site/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-06-26-wechat-新京报书评周刊-专访林小英接受教育最终是为了让我们把日子过得生动/index.html",
+      "failure_reason": "",
+      "duplicate_of": ""
+    },
+    {
+      "input": "https://mp.weixin.qq.com/s/wxCIOlazQlZxa_6KulnSFQ",
+      "input_type": "--url",
+      "status": "IMPORTED",
+      "title": "“我生病了，要去西湖玩玩才能好起来”",
+      "account_name": "译林出版社",
+      "published_date": "2026-06-26",
+      "source_url": "https://mp.weixin.qq.com/s/wxCIOlazQlZxa_6KulnSFQ",
+      "capture_json_path": "inbox/raw/wechat/2026-06-26-我生病了要去西湖玩玩才能好起来-2.json",
+      "kb_article_path": "D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-06-26-wechat-译林出版社-我生病了要去西湖玩玩才能好起来",
+      "docs_item_path": "docs/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-06-26-wechat-译林出版社-我生病了要去西湖玩玩才能好起来/index.html",
+      "site_item_path": "site/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-06-26-wechat-译林出版社-我生病了要去西湖玩玩才能好起来/index.html",
+      "failure_reason": "",
+      "duplicate_of": ""
+    },
+    {
+      "input": "https://mp.weixin.qq.com/s/be9-vAYCkq_a_RkuZEpEiw",
+      "input_type": "--url",
+      "status": "IMPORTED",
+      "title": "AI无法教会的三件事",
+      "account_name": "腾讯研究院",
+      "published_date": "2026-06-26",
+      "source_url": "https://mp.weixin.qq.com/s/be9-vAYCkq_a_RkuZEpEiw",
+      "capture_json_path": "inbox/raw/wechat/2026-06-26-ai无法教会的三件事-2.json",
+      "kb_article_path": "D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-06-26-wechat-腾讯研究院-ai无法教会的三件事",
+      "docs_item_path": "docs/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-06-26-wechat-腾讯研究院-ai无法教会的三件事/index.html",
+      "site_item_path": "site/items/D:\\Codex\\hermes-knowledge-base\\content\\articles\\2026\\2026-06-26-wechat-腾讯研究院-ai无法教会的三件事/index.html",
+      "failure_reason": "",
+      "duplicate_of": ""
+    }
+  ]
+}

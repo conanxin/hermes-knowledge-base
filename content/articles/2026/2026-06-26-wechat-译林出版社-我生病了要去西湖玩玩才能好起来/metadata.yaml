@@ -1,0 +1,39 @@
+title: "“我生病了，要去西湖玩玩才能好起来”"
+title_zh: "“我生病了，要去西湖玩玩才能好起来”"
+source_url: "https://mp.weixin.qq.com/s/wxCIOlazQlZxa_6KulnSFQ"
+source_site: "译林出版社"
+author: "译林出版社"
+published_date: "2026-06-26"
+captured_date: "2026-07-01"
+language: "zh-CN"
+translation_language: "zh-CN"
+status: "translated"
+type: "article"
+content_kind: "wechat_official_article"
+source_platform: "wechat_official_account"
+dedupe_key: "wechat:wxCIOlazQlZxa_6KulnSFQ:我生病了要去西湖玩玩才能好起来"
+is_translation_mirror: true
+topics:
+  - "科技"
+  - "产品"
+  - "文化"
+  - "社会"
+  - "生活"
+  - "自然地理"
+tags:
+  - "公众号"
+  - "阅读"
+  - "文章"
+  - "译林出版社"
+word_count:
+  source: 2562
+  translation: 2562
+wechat:
+  account_name: "译林出版社"
+  url_params:
+    # no params extracted
+capture:
+  tool: "openclaw-weixin"
+  captured_at: "2026-07-01T11:28:55"
+  version: "1.0"
+path: "content/articles/2026/2026-06-26-wechat-译林出版社-我生病了要去西湖玩玩才能好起来/"

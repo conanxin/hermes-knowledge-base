@@ -1,0 +1,44 @@
+title: "专访林小英：接受教育，最终是为了让我们把日子过得生动"
+title_zh: "专访林小英：接受教育，最终是为了让我们把日子过得生动"
+source_url: "https://mp.weixin.qq.com/s/BwLPBh-f435DVn-ivvSohQ"
+source_site: "新京报书评周刊"
+author: "刘亚光"
+published_date: "2026-06-26"
+captured_date: "2026-07-01"
+language: "zh-CN"
+translation_language: "zh-CN"
+status: "translated"
+type: "article"
+content_kind: "wechat_official_article"
+source_platform: "wechat_official_account"
+dedupe_key: "wechat:BwLPBh-f435DVn-ivvSohQ:专访林小英接受教育最终是为了让我们把日子过得生动"
+is_translation_mirror: true
+topics:
+  - "人工智能"
+  - "科技"
+  - "文化"
+  - "社会"
+  - "生活"
+  - "哲学"
+  - "历史"
+  - "经济"
+tags:
+  - "互联网"
+  - "教育"
+  - "认知"
+  - "阅读"
+  - "新京报书评周刊"
+  - "写作"
+  - "AI"
+word_count:
+  source: 6110
+  translation: 6110
+wechat:
+  account_name: "新京报书评周刊"
+  url_params:
+    # no params extracted
+capture:
+  tool: "openclaw-weixin"
+  captured_at: "2026-07-01T11:28:51"
+  version: "1.0"
+path: "content/articles/2026/2026-06-26-wechat-新京报书评周刊-专访林小英接受教育最终是为了让我们把日子过得生动/"

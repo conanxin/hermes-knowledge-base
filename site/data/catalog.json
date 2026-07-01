@@ -1328,6 +1328,160 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-paste-greatest-songs-1960s"
   },
   {
+    "title": "专访林小英：接受教育，最终是为了让我们把日子过得生动",
+    "title_zh": "专访林小英：接受教育，最终是为了让我们把日子过得生动",
+    "type": "article",
+    "path": "content/articles/2026/2026-06-26-wechat-新京报书评周刊-专访林小英接受教育最终是为了让我们把日子过得生动",
+    "author": "刘亚光",
+    "source_url": "https://mp.weixin.qq.com/s/BwLPBh-f435DVn-ivvSohQ",
+    "source_site": "新京报书评周刊",
+    "language": "zh-CN",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "2026-06-26",
+    "captured_date": "2026-07-01",
+    "topics": [
+      "人工智能",
+      "科技",
+      "文化",
+      "社会",
+      "生活",
+      "哲学",
+      "历史",
+      "经济"
+    ],
+    "tags": [
+      "互联网",
+      "教育",
+      "认知",
+      "阅读",
+      "新京报书评周刊",
+      "写作",
+      "AI"
+    ],
+    "word_count": {
+      "source": 6110,
+      "translation": 6110
+    },
+    "capture": {
+      "tool": "openclaw-weixin",
+      "captured_at": "2026-07-01T11:28:51",
+      "version": "1.0"
+    },
+    "content_kind": "wechat_official_article",
+    "dedupe_key": "wechat:BwLPBh-f435DVn-ivvSohQ:专访林小英接受教育最终是为了让我们把日子过得生动",
+    "is_translation_mirror": true,
+    "source_platform": "wechat_official_account",
+    "wechat": {
+      "account_name": "新京报书评周刊",
+      "url_params": null
+    },
+    "updated_date": "2026-07-01",
+    "slug": "2026-06-26-wechat-新京报书评周刊-专访林小英接受教育最终是为了让我们把日子过得生动",
+    "detail_url": "items/2026-06-26-wechat-新京报书评周刊-专访林小英接受教育最终是为了让我们把日子过得生动/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-wechat-新京报书评周刊-专访林小英接受教育最终是为了让我们把日子过得生动"
+  },
+  {
+    "title": "AI无法教会的三件事",
+    "title_zh": "AI无法教会的三件事",
+    "type": "article",
+    "path": "content/articles/2026/2026-06-26-wechat-腾讯研究院-ai无法教会的三件事",
+    "author": "腾讯研究院",
+    "source_url": "https://mp.weixin.qq.com/s/be9-vAYCkq_a_RkuZEpEiw",
+    "source_site": "腾讯研究院",
+    "language": "zh-CN",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "2026-06-26",
+    "captured_date": "2026-07-01",
+    "topics": [
+      "科技",
+      "文化",
+      "社会",
+      "生活",
+      "哲学",
+      "历史"
+    ],
+    "tags": [
+      "互联网",
+      "健康",
+      "认知",
+      "写作",
+      "腾讯研究院",
+      "教育"
+    ],
+    "word_count": {
+      "source": 3224,
+      "translation": 3224
+    },
+    "capture": {
+      "tool": "openclaw-weixin",
+      "captured_at": "2026-07-01T11:28:58",
+      "version": "1.0"
+    },
+    "content_kind": "wechat_official_article",
+    "dedupe_key": "wechat:be9-vAYCkq_a_RkuZEpEiw:ai无法教会的三件事",
+    "is_translation_mirror": true,
+    "source_platform": "wechat_official_account",
+    "wechat": {
+      "account_name": "腾讯研究院",
+      "url_params": null
+    },
+    "updated_date": "2026-07-01",
+    "slug": "2026-06-26-wechat-腾讯研究院-ai无法教会的三件事",
+    "detail_url": "items/2026-06-26-wechat-腾讯研究院-ai无法教会的三件事/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-wechat-腾讯研究院-ai无法教会的三件事"
+  },
+  {
+    "title": "“我生病了，要去西湖玩玩才能好起来”",
+    "title_zh": "“我生病了，要去西湖玩玩才能好起来”",
+    "type": "article",
+    "path": "content/articles/2026/2026-06-26-wechat-译林出版社-我生病了要去西湖玩玩才能好起来",
+    "author": "译林出版社",
+    "source_url": "https://mp.weixin.qq.com/s/wxCIOlazQlZxa_6KulnSFQ",
+    "source_site": "译林出版社",
+    "language": "zh-CN",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "2026-06-26",
+    "captured_date": "2026-07-01",
+    "topics": [
+      "科技",
+      "产品",
+      "文化",
+      "社会",
+      "生活",
+      "自然地理"
+    ],
+    "tags": [
+      "公众号",
+      "阅读",
+      "文章",
+      "译林出版社"
+    ],
+    "word_count": {
+      "source": 2562,
+      "translation": 2562
+    },
+    "capture": {
+      "tool": "openclaw-weixin",
+      "captured_at": "2026-07-01T11:28:55",
+      "version": "1.0"
+    },
+    "content_kind": "wechat_official_article",
+    "dedupe_key": "wechat:wxCIOlazQlZxa_6KulnSFQ:我生病了要去西湖玩玩才能好起来",
+    "is_translation_mirror": true,
+    "source_platform": "wechat_official_account",
+    "wechat": {
+      "account_name": "译林出版社",
+      "url_params": null
+    },
+    "updated_date": "2026-07-01",
+    "slug": "2026-06-26-wechat-译林出版社-我生病了要去西湖玩玩才能好起来",
+    "detail_url": "items/2026-06-26-wechat-译林出版社-我生病了要去西湖玩玩才能好起来/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-26-wechat-译林出版社-我生病了要去西湖玩玩才能好起来"
+  },
+  {
     "title": "一键把 YouTube 视频加入知识库",
     "title_zh": "一键把 YouTube 视频加入知识库",
     "type": "article",
@@ -1691,6 +1845,53 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-27-thoreau-walking"
   },
   {
+    "title": "从传统评点看金庸｜《倚天》篇：张无忌为什么总是被骗？",
+    "title_zh": "从传统评点看金庸｜《倚天》篇：张无忌为什么总是被骗？",
+    "type": "article",
+    "path": "content/articles/2026/2026-06-27-wechat-澎湃翻书党-从传统评点看金庸倚天篇张无忌为什么总是被骗",
+    "author": "闫力元",
+    "source_url": "https://mp.weixin.qq.com/s/XtJsfYmI0LrGyo42Yjc3PA",
+    "source_site": "澎湃翻书党",
+    "language": "zh-CN",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "2026-06-27",
+    "captured_date": "2026-07-01",
+    "topics": [
+      "产品",
+      "文化",
+      "哲学",
+      "历史"
+    ],
+    "tags": [
+      "文章",
+      "澎湃翻书党",
+      "阅读",
+      "公众号"
+    ],
+    "word_count": {
+      "source": 1888,
+      "translation": 1888
+    },
+    "capture": {
+      "tool": "openclaw-weixin",
+      "captured_at": "2026-07-01T11:28:48",
+      "version": "1.0"
+    },
+    "content_kind": "wechat_official_article",
+    "dedupe_key": "wechat:XtJsfYmI0LrGyo42Yjc3PA:从传统评点看金庸倚天篇张无忌为什么总是被骗",
+    "is_translation_mirror": true,
+    "source_platform": "wechat_official_account",
+    "wechat": {
+      "account_name": "澎湃翻书党",
+      "url_params": null
+    },
+    "updated_date": "2026-07-01",
+    "slug": "2026-06-27-wechat-澎湃翻书党-从传统评点看金庸倚天篇张无忌为什么总是被骗",
+    "detail_url": "items/2026-06-27-wechat-澎湃翻书党-从传统评点看金庸倚天篇张无忌为什么总是被骗/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-27-wechat-澎湃翻书党-从传统评点看金庸倚天篇张无忌为什么总是被骗"
+  },
+  {
     "title": "携手之外：国际学习科学年会（ISLS） 2026 的五条主线",
     "title_zh": "携手之外：国际学习科学年会（ISLS） 2026 的五条主线",
     "type": "article",
@@ -1742,6 +1943,58 @@
     "slug": "2026-06-28-wechat-可可乐博-携手之外国际学习科学年会isls-2026-的五条主线",
     "detail_url": "items/2026-06-28-wechat-可可乐博-携手之外国际学习科学年会isls-2026-的五条主线/",
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-28-wechat-可可乐博-携手之外国际学习科学年会isls-2026-的五条主线"
+  },
+  {
+    "title": "逆流而上的爱与勇气——写在阿伦特诞辰120周年之际",
+    "title_zh": "逆流而上的爱与勇气——写在阿伦特诞辰120周年之际",
+    "type": "article",
+    "path": "content/articles/2026/2026-06-28-wechat-文汇读书周报-逆流而上的爱与勇气写在阿伦特诞辰120周年之际",
+    "author": "唐小兵",
+    "source_url": "https://mp.weixin.qq.com/s/3YC72QkVirX7AJpl58cnow",
+    "source_site": "文汇读书周报",
+    "language": "zh-CN",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "2026-06-28",
+    "captured_date": "2026-07-01",
+    "topics": [
+      "文化",
+      "社会",
+      "生活",
+      "哲学",
+      "历史",
+      "自然地理"
+    ],
+    "tags": [
+      "教育",
+      "阅读",
+      "文汇读书周报",
+      "认知",
+      "文章",
+      "公众号",
+      "写作"
+    ],
+    "word_count": {
+      "source": 3751,
+      "translation": 3751
+    },
+    "capture": {
+      "tool": "openclaw-weixin",
+      "captured_at": "2026-07-01T11:28:44",
+      "version": "1.0"
+    },
+    "content_kind": "wechat_official_article",
+    "dedupe_key": "wechat:3YC72QkVirX7AJpl58cnow:逆流而上的爱与勇气写在阿伦特诞辰120周年之际",
+    "is_translation_mirror": true,
+    "source_platform": "wechat_official_account",
+    "wechat": {
+      "account_name": "文汇读书周报",
+      "url_params": null
+    },
+    "updated_date": "2026-07-01",
+    "slug": "2026-06-28-wechat-文汇读书周报-逆流而上的爱与勇气写在阿伦特诞辰120周年之际",
+    "detail_url": "items/2026-06-28-wechat-文汇读书周报-逆流而上的爱与勇气写在阿伦特诞辰120周年之际/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-28-wechat-文汇读书周报-逆流而上的爱与勇气写在阿伦特诞辰120周年之际"
   },
   {
     "title": "The Carrier Bag Theory of Fiction",

@@ -1,0 +1,37 @@
+title: "从传统评点看金庸｜《倚天》篇：张无忌为什么总是被骗？"
+title_zh: "从传统评点看金庸｜《倚天》篇：张无忌为什么总是被骗？"
+source_url: "https://mp.weixin.qq.com/s/XtJsfYmI0LrGyo42Yjc3PA"
+source_site: "澎湃翻书党"
+author: "闫力元"
+published_date: "2026-06-27"
+captured_date: "2026-07-01"
+language: "zh-CN"
+translation_language: "zh-CN"
+status: "translated"
+type: "article"
+content_kind: "wechat_official_article"
+source_platform: "wechat_official_account"
+dedupe_key: "wechat:XtJsfYmI0LrGyo42Yjc3PA:从传统评点看金庸倚天篇张无忌为什么总是被骗"
+is_translation_mirror: true
+topics:
+  - "产品"
+  - "文化"
+  - "哲学"
+  - "历史"
+tags:
+  - "文章"
+  - "澎湃翻书党"
+  - "阅读"
+  - "公众号"
+word_count:
+  source: 1888
+  translation: 1888
+wechat:
+  account_name: "澎湃翻书党"
+  url_params:
+    # no params extracted
+capture:
+  tool: "openclaw-weixin"
+  captured_at: "2026-07-01T11:28:48"
+  version: "1.0"
+path: "content/articles/2026/2026-06-27-wechat-澎湃翻书党-从传统评点看金庸倚天篇张无忌为什么总是被骗/"
