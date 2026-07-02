@@ -13,6 +13,28 @@ tmp/
 tmp/youtube_subs/
 tmp/material_fetches/
 
+# Ignore PDF / local document import dry-run artifacts (v0.3.89)
+content/articles/DRY_RUN_PREVIEW/
+
+# Ignore inbox/raw capture fixtures — fetched / generated raw payloads
+# that should never enter the repository (large, often user-license-bound).
+# Real content lives in content/articles/ after the import pipeline processes them.
+inbox/raw/pdf/
+inbox/raw/web/
+inbox/raw/wechat/
+inbox/raw/youtube/
+
+# Ignore session / per-run task reports that are SELF-introduced by local
+# material imports and wechat batch imports. Formal release reports (e.g.
+# fix_wechat_batch_smoke_stale_count_v0.3.88_*.md, no_real_pdf_material_matrix_*,
+# pdf_kb_import_v0.3.86_*.md, pdf_ocr_postflight_*.md, ignore_local_test_artifacts_*)
+# are intentionally NOT ignored — they are committed as release evidence.
+reports/material_import_*.md
+reports/material_import_*.json
+reports/wechat_batch_import_*.md
+reports/wechat_batch_import_*.json
+reports/generated_artifact_clean_checkpoint_*.md
+
 # Ignore OS files
 .DS_Store
 Thumbs.db
