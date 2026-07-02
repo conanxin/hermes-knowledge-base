@@ -373,7 +373,11 @@ hermes-knowledge-base/
 | **v0.3.82** | **新增 YouTube automatic transcript providers**（direct captionTracks / subtitle-only yt-dlp / optional transcript API） | 自动字幕需 `--allow-auto-captions` 才可入库；provider_attempts 写入 capture 与 material report；metadata-only 仍不入库 |
 | **v0.3.83** | **YouTube provider 环境可选补齐**（`yt-dlp` + `youtube-transcript-api`） | 不下载视频；不使用 cookie / 登录态；full transcript 才入库；auto captions 标记 `needs_review`；不写半成品条目；详见 `reports/youtube_provider_env_real_import_v0.3.83_20260701.md` |
 | **v0.3.84** | **Fetch-result handoff + inbox overwrite 保护**（`material_to_kb.py` → `youtube_to_kb.py`） | 路由层把 in-process full / partial capture 写到 `tmp/material_fetches/youtube_<vid>_<ts>.json` 并 `--fetch-result-json` 传入，subprocess 跳过 refetch 避免 429 退化；inbox 同 video_id 上遇到低 rank 拒绝覆盖，决策记 `overwrite_decision` + stderr |
+| **v0.3.86** | **PDF / 本地文档 KB 导入路线**（`scripts/pdf_to_kb.py`） | PyMuPDF 本地提取；扫描版 `BLOCKED_NEEDS_OCR` 不写半成品；详细见 `reports/pdf_kb_import_*` |
+| **v0.3.89** | **本地测试 / dry-run / session artifact 被 .gitignore** | 仓库 untracked 从 ~626 降到 2 个正式 report |
+| **v0.3.90** | **PDF smoke 修复**（`pdf_to_kb.py --import` 不再调用 `update_site.py` 走完整 build 链路） | `run_pdf_import_smoke.py` 26/26 → 33/33（+7 regression checks）；详细见 `reports/fix_pdf_smoke_catalog_dirty_v0.3.90_20260702.md` |
+| **v0.3.91** | **Material Ingestion Stable Baseline**（本 checkpoint） | 微信公众号 / 普通网页 / YouTube / 本地 HTML·MD·TXT / 本地 PDF 均稳定；全量门禁 reproduce clean；tag `v0.3.91-material-ingestion-stable-baseline`；详细见 `reports/full_gate_clean_reproducibility_audit_v0.3.91_20260702.md` + `reports/material_ingestion_stable_baseline_release_v0.3.91_20260702.md` |
 
 ---
 
-*Last refreshed for v0.3.84 on 2026-07-01.*
+*Last refreshed for v0.3.91 on 2026-07-02.*

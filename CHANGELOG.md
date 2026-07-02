@@ -2,6 +2,56 @@
 
 All notable changes to the Hermes Knowledge Base project.
 
+## v0.3.91 — Material Ingestion Stable Baseline
+
+### Summary
+
+跨材料类型（微信公众号 / 普通网页 / YouTube / 本地 HTML/MD/TXT / 本地 PDF）端的入库路线已稳定可复现。PDF smoke 写中入口到 catalog/index 的污染问题被修复，全量门禁（含 33/33 PDF smoke） PASS 后 tracked working tree 保持干净。本版本为“后续 agent / 新电脑 / 新同事可从 main 拉取后立即复用”的稳定 checkpoint。
+
+### Stable Baseline
+
+- **commit**: `f309cb6` （本地 head == origin main 同步点）
+- **tag**: `v0.3.91-material-ingestion-stable-baseline` （ annotated, 推 origin）
+- **PDF smoke**: `tests/run_pdf_import_smoke.py` 从 26/26 升级到 33/33（ +7 regression checks）
+- **full gate clean reproducibility**: PASS （ 14 个 gate 全绿、audit_kb_state 仅 PASS_WITH_WARNINGS）
+
+### Supported Material Matrix
+
+| 材料 | 能力 |
+|------|------|
+| 微信公众号 URL | 支持（公开 URL 直抓 + 本地文件兑底，不登录 / 不扫码 / 不读 cookie） |
+| 普通网页 URL | 支持 |
+| YouTube URL | 有 full transcript 支持；无 transcript BLOCKED |
+| 本地 HTML / MD / TXT | 支持 |
+| 本地 PDF（可提取文本层） | 支持（ `scripts/pdf_to_kb.py` + PyMuPDF） |
+| 本地 PDF（扫描版） | `BLOCKED_NEEDS_OCR`（不写半成品 KB 条目） |
+| 图片本地化 | 支持 |
+
+### Hard Guarantees（从上游版本继承，本 stable baseline 依然有效）
+
+- **不下载完整视频 / 不读 cookie / 不扫 QR**。
+- **不内置 OCR**：扫描版 PDF 硬停，不入库。
+- **不伪造文本**：基于真实提取，不 override 不生成。
+- **去重三键**：YouTube/Web/WeChat/PDF 各自补足，不与项目其它部分交叉冲突。
+- **质量门**： check_kb.py / check_pages_sync.py 不修改、不掩盖。
+
+### Commits
+
+- `f309cb6` — v0.3.91 full-gate clean reproducibility 审计报告
+- `b045a70` — v0.3.90 Stage D 文档补充
+- `13d7d55` — Stage D regression 检查（ 7 smoke_post 检查）
+- `def5a7f` — v0.3.90 主修复（ `pdf_to_kb.py` `run_gates()` 代替 `update_site.py`）
+- `7dadf95` — v0.3.89 .gitignore 策略（本地测试 / dry-run / session artifact）
+
+### See Also
+
+- `reports/full_gate_clean_reproducibility_audit_v0.3.91_20260702.md`
+- `reports/fix_pdf_smoke_catalog_dirty_v0.3.90_20260702.md`
+- `docs/AGENT_COMMANDS.md`
+- `README.md`
+
+---
+
 ## v0.3.86 — PDF / Local Document KB Import Route
 
 ### Summary

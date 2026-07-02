@@ -19,6 +19,7 @@ The versions from **v0.3.18 to v0.3.24** form a coherent capability line: taking
 | v0.3.22 | `v0.3.22-music-player-js-loader-fix` | `82fd039` | Music fix | app.js loader fix on detail pages | Verified play buttons work again |
 | v0.3.23 | `v0.3.23-youtube-capability-oss-exposure` | `bbb693c` | OSS exposure | YouTube capability docs for public | External users can discover capabilities |
 | v0.3.24 | `v0.3.24-youtube-public-entry-qa` | `9d0df38` | Public QA | Verified navigation + fixed path leaks | Safe, clean docs for external readers |
+| v0.3.91 | `v0.3.91-material-ingestion-stable-baseline` | `f309cb6` | Stable baseline | Material ingestion (WeChat / web / YouTube / local files / PDF) 全稳定 | 所有上游能力成熟 + 全量门禁 reproduce clean |
 
 ---
 
@@ -41,6 +42,56 @@ v0.3.18  →  v0.3.19  →  v0.3.20  →  v0.3.21  →  v0.3.23  →  v0.3.24
 
 ---
 
+## Material Ingestion Stable Baseline
+
+**v0.3.91** is the **stable baseline release** for material ingestion — every material type the system supports at this checkpoint is fully reproducible from `main` at `f309cb6`.
+
+### Supported Material Matrix
+
+| Material Type | Status | Notes |
+|---------------|--------|-------|
+| 微信公众号 URL (公开) | ✅ | 公开 URL 直抓 + 本地文件免底（不扫码、不登录、不读 cookie） |
+| 普通网页 URL | ✅ | material_to_kb.py → web_to_kb.py |
+| YouTube URL (有 transcript) | ✅ | material_to_kb.py → youtube_to_kb.py |
+| YouTube URL (无 transcript) | 🛑 BLOCKED | 归档原因，不入库 |
+| 本地 HTML / MD / TXT | ✅ | material_to_kb.py 本地文件入口 |
+| 本地 PDF (可提取文本层) | ✅ | material_to_kb.py → pdf_to_kb.py (PyMuPDF) |
+| 本地 PDF (扫描版) | 🛑 BLOCKED_NEEDS_OCR | 不写半成品，不内置 OCR |
+| 图片本地化 | ✅ | 公众号 / 网页 / 本地 文件均支持 |
+
+### Reproduction Commands
+
+```bash
+# 从 main 拉取 + ff-only
+git pull --ff-only origin main
+
+# 全量门禁 (含 PDF smoke 33/33 + 11 other gates)
+python3 tests/run_smoke_tests.py
+python3 tests/run_wechat_batch_smoke.py
+python3 tests/run_item_render_smoke.py
+python3 tests/run_image_localization_smoke.py
+python3 tests/run_material_router_smoke.py
+python3 tests/run_web_article_smoke.py
+python3 tests/run_youtube_import_smoke.py
+python3 tests/run_fetch_layer_smoke.py
+python3 tests/run_pdf_import_smoke.py
+python3 scripts/check_kb.py
+python3 scripts/update_site.py
+python3 scripts/audit_kb_state.py
+python3 scripts/check_pages_sync.py
+```
+
+预期：所有 gate PASS；git status 上无 tracked generated dirty。
+
+### Hard Guarantees (baseline-managed)
+
+- ✅ **不修改 check_kb.py / check_pages_sync.py 来掩盖问题**
+- ✅ **不提交 tmp / inbox/raw/* / DRY_RUN_PREVIEW / session reports**
+- ✅ **不交 smoke-only item page 或 smoke-only KB 条目**
+- ✅ **不交 catalog / index 中的 smoke slug**
+
+---
+
 ## Related Music Fix
 
 ### v0.3.22 — Music Player JS Loader Fix
@@ -56,6 +107,7 @@ v0.3.18  →  v0.3.19  →  v0.3.20  →  v0.3.21  →  v0.3.23  →  v0.3.24
 
 | What you want | Start here |
 |---------------|------------|
+| Use material ingestion on a new machine | `v0.3.91` |
 | Understand YouTube capabilities | `v0.3.23` / `v0.3.24` |
 | See a real video import | `v0.3.20` (Dario Amodei) |
 | Understand failure handling | `v0.3.21` |
@@ -133,7 +185,9 @@ v0.3.18  →  v0.3.19  →  v0.3.20  →  v0.3.21  →  v0.3.23  →  v0.3.24
 | v0.3.35 | `v0.3.35-obsolete-stash-cleanup` | `19db21a` | annotated | ✅ | 过时 stash 清理 |
 | v0.3.36 | `v0.3.36-repo-health-final-verification` | `8b4f128` | annotated | ✅ | 仓库健康验证 |
 | v0.3.36 | `v0.3.36-repo-hygiene-and-report-cleanup` | `942cab3` | annotated | ✅ | 仓库卫生清理 |
-| v0.3.37 | `v0.3.37-release-index-and-tag-hygiene` | `TBD` | annotated | 🔄 | **本版本** — release index + tag 卫生 |
+| v0.3.37 | `v0.3.37-release-index-and-tag-hygiene` | `TBD` | annotated | ✅ | release index + tag 卫生 |
+| v0.3.86 | `v0.3.86-pdf-local-document-kb-import-route` | `f1864ca` | annotated | ✅ | PDF / 本地文档 KB 导入路线 |
+| v0.3.91 | `v0.3.91-material-ingestion-stable-baseline` | `f309cb6` | annotated | ✅ | **本版本** — 材料入库稳定 checkpoint |
 
 ### Known Duplicate Minor-Version Exceptions
 
