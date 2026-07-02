@@ -20,6 +20,7 @@ The versions from **v0.3.18 to v0.3.24** form a coherent capability line: taking
 | v0.3.23 | `v0.3.23-youtube-capability-oss-exposure` | `bbb693c` | OSS exposure | YouTube capability docs for public | External users can discover capabilities |
 | v0.3.24 | `v0.3.24-youtube-public-entry-qa` | `9d0df38` | Public QA | Verified navigation + fixed path leaks | Safe, clean docs for external readers |
 | v0.3.91 | `v0.3.91-material-ingestion-stable-baseline` | `f309cb6` | Stable baseline | Material ingestion (WeChat / web / YouTube / local files / PDF) 全稳定 | 所有上游能力成熟 + 全量门禁 reproduce clean |
+| v0.3.92 | `v0.3.92-bingzhu-you-mv-assets` | `4117366` | **Asset release** | GitHub Release `v0.3.92-bingzhu-you-mv-assets` (22 assets, 34.71 MB) hosts 秉烛游 MV 素材包 | .mp4 / .mp3 / 大二进制不进入 git；metadata.source_url → release tag URL；详见 [docs/releases.md](releases.md) |
 
 ---
 

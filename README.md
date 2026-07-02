@@ -16,6 +16,7 @@
 | 仓库自身 | <https://github.com/conanxin/hermes-knowledge-base> |
 | Changelog | [CHANGELOG.md](CHANGELOG.md) |
 | 发布索引 | [docs/RELEASES.md](docs/RELEASES.md) |
+| 多媒体资产索引 | [docs/releases.md](docs/releases.md) |
 | 完整使用手册 | [docs/AGENT_COMMANDS.md](docs/AGENT_COMMANDS.md) |
 
 ## 3. 当前状态
