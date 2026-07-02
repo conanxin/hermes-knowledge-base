@@ -18,12 +18,15 @@ content_hash: "40f67b78b7042354df1f8edef41f1b69a8960f507a116695afad9d47fe0ae6b0"
 is_translation_mirror: false
 topics:
   - "阅读笔记"
+  - "软件工程"
 tags:
   - "martinfowler.com"
   - "文章"
   - "阅读"
   - "网页文章"
   - "Web"
+  - "软件质量"
+  - "成本权衡"
 word_count:
   source: 2724
   translation: 86

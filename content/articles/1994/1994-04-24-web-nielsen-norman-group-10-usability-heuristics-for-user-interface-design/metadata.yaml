@@ -18,12 +18,15 @@ content_hash: "d07f210ad2a32e29dbcf6c86fc0d349be498390ffbd730daf9d92d04ce2d244a"
 is_translation_mirror: false
 topics:
   - "阅读笔记"
+  - "UX/可访问性"
 tags:
   - "Nielsen Norman Group"
   - "文章"
   - "阅读"
   - "网页文章"
   - "Web"
+  - "UI 设计原则"
+  - "人机交互"
 word_count:
   source: 2257
   translation: 86

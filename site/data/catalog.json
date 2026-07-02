@@ -13,14 +13,17 @@
     "published_date": "1994-04-24",
     "captured_date": "2026-07-01",
     "topics": [
-      "阅读笔记"
+      "阅读笔记",
+      "UX/可访问性"
     ],
     "tags": [
       "Nielsen Norman Group",
       "文章",
       "阅读",
       "网页文章",
-      "Web"
+      "Web",
+      "UI 设计原则",
+      "人机交互"
     ],
     "word_count": {
       "source": 2257,
@@ -106,14 +109,17 @@
     "published_date": "2000-04-06",
     "captured_date": "2026-07-01",
     "topics": [
-      "阅读笔记"
+      "阅读笔记",
+      "软件工程"
     ],
     "tags": [
       "文章",
       "Joel on Software",
       "阅读",
       "网页文章",
-      "Web"
+      "Web",
+      "重写代价",
+      "架构返工"
     ],
     "word_count": {
       "source": 1498,
@@ -182,7 +188,9 @@
       "incentives",
       "cooperation",
       "quadratic-voting",
-      "land-readjustment"
+      "land-readjustment",
+      "mechanism-design",
+      "policy-prototype"
     ],
     "word_count": {
       "source": 4434,
@@ -1615,7 +1623,9 @@
       "公众号",
       "阅读",
       "文章",
-      "译林出版社"
+      "译林出版社",
+      "生活感悟",
+      "西湖游记"
     ],
     "word_count": {
       "source": 2562,
@@ -2025,7 +2035,9 @@
       "文章",
       "澎湃翻书党",
       "阅读",
-      "公众号"
+      "公众号",
+      "金庸评点",
+      "武侠文学"
     ],
     "word_count": {
       "source": 1888,
@@ -2410,14 +2422,17 @@
     "published_date": "",
     "captured_date": "2026-07-01",
     "topics": [
-      "阅读笔记"
+      "阅读笔记",
+      "软件工程"
     ],
     "tags": [
       "martinfowler.com",
       "文章",
       "阅读",
       "网页文章",
-      "Web"
+      "Web",
+      "软件质量",
+      "成本权衡"
     ],
     "word_count": {
       "source": 2724,
@@ -2479,14 +2494,18 @@
     "published_date": "",
     "captured_date": "2026-07-01",
     "topics": [
-      "阅读笔记"
+      "阅读笔记",
+      "读书方法",
+      "终身学习"
     ],
     "tags": [
       "www.paulgraham.com",
       "阅读",
       "文章",
       "网页文章",
-      "Web"
+      "Web",
+      "阅读习惯",
+      "知识广度"
     ],
     "word_count": {
       "source": 453,
@@ -2934,11 +2953,11 @@
     "type": "note",
     "path": "content/notes/2026/2026-07-02-bingzhu-you-mv-production",
     "author": "Conan Xin (lyrics) & Hermes Agent (production)",
-    "source_url": "https://github.com/conanxin/bingzhu-you",
-    "source_site": "GitHub (conanxin/bingzhu-you)",
+    "source_url": "https://conanxin.github.io/hermes-knowledge-base/assets/bingzhu-you/",
+    "source_site": "hermes-knowledge-base (GitHub Pages, assets/bingzhu-you/)",
     "language": "zh-CN",
     "translation_language": null,
-    "status": "content-draft",
+    "status": "active",
     "published_date": "2026-07-02",
     "captured_date": "2026-07-02",
     "topics": [

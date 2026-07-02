@@ -18,12 +18,15 @@ content_hash: "51c11602edccc2648feabb8188f3a775080c3b753d2b6b83764892c20680ef12"
 is_translation_mirror: false
 topics:
   - "阅读笔记"
+  - "软件工程"
 tags:
   - "文章"
   - "Joel on Software"
   - "阅读"
   - "网页文章"
   - "Web"
+  - "重写代价"
+  - "架构返工"
 word_count:
   source: 1498
   translation: 86

@@ -974,6 +974,10 @@
 
 - Hermes Agent UI Self-Audit v1
 
+## UI 设计原则
+
+- 10 Usability Heuristics for User Interface Design
+
 ## UK retail logistics
 
 - Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK
@@ -1393,6 +1397,10 @@
 
 - Is High Quality Software Worth the Cost?
 
+## mechanism-design
+
+- How Reverse Game Theory Could Solve The Housing Shortage
+
 ## media
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
@@ -1481,6 +1489,10 @@
 ## plot
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
+
+## policy-prototype
+
+- How Reverse Game Theory Could Solve The Housing Shortage
 
 ## political satire
 
@@ -1765,6 +1777,10 @@
 
 - 北京热门徒步线路TOP10！
 
+## 人机交互
+
+- 10 Usability Heuristics for User Interface Design
+
 ## 亿万富翁
 
 - How to Earn a Billion Dollars
@@ -1940,6 +1956,10 @@
 
 - Your AI Is Not a Tool
 
+## 成本权衡
+
+- Is High Quality Software Worth the Cost?
+
 ## 户外
 
 - 北京热门徒步线路TOP10！
@@ -2073,6 +2093,10 @@
 
 - Wiki 代替 RAG 的可行性评估
 
+## 架构返工
+
+- Things You Should Never Do, Part I
+
 ## 标志设计
 
 - 日本铁路如何在分裂中保持统一
@@ -2093,6 +2117,10 @@
 ## 步行
 
 - Walking
+
+## 武侠文学
+
+- 从传统评点看金庸｜《倚天》篇：张无忌为什么总是被骗？
 
 ## 民主社会主义
 
@@ -2134,6 +2162,10 @@
 
 - Your AI Is Not a Tool
 
+## 生活感悟
+
+- “我生病了，要去西湖玩玩才能好起来”
+
 ## 用户同理心
 
 - How to Earn a Billion Dollars
@@ -2149,6 +2181,10 @@
 ## 知识卡片
 
 - YouTube Video Brief Workflow
+
+## 知识广度
+
+- The Need to Read
 
 ## 知识架构
 
@@ -2274,6 +2310,10 @@
 
 - Don't dethrone consciousness!
 
+## 西湖游记
+
+- “我生病了，要去西湖玩玩才能好起来”
+
 ## 认知
 
 - 专访林小英：接受教育，最终是为了让我们把日子过得生动
@@ -2333,6 +2373,10 @@
 
 - Walking
 
+## 软件质量
+
+- Is High Quality Software Worth the Cost?
+
 ## 轴心时代
 
 - We May Be Entering A Second Axial Age
@@ -2349,6 +2393,10 @@
 
 - Ken Liu on AI and Freedom
 
+## 重写代价
+
+- Things You Should Never Do, Part I
+
 ## 野心
 
 - Superlinear Returns
@@ -2356,6 +2404,10 @@
 ## 野性
 
 - Walking
+
+## 金庸评点
+
+- 从传统评点看金庸｜《倚天》篇：张无忌为什么总是被骗？
 
 ## 门槛效应
 
@@ -2371,6 +2423,10 @@
 - 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
 - 逆流而上的爱与勇气——写在阿伦特诞辰120周年之际
 - Is High Quality Software Worth the Cost?
+- The Need to Read
+
+## 阅读习惯
+
 - The Need to Read
 
 ## 隐喻

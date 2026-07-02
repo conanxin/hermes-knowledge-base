@@ -18,12 +18,16 @@ content_hash: "6479c759293bc5b24a3fd80fb7c07111bf5c357b4dbda8dd8402e436ed5d78db"
 is_translation_mirror: false
 topics:
   - "阅读笔记"
+  - "读书方法"
+  - "终身学习"
 tags:
   - "www.paulgraham.com"
   - "阅读"
   - "文章"
   - "网页文章"
   - "Web"
+  - "阅读习惯"
+  - "知识广度"
 word_count:
   source: 453
   translation: 86
