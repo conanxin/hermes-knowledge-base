@@ -236,13 +236,37 @@ M scripts/pdf_to_kb.py
 
 ## commit hash
 
-待执行 `git commit` 后补充。
+```
+def5a7f  Fix PDF smoke catalog dirty state
+13d7d55  Add PDF smoke regression check for tracked generated clean state
+```
 
 ---
 
 ## push 结果
 
-待执行 `git push origin main` 后补充。
+`git push origin main` → success。
+
+`def5a7f..13d7d55  main -> main`（已在 origin 落定）。
+
+---
+
+## 补充：Stage D 防回归检查（commit `13d7d55`）
+
+在 `tests/run_pdf_import_smoke.py` main() 末尾增加 7 个最终检查（共 33/33）：
+
+1. **File-content 检查（6 个，always-on）**：分别扫描 `docs/data/catalog.json`、`site/data/catalog.json`、`index/catalog.jsonl`、`index/authors.md`、`index/tags.md`、`index/timeline.md`，验证不含 smoke slug `hermes-knowledge-base-routing`。
+2. **Git diff 检查（1 个，git available）**：运行 `git diff --name-only`，验证以上 6 个文件不在 dirty 列表中。
+
+**验证路径**：临时将 smoke slug 注入 `docs/data/catalog.json`：
+
+| 检查项 | fail 状态 |
+|--------|----------|
+| `smoke_post_no_smoke_slug_in__docs_data_catalog.json` | **FAIL**（检测到泄漏）|
+| `smoke_post_git_diff_no_tracked_generated_dirty` | **FAIL**（tracked dirty）|
+| 其余 31 个检查 | PASS |
+
+测试输出从 33/33 变为 31/33（2 failed），恢复后 33/33。证明 Stage D 能同时检测 file-content 和 git-tracked 两类回归。
 
 ---
 
