@@ -115,38 +115,74 @@ def main():
                     tag_name = ref.replace("refs/tags/", "")
                     if "^{}" not in tag_name:
                         remote_tags.append(tag_name)
-        
+
         print(f"remote v0.3 tags: {len(remote_tags)}")
-        
+
         # Check for local/remote mismatch
         local_set = set(tags)
         remote_set = set(remote_tags)
-        
+
         only_local = local_set - remote_set
         only_remote = remote_set - local_set
-        
+
         if only_local:
             print(f"warning: {len(only_local)} tags not pushed to origin")
             for tag in sorted(only_local):
                 print(f"  - {tag}")
-        
+
         if only_remote:
             print(f"warning: {len(only_remote)} tags only on origin (fetch to sync)")
             for tag in sorted(only_remote):
                 print(f"  - {tag}")
-                
+
     except SystemExit:
         raise
     except Exception as e:
         print(f"warning: could not check remote tags: {e}")
 
     print()
-    
+
+    # v0.3.96+: Tag SHA sanity check.
+    # Explicitly distinguish:
+    #   - "tag object SHA"      : `git rev-parse v0.3.X`  (annotated tag object's SHA;
+    #                                                 equals commit SHA only for lightweight tags)
+    #   - "dereferenced commit SHA": `git rev-parse v0.3.X^{}` (always the pointed-to commit)
+    # For protected tags (stable baseline + asset release), both SHAs must be tracked so
+    # future agents can verify the tag has not been moved silently.
+    protected_tags = [
+        "v0.3.91-material-ingestion-stable-baseline",
+        "v0.3.92-bingzhu-you-mv-assets",
+    ]
+    print("tag SHA sanity (annotated object vs dereferenced commit):")
+    sha_check_ok = True
+    for tag in protected_tags:
+        try:
+            obj_sha = run_git("rev-parse", tag)
+            commit_sha = run_git("rev-parse", f"{tag}^{{}}")
+            obj_short = obj_sha[:12] if obj_sha else "N/A"
+            commit_short = commit_sha[:12] if commit_sha else "N/A"
+            if obj_sha == commit_sha:
+                kind = "lightweight"
+            else:
+                kind = "annotated"
+            print(f"  {tag}")
+            print(f"    tag_object_sha:       {obj_short}")
+            print(f"    dereferenced_commit:  {commit_short}")
+            print(f"    kind: {kind}")
+        except SystemExit:
+            raise
+        except Exception as e:
+            sha_check_ok = False
+            print(f"  {tag}: ERROR {e}")
+    print()
+
     if status == "PASS_WITH_WARNINGS":
         print("Notes:")
         print("- v0.3.36 duplicate is a known exception (repo-health + repo-hygiene)")
         print("- From v0.3.37 onwards, avoid reusing minor numbers")
         print(f"- Next available: v0.3.{recommended_next}")
+        if not sha_check_ok:
+            print("- Tag SHA sanity check had errors (review above)")
     
     # Exit 0 for PASS and PASS_WITH_WARNINGS (non-blocking)
     sys.exit(0)
