@@ -21,6 +21,7 @@ The versions from **v0.3.18 to v0.3.24** form a coherent capability line: taking
 | v0.3.24 | `v0.3.24-youtube-public-entry-qa` | `9d0df38` | Public QA | Verified navigation + fixed path leaks | Safe, clean docs for external readers |
 | v0.3.91 | `v0.3.91-material-ingestion-stable-baseline` | `f309cb6` | Stable baseline | Material ingestion (WeChat / web / YouTube / local files / PDF) 全稳定 | 所有上游能力成熟 + 全量门禁 reproduce clean |
 | v0.3.92 | `v0.3.92-bingzhu-you-mv-assets` | `4117366` | **Asset release** | GitHub Release `v0.3.92-bingzhu-you-mv-assets` (22 assets, 34.71 MB) hosts 秉烛游 MV 素材包 | .mp4 / .mp3 / 大二进制不进入 git；metadata.source_url → release tag URL；详见 [docs/releases.md](releases.md) |
+| v0.4.0 | `v0.4.0-operator-ready-material-ingestion` | `c913d1a` | **Operator-ready baseline** | 统一入口 + 全量门禁 + operator playbook + release assets policy 整合 | 任何人 / 任何机器从 main 拉取即可上手；详见 [docs/OPERATOR_PLAYBOOK.md](OPERATOR_PLAYBOOK.md) + [scripts/run_full_gate.py](../scripts/run_full_gate.py) |
 
 ---
 
@@ -104,11 +105,71 @@ python3 scripts/check_pages_sync.py
 
 ---
 
+## v0.4.0 — Operator-Ready Material Ingestion Baseline
+
+**v0.4.0** 是 **operator-ready baseline**：在 `v0.3.91` material ingestion stable baseline 之上，把"任何人 / 任何机器从 `main` 拉取即可上手入库"作为硬要求正式落地。**本版本不导入新 KB 条目**；只在工具链 / 文档 / 治理上完成三件事：
+
+1. **统一入口 `scripts/material_to_kb.py`** 覆盖：微信公众号 / 普通网页 / YouTube (transcript-gated) / 本地 HTML·MD·TXT / 本地 PDF (extractable)。
+2. **Release-backed assets policy** 走 `scripts/check_release_assets.py` + `docs/releases.md`；`.mp4` / `.mp3` / 大二进制走 GitHub Release，不再污染 git。
+3. **Full gate runner** 走 `scripts/run_full_gate.py`，是统一的"上线前最后一道门"；`check_release_tags.py` / `check_release_assets.py` 已显式纳入。
+
+并配套 `docs/OPERATOR_PLAYBOOK.md` 给出 daily import entry / WeChat / web / YouTube / PDF / release assets / gates / BLOCKED 参考 / git discipline / new-machine recovery 的可执行手册。
+
+### Supported Material Matrix (this release)
+
+| Material Type | Status | Notes |
+|---------------|--------|-------|
+| 微信公众号 URL (公开) | ✅ | 统一入口 → `wechat_url_to_kb.py`；不扫码、不登录、不读 cookie |
+| 普通网页 URL | ✅ | 统一入口 → `web_article_to_kb.py`；robots 友好公开页 |
+| YouTube URL (有 transcript) | ✅ | 统一入口 → `youtube_to_kb.py`；full transcript 才入库 |
+| YouTube URL (无 transcript) | 🛑 BLOCKED | hard stop，归档原因 |
+| 本地 HTML / MD / TXT | ✅ | 统一入口本地文件入口 |
+| 本地 PDF (extractable) | ✅ | 统一入口 → `pdf_to_kb.py` (PyMuPDF) |
+| 本地 PDF (扫描版) | 🛑 BLOCKED_NEEDS_OCR | 不写半成品，不内置 OCR |
+| 图片本地化 | ✅ | 多入口共有 |
+
+### Reproduction Commands
+
+```bash
+# 从 main 拉取 + ff-only
+git pull --ff-only origin main
+
+# 任务启动前必跑
+python3 scripts/check_task_preflight.py --planned-tag <your-tag> --classify-dirty --json
+
+# 全量门禁（统一入口）
+python3 scripts/run_full_gate.py --json --output reports/full_gate_run_<your-tag>_<ts>.json
+
+# 只跑 KB / 同步 / 审计
+python3 scripts/check_kb.py
+python3 scripts/check_pages_sync.py
+python3 scripts/audit_kb_state.py
+```
+
+预期：`run_full_gate.py` PASS 或 PASS_WITH_WARNINGS，0 hard failures；KB content / size 与 `v0.3.91` 一致；git status tracked clean。
+
+### Hard Guarantees (operator-ready)
+
+- ✅ **不修改 `check_kb.py` / `check_pages_sync.py` / `audit_kb_state.py`** 来掩盖问题。
+- ✅ **不提交 tmp / inbox/raw/* / DRY_RUN_PREVIEW / session reports**。
+- ✅ **不交 smoke-only item page 或 smoke-only KB 条目**。
+- ✅ **不交 catalog / index 中的 smoke slug**。
+- ✅ **不 force push tag** / **不移动 v0.3.91 / v0.3.92 / v0.3.96 protected tags**。
+
+### See Also
+
+- [docs/OPERATOR_PLAYBOOK.md](OPERATOR_PLAYBOOK.md) — 完整的 operator-facing 操作手册。
+- [CHANGELOG.md](../CHANGELOG.md) — v0.4.0 entry。
+- `scripts/run_full_gate.py` — 全量门禁统一入口。
+
+---
+
 ## How to Pick a Version
 
 | What you want | Start here |
 |---------------|------------|
-| Use material ingestion on a new machine | `v0.3.91` |
+| Use material ingestion on a new machine | **`v0.4.0`** (operator-ready baseline) |
+| Fall back to the previous stable ingestion baseline | `v0.3.91` (material ingestion stable baseline) |
 | Understand YouTube capabilities | `v0.3.23` / `v0.3.24` |
 | See a real video import | `v0.3.20` (Dario Amodei) |
 | Understand failure handling | `v0.3.21` |
@@ -121,6 +182,7 @@ python3 scripts/check_pages_sync.py
 
 - [CHANGELOG.md](../CHANGELOG.md) — Full changelog with per-version details
 - [docs/YOUTUBE_CAPABILITIES.md](YOUTUBE_CAPABILITIES.md) — YouTube capability documentation
+- [docs/OPERATOR_PLAYBOOK.md](OPERATOR_PLAYBOOK.md) — Operator-facing 操作手册 (v0.4.0+)
 - [docs/releases/](releases/) — Per-version release notes
 
 ---
@@ -189,6 +251,7 @@ python3 scripts/check_pages_sync.py
 | v0.3.37 | `v0.3.37-release-index-and-tag-hygiene` | `TBD` | annotated | ✅ | release index + tag 卫生 |
 | v0.3.86 | `v0.3.86-pdf-local-document-kb-import-route` | `f1864ca` | annotated | ✅ | PDF / 本地文档 KB 导入路线 |
 | v0.3.91 | `v0.3.91-material-ingestion-stable-baseline` | `f309cb6` | annotated | ✅ | **本版本** — 材料入库稳定 checkpoint |
+| v0.4.0 | `v0.4.0-operator-ready-material-ingestion` | `c913d1a` | annotated | ✅ | **本版本** — operator-ready baseline（统一入口 + 全量门禁 + operator playbook + release assets policy 整合） |
 
 ### Known Duplicate Minor-Version Exceptions
 
@@ -211,9 +274,9 @@ python3 scripts/check_pages_sync.py
 
 ## Recommended Next Version
 
-**v0.3.38** (或更高)
+**v0.4.1** (或更高)
 
-> 从 v0.3.37 开始，每个 minor version 只对应一个 tag。v0.3.37 已用于 release index，因此下一个可用版本是 v0.3.38。
+> v0.4.0 已用于 operator-ready material ingestion baseline。下一次任务请从 v0.4.1 起跳。v0.3.x 仍可用作 fallback（v0.3.91 是上一个 material ingestion stable baseline）。
 
 ---
 
@@ -222,9 +285,10 @@ python3 scripts/check_pages_sync.py
 - [CHANGELOG.md](../CHANGELOG.md) — Full changelog with per-version details
 - [docs/VERSIONING.md](VERSIONING.md) — Versioning guide and tag rules
 - [scripts/check_release_tags.py](../scripts/check_release_tags.py) — Automated tag hygiene check
+- [docs/OPERATOR_PLAYBOOK.md](OPERATOR_PLAYBOOK.md) — Operator-facing 操作手册 (v0.4.0+)
 - [docs/YOUTUBE_CAPABILITIES.md](YOUTUBE_CAPABILITIES.md) — YouTube capability documentation
 - [docs/releases/](releases/) — Per-version release notes
 
 ---
 
-*Last updated: 2026-06-27*
+*Last updated: 2026-07-02*

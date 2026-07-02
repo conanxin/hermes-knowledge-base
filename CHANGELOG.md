@@ -2,6 +2,69 @@
 
 All notable changes to the Hermes Knowledge Base project.
 
+## v0.4.0 — Operator-Ready Material Ingestion Baseline
+
+### Summary
+
+在 v0.3.91 stable baseline 之上，把"任何人 / 任何机器从 main 拉取即可上手入库"作为硬要求正式落地。本版本**不导入新 KB 条目**，只在工具链 / 文档 / 治理上把统一入口、release-backed assets policy、full gate runner、operator playbook 整合成可复用的 operator-ready baseline。
+
+### Operator-Ready Baseline
+
+- **commit**: `c913d1a` (本地 head == origin main 同步点)
+- **tag**: `v0.4.0-operator-ready-material-ingestion` (annotated, 推 origin)
+- **统一入口**: `scripts/material_to_kb.py` 已支持微信公众号 / 普通网页 / YouTube (transcript-gated) / 本地 HTML·MD·TXT / 本地 PDF (extractable)。
+- **Release-backed assets**: `check_release_assets.py` 已纳入 full gate；`docs/releases.md` 给出 `.mp4` / `.mp3` / 大二进制走 GitHub Release 的官方路径。
+- **Full gate runner**: `scripts/run_full_gate.py` 是统一全量门禁入口；`check_release_tags.py` / `check_release_assets.py` 已显式纳入。
+- **Operator playbook**: `docs/OPERATOR_PLAYBOOK.md` 已建立，覆盖 daily import entry / WeChat / web / YouTube / PDF / release assets / gates / BLOCKED 参考 / git discipline / new-machine recovery。
+
+### Supported Material Matrix (this release)
+
+| 材料类型 | 入口 | 状态 |
+|---|---|---|
+| 微信公众号 URL | `material_to_kb.py` → `wechat_url_to_kb.py` | ✅ 公开 URL / 本地文件 (不登录 / 不扫码 / 不读 cookie) |
+| 普通网页 URL | `material_to_kb.py` → `web_article_to_kb.py` | ✅ robots 友好公开页 |
+| YouTube URL (有 transcript) | `material_to_kb.py` → `youtube_to_kb.py` | ✅ full transcript 才入库 |
+| YouTube URL (无 transcript) | 同上 | 🛑 BLOCKED |
+| 本地 HTML / MD / TXT | `material_to_kb.py` | ✅ |
+| 本地 PDF (extractable text layer) | `material_to_kb.py` → `pdf_to_kb.py` | ✅ PyMuPDF |
+| 本地 PDF (扫描版) | 同上 | 🛑 BLOCKED_NEEDS_OCR |
+| 图片本地化 | 多入口共有 | ✅ |
+
+### Gate Result (this release)
+
+- `python3 scripts/run_full_gate.py` → **PASS_WITH_WARNINGS** (0 hard failures; 1 step `audit_kb_state` PASS_WITH_WARNINGS — 29 soft `tag_topic_count_out_of_range` warnings inherited from content, unchanged since v0.3.91, **not** a regression)。
+- `python3 scripts/check_kb.py` → PASS。
+- `python3 scripts/check_pages_sync.py` → PASS。
+
+### Hard Guarantees (preserved from v0.3.91)
+
+- **不做新功能** (本 checkpoint 仅文档 / 治理 / 报告)。
+- **不导入新 KB 条目** (content / KB size 与 v0.3.91 完全一致)。
+- **不修改** `scripts/check_kb.py` / `scripts/check_pages_sync.py` / `scripts/audit_kb_state.py`。
+- **不降低任何 gate 标准**。
+- **不 force push** / **不 reset** / **不 `git add -A`** / **不移动 v0.3.91 / v0.3.92 / v0.3.96 protected tags**。
+- **不删除 untracked artifact**；**不提交 tmp / inbox/raw/* / session reports**。
+
+### Commits
+
+- `c913d1a` — Add material ingestion operator playbook
+- `339193f` — Report tooling stability checkpoint
+- `3d026f0` — Fix deterministic WeChat batch manifest selection
+- `f3d2d30` — Add `check_release_tags` as explicit step in full gate (v0.3.96)
+- `950abcf` — Add full gate runner and tag sanity checks (v0.3.96)
+- `a6daf50` — Add unified full gate runner and tag SHA sanity check (v0.3.96)
+- `7a2e99a` — Add release asset integrity checks
+- `9294149` — Document release asset storage policy
+
+### See Also
+
+- `docs/OPERATOR_PLAYBOOK.md`
+- `docs/RELEASES.md`
+- `scripts/run_full_gate.py`
+- `reports/operator_ready_material_ingestion_release_v0.4.0_20260702.md`
+
+---
+
 ## v0.3.91 — Material Ingestion Stable Baseline
 
 ### Summary

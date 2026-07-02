@@ -421,7 +421,8 @@ hermes-knowledge-base/
 | **v0.3.89** | **本地测试 / dry-run / session artifact 被 .gitignore** | 仓库 untracked 从 ~626 降到 2 个正式 report |
 | **v0.3.90** | **PDF smoke 修复**（`pdf_to_kb.py --import` 不再调用 `update_site.py` 走完整 build 链路） | `run_pdf_import_smoke.py` 26/26 → 33/33（+7 regression checks）；详细见 `reports/fix_pdf_smoke_catalog_dirty_v0.3.90_20260702.md` |
 | **v0.3.91** | **Material Ingestion Stable Baseline**（本 checkpoint） | 微信公众号 / 普通网页 / YouTube / 本地 HTML·MD·TXT / 本地 PDF 均稳定；全量门禁 reproduce clean；tag `v0.3.91-material-ingestion-stable-baseline`；详细见 `reports/full_gate_clean_reproducibility_audit_v0.3.91_20260702.md` + `reports/material_ingestion_stable_baseline_release_v0.3.91_20260702.md` |
+| **v0.4.0** | **Operator-Ready Material Ingestion Baseline**（本 checkpoint） | 统一入口 `material_to_kb.py` + 全量门禁 `run_full_gate.py` + operator playbook `docs/OPERATOR_PLAYBOOK.md` + release assets policy 整合；不导入新 KB 条目；tag `v0.4.0-operator-ready-material-ingestion`；详细见 `reports/operator_ready_material_ingestion_release_v0.4.0_20260702.md` |
 
 ---
 
-*Last refreshed for v0.3.91 on 2026-07-02.*
+*Last refreshed for v0.4.0 on 2026-07-02.*
