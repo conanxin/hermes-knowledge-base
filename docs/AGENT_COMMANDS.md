@@ -632,8 +632,27 @@ git push origin v0.3.N-task-name
 
 ---
 
+## Release-backed Entries
+
+KB entries whose large assets live in GitHub Releases (not git) must:
+
+1. Have `asset_storage: github_release` in `metadata.yaml`
+2. Have `asset_release_tag`, `asset_release_url`, `asset_count`, `asset_size_mb`, `asset_license` fields
+3. Be indexed in [docs/releases.md](releases.md)
+4. Have `source_url` pointing to the release tag URL (not a download URL)
+
+Integrity check:
+```bash
+python3 scripts/check_release_assets.py   # PASS or PASS_WITH_WARNINGS required
+python3 tests/run_release_assets_smoke.py  # smoke tests
+```
+Full gate sequence: see Phase E of each task spec.
+
+---
+
 ## 相关文档
 
 - [docs/VERSIONING.md](VERSIONING.md) — 版本命名规则与 tag 策略
 - [scripts/check_task_preflight.py](../scripts/check_task_preflight.py) — Preflight 检查脚本
 - [scripts/check_release_tags.py](../scripts/check_release_tags.py) — Tag 卫生检查
+- [scripts/check_release_assets.py](../scripts/check_release_assets.py) — Release-backed asset integrity check (v0.3.95+)
