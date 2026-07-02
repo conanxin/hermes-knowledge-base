@@ -167,6 +167,90 @@ def test_check_release_tags_sanity():
     print("  PASS: check_release_tags.py prints tag SHA sanity")
 
 
+def test_list_mode_full():
+    """Test 10: --list mode prints full plan as JSON without executing."""
+    rc, out, err = run(["--list"])
+    assert rc == 0, f"--list should exit 0, got rc={rc}: {err}"
+    plan = json.loads(out)
+    assert plan["mode"] == "full", f"Expected mode=full, got {plan['mode']}"
+    assert plan["step_count"] >= 10, f"Expected >=10 steps, got {plan['step_count']}"
+    names = [s["name"] for s in plan["steps"]]
+    # Spec requires: full gate plan includes check_release_assets and run_pdf_import_smoke
+    assert "check_release_assets" in names, \
+        f"Full plan missing check_release_assets: {names}"
+    assert "run_pdf_import_smoke" in names, \
+        f"Full plan missing run_pdf_import_smoke: {names}"
+    print("  PASS: --list (full) prints plan with check_release_assets + run_pdf_import_smoke")
+
+
+def test_list_mode_quick():
+    """Test 11: --list --quick prints quick plan, is subset of full."""
+    rc, out, err = run(["--list", "--quick"])
+    assert rc == 0, f"--list --quick should exit 0, got rc={rc}: {err}"
+    quick_plan = json.loads(out)
+    assert quick_plan["mode"] == "quick", f"Expected mode=quick, got {quick_plan['mode']}"
+    # Quick must be subset of full
+    full_plan = json.loads(run(["--list"])[1])
+    quick_names = set(s["name"] for s in quick_plan["steps"])
+    full_names = set(s["name"] for s in full_plan["steps"])
+    assert quick_names.issubset(full_names), \
+        f"Quick names not subset of full: extra={quick_names - full_names}"
+    print("  PASS: --list --quick plan is subset of full plan")
+
+
+def test_list_does_not_execute():
+    """Test 12: --list does NOT execute commands."""
+    rc, out, err = run(["--list"])
+    assert rc == 0
+    plan = json.loads(out)
+    # If commands were executed, output would contain PASS/FAIL lines and
+    # working_tree section. List output should be pure plan structure.
+    assert "working_tree" not in plan, "List output should not include working_tree section"
+    assert "steps" in plan
+    for step in plan["steps"]:
+        # Each step has command field but no exit_code/status
+        assert "command" in step
+        assert "exit_code" not in step, \
+            f"List step {step['name']} should not have exit_code (would mean execution happened)"
+        assert "status" not in step, \
+            f"List step {step['name']} should not have status"
+    print("  PASS: --list does NOT execute commands (no exit_code/status fields)")
+
+
+def test_tag_sanity_commit_match():
+    """Test 13: Tag sanity verifies dereferenced commit matches documented values."""
+    result = subprocess.run(
+        [sys.executable, str(REPO_ROOT / "scripts" / "check_release_tags.py")],
+        cwd=str(REPO_ROOT), capture_output=True, text=True, check=False,
+    )
+    assert result.returncode == 0, \
+        f"check_release_tags.py should PASS, got rc={result.returncode}: {result.stdout[-1000:]}"
+    out = result.stdout
+    # Spec: stable tag expected commit 56fe848, asset tag expected 4117366
+    assert "expected_commit:      56fe848" in out, \
+        "Missing expected_commit for stable tag (56fe848)"
+    assert "expected_commit:      4117366" in out, \
+        "Missing expected_commit for asset tag (4117366)"
+    assert "commit_match: OK" in out, \
+        f"commit_match not OK for one or more protected tags"
+    print("  PASS: Tag sanity verifies documented commit match (56fe848 / 4117366)")
+
+
+def test_annotated_tag_not_false_positive():
+    """Test 14: Annotated tag SHA difference is NOT reported as FAIL."""
+    # v0.3.91 is annotated (tag_object != dereferenced). Must not fail.
+    result = subprocess.run(
+        [sys.executable, str(REPO_ROOT / "scripts" / "check_release_tags.py")],
+        cwd=str(REPO_ROOT), capture_output=True, text=True, check=False,
+    )
+    assert result.returncode == 0, \
+        "Annotated tag should not fail tag sanity check"
+    out = result.stdout
+    # The stable tag should be reported as annotated
+    assert "kind: annotated" in out, "Expected at least one annotated tag"
+    print("  PASS: Annotated tag does not trigger false positive")
+
+
 def main():
     print("Running smoke tests for run_full_gate.py + check_release_tags.py")
     print()
@@ -181,6 +265,11 @@ def main():
         test_quick_mode_step_count,
         test_no_update_site_excludes_step,
         test_check_release_tags_sanity,
+        test_list_mode_full,
+        test_list_mode_quick,
+        test_list_does_not_execute,
+        test_tag_sanity_commit_match,
+        test_annotated_tag_not_false_positive,
     ]
 
     failed = []

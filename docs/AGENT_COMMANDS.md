@@ -632,6 +632,126 @@ git push origin v0.3.N-task-name
 
 ---
 
+## 统一 Full Gate Runner（v0.3.96+）
+
+**项目入口标准命令。** 所有 agent 在任务开始前、结束后都应运行：
+
+```bash
+# 完整门禁（16 个 steps）
+python3 scripts/run_full_gate.py
+
+# 快速门禁（7 个核心 steps）
+python3 scripts/run_full_gate.py --quick
+
+# 仅查看计划，不执行（dry-run）
+python3 scripts/run_full_gate.py --list
+python3 scripts/run_full_gate.py --quick --list
+
+# Machine-readable JSON 输出 + 存档
+python3 scripts/run_full_gate.py --json --output reports/full_gate_run_YYYYMMDD_HHMMSS.json
+
+# 遇到第一个 FAIL 立即停止
+python3 scripts/run_full_gate.py --fail-fast
+
+# 跳过 update_site.py（迭代中间状态）
+python3 scripts/run_full_gate.py --no-update-site
+```
+
+**Full plan（16 steps，固定顺序）：**
+
+| # | Step | 说明 |
+|---|------|------|
+| 1 | `py_compile` | 静态编译所有 scripts/ |
+| 2 | `run_smoke_tests` | 核心 smoke |
+| 3 | `run_wechat_batch_smoke` | 微信批量入库 smoke |
+| 4 | `run_item_render_smoke` | 详情页渲染 smoke |
+| 5 | `run_image_localization_smoke` | 图片本地化 smoke |
+| 6 | `run_material_router_smoke` | 路由 smoke |
+| 7 | `run_web_article_smoke` | 网页文章 smoke |
+| 8 | `run_youtube_import_smoke` | YouTube smoke |
+| 9 | `run_fetch_layer_smoke` | 拉取层 smoke |
+| 10 | `run_pdf_import_smoke` | PDF 入库 smoke |
+| 11 | `run_release_assets_smoke` | Release-backed asset smoke |
+| 12 | `check_release_assets` | Release asset 完整性检查 |
+| 13 | `check_kb` | KB 一致性 |
+| 14 | `update_site` | 生成站点 |
+| 15 | `audit_kb_state` | KB 状态审计 |
+| 16 | `check_pages_sync` | pages 同步检查 |
+
+**Quick plan（7 steps）：** py_compile, run_material_router_smoke, run_pdf_import_smoke, run_release_assets_smoke, check_release_assets, check_kb, check_pages_sync。
+
+**JSON 输出结构：**
+
+```json
+{
+  "status": "PASS | PASS_WITH_WARNINGS | FAILED_GATE | FAILED_CLEANLINESS",
+  "mode": "full | quick",
+  "total_steps": 16,
+  "passed": 15,
+  "passed_with_warnings": 1,
+  "failed": 0,
+  "total_duration_seconds": 20.7,
+  "failed_step_names": [],
+  "steps": [
+    {
+      "name": "py_compile",
+      "command": "python3 -m py_compile ...",
+      "exit_code": 0,
+      "duration_seconds": 0.08,
+      "stdout_tail": "...",
+      "stderr_tail": "",
+      "status": "PASS"
+    }
+  ],
+  "working_tree": {
+    "tracked_dirty_files": [],
+    "untracked_files": [],
+    "diff_stat": "",
+    "status": "PASS | FAILED_CLEANLINESS"
+  }
+}
+```
+
+**退出码：**
+
+- `0` — 所有步骤 PASS（或仅 PASS_WITH_WARNINGS）
+- `1` — 任一 FAIL 或 tracked working tree dirty
+
+**Tracked working tree 检查：** gate 跑完后，runner 跑 `git status --short` 与 `git diff --stat`。Tracked dirty 文件（如 update_site 产生的 canonical diff）会被报告为 `FAILED_CLEANLINESS`。**绝不要为了过门禁而提交脏生成物。** 如发现 dirty，必须修复原因。
+
+---
+
+## Tag SHA Sanity（v0.3.96+）
+
+Tag 有两种 SHA，agent 必须知道区别：
+
+| SHA 类型 | 命令 | 含义 |
+|---|---|---|
+| Tag object SHA | `git rev-parse v0.3.X` | 轻量 tag：等同于 commit SHA；annotated tag：tag object 的唯一 SHA |
+| Dereferenced commit SHA | `git rev-parse v0.3.X^{}` | **始终**指向该 tag 标记的 commit |
+
+**当前 protected tags：**
+
+| Tag | 类型 | Tag object | Dereferenced commit |
+|---|---|---|---|
+| `v0.3.91-material-ingestion-stable-baseline` | annotated | `6b8e95b1f235` | `56fe8482a8ce` |
+| `v0.3.92-bingzhu-you-mv-assets` | lightweight | `4117366a5cf5` | `4117366a5cf5` |
+
+**为什么区分：**
+
+- Lightweight tag → 两个 SHA 相同；移动 tag（`git tag -f`）会同时改变两者
+- Annotated tag → 两个 SHA 不同；移动 tag 会改变 dereferenced commit SHA（这是检测 tag 被静默移动的关键信号）
+
+**Tag sanity 检查运行方式：**
+
+```bash
+python3 scripts/check_release_tags.py
+```
+
+输出中包含 `tag SHA sanity` 段。如果 protected tag 的 dereferenced commit 与文档记录不符（`expected_commit`），检查以 `FAIL` 退出码 1 终止。这表明 tag 被**移动**，是 critical invariant violation。
+
+---
+
 ## Release-backed Entries
 
 KB entries whose large assets live in GitHub Releases (not git) must:
@@ -654,5 +774,7 @@ Full gate sequence: see Phase E of each task spec.
 
 - [docs/VERSIONING.md](VERSIONING.md) — 版本命名规则与 tag 策略
 - [scripts/check_task_preflight.py](../scripts/check_task_preflight.py) — Preflight 检查脚本
-- [scripts/check_release_tags.py](../scripts/check_release_tags.py) — Tag 卫生检查
+- [scripts/check_release_tags.py](../scripts/check_release_tags.py) — Tag 卫生检查（含 SHA sanity）
+- [scripts/run_full_gate.py](../scripts/run_full_gate.py) — 统一 full gate runner
+- [tests/run_full_gate_runner_smoke.py](../tests/run_full_gate_runner_smoke.py) — Full gate runner smoke
 - [scripts/check_release_assets.py](../scripts/check_release_assets.py) — Release-backed asset integrity check (v0.3.95+)

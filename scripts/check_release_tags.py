@@ -149,13 +149,27 @@ def main():
     #   - "dereferenced commit SHA": `git rev-parse v0.3.X^{}` (always the pointed-to commit)
     # For protected tags (stable baseline + asset release), both SHAs must be tracked so
     # future agents can verify the tag has not been moved silently.
+    #
+    # Expected dereferenced commits (per docs/RELEASES.md):
+    #   v0.3.91-material-ingestion-stable-baseline  → 56fe848 ("Document material ingestion stable baseline")
+    #   v0.3.92-bingzhu-you-mv-assets              → 4117366 ("Clean up KB audit warnings (37 → 29)")
+    # If a protected tag points to a different commit, that is FAIL (tag was moved).
     protected_tags = [
-        "v0.3.91-material-ingestion-stable-baseline",
-        "v0.3.92-bingzhu-you-mv-assets",
+        {
+            "name": "v0.3.91-material-ingestion-stable-baseline",
+            "expected_commit": "56fe8482a8ce",  # documented stable baseline
+        },
+        {
+            "name": "v0.3.92-bingzhu-you-mv-assets",
+            "expected_commit": "4117366a5cf5",  # documented asset release point
+        },
     ]
     print("tag SHA sanity (annotated object vs dereferenced commit):")
     sha_check_ok = True
-    for tag in protected_tags:
+    moved_tags = []
+    for entry in protected_tags:
+        tag = entry["name"]
+        expected = entry["expected_commit"]
         try:
             obj_sha = run_git("rev-parse", tag)
             commit_sha = run_git("rev-parse", f"{tag}^{{}}")
@@ -165,16 +179,35 @@ def main():
                 kind = "lightweight"
             else:
                 kind = "annotated"
+
+            # Verify dereferenced commit matches documented baseline.
+            # We compare on a 12-char prefix (full SHA would also work).
+            match_ok = commit_sha.startswith(expected) if expected else True
+            match_marker = "OK" if match_ok else "MISMATCH"
             print(f"  {tag}")
             print(f"    tag_object_sha:       {obj_short}")
             print(f"    dereferenced_commit:  {commit_short}")
+            print(f"    expected_commit:      {expected}")
             print(f"    kind: {kind}")
+            print(f"    commit_match: {match_marker}")
+            if not match_ok:
+                moved_tags.append((tag, commit_short, expected))
         except SystemExit:
             raise
         except Exception as e:
             sha_check_ok = False
             print(f"  {tag}: ERROR {e}")
     print()
+
+    if moved_tags:
+        status = "FAIL"
+        print("FAIL: protected tag(s) point to a different commit than documented:")
+        for (tag, actual, expected) in moved_tags:
+            print(f"  - {tag}")
+            print(f"    actual:   {actual}")
+            print(f"    expected: {expected}")
+        print("Tag has been MOVED. This is a critical invariant violation.")
+        sys.exit(1)
 
     if status == "PASS_WITH_WARNINGS":
         print("Notes:")

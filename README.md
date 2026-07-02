@@ -280,6 +280,48 @@ python3 scripts/import_wechat_article_capture.py --dry-run inbox/raw/wechat/<fil
 5. `sync_pages_docs.py`
 6. `check_pages_sync.py` （post-sync integrity check；非 0 即拒绝宣称成功）
 
+### 8a. 统一 Full Gate Runner（v0.3.96+，推荐入口）
+
+不再需要手拷上面表格里的多个命令。一键全跑：
+
+```bash
+python3 scripts/run_full_gate.py                 # full mode（16 个步骤）
+python3 scripts/run_full_gate.py --quick         # quick mode（7 个核心步骤）
+python3 scripts/run_full_gate.py --list          # dry-run，仅查看计划
+python3 scripts/run_full_gate.py --json --output reports/full_gate_run_YYYYMMDD_HHMMSS.json
+python3 scripts/run_full_gate.py --fail-fast     # 遇首个 FAIL 立即停
+python3 scripts/run_full_gate.py --no-update-site # 迭代中跳过 update_site
+```
+
+Runner 额外检查 gate 之后 **tracked working tree** 是否被污染——这是 `update_site.py` 可能产生 canonical diff 时唯一可靠的检测。如果发现 tracked dirty，runner 报 `FAILED_CLEANLINESS` 并退出 1。**绝不要为了过门禁而 commit 脏生成物。**
+
+Smoke tests:
+
+```bash
+python3 tests/run_full_gate_runner_smoke.py  # 14/14 PASS
+```
+
+Tag SHA sanity（区分 annotated tag object SHA 与 dereferenced commit SHA）：
+
+```bash
+python3 scripts/check_release_tags.py
+# tag SHA sanity (annotated object vs dereferenced commit):
+#   v0.3.91-material-ingestion-stable-baseline
+#     tag_object_sha:       6b8e95b1f235
+#     dereferenced_commit:  56fe8482a8ce
+#     expected_commit:      56fe8482a8ce
+#     kind: annotated
+#     commit_match: OK
+#   v0.3.92-bingzhu-you-mv-assets
+#     tag_object_sha:       4117366a5cf5
+#     dereferenced_commit:  4117366a5cf5
+#     expected_commit:      4117366a5cf5
+#     kind: lightweight
+#     commit_match: OK
+```
+
+Protected tags（`v0.3.91-*`、`v0.3.92-*`）的 dereferenced commit 必须与上述 expected_commit 一致；不一致即 `FAIL` 退出 1，是 critical invariant violation。
+
 ## 9. 仓库目录结构
 
 ```

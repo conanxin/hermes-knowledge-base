@@ -11,6 +11,7 @@ Usage:
     python3 scripts/run_full_gate.py --output PATH   # write JSON report
     python3 scripts/run_full_gate.py --fail-fast     # stop on first FAIL
     python3 scripts/run_full_gate.py --no-update-site# skip update_site.py
+    python3 scripts/run_full_gate.py --list          # dry-run plan, no execution
 
 Exit codes:
     0 - all PASS (or PASS_WITH_WARNINGS)
@@ -194,6 +195,8 @@ def main() -> None:
     parser.add_argument("--fail-fast", action="store_true", help="Stop on first FAIL")
     parser.add_argument("--no-update-site", action="store_true",
                         help="Skip update_site step")
+    parser.add_argument("--list", action="store_true",
+                        help="Print planned steps as JSON and exit (no execution)")
     parser.add_argument("--cwd", type=str, default=str(REPO_ROOT),
                         help="Working directory (default: repo root)")
     args = parser.parse_args()
@@ -205,6 +208,19 @@ def main() -> None:
 
     if args.no_update_site:
         steps = [(n, c, t) for (n, c, t) in steps if n != "update_site"]
+
+    # --list: dry-run plan, exit immediately with JSON plan (no execution)
+    if args.list:
+        plan = {
+            "mode": "quick" if args.quick else "full",
+            "step_count": len(steps),
+            "steps": [
+                {"name": n, "command": " ".join(c), "timeout_seconds": t}
+                for (n, c, t) in steps
+            ],
+        }
+        print(json.dumps(plan, indent=2, ensure_ascii=False))
+        sys.exit(0)
 
     started = time.time()
     results: List[dict] = []
