@@ -3,28 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>hermes-knowledge-base</title>
+<title>hermes-knowledge-base · 个人知识库与材料入库系统</title>
+<meta name="description" content="把公众号、网页、PDF、本地文档与 YouTube 转录转成可浏览、可追溯的知识条目。">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header>
-<h1>hermes-knowledge-base</h1>
-<p class="subtitle">个人知识库浏览</p>
+<header class="site-hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-eyebrow">hermes-knowledge-base</p>
+      <h1 class="hero-title">个人知识库与材料入库系统</h1>
+      <p class="hero-lede">把公众号、网页、PDF、本地文档与 YouTube 转录转成可浏览、可追溯的知识条目。</p>
+      <nav class="hero-cta" aria-label="主要入口">
+        <a class="cta-btn cta-primary" href="#records">浏览知识库 ↓</a>
+        <a class="cta-btn" href="https://github.com/conanxin/hermes-knowledge-base/blob/main/docs/OPERATOR_PLAYBOOK.md" target="_blank" rel="noopener">Operator Playbook</a>
+        <a class="cta-btn" href="https://github.com/conanxin/hermes-knowledge-base" target="_blank" rel="noopener">GitHub Repo</a>
+        <a class="cta-btn" href="https://github.com/conanxin/hermes-knowledge-base/releases" target="_blank" rel="noopener">Release Assets</a>
+      </nav>
+      <p class="hero-footnote">所有计数由 <code>data/catalog.json</code> 实时驱动；本页无硬编码数字。</p>
+    </div>
+  </div>
 </header>
 
-<main>
-<section class="stats" id="stats"></section>
+<main class="site-main">
+  <section class="stats" id="stats" aria-label="知识库统计"></section>
 
-<section class="controls">
-<input type="text" id="search" placeholder="搜索标题、标签、主题..." autocomplete="off">
-<div class="filters" id="filters"></div>
-</section>
+  <section class="controls" aria-label="搜索与筛选">
+    <div class="search-row">
+      <input type="search" id="search" placeholder="搜索标题、摘要、标签、来源…" autocomplete="off">
+      <button type="button" id="clear-search" class="clear-btn" hidden aria-label="清除搜索">×</button>
+    </div>
+    <div class="filters" id="filters" role="toolbar" aria-label="类型筛选"></div>
+    <div class="result-meta" id="result-meta" aria-live="polite"></div>
+  </section>
 
-<section class="records" id="records"></section>
+  <section class="records" id="records" aria-live="polite"></section>
 </main>
 
-<footer>
-<p>hermes-knowledge-base · 54 records</p>
+<footer class="site-footer">
+  <p id="footer-line">hermes-knowledge-base</p>
+  <p class="footer-sub">v0.4.0 operator-ready material ingestion · <a href="https://github.com/conanxin/hermes-knowledge-base/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a> · <a href="https://github.com/conanxin/hermes-knowledge-base/blob/main/docs/RELEASES.md" target="_blank" rel="noopener">Releases</a></p>
 </footer>
 
 <script src="app.js"></script>

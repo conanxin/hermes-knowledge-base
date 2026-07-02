@@ -1,12 +1,11 @@
+// v0.4.2 — UI polish: clearer stats, search clear, result meta, empty state, copy feedback.
+// Data-driven: every count, every card, every label comes from data/catalog.json.
+
 const GITHUB_REPO = 'https://github.com/conanxin/hermes-knowledge-base/tree/main/';
 
 let allRecords = [];
 let currentFilter = 'all';
 
-// v0.3.22: only run SPA home-page bootstrap when the page actually has
-// the home-page containers. Item detail pages (and other static pages) now
-// load ../../app.js too, so the previous top-level loadData() call would
-// 404 + null-reference on missing #search/#stats/#filters/#records.
 const IS_HOME_PAGE = !!(
   document.getElementById('search') &&
   document.getElementById('records') &&
@@ -14,60 +13,121 @@ const IS_HOME_PAGE = !!(
   document.getElementById('filters')
 );
 
+// Canonical type order — keeps the stats / filters in a predictable visual sequence.
+const KNOWN_TYPES = ['article', 'note', 'project', 'resource_collection', 'essay', 'interview', 'academic_paper', 'video'];
+
+const TYPE_LABELS_ZH = {
+  article: '文章',
+  note: '笔记',
+  project: '项目',
+  resource_collection: '合集',
+  essay: '随笔',
+  interview: '访谈',
+  academic_paper: '论文',
+  video: '视频',
+};
+
 async function loadData() {
-  if (!IS_HOME_PAGE) return;  // no-op on non-home pages
+  if (!IS_HOME_PAGE) return;
   const res = await fetch('data/catalog.json');
   allRecords = await res.json();
-  // Sort by updated_date descending
+  // Sort by updated_date desc, then published_date desc, then title for stability.
   allRecords.sort((a, b) => {
     const da = a.updated_date || '';
     const db = b.updated_date || '';
-    return db.localeCompare(da);
+    if (db !== da) return db.localeCompare(da);
+    const pa = a.published_date || '';
+    const pb = b.published_date || '';
+    if (pb !== pa) return pb.localeCompare(pa);
+    return (a.title || '').localeCompare(b.title || '');
   });
   renderStats();
   renderFilters();
   renderRecords();
+  bindGlobalControls();
+}
+
+function summarizeType(type) {
+  // Use Chinese label for display, fall back to the raw type if unknown.
+  return TYPE_LABELS_ZH[type] || type;
 }
 
 function renderStats() {
-  const stats = {
-    total: allRecords.length,
-    article: allRecords.filter(r => r.type === 'article').length,
-    note: allRecords.filter(r => r.type === 'note').length,
-    project: allRecords.filter(r => r.type === 'project').length,
-    resource_collection: allRecords.filter(r => r.type === 'resource_collection').length,
-  };
+  const counts = { total: allRecords.length };
+  for (const t of KNOWN_TYPES) {
+    counts[t] = allRecords.filter(r => r.type === t).length;
+  }
+  // Unknown types (defensive: should not happen in production, but log if so).
+  const known = new Set(KNOWN_TYPES);
+  const unknowns = [...new Set(allRecords.map(r => r.type).filter(t => !known.has(t)))];
+  if (unknowns.length) {
+    console.warn('[ui] unknown types in catalog:', unknowns);
+    for (const t of unknowns) counts[t] = allRecords.filter(r => r.type === t).length;
+  }
+
+  // Build the four top cards + a per-type chip row for everything else.
+  const top = [
+    { key: 'total', label: '总记录', accent: 'total' },
+    { key: 'article', label: '文章', accent: 'article' },
+    { key: 'note', label: '笔记', accent: 'note' },
+    { key: 'project', label: '项目', accent: 'project' },
+    { key: 'resource_collection', label: '合集', accent: 'collection' },
+  ];
 
   const container = document.getElementById('stats');
   container.innerHTML = `
-    <div class="stat-card"><div class="number">${stats.total}</div><div class="label">总记录</div></div>
-    <div class="stat-card"><div class="number">${stats.article}</div><div class="label">article</div></div>
-    <div class="stat-card"><div class="number">${stats.note}</div><div class="label">note</div></div>
-    <div class="stat-card"><div class="number">${stats.project}</div><div class="label">project</div></div>
-    <div class="stat-card"><div class="number">${stats.resource_collection}</div><div class="label">collection</div></div>
+    <div class="stat-card-grid">
+      ${top.map(c => `
+        <button type="button" class="stat-card stat-${c.accent}" data-type="${c.key === 'total' ? 'all' : c.key}">
+          <span class="stat-number">${counts[c.key]}</span>
+          <span class="stat-label">${c.label}</span>
+        </button>
+      `).join('')}
+    </div>
+    <div class="stat-secondary">
+      ${KNOWN_TYPES.filter(t => t !== 'article' && t !== 'note' && t !== 'project' && t !== 'resource_collection' && counts[t] > 0)
+        .map(t => `<span class="stat-chip">${summarizeType(t)} <strong>${counts[t]}</strong></span>`)
+        .join('')}
+      ${unknowns.filter(t => counts[t] > 0).map(t => `<span class="stat-chip">${t} <strong>${counts[t]}</strong></span>`).join('')}
+    </div>
   `;
 
-  // Update the static footer text so the count stays in sync after re-runs.
-  const footer = document.querySelector('footer p');
+  // Make the top stat cards into filter shortcuts (clicking 总记录 resets to all).
+  container.querySelectorAll('.stat-card').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentFilter = btn.dataset.type;
+      const search = document.getElementById('search');
+      if (search) search.value = '';
+      const clear = document.getElementById('clear-search');
+      if (clear) clear.hidden = true;
+      renderFilters();
+      renderRecords();
+    });
+  });
+
+  // Update the static footer so the count stays in sync after every re-render.
+  const footer = document.getElementById('footer-line');
   if (footer) {
-    footer.textContent = `hermes-knowledge-base · ${stats.total} records`;
+    footer.textContent = `hermes-knowledge-base · 共 ${counts.total} 条记录`;
   }
 }
 
 function renderFilters() {
-  const counts = {
-    all: allRecords.length,
-    article: allRecords.filter(r => r.type === 'article').length,
-    note: allRecords.filter(r => r.type === 'note').length,
-    project: allRecords.filter(r => r.type === 'project').length,
-    resource_collection: allRecords.filter(r => r.type === 'resource_collection').length,
-  };
-  const types = ['all', 'article', 'note', 'project', 'resource_collection'];
-  const labels = { all: '全部', article: 'article', note: 'note', project: 'project', resource_collection: 'collection' };
+  const counts = { all: allRecords.length };
+  for (const t of KNOWN_TYPES) {
+    counts[t] = allRecords.filter(r => r.type === t).length;
+  }
+  const known = new Set(KNOWN_TYPES);
+  const unknowns = [...new Set(allRecords.map(r => r.type).filter(t => !known.has(t)))];
+  for (const t of unknowns) counts[t] = allRecords.filter(r => r.type === t).length;
+
+  const order = ['all', ...KNOWN_TYPES.filter(t => counts[t] > 0), ...unknowns.filter(t => counts[t] > 0)];
   const container = document.getElementById('filters');
-  container.innerHTML = types.map(t =>
-    `<button class="filter-btn ${t === currentFilter ? 'active' : ''}" data-type="${t}">${labels[t]} (${counts[t]})</button>`
-  ).join('');
+  container.innerHTML = order.map(t => {
+    const label = t === 'all' ? '全部' : summarizeType(t);
+    const active = t === currentFilter ? 'active' : '';
+    return `<button type="button" class="filter-btn ${active}" data-type="${t}">${label} <span class="filter-count">${counts[t]}</span></button>`;
+  }).join('');
 
   container.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -82,63 +142,163 @@ function getSearchableText(r) {
   return [
     r.title || '',
     r.title_zh || '',
+    r.summary || '',
+    r.summary_zh || '',
+    r.author || '',
+    r.author_zh || '',
+    r.source_site || '',
     ...(r.tags || []),
     ...(r.topics || []),
   ].join(' ').toLowerCase();
 }
 
-function copyPath(path) {
-  navigator.clipboard.writeText(path).catch(() => {});
+async function copyPath(path, btn) {
+  if (!path) return;
+  try {
+    await navigator.clipboard.writeText(path);
+  } catch (e) {
+    // Fallback for older browsers or non-secure contexts.
+    const ta = document.createElement('textarea');
+    ta.value = path;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (_) {}
+    document.body.removeChild(ta);
+  }
+  if (!btn) return;
+  const original = btn.dataset.label || btn.textContent;
+  btn.dataset.label = original;
+  btn.textContent = '已复制 ✓';
+  btn.classList.add('copied');
+  clearTimeout(btn._t);
+  btn._t = setTimeout(() => {
+    btn.textContent = original;
+    btn.classList.remove('copied');
+  }, 1400);
+}
+
+function tagList(r, max = 6) {
+  const tags = r.tags || [];
+  if (tags.length <= max) {
+    return tags.map(t => `<span class="chip">${escapeHtml(t)}</span>`).join('');
+  }
+  const shown = tags.slice(0, max).map(t => `<span class="chip">${escapeHtml(t)}</span>`).join('');
+  const rest = tags.length - max;
+  return `${shown}<span class="chip chip-more" title="${escapeHtml(tags.slice(max).join(' · '))}">+${rest}</span>`;
+}
+
+function metaLine(r) {
+  const parts = [];
+  if (r.author || r.author_zh) parts.push(escapeHtml(r.author_zh || r.author));
+  if (r.source_site) parts.push(escapeHtml(r.source_site));
+  const date = r.published_date || r.captured_date || r.updated_date || '';
+  if (date) parts.push(escapeHtml(date));
+  return parts.join(' · ');
 }
 
 function renderRecords() {
-  const query = document.getElementById('search').value.trim().toLowerCase();
-  const container = document.getElementById('records');
+  const queryEl = document.getElementById('search');
+  const query = (queryEl ? queryEl.value : '').trim().toLowerCase();
+  const clearBtn = document.getElementById('clear-search');
+  if (clearBtn) clearBtn.hidden = query.length === 0;
 
   let filtered = allRecords;
-
   if (currentFilter !== 'all') {
     filtered = filtered.filter(r => r.type === currentFilter);
   }
-
   if (query) {
     filtered = filtered.filter(r => getSearchableText(r).includes(query));
   }
 
+  const resultMeta = document.getElementById('result-meta');
+  if (resultMeta) {
+    if (query || currentFilter !== 'all') {
+      resultMeta.textContent = `显示 ${filtered.length} / ${allRecords.length} 条${query ? `（搜索：${query}）` : ''}`;
+    } else {
+      resultMeta.textContent = '';
+    }
+  }
+
+  const container = document.getElementById('records');
   if (filtered.length === 0) {
-    container.innerHTML = '<div class="empty-state">未找到匹配记录，请尝试其他关键词</div>';
+    const emptyMsg = query
+      ? `没有匹配 “${escapeHtml(query)}” 的条目，试试减少关键词或切换类型。`
+      : '当前筛选下没有条目。';
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">∅</div>
+        <div class="empty-text">${emptyMsg}</div>
+        <button type="button" class="action-btn" id="empty-reset">清除筛选</button>
+      </div>
+    `;
+    const reset = document.getElementById('empty-reset');
+    if (reset) reset.addEventListener('click', resetFilters);
     return;
   }
 
   container.innerHTML = filtered.map(r => {
     const githubLink = r.github_url || (GITHUB_REPO + r.path);
     const detailLink = r.detail_url || '';
-    const date = r.updated_date || '';
-    const author = r.author || '';
-    const tags = (r.tags || []).slice(0, 10).map(t => `<span class="chip">${escapeHtml(t)}</span>`).join('');
-    // Title link: prefer in-site detail page, fall back to GitHub folder.
     const titleHref = detailLink || githubLink;
     const titleTarget = detailLink ? '' : 'target="_blank" rel="noopener"';
+    const summary = r.summary_zh || r.summary || '';
+    const summaryHtml = summary
+      ? `<p class="record-summary">${escapeHtml(summary.slice(0, 200))}${summary.length > 200 ? '…' : ''}</p>`
+      : '';
     return `
-      <div class="record-card">
+      <article class="record-card">
         <div class="record-header">
-          <span class="type-badge ${r.type}">${r.type}</span>
+          <span class="type-badge type-${escapeAttr(r.type)}">${escapeHtml(summarizeType(r.type))}</span>
           <a class="record-title" href="${titleHref}" ${titleTarget}>${escapeHtml(r.title_zh || r.title || '无标题')}</a>
         </div>
-        <div class="record-title-en">${escapeHtml(r.title || '')}</div>
-        <div class="record-info">
-          ${author ? `<span class="info-item">${escapeHtml(author)}</span>` : ''}
-          ${date ? `<span class="info-item">${date}</span>` : ''}
-        </div>
-        <div class="record-meta">${tags}</div>
+        ${(r.title && r.title_zh && r.title_zh !== r.title) ? `<p class="record-title-en">${escapeHtml(r.title)}</p>` : ''}
+        <p class="record-info">${metaLine(r)}</p>
+        ${summaryHtml}
+        <div class="record-meta">${tagList(r, 6)}</div>
         <div class="record-actions">
           ${detailLink ? `<a class="action-link primary" href="${detailLink}">阅读 →</a>` : ''}
-          <a class="action-link" href="${githubLink}" target="_blank" rel="noopener">GitHub 文件夹</a>
-          <button class="action-btn" onclick="copyPath('${escapeAttr(r.path || '')}')">复制 path</button>
+          <a class="action-link" href="${githubLink}" target="_blank" rel="noopener">GitHub</a>
+          ${r.source_url ? `<a class="action-link" href="${escapeAttr(r.source_url)}" target="_blank" rel="noopener">原始来源</a>` : ''}
+          <button type="button" class="action-btn" data-path="${escapeAttr(r.path || '')}">复制路径</button>
         </div>
-      </div>
+      </article>
     `;
   }).join('');
+
+  container.querySelectorAll('.action-btn[data-path]').forEach(btn => {
+    btn.addEventListener('click', () => copyPath(btn.dataset.path, btn));
+  });
+}
+
+function bindGlobalControls() {
+  const search = document.getElementById('search');
+  if (!search) return;
+  let debounceId;
+  const onInput = () => {
+    clearTimeout(debounceId);
+    debounceId = setTimeout(renderRecords, 80);
+  };
+  search.addEventListener('input', onInput);
+
+  const clear = document.getElementById('clear-search');
+  if (clear) {
+    clear.addEventListener('click', () => {
+      search.value = '';
+      clear.hidden = true;
+      renderRecords();
+      search.focus();
+    });
+  }
+}
+
+function resetFilters() {
+  currentFilter = 'all';
+  const search = document.getElementById('search');
+  if (search) search.value = '';
+  const clear = document.getElementById('clear-search');
+  if (clear) clear.hidden = true;
+  renderFilters();
+  renderRecords();
 }
 
 // Minimal HTML escaping for user-supplied content rendered into innerHTML.
@@ -152,11 +312,6 @@ function escapeHtml(s) {
 }
 function escapeAttr(s) {
   return escapeHtml(s).replace(/`/g, '&#96;');
-}
-
-// v0.3.22: home-page search input binding only on home page.
-if (IS_HOME_PAGE) {
-  document.getElementById('search').addEventListener('input', renderRecords);
 }
 
 // ============================================================
@@ -193,34 +348,16 @@ function initTrackPlayers() {
   });
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    initTrackPlayers();
-    initTrackFilter();
-  });
-} else {
-  initTrackPlayers();
-  initTrackFilter();
-}
-
 // ============================================================
 // v0.3.28: Playable track filter
-// Shows / hides .track-card elements based on the active filter
-// button. Safety: if no #track-filter-bar exists on the page
-// (e.g. non-music detail pages, homepage), this is a strict no-op
-// and does not bind any listeners. Lazy-load iframe logic
-// (initTrackPlayers) is unaffected — when a hidden card is shown
-// again later, its .track-play-button is still bound and works.
 // ============================================================
 function initTrackFilter() {
   const bar = document.getElementById('track-filter-bar');
-  if (!bar) return;  // no-op on pages without the filter bar
+  if (!bar) return;
 
   const buttons = bar.querySelectorAll('.track-filter-button');
   if (!buttons.length) return;
 
-  // Scope to the closest .detail-article container so we never touch
-  // track-cards from other detail sections embedded in the same DOM.
   const scope = bar.closest('.detail-article') || document;
   const cards = scope.querySelectorAll('.track-card');
 
@@ -247,7 +384,6 @@ function initTrackFilter() {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const filter = btn.getAttribute('data-filter') || 'all';
-      // Update button visual + aria state.
       buttons.forEach((b) => {
         const isActive = b === btn;
         b.classList.toggle('active', isActive);
@@ -256,6 +392,16 @@ function initTrackFilter() {
       applyFilter(filter);
     });
   });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    initTrackPlayers();
+    initTrackFilter();
+  });
+} else {
+  initTrackPlayers();
+  initTrackFilter();
 }
 
 loadData();
