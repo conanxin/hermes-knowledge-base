@@ -1,4 +1,4 @@
-// v0.4.2 — UI polish: clearer stats, search clear, result meta, empty state, copy feedback.
+// v0.4.3 — UI polish: dedup stats/filters, pagination, card density, TOC, reading layout.
 // Data-driven: every count, every card, every label comes from data/catalog.json.
 
 const GITHUB_REPO = 'https://github.com/conanxin/hermes-knowledge-base/tree/main/';
@@ -27,6 +27,11 @@ const TYPE_LABELS_ZH = {
   video: '视频',
 };
 
+// ---- Pagination state ----
+let currentPage = 1;
+const PAGE_SIZES = [12, 24, 48, 9999];
+let currentPageSize = PAGE_SIZES[0]; // default 12
+
 async function loadData() {
   if (!IS_HOME_PAGE) return;
   const res = await fetch('data/catalog.json');
@@ -48,16 +53,15 @@ async function loadData() {
 }
 
 function summarizeType(type) {
-  // Use Chinese label for display, fall back to the raw type if unknown.
   return TYPE_LABELS_ZH[type] || type;
 }
 
+// ---- v0.4.3 Stage C: Stats as pure overview (non-interactive) ----
 function renderStats() {
   const counts = { total: allRecords.length };
   for (const t of KNOWN_TYPES) {
     counts[t] = allRecords.filter(r => r.type === t).length;
   }
-  // Unknown types (defensive: should not happen in production, but log if so).
   const known = new Set(KNOWN_TYPES);
   const unknowns = [...new Set(allRecords.map(r => r.type).filter(t => !known.has(t)))];
   if (unknowns.length) {
@@ -65,7 +69,6 @@ function renderStats() {
     for (const t of unknowns) counts[t] = allRecords.filter(r => r.type === t).length;
   }
 
-  // Build the four top cards + a per-type chip row for everything else.
   const top = [
     { key: 'total', label: '总记录', accent: 'total' },
     { key: 'article', label: '文章', accent: 'article' },
@@ -76,36 +79,17 @@ function renderStats() {
 
   const container = document.getElementById('stats');
   container.innerHTML = `
+    <div class="stats-label">知识库概览</div>
     <div class="stat-card-grid">
       ${top.map(c => `
-        <button type="button" class="stat-card stat-${c.accent}" data-type="${c.key === 'total' ? 'all' : c.key}">
+        <div class="stat-card stat-${c.accent}" aria-label="${c.label}: ${counts[c.key]}">
           <span class="stat-number">${counts[c.key]}</span>
           <span class="stat-label">${c.label}</span>
-        </button>
+        </div>
       `).join('')}
-    </div>
-    <div class="stat-secondary">
-      ${KNOWN_TYPES.filter(t => t !== 'article' && t !== 'note' && t !== 'project' && t !== 'resource_collection' && counts[t] > 0)
-        .map(t => `<span class="stat-chip">${summarizeType(t)} <strong>${counts[t]}</strong></span>`)
-        .join('')}
-      ${unknowns.filter(t => counts[t] > 0).map(t => `<span class="stat-chip">${t} <strong>${counts[t]}</strong></span>`).join('')}
     </div>
   `;
 
-  // Make the top stat cards into filter shortcuts (clicking 总记录 resets to all).
-  container.querySelectorAll('.stat-card').forEach(btn => {
-    btn.addEventListener('click', () => {
-      currentFilter = btn.dataset.type;
-      const search = document.getElementById('search');
-      if (search) search.value = '';
-      const clear = document.getElementById('clear-search');
-      if (clear) clear.hidden = true;
-      renderFilters();
-      renderRecords();
-    });
-  });
-
-  // Update the static footer so the count stays in sync after every re-render.
   const footer = document.getElementById('footer-line');
   if (footer) {
     footer.textContent = `hermes-knowledge-base · 共 ${counts.total} 条记录`;
@@ -132,6 +116,7 @@ function renderFilters() {
   container.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       currentFilter = btn.dataset.type;
+      currentPage = 1; // reset to first page on filter change
       renderFilters();
       renderRecords();
     });
@@ -157,7 +142,6 @@ async function copyPath(path, btn) {
   try {
     await navigator.clipboard.writeText(path);
   } catch (e) {
-    // Fallback for older browsers or non-secure contexts.
     const ta = document.createElement('textarea');
     ta.value = path;
     document.body.appendChild(ta);
@@ -196,6 +180,10 @@ function metaLine(r) {
   return parts.join(' · ');
 }
 
+function pageSizeLabel(size) {
+  return size >= 9999 ? '全部' : String(size);
+}
+
 function renderRecords() {
   const queryEl = document.getElementById('search');
   const query = (queryEl ? queryEl.value : '').trim().toLowerCase();
@@ -210,19 +198,31 @@ function renderRecords() {
     filtered = filtered.filter(r => getSearchableText(r).includes(query));
   }
 
+  const total = filtered.length;
+  const pageSize = currentPageSize >= 9999 ? total : currentPageSize;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  if (currentPage > totalPages) currentPage = totalPages;
+
+  // Result meta: shows range
   const resultMeta = document.getElementById('result-meta');
   if (resultMeta) {
-    if (query || currentFilter !== 'all') {
-      resultMeta.textContent = `显示 ${filtered.length} / ${allRecords.length} 条${query ? `（搜索：${query}）` : ''}`;
+    if (total === 0) {
+      resultMeta.textContent = '无匹配结果';
+    } else if (total <= pageSize && pageSize < 9999) {
+      resultMeta.textContent = `显示 ${total} / ${allRecords.length} 条${currentFilter !== 'all' ? ' · ' + summarizeType(currentFilter) : ''}`;
     } else {
-      resultMeta.textContent = '';
+      const start = (currentPage - 1) * pageSize + 1;
+      const end = Math.min(currentPage * pageSize, total);
+      resultMeta.textContent = `显示 ${start}–${end} / ${total} 条${currentFilter !== 'all' ? ' · ' + summarizeType(currentFilter) : ''}`;
     }
   }
 
   const container = document.getElementById('records');
+
+  // Empty state
   if (filtered.length === 0) {
     const emptyMsg = query
-      ? `没有匹配 “${escapeHtml(query)}” 的条目，试试减少关键词或切换类型。`
+      ? `没有匹配 "${escapeHtml(query)}" 的条目，试试减少关键词或切换类型。`
       : '当前筛选下没有条目。';
     container.innerHTML = `
       <div class="empty-state">
@@ -236,14 +236,19 @@ function renderRecords() {
     return;
   }
 
-  container.innerHTML = filtered.map(r => {
+  // Slice to current page
+  const start = (currentPage - 1) * pageSize;
+  const pageRecords = filtered.slice(start, start + pageSize);
+
+  // Render cards
+  container.innerHTML = pageRecords.map(r => {
     const githubLink = r.github_url || (GITHUB_REPO + r.path);
     const detailLink = r.detail_url || '';
     const titleHref = detailLink || githubLink;
     const titleTarget = detailLink ? '' : 'target="_blank" rel="noopener"';
     const summary = r.summary_zh || r.summary || '';
     const summaryHtml = summary
-      ? `<p class="record-summary">${escapeHtml(summary.slice(0, 200))}${summary.length > 200 ? '…' : ''}</p>`
+      ? `<p class="record-summary">${escapeHtml(summary.slice(0, 160))}${summary.length > 160 ? '…' : ''}</p>`
       : '';
     return `
       <article class="record-card">
@@ -265,9 +270,83 @@ function renderRecords() {
     `;
   }).join('');
 
+  // Pagination controls (only show when total > pageSize or All was selected and there are many)
+  const needsPagination = total > pageSize || currentPageSize >= 9999;
+  if (needsPagination && total > 0) {
+    container.innerHTML += renderPaginationHTML(currentPage, totalPages, total, pageSize, pageRecords.length);
+    attachPaginationHandlers();
+  }
+
   container.querySelectorAll('.action-btn[data-path]').forEach(btn => {
     btn.addEventListener('click', () => copyPath(btn.dataset.path, btn));
   });
+}
+
+function renderPaginationHTML(page, totalPages, total, pageSize, pageCount) {
+  if (totalPages <= 1 && pageSize >= 9999) return ''; // All and fits in one page
+
+  const pages = [];
+  const delta = 2;
+  for (let i = 1; i <= totalPages; i++) {
+    if (i === 1 || i === totalPages || (i >= page - delta && i <= page + delta)) {
+      pages.push(i);
+    } else if (pages[pages.length - 1] !== '…') {
+      pages.push('…');
+    }
+  }
+
+  const sizeOptions = PAGE_SIZES.map(s => {
+    const label = pageSizeLabel(s);
+    const sel = s === currentPageSize ? 'selected' : '';
+    return `<option value="${s}" ${sel}>${label}</option>`;
+  }).join('');
+
+  return `
+    <nav class="pagination" aria-label="分页导航">
+      <div class="pagination-controls">
+        <button type="button" class="page-btn" data-page="${page - 1}" ${page <= 1 ? 'disabled' : ''} aria-label="上一页">
+          ← 上一页
+        </button>
+        <div class="page-numbers">
+          ${pages.map(p => p === '…'
+            ? '<span class="page-ellipsis">…</span>'
+            : `<button type="button" class="page-num ${p === page ? 'active' : ''}" data-page="${p}" aria-label="第 ${p} 页" aria-current="${p === page ? 'page' : ''}">${p}</button>`
+          ).join('')}
+        </div>
+        <button type="button" class="page-btn" data-page="${page + 1}" ${page >= totalPages ? 'disabled' : ''} aria-label="下一页">
+          下一页 →
+        </button>
+      </div>
+      <div class="pagination-meta">
+        <label class="page-size-label" for="page-size-select">每页显示</label>
+        <select id="page-size-select" class="page-size-select" aria-label="每页显示数量">
+          ${sizeOptions}
+        </select>
+        <span class="page-size-note">${page} / ${totalPages} 页 · 共 ${total} 条</span>
+      </div>
+    </nav>
+  `;
+}
+
+function attachPaginationHandlers() {
+  document.querySelectorAll('.page-num, .page-btn[data-page]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const p = parseInt(btn.dataset.page, 10);
+      if (isNaN(p) || p < 1) return;
+      currentPage = p;
+      renderRecords();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  const sel = document.getElementById('page-size-select');
+  if (sel) {
+    sel.addEventListener('change', () => {
+      currentPageSize = parseInt(sel.value, 10);
+      currentPage = 1;
+      renderRecords();
+    });
+  }
 }
 
 function bindGlobalControls() {
@@ -276,7 +355,10 @@ function bindGlobalControls() {
   let debounceId;
   const onInput = () => {
     clearTimeout(debounceId);
-    debounceId = setTimeout(renderRecords, 80);
+    debounceId = setTimeout(() => {
+      currentPage = 1; // reset to first page on search
+      renderRecords();
+    }, 80);
   };
   search.addEventListener('input', onInput);
 
@@ -285,6 +367,7 @@ function bindGlobalControls() {
     clear.addEventListener('click', () => {
       search.value = '';
       clear.hidden = true;
+      currentPage = 1;
       renderRecords();
       search.focus();
     });
@@ -293,6 +376,7 @@ function bindGlobalControls() {
 
 function resetFilters() {
   currentFilter = 'all';
+  currentPage = 1;
   const search = document.getElementById('search');
   if (search) search.value = '';
   const clear = document.getElementById('clear-search');
@@ -316,16 +400,10 @@ function escapeAttr(s) {
 
 // ============================================================
 // Music Track Players (v0.3.19 music-track-links)
-// Lazy-load iframes only on click — never auto-load 50 iframes
-// on the same page. Click handler is attached via event delegation
-// so it works for both .track-play-button (verified) and is a no-op
-// for cards that only show a search link (no embed).
 // ============================================================
 function initTrackPlayers() {
   const buttons = document.querySelectorAll('.track-play-button');
   buttons.forEach((btn) => {
-    // v0.3.22: if already replaced with an iframe, skip (prevent duplicate
-    // iframes if the user re-clicks the wrapper area after first click).
     if (btn.dataset.replaced === '1') return;
     btn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -333,7 +411,6 @@ function initTrackPlayers() {
       if (!url) return;
       const wrapper = btn.closest('.track-actions');
       if (!wrapper) return;
-      // Replace the button with an iframe on first click.
       const iframe = document.createElement('iframe');
       iframe.src = url;
       iframe.className = 'track-embed';
@@ -354,10 +431,8 @@ function initTrackPlayers() {
 function initTrackFilter() {
   const bar = document.getElementById('track-filter-bar');
   if (!bar) return;
-
   const buttons = bar.querySelectorAll('.track-filter-button');
   if (!buttons.length) return;
-
   const scope = bar.closest('.detail-article') || document;
   const cards = scope.querySelectorAll('.track-card');
 
@@ -369,14 +444,8 @@ function initTrackFilter() {
         visible = status === 'verified';
       } else if (filter === 'pending') {
         visible = status !== 'verified';
-      } else {
-        visible = true;
       }
-      if (visible) {
-        card.classList.remove('is-hidden');
-      } else {
-        card.classList.add('is-hidden');
-      }
+      card.classList.toggle('is-hidden', !visible);
     });
   }
 

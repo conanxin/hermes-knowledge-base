@@ -366,8 +366,34 @@ body.detail-page {
 }
 
 .detail-main {
-  max-width: 760px;
+  max-width: 1100px;
   margin: 16px auto 0;
+}
+
+.detail-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.detail-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 24px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  padding-top: 4px;
+}
+
+.sidebar-toc {
+  /* TOC rendered inline; empty div collapses when no toc */
+}
+
+.sidebar-toc:empty {
+  display: none;
 }
 
 .detail-article {
@@ -376,6 +402,8 @@ body.detail-page {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 28px 32px 32px;
+  flex: 1;
+  min-width: 0;
 }
 
 .detail-title-block {
@@ -646,17 +674,42 @@ body.detail-page {
   }
 }
 
+/* v0.4.3: sidebar layout — mobile hides sidebar, TOC shows inline */
+@media (max-width: 768px) {
+  .detail-layout {
+    flex-direction: column;
+  }
+  .detail-sidebar {
+    display: none;
+  }
+  /* On mobile, render TOC inline inside article (handled by JS in app.js
+     for detail pages, moving toc from sidebar into article body). */
+  .detail-article > .detail-toc {
+    display: block;
+    margin: 0 0 20px;
+  }
+}
+
 /* ======================================================================
    v0.3.9 — detail page polish (TOC, details/summary, back-to-top, reading)
    ====================================================================== */
 
-/* ----- Table of contents (TOC) ----- */
+/* ----- Table of contents (TOC) — sidebar mode ----- */
 .detail-toc {
   background: var(--bg);
   border: 1px solid var(--border);
   border-left: 3px solid var(--accent);
   border-radius: var(--radius);
-  padding: 12px 16px 14px;
+  padding: 12px 14px 14px;
+}
+
+/* TOC inside .detail-sidebar uses the sidebar width; no max-width constraint. */
+.detail-sidebar .detail-toc {
+  margin: 0;
+}
+
+/* Fallback: TOC still works inside article body (e.g. when sidebar is hidden on mobile). */
+.detail-article > .detail-toc {
   margin: 0 0 22px;
   max-width: 68ch;
 }
@@ -723,6 +776,18 @@ body.detail-page {
   color: var(--accent);
 }
 .toc-link:hover::before {
+  background: var(--accent);
+  color: var(--color-on-accent);
+  border-color: var(--accent);
+}
+
+/* v0.4.3: scroll-spy active state */
+.toc-link.active {
+  color: var(--accent);
+  background: var(--accent-bg);
+  font-weight: 600;
+}
+.toc-link.active::before {
   background: var(--accent);
   color: var(--color-on-accent);
   border-color: var(--accent);
@@ -1510,13 +1575,22 @@ body.detail-page {
   font-size: 0.95em;
 }
 
-/* --- Stat cards (clickable filter shortcuts) --- */
+/* --- Stat cards (pure overview — non-interactive) --- */
 .stats {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
   margin: 24px 16px 8px;
+}
+
+.stats-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+  text-align: center;
 }
 
 .stat-card-grid {
@@ -1529,7 +1603,6 @@ body.detail-page {
 }
 
 .stat-card {
-  appearance: none;
   font-family: inherit;
   display: inline-flex;
   flex-direction: column;
@@ -1540,19 +1613,8 @@ body.detail-page {
   border-radius: var(--radius-card);
   padding: 14px 22px;
   min-width: 96px;
-  cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease;
   box-shadow: var(--shadow-card);
   color: var(--color-text-primary);
-}
-
-.stat-card:hover {
-  border-color: var(--color-accent);
-}
-
-.stat-card:focus-visible {
-  outline: none;
-  box-shadow: var(--shadow-focus);
 }
 
 .stat-card .stat-number {
@@ -1573,29 +1635,6 @@ body.detail-page {
 .stat-card.stat-project { border-bottom: 3px solid var(--color-category-c-text); }
 .stat-card.stat-collection { border-bottom: 3px solid var(--color-category-d-text); }
 .stat-card.stat-total { border-bottom: 3px solid var(--color-text-primary); }
-
-.stat-secondary {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 6px;
-  max-width: 920px;
-}
-
-.stat-chip {
-  font-size: 0.78rem;
-  padding: 3px 10px;
-  border-radius: var(--radius-pill);
-  background: var(--color-tag-bg);
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
-}
-
-.stat-chip strong {
-  color: var(--color-text-primary);
-  font-weight: 600;
-  margin-left: 4px;
-}
 
 /* --- Controls (search + filters + result meta) --- */
 .controls {
@@ -1910,6 +1949,122 @@ body.detail-page {
   color: var(--color-text-secondary);
   max-width: 380px;
   line-height: 1.55;
+}
+
+/* --- Pagination --- */
+.pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 24px 0 8px;
+  margin-top: 8px;
+  border-top: 1px solid var(--color-border);
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.page-btn {
+  font-family: inherit;
+  font-size: 0.82rem;
+  padding: 6px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-button);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.page-btn:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.page-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.page-num {
+  font-family: inherit;
+  font-size: 0.82rem;
+  min-width: 34px;
+  height: 34px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-button);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.page-num:hover:not(.active) {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.page-num.active {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  border-color: var(--color-accent);
+  font-weight: 600;
+}
+
+.page-ellipsis {
+  font-size: 0.82rem;
+  color: var(--color-text-meta);
+  padding: 0 4px;
+}
+
+.pagination-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+}
+
+.page-size-label {
+  color: var(--color-text-secondary);
+}
+
+.page-size-select {
+  font-family: inherit;
+  font-size: 0.78rem;
+  padding: 3px 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-button);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.page-size-note {
+  color: var(--color-text-meta);
+}
+
+@media (max-width: 520px) {
+  .pagination-controls { gap: 5px; }
+  .page-num { min-width: 30px; height: 30px; font-size: 0.78rem; }
 }
 
 /* --- Footer --- */

@@ -12,13 +12,9 @@
 <a class="back-link" href="../../">← 返回首页</a>
 </header>
 <main class="detail-main">
-<article class="detail-article">
-<div class="detail-title-block">
-<span class="type-badge note">note</span>
-<h1 class="detail-title">Transformer 解码机制解析</h1>
-<p class="detail-title-en">Transformer 解码机制解析</p>
-</div>
-
+<div class="detail-layout">
+  <aside class="detail-sidebar" id="detail-sidebar">
+    <div class="sidebar-toc" id="sidebar-toc">
 <nav class="detail-toc" aria-label="页内目录">
 <div class="toc-title">目录</div>
 <ol class="toc-list">
@@ -32,6 +28,14 @@
 <li class="toc-item toc-level-2"><a class="toc-link" href="#来源">来源</a></li>
 </ol>
 </nav>
+</div>
+  </aside>
+  <article class="detail-article">
+  <div class="detail-title-block">
+  <span class="type-badge note">note</span>
+  <h1 class="detail-title">Transformer 解码机制解析</h1>
+  <p class="detail-title-en">Transformer 解码机制解析</p>
+  </div>
 
 <section class="detail-meta">
 <div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">note</div></div>
@@ -130,7 +134,8 @@
 </nav>
 <a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
 
-</article>
+  </article>
+</div><!-- .detail-layout -->
 </main>
 <footer>
 <p><a href="../../">hermes-knowledge-base</a> · 站内详情页</p>
@@ -175,7 +180,53 @@
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+
+  // v0.4.3: TOC sidebar scroll-spy — highlight the current section.
+  var tocLinks = document.querySelectorAll('.toc-link');
+  if (tocLinks.length) {
+    var headings = [];
+    document.querySelectorAll('h2[id], h3[id]').forEach(function(h) {
+      headings.push({ id: h.id, el: h });
+    });
+    function spy() {
+      var scrollY = window.scrollY + 80;
+      var current = null;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        if (scrollY >= headings[i].el.offsetTop) {
+          current = headings[i].id;
+          break;
+        }
+      }
+      tocLinks.forEach(function(link) {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      });
+    }
+    window.addEventListener('scroll', spy, { passive: true });
+    spy();
   }
+
+  // v0.4.3: On mobile, move TOC from sidebar into article body.
+  (function() {
+    var sidebar = document.getElementById('detail-sidebar');
+    var article = document.querySelector('.detail-article');
+    if (!sidebar || !article) return;
+    var toc = document.getElementById('sidebar-toc');
+    if (!toc || !toc.children.length) return;
+    function moveTOC() {
+      if (window.innerWidth <= 768) {
+        if (toc.parentNode === sidebar) {
+          var insertBefore = article.querySelector('.detail-meta') || article.children[1];
+          article.insertBefore(toc, insertBefore);
+        }
+      } else {
+        if (toc.parentNode === article) {
+          sidebar.appendChild(toc);
+        }
+      }
+    }
+    moveTOC();
+    window.addEventListener('resize', moveTOC);
+  })();
 })();
 </script>
 </body>

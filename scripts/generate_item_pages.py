@@ -937,12 +937,16 @@ TEMPLATE_HEAD = """<!DOCTYPE html>
 <a class="back-link" href="{up}">← 返回首页</a>
 </header>
 <main class="detail-main">
-<article class="detail-article">
-<div class="detail-title-block">
-<span class="type-badge {type_class}">{type_label}</span>
-<h1 class="detail-title">{title_zh}</h1>
-<p class="detail-title-en">{title}</p>
-</div>
+<div class="detail-layout">
+  <aside class="detail-sidebar" id="detail-sidebar">
+    <div class="sidebar-toc" id="sidebar-toc">{toc_html}</div>
+  </aside>
+  <article class="detail-article">
+  <div class="detail-title-block">
+  <span class="type-badge {type_class}">{type_label}</span>
+  <h1 class="detail-title">{title_zh}</h1>
+  <p class="detail-title-en">{title}</p>
+  </div>
 """
 
 TEMPLATE_METADATA_GRID = """
@@ -988,7 +992,8 @@ TEMPLATE_ACTIONS = """
 """
 
 TEMPLATE_FOOTER = """
-</article>
+  </article>
+</div><!-- .detail-layout -->
 </main>
 <footer>
 <p><a href="{up}">hermes-knowledge-base</a> · 站内详情页</p>
@@ -1033,7 +1038,53 @@ TEMPLATE_FOOTER = """
     }};
     window.addEventListener('scroll', onScroll, {{ passive: true }});
     onScroll();
+
+  // v0.4.3: TOC sidebar scroll-spy — highlight the current section.
+  var tocLinks = document.querySelectorAll('.toc-link');
+  if (tocLinks.length) {{
+    var headings = [];
+    document.querySelectorAll('h2[id], h3[id]').forEach(function(h) {{
+      headings.push({{ id: h.id, el: h }});
+    }});
+    function spy() {{
+      var scrollY = window.scrollY + 80;
+      var current = null;
+      for (var i = headings.length - 1; i >= 0; i--) {{
+        if (scrollY >= headings[i].el.offsetTop) {{
+          current = headings[i].id;
+          break;
+        }}
+      }}
+      tocLinks.forEach(function(link) {{
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      }});
+    }}
+    window.addEventListener('scroll', spy, {{ passive: true }});
+    spy();
   }}
+
+  // v0.4.3: On mobile, move TOC from sidebar into article body.
+  (function() {{
+    var sidebar = document.getElementById('detail-sidebar');
+    var article = document.querySelector('.detail-article');
+    if (!sidebar || !article) return;
+    var toc = document.getElementById('sidebar-toc');
+    if (!toc || !toc.children.length) return;
+    function moveTOC() {{
+      if (window.innerWidth <= 768) {{
+        if (toc.parentNode === sidebar) {{
+          var insertBefore = article.querySelector('.detail-meta') || article.children[1];
+          article.insertBefore(toc, insertBefore);
+        }}
+      }} else {{
+        if (toc.parentNode === article) {{
+          sidebar.appendChild(toc);
+        }}
+      }}
+    }}
+    moveTOC();
+    window.addEventListener('resize', moveTOC);
+  }})();
 }})();
 </script>
 </body>
@@ -1227,15 +1278,6 @@ def render_record_page(record: Dict[str, Any], body: Dict[str, Any]) -> str:
     title = meta.get("title") or record.get("title") or ""
     desc = _build_description(meta, record)
 
-    head = TEMPLATE_HEAD.format(
-        title_zh=html.escape(title_zh),
-        title=html.escape(title) if title else "",
-        desc_escaped=html.escape(desc, quote=True),
-        up="../../",
-        type_class=record_type,
-        type_label=html.escape(_type_label(record_type)),
-    )
-
     meta_rows = _build_metadata_rows(meta)
     meta_section = TEMPLATE_METADATA_GRID.format(rows=meta_rows) if meta_rows else ""
 
@@ -1262,6 +1304,16 @@ def render_record_page(record: Dict[str, Any], body: Dict[str, Any]) -> str:
     )
     toc_html = _build_toc_html(page_toc)
 
+    head = TEMPLATE_HEAD.format(
+        title_zh=html.escape(title_zh),
+        title=html.escape(title) if title else "",
+        desc_escaped=html.escape(desc, quote=True),
+        up="../../",
+        type_class=record_type,
+        type_label=html.escape(_type_label(record_type)),
+        toc_html=toc_html,
+    )
+
     actions = TEMPLATE_ACTIONS.format(
         source_btn=_build_source_btn(meta.get("source_url")),
         github_url=GITHUB_REPO_BASE + record["path"],
@@ -1271,7 +1323,7 @@ def render_record_page(record: Dict[str, Any], body: Dict[str, Any]) -> str:
     footer = TEMPLATE_FOOTER.format(up="../../")
     # The coverage summary (v0.3.29) sits above the filter bar (v0.3.28)
     # which sits above the body sections. If no tracks, both render as "".
-    return head + toc_html + meta_section + track_coverage_summary + track_filter_bar + sections_html + actions + footer
+    return head + meta_section + track_coverage_summary + track_filter_bar + sections_html + actions + footer
 
 
 def generate_item_pages() -> int:
