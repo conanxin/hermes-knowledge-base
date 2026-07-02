@@ -18,6 +18,14 @@ Usage:
 Exit codes:
     0 - all smoke checks passed
     1 - at least one smoke check failed
+
+v0.3.97: deterministic manifest selection via --run-id
+    Each batch invocation passes a unique --run-id so the manifest filename
+    is fixed and known. This removes the mtime-based "find latest" logic,
+    which was racy: when two batch runs finished within the same second,
+    the earlier run's manifest could be returned instead of the current
+    run's, causing flakes like "second item is DRY_RUN_DUPLICATE" reading
+    the wrong manifest.
 """
 
 from __future__ import annotations
@@ -26,6 +34,8 @@ import json
 import os
 import subprocess
 import sys
+import time
+import uuid
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -55,13 +65,44 @@ def check(condition: bool, name: str, detail: str = "") -> bool:
     return condition
 
 
-def _find_latest_manifest(prefix: str = "wechat_batch_import_") -> Path | None:
-    """Return the most recent manifest JSON under reports/ matching the prefix."""
-    reports = REPO_ROOT / "reports"
-    if not reports.exists():
-        return None
-    files = sorted(reports.glob(f"{prefix}*.json"), key=lambda p: p.stat().st_mtime, reverse=True)
-    return files[0] if files else None
+def make_run_id() -> str:
+    """Generate a unique deterministic run_id.
+
+    Format: smoke_<pid>_<timestamp_ns>_<uuid8>
+    This is unique per process even if multiple test invocations happen in
+    the same nanosecond, and human-readable enough for debugging.
+    """
+    return f"smoke_{os.getpid()}_{time.time_ns()}_{uuid.uuid4().hex[:8]}"
+
+
+def run_batch_with_run_id(args: list[str]) -> tuple[int, str, str, Path]:
+    """Invoke the batch script with a unique --run-id.
+
+    Returns (returncode, stdout, stderr, manifest_json_path).
+    The manifest path is computed deterministically from the run_id, NOT
+    looked up via mtime.
+    """
+    run_id = make_run_id()
+    cmd = [TEST_PY, str(BATCH_SCRIPT)] + args + ["--run-id", run_id]
+    code, out, err = run(cmd)
+    # The script emits the manifest path on stdout as JSON; the LAST JSON
+    # line is the summary. Find it from the trailing JSON.
+    manifest_path = None
+    for line in reversed((out or "").splitlines()):
+        line = line.strip()
+        if line.startswith("{") and line.endswith("}"):
+            try:
+                obj = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if "json_report_path" in obj:
+                manifest_path = Path(obj["json_report_path"])
+                break
+    if manifest_path is None:
+        # Fallback: construct the expected path deterministically.
+        manifest_path = (REPO_ROOT / "reports" /
+                         f"wechat_batch_import_{run_id}.json")
+    return code, out, err, manifest_path
 
 
 def smoke_1_batch_multi_local_fixtures() -> bool:
@@ -69,14 +110,15 @@ def smoke_1_batch_multi_local_fixtures() -> bool:
     print("\n=== Smoke 1: batch --input multiple local fixtures (dry-run) ===")
     if not BATCH_URLS.exists():
         return check(False, "fixture exists", str(BATCH_URLS))
-    cmd = [TEST_PY, str(BATCH_SCRIPT), "--input", str(BATCH_URLS), "--dry-run"]
-    code, out, err = run(cmd)
+    code, out, err, manifest = run_batch_with_run_id(
+        ["--input", str(BATCH_URLS), "--dry-run"]
+    )
     if not check(code == 0, "batch exits 0", f"exit={code}\nstderr tail: {err[-300:]}"):
         return False
-    manifest = _find_latest_manifest()
-    if not check(manifest is not None and manifest.exists(), "manifest JSON written"):
+    if not check(manifest is not None and manifest.exists(),
+                 "manifest JSON written at deterministic path", str(manifest)):
         return False
-    data = json.loads(manifest.read_text(encoding="utf-8"))  # type: ignore
+    data = json.loads(manifest.read_text(encoding="utf-8"))
     items = data.get("items", [])
     if not check(len(items) == 2, "manifest has 2 items", f"got {len(items)}"):
         return False
@@ -92,12 +134,12 @@ def smoke_2_duplicate_detection() -> bool:
     print("\n=== Smoke 2: duplicate detection (Layer 3 content hash) ===")
     if not BATCH_DUP.exists():
         return check(False, "fixture exists", str(BATCH_DUP))
-    cmd = [TEST_PY, str(BATCH_SCRIPT), "--input", str(BATCH_DUP), "--dry-run"]
-    code, out, err = run(cmd)
+    code, out, err, manifest = run_batch_with_run_id(
+        ["--input", str(BATCH_DUP), "--dry-run"]
+    )
     if not check(code == 0, "batch exits 0", f"exit={code}\n{err[-300:]}"):
         return False
-    manifest = _find_latest_manifest()
-    data = json.loads(manifest.read_text(encoding="utf-8"))  # type: ignore
+    data = json.loads(manifest.read_text(encoding="utf-8"))
     items = data.get("items", [])
     if not check(len(items) == 2, "manifest has 2 items", f"got {len(items)}"):
         return False
@@ -118,12 +160,12 @@ def smoke_3_ai_url_trap_regression() -> bool:
     if not HIKING_FIXTURE.exists():
         return check(False, "hiking fixture exists")
     # Run a single-input batch on the hiking fixture.
-    cmd = [TEST_PY, str(BATCH_SCRIPT), "--html-file", str(HIKING_FIXTURE), "--dry-run"]
-    code, out, err = run(cmd)
+    code, out, err, manifest = run_batch_with_run_id(
+        ["--html-file", str(HIKING_FIXTURE), "--dry-run"]
+    )
     if not check(code == 0, "batch exits 0", f"exit={code}\n{err[-300:]}"):
         return False
-    manifest = _find_latest_manifest()
-    data = json.loads(manifest.read_text(encoding="utf-8"))  # type: ignore
+    data = json.loads(manifest.read_text(encoding="utf-8"))
     items = data.get("items", [])
     if not check(len(items) == 1, "manifest has 1 item"):
         return False
@@ -153,12 +195,12 @@ def smoke_4_failure_isolation() -> bool:
     print("\n=== Smoke 4: failure isolation (missing file mid-batch) ===")
     if not BATCH_FAIL.exists():
         return check(False, "fixture exists", str(BATCH_FAIL))
-    cmd = [TEST_PY, str(BATCH_SCRIPT), "--input", str(BATCH_FAIL), "--dry-run"]
-    code, out, err = run(cmd)
+    code, out, err, manifest = run_batch_with_run_id(
+        ["--input", str(BATCH_FAIL), "--dry-run"]
+    )
     if not check(code == 0, "batch exits 0 (did not crash)", f"exit={code}\n{err[-300:]}"):
         return False
-    manifest = _find_latest_manifest()
-    data = json.loads(manifest.read_text(encoding="utf-8"))  # type: ignore
+    data = json.loads(manifest.read_text(encoding="utf-8"))
     items = data.get("items", [])
     if not check(len(items) == 3, "manifest has 3 items", f"got {len(items)}"):
         return False
@@ -224,7 +266,7 @@ def smoke_5_pages_sync_still_intact() -> bool:
 
 def main() -> int:
     print("=" * 60)
-    print("WeChat batch import smoke tests (v0.3.71)")
+    print("WeChat batch import smoke tests (v0.3.71, v0.3.97 deterministic manifests)")
     print("=" * 60)
     results = [
         smoke_1_batch_multi_local_fixtures(),

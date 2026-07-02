@@ -334,9 +334,21 @@ def _now_stamp() -> tuple[str, str]:
 
 
 def _write_manifest(results: list[dict], stamp: str, iso: str,
-                    dry_run: bool, gate_results: list[dict]) -> tuple[Path, Path]:
+                    dry_run: bool, gate_results: list[dict],
+                    run_id: str = "") -> tuple[Path, Path]:
+    """Write manifest JSON + Markdown report under reports/.
+
+    Args:
+        run_id: If provided, the manifest path uses this fixed run_id instead of
+            the timestamp stamp. This makes manifest selection deterministic for
+            callers (e.g. smoke tests) that want to read back the exact manifest
+            they just produced, without relying on filesystem mtime.
+    """
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-    base = f"wechat_batch_import_{stamp}"
+    if run_id:
+        base = f"wechat_batch_import_{run_id}"
+    else:
+        base = f"wechat_batch_import_{stamp}"
     md_path = REPORTS_DIR / f"{base}.md"
     json_path = REPORTS_DIR / f"{base}.json"
 
@@ -348,6 +360,8 @@ def _write_manifest(results: list[dict], stamp: str, iso: str,
         "summary": _summarize(results),
         "gate_results": gate_results,
         "items": results,
+        # run_id is recorded so downstream consumers can sanity-check.
+        "run_id": run_id or "",
     }
     json_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -592,6 +606,11 @@ def build_arg_parser() -> argparse.ArgumentParser:
                    help="actually write KB entries (runs gates at the end)")
     p.add_argument("--no-gates", action="store_true",
                    help="skip the post-import quality gates (only valid in --import mode)")
+    p.add_argument("--run-id", type=str, default="",
+                   help="deterministic manifest filename suffix (replaces timestamp). "
+                        "Useful for smoke tests that need to read back the exact manifest "
+                        "they just produced without relying on mtime. "
+                        "When omitted, the legacy timestamp-based filename is used.")
     return p
 
 
@@ -653,9 +672,21 @@ def main() -> int:
 
     # --- Write manifest ---
     stamp, iso = _now_stamp()
-    md_path, json_path = _write_manifest(results, stamp, iso, dry_run, gate_results)
+    md_path, json_path = _write_manifest(results, stamp, iso, dry_run, gate_results,
+                                        run_id=args.run_id)
     print(f"\n[batch] manifest: {md_path}", file=sys.stderr)
     print(f"[batch] manifest: {json_path}", file=sys.stderr)
+    # Also emit JSON-friendly result summary on stdout so callers can parse the
+    # exact manifest paths back out without scraping stderr.
+    print(json.dumps({
+        "ok": True,
+        "mode": "dry-run" if dry_run else "import",
+        "total": len(results),
+        "summary": _summarize(results),
+        "markdown_report_path": str(md_path),
+        "json_report_path": str(json_path),
+        "run_id": args.run_id or "",
+    }, ensure_ascii=False))
 
     # --- Exit code ---
     if gate_results and any(g["exit"] != 0 for g in gate_results):
