@@ -277,6 +277,11 @@
 ## David Perell
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+- David Sedaris: Lessons From Decades of Writing
+
+## David Sedaris
+
+- David Sedaris: Lessons From Decades of Writing
 
 ## Deep Blue
 
@@ -427,6 +432,7 @@
 ## How I Write
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+- David Sedaris: Lessons From Decades of Writing
 
 ## Human Capital
 
@@ -679,6 +685,10 @@
 ## Neoreaction
 
 - The People Are Never Right
+
+## New Yorker
+
+- David Sedaris: Lessons From Decades of Writing
 
 ## Nia Docs
 
@@ -1187,6 +1197,10 @@
 
 - Session Guard Phase 1: Pre-Request Sanitizer
 
+## diary
+
+- David Sedaris: Lessons From Decades of Writing
+
 ## do things that don't scale
 
 - Superlinear Returns
@@ -1301,6 +1315,10 @@
 ## humor
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
+
+## humor writing
+
+- David Sedaris: Lessons From Decades of Writing
 
 ## hydro0x01
 
@@ -1436,6 +1454,10 @@
 ## nonconformity
 
 - Self-Reliance
+
+## nonfiction essays
+
+- David Sedaris: Lessons From Decades of Writing
 
 ## novel_writing
 
@@ -1851,6 +1873,10 @@
 
 - How to Earn a Billion Dollars
 
+## 创意写作
+
+- David Sedaris: Lessons From Decades of Writing
+
 ## 剧本写作
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
@@ -1927,6 +1953,10 @@
 ## 市场需求
 
 - How to Earn a Billion Dollars
+
+## 幽默写作
+
+- David Sedaris: Lessons From Decades of Writing
 
 ## 庄子
 
@@ -2314,6 +2344,10 @@
 
 - “我生病了，要去西湖玩玩才能好起来”
 
+## 观察
+
+- David Sedaris: Lessons From Decades of Writing
+
 ## 认知
 
 - 专访林小英：接受教育，最终是为了让我们把日子过得生动
@@ -2441,6 +2475,10 @@
 
 - AI 没有意识，但它正在成为我们的无意识
 - Ken Liu on AI and Freedom
+
+## 非虚构散文
+
+- David Sedaris: Lessons From Decades of Writing
 
 ## 风格
 

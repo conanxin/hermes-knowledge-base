@@ -2554,6 +2554,52 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-07-01-web-wwwpaulgrahamcom-the-need-to-read"
   },
   {
+    "title": "David Sedaris: Lessons From Decades of Writing",
+    "title_zh": "戴维·塞达里斯：数十年写作的启示",
+    "type": "article",
+    "path": "content/articles/2026/2026-07-02-how-i-write-david-sedaris",
+    "author": "David Perell",
+    "source_url": "https://howiwrite.substack.com/p/david-sedaris-lessons-from-decades",
+    "source_site": "howiwrite.substack.com",
+    "language": "en",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "2026-07-01",
+    "captured_date": "2026-07-02",
+    "topics": [
+      "David Sedaris",
+      "David Perell",
+      "How I Write",
+      "nonfiction essays",
+      "diary writing",
+      "humor writing",
+      "observation",
+      "New Yorker",
+      "creative writing"
+    ],
+    "tags": [
+      "David Sedaris",
+      "David Perell",
+      "How I Write",
+      "nonfiction essays",
+      "humor writing",
+      "diary",
+      "New Yorker",
+      "观察",
+      "非虚构散文",
+      "幽默写作",
+      "创意写作"
+    ],
+    "word_count": {
+      "source": 14360,
+      "translation": 16107
+    },
+    "updated_date": "2026-07-02",
+    "slug": "2026-07-02-how-i-write-david-sedaris",
+    "detail_url": "items/2026-07-02-how-i-write-david-sedaris/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-07-02-how-i-write-david-sedaris"
+  },
+  {
     "title": "灵感资源库",
     "title_zh": "灵感资源库",
     "type": "note",

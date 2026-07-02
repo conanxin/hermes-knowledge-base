@@ -59,6 +59,7 @@
 
 - Andrew Hunter Murray: Writing Advice Better Than Your English Classes
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+- David Sedaris: Lessons From Decades of Writing
 
 ## Emily Campbell
 
