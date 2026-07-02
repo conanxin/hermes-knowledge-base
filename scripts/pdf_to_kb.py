@@ -42,8 +42,6 @@ SCRIPTS_DIR = KB_HOME / "scripts"
 CONTENT_DIR = KB_HOME / "content"
 ARTICLES_DIR = CONTENT_DIR / "articles"
 INBOX_PDF = KB_HOME / "inbox" / "raw" / "pdf"
-UPDATER = SCRIPTS_DIR / "update_site.py"
-
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
@@ -834,16 +832,12 @@ def main() -> int:
     # 8. Import
     item_dir = build_article_entry(capture)
 
-    # 9. Run gates (incremental site update, not full update_site.py, to keep
-    #    this import isolated)
+    # 9. Run gates: KB integrity + page-sync checks only.
+    #    NOT update_site.py (full build chain) — that would re-build
+    #    catalog/index and pollute tracked generated files with smoke slugs.
     try:
         item_dir_rel = item_dir.relative_to(KB_HOME).as_posix()
-        slug = item_dir.name
-        proc = subprocess.run(
-            [sys.executable, str(UPDATER), "--only", slug],
-            cwd=KB_HOME, capture_output=True, text=True, encoding="utf-8",
-        )
-        gate_ok = proc.returncode == 0
+        gate_ok, _ = run_gates()
     except Exception as exc:
         print(f"[pdf] gate run failed: {exc}", file=sys.stderr)
         gate_ok = False
