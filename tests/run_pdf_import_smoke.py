@@ -280,6 +280,50 @@ def main() -> int:
             "smoke_5_router_does_not_report_BLOCKED_UNSUPPORTED",
         ))
 
+    # ---- smoke_post: Stage D regression check ----
+    # After the PDF smoke runs (which creates the smoke fixture article
+    # in content/articles/), the tracked generated files MUST NOT contain
+    # the smoke slug. If they do, the import path has once again leaked
+    # test data into tracked catalog/index (regression of v0.3.89 bug).
+    #
+    # Two complementary checks:
+    #   1. File-content check (always; no git required)
+    #   2. git diff --name-only (when git is available; stronger)
+    TRACKED_GENERATED_FILES = (
+        "docs/data/catalog.json",
+        "site/data/catalog.json",
+        "index/catalog.jsonl",
+        "index/authors.md",
+        "index/tags.md",
+        "index/timeline.md",
+    )
+    SMOKE_SLUG_PREFIX = "hermes-knowledge-base-routing"
+
+    for rel in TRACKED_GENERATED_FILES:
+        p = REPO_ROOT / rel
+        if not p.exists():
+            continue
+        try:
+            text = p.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        contains_slug = SMOKE_SLUG_PREFIX in text
+        results.append(check(
+            not contains_slug,
+            f"smoke_post_no_smoke_slug_in__{rel.replace('/', '_')}",
+            "" if not contains_slug else f"smoke slug leaked into {rel}",
+        ))
+
+    git_rc, git_out, _ = run(["git", "diff", "--name-only"], cwd=REPO_ROOT)
+    if git_rc == 0:
+        dirty = [line.strip() for line in git_out.splitlines() if line.strip()]
+        offending = [f for f in dirty if f in TRACKED_GENERATED_FILES]
+        results.append(check(
+            len(offending) == 0,
+            "smoke_post_git_diff_no_tracked_generated_dirty",
+            "" if not offending else f"tracked generated dirty: {offending}",
+        ))
+
     passed = sum(1 for r in results if r)
     failed = len(results) - passed
     print(f"\n[pdf-smoke] {passed}/{len(results)} checks passed "
