@@ -1,5 +1,12 @@
 # Agent Commands
 
+> **Quick orientation:** for daily import / batch / gate workflows see [docs/OPERATOR_PLAYBOOK.md](OPERATOR_PLAYBOOK.md) first. This file is the deeper command-by-command reference.
+
+## Daily operator playbook
+
+- [docs/OPERATOR_PLAYBOOK.md](OPERATOR_PLAYBOOK.md) — daily use guide (entry points, material matrix, BLOCKED status reference, gate meanings, git discipline, new-machine recovery).
+- This `AGENT_COMMANDS.md` complements it with detailed command-by-command notes, preflight/postflight steps, and policy specifics (e.g. tag/topic soft ranges).
+
 ## 统一材料入库入口（v0.3.79）
 
 用户以后可以直接说：

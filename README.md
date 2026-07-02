@@ -18,6 +18,7 @@
 | 发布索引 | [docs/RELEASES.md](docs/RELEASES.md) |
 | 多媒体资产索引 | [docs/releases.md](docs/releases.md) |
 | 完整使用手册 | [docs/AGENT_COMMANDS.md](docs/AGENT_COMMANDS.md) |
+| 日常操作手册 | [docs/OPERATOR_PLAYBOOK.md](docs/OPERATOR_PLAYBOOK.md) |
 
 ## 3. 当前状态
 
