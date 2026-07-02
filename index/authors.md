@@ -47,6 +47,10 @@
 - Hermes Agent UI Self-Audit v1
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 
+## Conan Xin (lyrics) & Hermes Agent (production)
+
+- Bingzhu You (秉烛游) — A Rap Song and 2-Minute MV from Classical Chinese Poetry
+
 ## Dario Amodei / Emily Chang
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview

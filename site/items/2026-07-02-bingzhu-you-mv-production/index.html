@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>秉烛游 · 一首从古诗出发的说唱与两分钟 MV · hermes-knowledge-base</title>
+<meta name="description" content="秉烛游 · 一首从古诗出发的说唱与两分钟 MV — Conan Xin (lyrics) &amp; Hermes Agent (production)">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="detail-page" id="top">
+<header class="detail-header">
+<a class="back-link" href="../../">← 返回首页</a>
+</header>
+<main class="detail-main">
+<article class="detail-article">
+<div class="detail-title-block">
+<span class="type-badge note">note</span>
+<h1 class="detail-title">秉烛游 · 一首从古诗出发的说唱与两分钟 MV</h1>
+<p class="detail-title-en">Bingzhu You (秉烛游) — A Rap Song and 2-Minute MV from Classical Chinese Poetry</p>
+</div>
+
+<nav class="detail-toc" aria-label="页内目录">
+<div class="toc-title">目录</div>
+<ol class="toc-list">
+<li class="toc-item toc-level-2"><a class="toc-link" href="#古诗原典">古诗原典</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#工具栈">工具栈</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#音乐生成">音乐生成</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#视频生成">视频生成</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#视频合成">视频合成</a></li>
+<li class="toc-item toc-level-3"><a class="toc-link" href="#字幕ass关键节选">字幕(ASS)关键节选</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#仓库结构在-conanxinbingzhu-you">仓库结构(在 `conanxin/bingzhu-you`)</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#重现指令给未来想复制这个流程的人">重现指令(给未来想复制这个流程的人)</a></li>
+<li class="toc-item toc-level-2"><a class="toc-link" href="#相关资源">相关资源</a></li>
+</ol>
+</nav>
+
+<section class="detail-meta">
+<div class="meta-row"><div class="meta-label">类型</div><div class="meta-value">note</div></div>
+<div class="meta-row"><div class="meta-label">作者</div><div class="meta-value">Conan Xin (lyrics) &amp; Hermes Agent (production)</div></div>
+<div class="meta-row"><div class="meta-label">来源</div><div class="meta-value">GitHub (conanxin/bingzhu-you)</div></div>
+<div class="meta-row"><div class="meta-label">发布日期</div><div class="meta-value">2026-07-02</div></div>
+<div class="meta-row"><div class="meta-label">采集日期</div><div class="meta-value">2026-07-02</div></div>
+<div class="meta-row"><div class="meta-label">标签</div><div class="meta-value meta-tags"><span class="chip">秉烛游</span><span class="chip">MV</span><span class="chip">AI Music</span><span class="chip">AI Video</span><span class="chip">Suno 风格</span><span class="chip">Hermes Agent</span><span class="chip">Music Production</span><span class="chip">Multi-Agent Pipeline</span><span class="chip">Lyric Writing</span><span class="chip">Storyboard</span></div></div>
+<div class="meta-row"><div class="meta-label">主题</div><div class="meta-value meta-tags"><span class="chip">秉烛游</span><span class="chip">古诗新唱</span><span class="chip">说唱</span><span class="chip">AI 音乐生成</span><span class="chip">AI 视频生成</span><span class="chip">S2V 人物一致性</span><span class="chip">多媒体协作</span><span class="chip">Chinese Hip-Hop</span><span class="chip">BPM 88</span><span class="chip">boom bap</span><span class="chip">古风 hook</span><span class="chip">guzheng × 808</span></div></div>
+</section>
+
+<section class="detail-section" id="section-summary">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">摘要</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="秉烛游-一首从古诗出发的说唱与两分钟-mv">秉烛游 · 一首从古诗出发的说唱与两分钟 MV</h1>
+<h2 id="一句话总结">一句话总结</h2>
+<p>把汉乐府《古诗十九首》之十五的"生年不满百,常怀千岁忧"四句古诗,改写成 2 分 09 秒的中文说唱,配上四段 AI 生成的 6 秒场景、烧入歌词字幕与片头片尾,产出可在 Telegram 内联播放的 13 段小片段。<strong>整条流水线由一个 AI 协作者(音乐模型 + 视频模型 + Hermes Agent 编排)完成,人类只写歌词与拍板。</strong></p>
+<h2 id="原始古诗汉乐府古诗十九首之十五">原始古诗(汉乐府《古诗十九首》之十五)</h2>
+<blockquote><p>生年不满百,常怀千岁忧。 昼短苦夜长,何不秉烛游? 为乐当及时,何能待来兹? 愚者爱惜费,但为后世嗤。</p></blockquote>
+<p>诗的核心命题:<strong>生命短暂,但人总是为遥不可及的未来焦虑,反而错过了当下的快乐</strong>。解决方案是"秉烛游"——举着烛火在夜里出游,抓住眼前。</p>
+<h2 id="改写后的歌词完整">改写后的歌词(完整)</h2>
+<blockquote><p><strong>[Intro]</strong> Yo, 古人说的话,今天还在传 一盏烛火,照亮两千年</p>
+<p><strong>[Verse 1]</strong> 生年不满百,常怀千岁忧 活不到一百年,操着一百年的心 CPU 过载在胸口,焦虑写在眉头 算法算不出答案,deadline 还催着走 电费账单叠成山,房贷利率往上涨 下一代的教育金,下一代的学区房 月亮不睡你不睡,太阳升了咖啡续 KPI 在那里等 KPI,PPT 后面还有 PPT</p>
+<p><strong>[Chorus]</strong> 昼短苦夜长,何不秉烛游 把灯点起来,把夜点亮 别等明天别等以后 此刻就是最好的时光</p>
+<p><strong>[Verse 2]</strong> 为乐当及时,何能待来兹 快乐这事儿不能预售,也不能分期 等到涨薪等到升职等到退休等到带孙 等到朋友圈刷完,等到账户只剩本 古人举着火把在长夜里跳舞 今人攥着手机在算法里沉浮 享乐不是奢侈,是给灵魂续上氧气 别让快乐成为 KPI 之外的 KPI</p>
+<p><strong>[Chorus]</strong> 昼短苦夜长,何不秉烛游 点一根烛火也好,照亮一个角落 不为永生只为活过,今夜就是此刻 不为后世只为当下,此刻就是意义</p>
+<p><strong>[Bridge]</strong> 愚者爱惜费,但为后世嗤 攒了一辈子舍不得花,后人在背后笑你 时间才是真货币,余额从来不显示 提现窗口随时关闭,从不发预告通知</p>
+<p><strong>[Verse 3]</strong> 所以把烛火举起来,把麦克风举起来 把那些犹豫的、害怕的、不敢的,全甩开 生命这场单程票,没有回程也没有续杯 今天不快乐,明天哪有力气后悔</p>
+<p><strong>[Outro]</strong> 昼短——苦夜长 何不——秉烛游 秉烛游,秉烛游 照亮此刻,够了</p></blockquote>
+<h2 id="制作管线七步">制作管线(七步)</h2>
+<table class="md-table"><thead><tr><th>步骤</th><th>工具</th><th>产物</th><th>关键参数</th></tr></thead><tbody><tr><td>1. 歌词改写</td><td>人类 + AI 头脑风暴</td><td>上面 8 段中文说唱</td><td>押韵、节奏感、古诗原句保留为 hook</td></tr><tr><td>2. 音频生成</td><td><code>music-2.6</code>(音乐模型)</td><td><code>bingzhu_you.mp3</code> · 4 MB · 2:09 · 256 kbps</td><td>风格 old school boom bap + 古风采样;BPM 88;A minor;男声说唱,带 chest voice + 轻微沙哑</td></tr><tr><td>3. 场景规划</td><td>故事板(人类 + AI)</td><td>4 段 6s 场景,对应歌词结构</td><td>A 举烛 / B 城市起舞 / C 金雨 / D 收束</td></tr><tr><td>4. 视频生成(并行 4 段)</td><td>A、D 用 <code>S2V-01</code>(subject reference);B、C 用 <code>Hailuo-2.3</code>(I2V)</td><td>4 段 6s 720p mp4</td><td>S2V 用封面作 subject image;B/C 用封面作 first frame</td></tr><tr><td>5. 拼接到音频时长</td><td>ffmpeg normalize + concat + loop</td><td><code>final.mp4</code> 720×720 · 2:09</td><td>4 段循环叠加到 129s;libx264 crf 28</td></tr><tr><td>6. 烧入歌词字幕</td><td>ffmpeg libass + ASS 字幕</td><td><code>final_subs.mp4</code> 14 MB</td><td>ASS 用 720×720 坐标系;Default 字号 40,Title 字号 72 金色</td></tr><tr><td>7. 加片头片尾 + 切段发送</td><td>ffmpeg drawtext(textfile 避开转义坑) + 切片</td><td>13 段 mp4,每段 10.4s,≤ 1.4 MB</td><td>片头 3s 标题+副标+鸣谢;片尾 3s "— 完 —"+ 鸣谢;分段每段 ≤ 1.4 MB 以适配 Telegram 通道</td></tr></tbody></table>
+<h2 id="关键工程取舍">关键工程取舍</h2>
+<ul><li><strong>音频用 music-2.6 单次生成,不反复 prompt 调优</strong> — 给定的风格描述(bpm/调式/人声/乐器)已经够具体,模型一次性给到满意结果。</li><li><strong>视频分两路生成(S2V + I2V)</strong>:A 和 D 必须保持书生形象一致,所以用 S2V-01 subject reference;B 和 C 是城市/金雨环境,不需要人物一致性,用 Hailuo-2.3 first-frame 模式更快。</li><li><strong>完整 2:09 MV 不直接发 Telegram</strong>:Bot 上传通道对几 MB 以上的 mp4 偶发超时。切成 13 段 ≤ 1.4 MB 之后稳定通过。</li><li><strong>drawtext 文本用 <code>textfile=</code> 而不是 <code>text=</code></strong>:bash + Python 双层转义下,<code>text='中文'</code> 会被吞成黑帧。把每行文本写到独立文件再 <code>textfile=路径</code> 是稳的做法。</li><li><strong>D 段(收束)在第一次生成时被配额拦了</strong>:等到下个配额周期补做,rebuild 完整版,而不是降级用 3 段。</li></ul>
+<h2 id="产出在-github-仓库-conanxinbingzhu-you">产出(在 GitHub 仓库 <code>conanxin/bingzhu-you</code>)</h2>
+<ul><li>完整 MV:720×720 · 2:09 · 14 MB(在仓库 root)</li><li>13 段小片段(适配 Telegram 发送):每段 10.4s,最大 1.4 MB,最小 0.34 MB</li><li>4 段 AI 原始 clip(A/B/C/D,1280×720 或 768×768,各 ~5-6s)</li><li>音频(单独):mp3 4 MB</li><li>封面:1024×1024 jpg</li><li>歌词文件(textfile 副产物,展示片头片尾所有文本)</li><li>字幕(ASS,720×720 坐标)</li></ul>
+<h2 id="这件作品说明了什么">这件作品说明了什么</h2>
+<p>一件"从古诗到 2 分钟 MV"的活,<strong>人类参与部分</strong>:写 8 段歌词 + 拍 4 个关键决策(类型/状态/收录形式/链接形式)。<strong>AI 参与部分</strong>:8 个生成模型调用 + 6 步 ffmpeg 合成 + 1 个 Git push。<strong>端到端耗时</strong>:从写歌词到 13 段全发到 Telegram,<strong>单次会话 ~3 小时</strong>(含等待视频生成的等待时间)。</p>
+<p><strong>与"AI 写作"或"AI 绘画"的不同</strong>:这是 <strong>AI 编排 + 多个专门模型分工</strong> 的活,不是单模型"一气呵成"。<strong>人类边界</strong>在概念与拍板,<strong>模型边界</strong>在执行与生成,<strong>Agent 边界</strong>在工程与决策。三个边界清晰的边界让这件事<strong>可重复</strong>——任何人按这条 pipeline + 这套 prompt 都能产出一首类似质量的 MV。</p>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-source">
+<details class="section-details" open>
+<summary class="section-summary">
+<span class="section-summary-label">原文 / 源文本</span>
+
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="source-原始资料与工具">Source · 原始资料与工具</h1>
+<h2 id="古诗原典">古诗原典</h2>
+<p><strong>汉乐府《古诗十九首》之十五</strong></p>
+<blockquote><p>生年不满百,常怀千岁忧。 昼短苦夜长,何不秉烛游? 为乐当及时,何能待来兹? 愚者爱惜费,但为后世嗤。</p></blockquote>
+<p><strong>出处</strong>:《文选》卷二十九,题为"古诗十九首"。最早由梁代萧统编入《文选》时定名,<strong>作者佚名</strong>,一般认为是东汉末年(约公元 1-2 世纪)文人作品,因十九首风格相近、形式相似而得名。</p>
+<p><strong>历代解读</strong>:</p>
+<ul><li>钟嵘《诗品》评为"文温以丽,意悲而远,惊心动魄,可谓几乎一字千金"</li><li>主题是"人生苦短、及时行乐"——这与中国传统儒家"节欲"主流话语形成有趣张力</li><li>末句"但为后世嗤"是反讽:<strong>愚者攒钱不花,反而被后人笑话</strong>——与今天"月光族 vs 储蓄族"讨论同构</li></ul>
+<h2 id="工具栈">工具栈</h2>
+<h3 id="音乐生成">音乐生成</h3>
+<table class="md-table"><thead><tr><th>工具</th><th>用途</th><th>关键参数</th></tr></thead><tbody><tr><td><code>mmx music generate</code></td><td>一次性生成完整音频</td><td>model: <code>music-2.6</code>, BPM 88, key A minor, format mp3 256kbps</td></tr></tbody></table>
+<p><strong>Prompt 全文</strong>:</p>
+<pre><code>Chinese old school boom bap hip-hop rap, 808 sub-bass, vinyl crackle,
+guzheng and erhu samples blended with trap hi-hats, cinematic tension
+into uplifting release, male vocal with confident flow</code></pre>
+<p><strong>Lyrics file</strong>:见 <code>summary.md</code> 的"改写后的歌词"段落,8 段共 ~80 行中文说唱。</p>
+<h3 id="视频生成">视频生成</h3>
+<h4 id="clip-a-书生举烛s2v-01">Clip A · 书生举烛(S2V-01)</h4>
+<pre><code>A lone Chinese scholar in flowing traditional robes stands on a misty
+rooftop at night. He slowly raises a single candle above his head.
+The candle flame grows impossibly large and golden, casting warm
+divine light that pushes back the dark mist. Cinematic camera slowly
+pushes in. Moody, atmospheric, ancient meets mystical. Anamorphic
+lens, film grain, 24fps cinematic motion.</code></pre>
+<p><strong>模式</strong>:S2V-01(subject-image 用封面)· 6s · 1280×720 · 704 KB</p>
+<h4 id="clip-b-城市起舞i2v-hailuo-23">Clip B · 城市起舞(I2V / Hailuo-2.3)</h4>
+<pre><code>Cinematic camera pulls back from the album cover. The lone scholar
+on the rooftop begins to dance with the candle held high, ancient
+robes flowing. The candle flame ignites into a thousand golden sparks
+that rain down over the neon cyberpunk city below. Camera tilts
+down to reveal the vast cityscape. Dynamic motion, energetic,
+hip-hop music video energy. Anamorphic lens flare, neon reflections,
+24fps.</code></pre>
+<p><strong>模式</strong>:Hailuo-2.3(first-frame 用封面)· 6s · 768×768 · 2.3 MB</p>
+<h4 id="clip-c-金雨倾泻i2v-hailuo-23">Clip C · 金雨倾泻(I2V / Hailuo-2.3)</h4>
+<pre><code>Golden rainstorm cascading over a vast neon cyberpunk city at night.
+Thousands of luminous golden droplets fall slowly through the air,
+each catching the city light. Camera sweeps across rooftops as
+silhouetted figures dance below with arms raised. Heavy atmosphere,
+fog, golden bokeh, anamorphic lens flare, 24fps cinematic motion.</code></pre>
+<p><strong>模式</strong>:Hailuo-2.3 · 6s · 768×768 · 3.8 MB</p>
+<h4 id="clip-d-收束溶光s2v-01">Clip D · 收束溶光(S2V-01)</h4>
+<pre><code>The Chinese scholar walks slowly forward into a vast field of
+golden candlelight, viewed from behind. The camera follows him in
+a long tracking shot. He raises the candle one final time, and the
+entire screen dissolves into pure warm golden light. Serene,
+contemplative, peaceful resolution. Slow motion, soft bokeh
+particles, atmospheric fog, cinematic 24fps, anamorphic
+widescreen feel.</code></pre>
+<p><strong>模式</strong>:S2V-01 · 6s · 1280×720 · 818 KB</p>
+<h3 id="视频合成">视频合成</h3>
+<table class="md-table"><thead><tr><th>步骤</th><th>命令形态</th><th>关键参数</th></tr></thead><tbody><tr><td>标准化</td><td>ffmpeg -vf "scale=720:720:force_original_aspect_ratio=decrease,pad=720:720:..."</td><td>每个 clip 都到 720×720 square</td></tr><tr><td>拼接</td><td>ffmpeg -f concat -safe 0</td><td>4 段顺序连成 1 个 24s 循环单元</td></tr><tr><td>循环到音频</td><td>ffmpeg -stream_loop 5</td><td>6 个循环 = 144s,截到 129.4s</td></tr><tr><td>烧字幕</td><td>ffmpeg -vf "ass=bingzhu_subs_720.ass"</td><td>libass filter,720×720 坐标系</td></tr><tr><td>加片头片尾</td><td>ffmpeg drawtext=textfile=...</td><td>textfile 避开中文转义坑</td></tr><tr><td>切片</td><td>ffmpeg -ss -t -crf 30</td><td>13 段 × 10.4s,目标 ≤ 1.4 MB</td></tr></tbody></table>
+<h3 id="字幕ass关键节选">字幕(ASS)关键节选</h3>
+<pre><code>[Script Info]
+ScriptType: V4.00+
+PlayResX: 720
+PlayResY: 720
+
+[V4+ Styles]
+Style: Default,Noto Sans CJK SC,40,&amp;H00FFFFFF,...
+
+[V4+ Events]
+Dialogue: 0,0:00:00.00,0:00:04.50,Title,,0,0,0,,秉烛游
+Dialogue: 0,0:00:04.50,0:00:09.00,Default,,0,0,0,,生年不满百,常怀千岁忧
+Dialogue: 0,0:00:50.00,0:00:55.50,Default,,0,0,0,,昼短苦夜长 何不秉烛游
+... (共 24 行 Dialogue,完整版见仓库)</code></pre>
+<h2 id="仓库结构在-conanxinbingzhu-you">仓库结构(在 <code>conanxin/bingzhu-you</code>)</h2>
+<pre><code>bingzhu-you/
+├── README.md                          # 仓库简介 + 收听/观看指引
+├── bingzhu_you.mp3                    # 完整音频(2:09 · 4 MB · 256 kbps)
+├── bingzhu_you_cover.jpg              # 封面图(1024×1024 · 343 KB)
+├── bingzhu_you_lyrics.txt             # 歌词(mm music 格式)
+├── bingzhu_subs_720.ass               # 字幕源文件
+├── text_assets/                       # drawtext 用的文本片段
+│   ├── title.txt
+│   ├── subtitle.txt
+│   ├── credit_composer.txt
+│   ├── outro_main.txt
+│   ├── outro_poem1.txt
+│   ├── outro_poem2.txt
+│   ├── outro_credits1.txt
+│   └── outro_credits2.txt
+├── clips/                             # 4 段 AI 原始素材
+│   ├── A_scholar_lifts_candle.mp4
+│   ├── B_dance_over_city.mp4
+│   ├── C_golden_rain.mp4
+│   └── D_walks_into_light.mp4
+├── full_mv.mp4                        # 完整版 2:09 · 14 MB · 720×720
+└── segments/                          # 13 段 Telegram 适配版
+    ├── seg_01_intro.mp4
+    ├── seg_02..12.mp4
+    └── seg_13_outro.mp4</code></pre>
+<h2 id="重现指令给未来想复制这个流程的人">重现指令(给未来想复制这个流程的人)</h2>
+<pre data-lang="bash"><code># 1. 准备歌词文件(8 段中文说唱,带 [Verse]/[Chorus] 标签)
+# 2. 生成音频
+mmx music generate --prompt &quot;...&quot; --lyrics-file lyrics.txt --bpm 88 --out song.mp3
+
+# 3. 并行生成 4 段 AI 视频
+mmx video generate --model S2V-01 --subject-image cover.jpg --prompt &quot;A scene&quot; --async --download clips/A.mp4
+mmx video generate --model Hailuo-2.3 --first-frame cover.jpg --prompt &quot;B scene&quot; --async --download clips/B.mp4
+mmx video generate --model Hailuo-2.3 --first-frame cover.jpg --prompt &quot;C scene&quot; --async --download clips/C.mp4
+mmx video generate --model S2V-01 --subject-image cover.jpg --prompt &quot;D scene&quot; --async --download clips/D.mp4
+
+# 4. ffmpeg 标准化 + 拼接 + 循环到音频长度
+# 5. ffmpeg 烧 ASS 字幕
+# 6. ffmpeg 拼接 intro + subs版 + outro
+# 7. ffmpeg 切成 ≤ 1.4 MB 小片段(约 10s 一段)
+# 8. 逐段发送到 Telegram</code></pre>
+<h2 id="相关资源">相关资源</h2>
+<ul><li><strong>mmx CLI</strong>:MiniMax 提供的 AI 模型统一 CLI 工具</li><li><strong>ffmpeg</strong>:开源视频处理工具,带 libass、libx264、libfreetype</li><li><strong>Noto Sans CJK SC</strong>:Google 开源中文字体,被 drawtext 和 libass 共同使用</li><li><strong>Telegram Bot API</strong>:视频上传通道对几 MB 以上 mp4 偶发超时(实测阈值 ~1.5 MB)</li></ul>
+</div>
+</details>
+</section>
+
+
+<section class="detail-section" id="section-notes">
+<details class="section-details">
+<summary class="section-summary">
+<span class="section-summary-label">笔记</span>
+<span class="section-tag section-tag-collapsed">默认折叠</span>
+<span class="section-summary-toggle" aria-hidden="true"></span>
+</summary>
+<div class="markdown-body">
+<h1 id="notes-制作过程中的技术决策">Notes · 制作过程中的技术决策</h1>
+<h2 id="1-歌词改写策略">1. 歌词改写策略</h2>
+<ul><li><strong>保留古诗原句作为 hook</strong>:Chorus 的 "昼短苦夜长,何不秉烛游" 是 8 个字对仗+7 个字,押韵游/忧/久/收,与古诗原句完全相同。<strong>古今双关的核心钩子在 chorus 而非 verse</strong>。</li><li><strong>现代焦虑在 verse</strong>:CPU/deadline/KPI/PPT/月亮不睡/咖啡续,这些意象是 2026 年打工人最熟悉的。把"千岁忧"翻译成现代语言,让古诗命题有当代共鸣。</li><li><strong>verse 末尾两句对比</strong>:"古人举着火把在长夜里跳舞 / 今人攥着手机在算法里沉浮"——这个对仗把整首歌从"个人焦虑"拉到"时代对比",<strong>Bridge 才上"时间才是真货币"这种抽象判断</strong>。</li><li><strong>Outro 拆句</strong>:"昼短——苦夜长 / 何不——秉烛游"破折号断句给最后一击,而不是连读,让节拍有 4 个落点,适合视频结尾渐入黑场。</li></ul>
+<h2 id="2-音乐生成的关键参数">2. 音乐生成的关键参数</h2>
+<table class="md-table"><thead><tr><th>参数</th><th>值</th><th>为什么</th></tr></thead><tbody><tr><td>BPM</td><td>88</td><td>boom bap 标准节奏;古诗的 5 字句对 4/4 拍每分 88 拍刚好一句一个气口</td></tr><tr><td>调式</td><td>A minor</td><td>小调自带悲壮,与中国古诗意象匹配</td></tr><tr><td>风格</td><td>old school boom bap + 古风采样</td><td>1989-1995 美国东岸说唱的鼓+808 sub-bass,与古筝/二胡采样叠合</td></tr><tr><td>男声 vocal</td><td>chest voice + slight rasp</td><td>比清澈少年声更"有故事",与"古人说话两千年"的开场匹配</td></tr><tr><td>结构</td><td>intro-verse-chorus-verse-chorus-bridge-verse-outro</td><td>标准 3 verse,让副歌重复 2 次加深记忆点</td></tr></tbody></table>
+<h2 id="3-视频分两路生成的理由">3. 视频分两路生成的理由</h2>
+<p><strong>为什么不全用 I2V</strong>:Hailuo-2.3 的 I2V 模式(first-frame image)每次都会"重新诠释"首帧里的人物,跨 clip 的人物一致性无保证。如果 4 段都用 I2V,你会看到 4 个看起来相似但不相同的人——这破坏 MV 叙事。</p>
+<p><strong>为什么不全用 S2V</strong>:S2V-01 强 subject reference 适合"书生主体"画面,但对"城市金雨"这种空镜/风景类 prompt 反而过度锁定,生成速度慢且画面构图被 subject image 牵制。</p>
+<p><strong>实际选择</strong>:</p>
+<ul><li>A 段(书生举烛)+ D 段(书生走向烛光):<strong>S2V-01</strong> + 封面作 subject-image,确保两段书生形象一致</li><li>B 段(城市起舞)+ C 段(金雨):<strong>Hailuo-2.3</strong> + 封面作 first-frame,人物退到次要位置,环境为主</li></ul>
+<h2 id="4-字幕烧入的工程坑">4. 字幕烧入的工程坑</h2>
+<p><strong>坑 1:ffmpeg drawtext 静默黑帧</strong></p>
+<p>第一次用 <code>drawtext=text='秉烛游':fontcolor=white:...</code> 时,ffmpeg 没有报错但输出的视频是全黑——所有文字 glyph 没渲染。debug 日志显示 drawtext 在跑(parsing 成功),但 <code>mb I skip=99.9%</code> 说明画面静态。</p>
+<p><strong>原因</strong>:<code>text='中文'</code> 在 bash + Python subprocess 双层转义下,中文字符可能被错误地解析为 filter chain 的子结构。drawtext 解析失败但 ffmpeg 静默继续。</p>
+<p><strong>修复</strong>:把所有要渲染的中文文本写到独立 .txt 文件,用 <code>textfile=路径</code> 引用。完全绕开 shell 转义问题。</p>
+<p><strong>坑 2:libass 坐标系错位</strong></p>
+<p>昨晚 v1 的 <code>subs.ass</code> 是为 1080² 视频写的。今天 v2 视频是 720²,直接用会让字幕跑到画面外 1/3。改 <code>PlayResX/Y</code> 为 720,字号从 58 降到 40、96 降到 72,完整重新校准。</p>
+<p><strong>坑 3:字幕时间轴与音频不同步</strong></p>
+<p>mmx 生成的 mp3 实际时长是 129.38s(显示是 2:09 整数)。ASS 文件是按 2:09 整数写的,导致最后一行字幕比音频早 ~0.4s 结束。把最后一行 end 改成 <code>0:02:09.40</code> 对齐实际音频。</p>
+<h2 id="5-telegram-通道的物理限制">5. Telegram 通道的物理限制</h2>
+<p><strong>完整 14 MB 视频 4 次都失败</strong>:不是文件大小,178 KB 的 6s 短视频能过,3.2 MB 的 30s 预告片就超时。</p>
+<p><strong>真正原因</strong>:Telegram Bot API 上传通道对每秒视频帧的处理有时间预算,可能跟 Bot 端处理时间窗有关,而非文件总大小。<strong>经验阈值</strong>:≤ 1.5 MB / ≤ 12s 稳定通过,&gt; 3 MB 偶发超时,&gt; 10 MB 几乎必超时。</p>
+<p><strong>应对</strong>:切成 13 段 × 10.4s × ≤ 1.4 MB,稳定通过。但个别段(如 seg_02 含丰富视觉动作)1.4 MB 也可能超时——这种情况下用 crf 36 重切到 0.6 MB 兜底。</p>
+<h2 id="6-配额管理">6. 配额管理</h2>
+<p><strong>D 段被配额拦</strong>:第 4 段 AI 视频生成时返回"insufficient quota"。<strong>做法不是降级</strong>——等下个配额周期补做后 rebuild 完整版。</p>
+<p><strong>为什么不用"3 段循环 + 延长 D 段时间"</strong>:那样 D 段画面会和 A/B/C 段同样长,失去"收束"的语义。但<strong>4 段各 6s = 24s</strong> 循环 6 次到 144s,实际我们只需要 129s,所以 v2 用 6 个完整循环覆盖完整音频。</p>
+<h2 id="7-视觉验证的局限">7. 视觉验证的局限</h2>
+<p><strong>本地 vision API 不可用</strong>(<code>MiniMax-M3</code> 模型限制),无法用 vision_analyze 自动判断抽帧画面是否真的有字幕。<strong>替代方法</strong>:用 PIL 数非灰色像素比例(中心 300×300 区域内非灰色像素 &gt; 5% → 字幕渲染成功)。这是粗略但可行的 fallback。</p>
+<p><strong>真正可靠的视觉验证</strong>:用户在 Telegram 看每段视频 2-3 秒,确认内容、字幕、人物一致。这是<strong>端到端</strong>验证,没有 shortcut。</p>
+<h2 id="8-这条管线的可复用性">8. 这条管线的可复用性</h2>
+<p><strong>它不是一次性</strong>:同一套 (mmx music-2.6 + S2V-01 + Hailuo-2.3 + ffmpeg libass + 切片) 流水线可以复制到:</p>
+<ul><li>任何<strong>诗词改唱</strong>项目(把 4-8 句古诗词 + 现代 context,做 2 分钟说唱)</li><li>任何<strong>短文学作品的 MV 化</strong>(小说节选、散文诗、歌词可视化)</li><li>任何<strong>AI 协作创作</strong>项目(给歌词/剧本/分镜,让 AI 完成音视频)</li></ul>
+<p><strong>Prompt 模板</strong>(可重用):</p>
+<pre><code># 音乐 prompt 模板
+&quot;&lt;歌曲主题&gt; &lt;genre&gt;, &lt;instruments&gt;, &lt;mood&gt;, male vocal with &lt;vocal characteristic&gt;,
+BPM &lt;N&gt;, key &lt;X&gt; &lt;major|minor&gt;, structure intro-verse-chorus-...&quot;
+
+# S2V 视频 prompt 模板
+&quot;&lt;subject-name&gt; performs &lt;action&gt;. &lt;environment&gt;. &lt;camera move&gt;. &lt;style keywords&gt;.&quot;
+
+# I2V 视频 prompt 模板
+&quot;&lt;scene description&gt;, camera &lt;movement&gt;, &lt;lighting&gt;, &lt;style keywords&gt;.&quot;</code></pre>
+<p><strong>下一步</strong>可以把这个管线脚本化(<code>scripts/bingzhu_you_pipeline.sh</code>),输入歌词文本+封面图,自动产出 13 段 mp4——但这是后续项目,本次先收工。</p>
+</div>
+</details>
+</section>
+
+<nav class="detail-actions">
+<a class="action-link source-link" href="https://github.com/conanxin/bingzhu-you" target="_blank" rel="noopener">原文链接 ↗</a>
+<a class="action-link primary" href="https://github.com/conanxin/hermes-knowledge-base/tree/main/content/notes/2026/2026-07-02-bingzhu-you-mv-production" target="_blank" rel="noopener">GitHub 文件夹 →</a>
+<button class="action-btn" id="copy-path-btn" data-path="content/notes/2026/2026-07-02-bingzhu-you-mv-production">复制 path</button>
+<span class="action-feedback" id="copy-feedback" aria-live="polite"></span>
+</nav>
+<a class="back-to-top" href="#top" aria-label="返回顶部" title="返回顶部">↑</a>
+
+</article>
+</main>
+<footer>
+<p><a href="../../">hermes-knowledge-base</a> · 站内详情页</p>
+</footer>
+<script src="../../app.js" defer></script>
+<script>
+(function() {
+  const btn = document.getElementById('copy-path-btn');
+  const fb = document.getElementById('copy-feedback');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      const path = btn.getAttribute('data-path') || '';
+      const done = function() {
+        if (fb) {
+          fb.textContent = '已复制: ' + path;
+          setTimeout(function() { fb.textContent = ''; }, 2500);
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(path).then(done, function() {
+          // Fallback for non-secure contexts.
+          const ta = document.createElement('textarea');
+          ta.value = path;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); done(); } catch (e) {}
+          document.body.removeChild(ta);
+        });
+      }
+    });
+  }
+
+  // Show/hide the back-to-top button based on scroll position.
+  const topBtn = document.querySelector('.back-to-top');
+  if (topBtn) {
+    const onScroll = function() {
+      if (window.scrollY > 400) {
+        topBtn.classList.add('visible');
+      } else {
+        topBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+</body>
+</html>

@@ -60,12 +60,20 @@
 - 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
 - 灵感资源库
 
+## AI Music
+
+- Bingzhu You (秉烛游) — A Rap Song and 2-Minute MV from Classical Chinese Poetry
+
 ## AI UX
 
 - Hermes Agent UI P0 Implementation Spec
 - Hermes Agent UI Self-Audit v1
 - Hermes Agent UI Self-Check (Shape of AI 37-pattern checklist)
 - The Shape of AI
+
+## AI Video
+
+- Bingzhu You (秉烛游) — A Rap Song and 2-Minute MV from Classical Chinese Poetry
 
 ## AI governance
 
@@ -405,6 +413,7 @@
 
 ## Hermes Agent
 
+- Bingzhu You (秉烛游) — A Rap Song and 2-Minute MV from Classical Chinese Poetry
 - Hermes Agent Self-Evolution
 
 ## Highlander Folk School
@@ -583,6 +592,10 @@
 
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
 
+## Lyric Writing
+
+- Bingzhu You (秉烛游) — A Rap Song and 2-Minute MV from Classical Chinese Poetry
+
 ## MAGA
 
 - The People Are Never Right
@@ -590,6 +603,10 @@
 ## MCP
 
 - Nia Docs — 把整个 Web 变成文件系统
+
+## MV
+
+- Bingzhu You (秉烛游) — A Rap Song and 2-Minute MV from Classical Chinese Poetry
 
 ## Magnifica humanitas
 
@@ -627,9 +644,17 @@
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
 
+## Multi-Agent Pipeline
+
+- Bingzhu You (秉烛游) — A Rap Song and 2-Minute MV from Classical Chinese Poetry
+
 ## Multiple Income Streams
 
 - Financial Freedom is Easy, After You Learn This
+
+## Music Production
+
+- Bingzhu You (秉烛游) — A Rap Song and 2-Minute MV from Classical Chinese Poetry
 
 ## Myles Horton
 
@@ -857,6 +882,14 @@
 ## Steven Spielberg
 
 - An Oral History of Steven Spielberg, a Raider of a Lost Art
+
+## Storyboard
+
+- Bingzhu You (秉烛游) — A Rap Song and 2-Minute MV from Classical Chinese Poetry
+
+## Suno 风格
+
+- Bingzhu You (秉烛游) — A Rap Song and 2-Minute MV from Classical Chinese Poetry
 
 ## System Over Willpower
 
@@ -2139,6 +2172,10 @@
 ## 私有化
 
 - 日本铁路如何在分裂中保持统一
+
+## 秉烛游
+
+- Bingzhu You (秉烛游) — A Rap Song and 2-Minute MV from Classical Chinese Poetry
 
 ## 科学
 
