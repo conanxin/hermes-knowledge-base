@@ -1,428 +1,236 @@
 # Hermes Knowledge Base
 
-个人静态知识库。Hermes agent 维护内容采集、翻译、归档与发布；站点由 GitHub Pages 提供在线浏览。
+> 个人静态知识库。Hermes agent 维护内容采集、翻译、归档与发布；站点由 GitHub Pages 提供在线浏览。
+>
+> **当前稳定版本：** `v0.4.0-operator-ready-material-ingestion` (commit `c1695fd`)
+> **Full gate 状态：** `PASS_WITH_WARNINGS` — 0 hard failures，1 软警告 (`audit_kb_state` 29 条 tags/topics 软范围漂移，content 自带，未变更多个月；详见 [docs/OPERATOR_PLAYBOOK.md §1.1](docs/OPERATOR_PLAYBOOK.md#11-known-soft-warnings-informational-only))
+> **入口脚本：** [`scripts/material_to_kb.py`](scripts/material_to_kb.py)（统一材料入口）+ [`scripts/run_full_gate.py`](scripts/run_full_gate.py)（统一全量门禁）
+> **本 README 角色：** 项目首页说明（最短路径 + 文档导航）。所有 daily import / 各材料详细流程 → [docs/OPERATOR_PLAYBOOK.md](docs/OPERATOR_PLAYBOOK.md)。
 
-## 1. 项目一句话说明
+---
 
-把"想留但不想再翻原文"的外部材料（文章 / 散文 / 论文 / 视频 / 播客 / 资源集合 / 个人笔记 / 项目）转成有元数据、有中文译本、有结构化笔记、可被全文检索的静态知识库。所有内容以 `metadata.yaml` 为单一入口，质量门禁一律在 `scripts/` 下。
+## 1. 一句话说明
 
-## 2. 入口
+把"想留但不想再翻原文"的外部材料（公众号 / 网页 / 视频 / PDF / 本地文件 / 项目文档）转成有元数据、有中文译本、有结构化笔记、可被全文检索的静态知识库。所有内容以 `metadata.yaml` 为单一入口，质量门禁一律在 `scripts/` 下。
+
+---
+
+## 2. 线上入口
 
 | 入口 | 地址 |
 |---|---|
 | 在线浏览（GitHub Pages） | <https://conanxin.github.io/hermes-knowledge-base/> |
-| 在线浏览（每条记录详情页） | <https://conanxin.github.io/hermes-knowledge-base/items/<slug>/> |
+| 单条详情页 | <https://conanxin.github.io/hermes-knowledge-base/items/<slug>/> |
 | 本地预览 | `python3 -m http.server 8000 -d site` → <http://localhost:8000> |
-| 仓库自身 | <https://github.com/conanxin/hermes-knowledge-base> |
-| Changelog | [CHANGELOG.md](CHANGELOG.md) |
-| 发布索引 | [docs/RELEASES.md](docs/RELEASES.md) |
-| 多媒体资产索引 | [docs/releases.md](docs/releases.md) |
-| 完整使用手册 | [docs/AGENT_COMMANDS.md](docs/AGENT_COMMANDS.md) |
-| 日常操作手册 | [docs/OPERATOR_PLAYBOOK.md](docs/OPERATOR_PLAYBOOK.md) |
+| 仓库 | <https://github.com/conanxin/hermes-knowledge-base> |
+| 多媒体资产（GitHub Releases） | [docs/releases.md](docs/releases.md) |
 
-## 3. 当前状态
-
-<!-- KB_STATE_START — auto-updated by scripts/audit_kb_state.py -->
-<!-- Run `python3 scripts/audit_kb_state.py` to refresh; do not edit manually. -->
-<!-- Real total = 56 items. Last refreshed: 2026-07-01 (v0.3.70). -->
-
-| 类型 | 数量 | 说明 | 目录 |
-|------|------|------|------|
-| article | 26 | 外部文章（含 wechat 子集），有 source_url，需翻译 | `content/articles/` |
-| essay | 8 | 散文 / 自传性长文，与 article 同等需要翻译 | `content/articles/` |
-| note | 9 | 中文笔记，无翻译，来源 `legacy-knowledge` 或 `notes` | `content/legacy-knowledge/`, `content/notes/` |
-| resource_collection | 5 | 资源集合（结构化列表，无翻译） | `content/resource_collections/` |
-| project | 4 | 项目文档（有 source_url，无翻译） | `content/projects/` |
-| video | 2 | YouTube 视频知识包（transcript + cards + analysis） | `content/articles/` |
-| academic_paper | 1 | 学术论文（tandfonline 等） | `content/papers/` |
-| interview | 1 | 长访谈（视频/播客转录） | `content/articles/` |
-| **总计** | **56** | — | — |
-
-<!-- KB_STATE_END -->
-
-> managed block 由 `scripts/audit_kb_state.py` 维护。除非审计脚本显式要求刷新，否则不要手改其中的统计数字；任何"加一条减一条"的动作都会让这个块和真实 `content/` 又漂一次。
-
-## 4. 支持的内容类型
-
-> 当前实际生效的 8 类（与上表一致）：`article` / `essay` / `note` / `resource_collection` / `project` / `video` / `academic_paper` / `interview`。
-
-类型分区与"是否需要中文译本"的真实情况：
-
-| 类型 | 是否需要翻译 | 内容来源 | 落地目录 |
-|---|---|---|---|
-| `article` | 是（zh-CN） | URL 文章（含 wechat 子集） | `content/articles/YYYY/` |
-| `essay` | 是（zh-CN） | 长篇散文 / 自传性长文 | `content/articles/YYYY/` |
-| `note` | 否（中文原生） | 个人笔记 / legacy 迁移 | `content/notes/`, `content/legacy-knowledge/` |
-| `resource_collection` | 否 | 结构化资源清单 / listicle | `content/resource_collections/` |
-| `project` | 否 | 项目文档（有 source_url） | `content/projects/` |
-| `video` | 是（zh-CN） | YouTube 视频知识包 | `content/articles/YYYY/` |
-| `academic_paper` | 是（zh-CN） | 学术论文（tandfonline 等） | `content/papers/` |
-| `interview` | 是（zh-CN） | 长访谈转录 | `content/articles/YYYY/` |
-
-每种类型的 schema 与字段约束见 [docs/TAXONOMY.md](docs/TAXONOMY.md)。
-
-## 5. Quick Start
-
-```bash
-# 1. 拉取
-git pull --ff-only
-
-# 2. 任务启动前必跑（任何任务）
-python3 scripts/check_task_preflight.py
-
-# 3. 一次性完成"质量门禁 + 重建 + 同步"
-python3 scripts/update_site.py
-
-# 4. 离线浏览
-python3 -m http.server 8000 -d site
-# → http://localhost:8000
-```
-
-只想确认 KB 健康、不重建：
-
-```bash
-python3 scripts/check_kb.py
-python3 scripts/audit_kb_state.py
-```
-
-## 6. 导入能力总览
-
-四种导入入口各自有完整工作流文档；README 只放最短命令，详细步骤、停止条件、字段约束请打开对应的 docs/workflows 文件。
-
-| 能力 | 触发命令（最短） | 文档 | 注意事项 |
-|---|---|---|---|
-| 统一材料入口 | 「解读并入库这个材料：<URL 或 本地文件>」<br>「批量解读并入库这些材料：<materials.txt>」 | [docs/commands/material-kb-import-command.md](docs/commands/material-kb-import-command.md), [docs/workflows/material-kb-import-workflow.md](docs/workflows/material-kb-import-workflow.md) | v0.3.79 起：微信公众号 URL/HTML/MD/TXT、普通网页 URL、YouTube URL（需可获取字幕 / transcript）支持；**v0.3.86 起**：本地 PDF（可提取文本层）也支持（路由到 `pdf_to_kb.py`，PyMuPDF 本地提取）。扫描版 PDF 返回 `BLOCKED_NEEDS_OCR` 不入库 |
-| 普通网页文章 | 「解读并入库这个网页文章：<url>」 | [docs/commands/web-article-kb-import-command.md](docs/commands/web-article-kb-import-command.md), [docs/workflows/web-article-kb-import-workflow.md](docs/workflows/web-article-kb-import-workflow.md) | 只抓公开 HTTP(S) 正文；不登录、不读 cookie、不绕过 paywall；正文不完整则 `BLOCKED_*` |
-| URL 文章 | 「入库并完整翻译：<url>」 | [docs/AGENT_COMMANDS.md](docs/AGENT_COMMANDS.md) | 默认 `content_type=article`、zh-CN、自动 commit/push |
-| 本地 PDF（OCR 路线） | 「把这个本地 PDF OCR 识别、完整翻译并加入 Hermes 知识库：<abs-path>」 | [docs/import-recipes/PDF_OCR_LOCAL.md](docs/import-recipes/PDF_OCR_LOCAL.md), [docs/workflows/pdf-ocr-kb-import-workflow.md](docs/workflows/pdf-ocr-kb-import-workflow.md) | 必须**绝对路径**；PDF 本身不入仓，只留 `source.local-ref.txt` |
-| 本地 PDF（文本层路线） | 「解读并入库这个 PDF：<file.pdf>」 | [docs/commands/pdf-kb-import-command.md](docs/commands/pdf-kb-import-command.md), [docs/workflows/pdf-kb-import-workflow.md](docs/workflows/pdf-kb-import-workflow.md) | **v0.3.86 起**：PyMuPDF 本地提取，扫描版返回 `BLOCKED_NEEDS_OCR` 不写半成品 |
-| 微信公众号文章 | 「解读并入库这篇公众号文章：<mp.weixin.qq.com 链接>」<br>「解读并入库这个公众号文章本地文件：<path>」<br>「批量解读并入库这些公众号文章：<urls.txt 或多行 URL>」 | [docs/commands/wechat-url-kb-import-command.md](docs/commands/wechat-url-kb-import-command.md), [docs/commands/wechat-batch-kb-import-command.md](docs/commands/wechat-batch-kb-import-command.md), [docs/workflows/wechat-article-kb-import-workflow.md](docs/workflows/wechat-article-kb-import-workflow.md) | **v0.3.69 起支持公开 URL 直抓 + 本地文件兜底；v0.3.71 起支持批量 + 三层去重**（不登录、不扫码、不读 cookie）；OpenClaw 实时链路仍 disabled，详见 §7 |
-| YouTube 视频 | 「预检这个 YouTube 视频：<url>」<br>「解读这个 YouTube 视频并加入 Hermes 知识库：<url>」 | [docs/YOUTUBE_CAPABILITIES.md](docs/YOUTUBE_CAPABILITIES.md), [docs/workflows/youtube-link-preflight-workflow.md](docs/workflows/youtube-link-preflight-workflow.md), [docs/workflows/youtube-video-brief-workflow.md](docs/workflows/youtube-video-brief-workflow.md) | 不登录、不读 cookie、不下载完整视频、私密视频直接 BLOCKED 并归档 |
-
-### YouTube transcript quality gate (v0.3.81)
-
-Direct YouTube import defaults to full transcripts only. `fetch_quality=partial` may dry-run with a warning, but import requires `--allow-partial-transcript` and at least 800 visible transcript characters. `fetch_quality=metadata_only`, no captions, empty/too-short transcript, login/cookie/paywall/private access, or blocked fetches never write KB entries.
-
-### YouTube automatic transcript providers (v0.3.82)
-
-`scripts/youtube_to_kb.py` now tries a provider chain before giving up: direct `captionTracks` (`original`, `vtt`, `srv3`, `ttml`, `json3`), subtitle-only `yt-dlp`, optional `youtube-transcript-api`, then metadata-only diagnostics. It still never downloads video files, never uses cookies/login state, and never turns a description into a transcript.
-
-Automatic captions can produce `fetch_quality=full`, but they are marked `transcript_kind: auto` and `transcript_needs_review: true`. Importing full automatic captions requires explicit `--allow-auto-captions`; metadata-only remains blocked.
-
-```bash
-python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --dry-run
-python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --allow-auto-captions --import
-python3 scripts/material_to_kb.py --input "<YOUTUBE_URL>" --caption-provider yt-dlp --dry-run
-```
-
-### YouTube provider environment (v0.3.83)
-
-The `yt-dlp` and `youtube-transcript-api` packages are **optional** providers — the chain degrades
-gracefully (back to metadata_only) when either is missing. Enable in a fresh environment with:
-
-```bash
-python -m pip install --upgrade yt-dlp youtube-transcript-api
-# Debian/WSL PEP 668:
-python -m pip install --user --break-system-packages --upgrade yt-dlp youtube-transcript-api
-```
-
-Hard guarantees the chain keeps regardless of which providers are present:
-
-- **No video downloads.** yt-dlp runs with `--skip-download`; only metadata or subtitle text is parsed.
-- **No cookies, no login state, no impersonation bypass.** All fetches work from public endpoints.
-- **`full` transcript only is importable.** `fetch_quality=full` with `transcript_char_count>=800`
-  is the import gate. `partial`, `metadata_only`, blocked, empty, or too-short results never write
-  a KB entry.
-- **Auto captions stay flagged for review.** `transcript_kind: auto` +
-  `transcript_needs_review: true`; import requires `--allow-auto-captions`.
-
-### Fetch-result handoff + inbox overwrite protection (v0.3.84)
-
-`material_to_kb.py` runs the in-process YouTube fetch layer first. When the fetch is `full` (or
-`partial` when allowed), the router serializes the capture to
-`tmp/material_fetches/youtube_<video_id>_<timestamp>.json` and passes
-`--fetch-result-json <path>` to the YouTube subprocess. The subprocess loads the handoff and
-**skips refetch**, which prevents the 429-throttling race that turns a real full transcript into
-a `metadata_only` one when the second call hits YouTube's rate limit.
-
-A handoff is only written for `full` / `partial`; `metadata_only`, `blocked`, or empty results
-still cause the subprocess to refetch so a fresh attempt is logged. The handoff file lives under
-the gitignored `tmp/material_fetches/` directory.
-
-The canonical `inbox/raw/youtube/*.json` capture is also protected from being overwritten by a
-weaker capture with the same `video_id`:
-
-- Quality rank: `full` (4) > `partial` (3) > `metadata_only` (2) > `blocked` (1) > `none` (0).
-- A weaker capture is refused; the existing path is returned and `overwrite: false` is recorded
-  on the subprocess stderr summary along with the `existing_quality` / `new_quality` / reason.
-
-### 7. 微信公众号：当前真实能力
-
-**两条可用通道**（都不登录微信、不扫码、不读 cookie）：
-
-#### 通道 A（v0.3.69+，推荐）：公开 URL 直抓 + 本地文件兜底
-
-只给一个 `mp.weixin.qq.com` 链接，或浏览器另存的 HTML/Markdown/TXT，`scripts/wechat_url_to_kb.py` 抓取公开页面、解析正文、生成标准 capture JSON，再走同一条基线入库流程。
-
-最短命令（WorkBuddy 里直接说）：
-
-```
-解读并入库这篇公众号文章：
-<mp.weixin.qq.com 链接>
-```
-
-本地文件兜底：
-
-```
-解读并入库这个公众号文章本地文件：
-<本地 html/md/txt 路径>
-```
-
-底层脚本：
-
-```bash
-# dry-run（默认安全模式，不写 KB 条目）
-python3 scripts/wechat_url_to_kb.py --url "<mp.weixin.qq.com 链接>" --dry-run
-# 真的入库
-python3 scripts/wechat_url_to_kb.py --url "<mp.weixin.qq.com 链接>" --import
-# 本地文件四选一
-python3 scripts/wechat_url_to_kb.py --html-file <path> --import
-python3 scripts/wechat_url_to_kb.py --markdown-file <path> --import
-python3 scripts/wechat_url_to_kb.py --text-file <path> --import
-```
-
-抓不到完整正文（登录墙 / 拦截 / 截断）时 HARD STOP，提示用户另存为本地文件。详见 [docs/commands/wechat-url-kb-import-command.md](docs/commands/wechat-url-kb-import-command.md)。
-
-#### 通道 A 批量模式（v0.3.71+）
-
-一次给多个链接或本地文件，`scripts/wechat_batch_import.py` 逐篇调用通道 A，三层去重（source_url / title+account+date / content sha256），单篇失败不中断整批，最后生成 markdown + json 双格式 manifest。
-
-最短命令：
-
-```
-批量解读并入库这些公众号文章：
-<urls.txt 或多行 URL>
-```
-
-本地文件批量：
-
-```
-批量解读并入库这些公众号本地文件：
-<files.txt 或多行 .html/.md/.txt 路径>
-```
-
-详见 [docs/commands/wechat-batch-kb-import-command.md](docs/commands/wechat-batch-kb-import-command.md)。
-
-#### 通道 B（v0.3.62，OpenClaw 捕获包桥接）
-
-`@tencent-weixin/openclaw-weixin` 扩展自 2026-04-09 起处于 disabled 状态（详见 [docs/workflows/wechat-real-inbound-troubleshooting.md](docs/workflows/wechat-real-inbound-troubleshooting.md) §2），实时全自动链路不通，但可用已存在的 capture JSON 走桥接：
-
-- ❌ 实时：WeChat → OpenClaw 网关 → capture JSON → KB（扩展 disabled，长轮询不注册）
-- ✅ 推荐：已绑定微信的 agent → 写入 standard capture JSON 到 `inbox/raw/wechat/` → 标准 capture JSON → Hermes KB dry-run/import
-
-具体落地（任选其一）：
-
-```bash
-# 只看能否解析、不入库
-python3 scripts/wechat_inbound_to_capture.py --dry-run
-
-# 用 latest / 指定的 capture JSON 跑一次入库（脚本内部仍默认 --dry-run，需再加 --no-import-dry-run 才会真正产出 5 文件）
-python3 scripts/wechat_inbound_to_capture.py --import
-
-# 直接对指定 capture 文件做入库语义检查 + 生成 KB 5 文件 dry-run
-python3 scripts/import_wechat_article_capture.py --dry-run inbox/raw/wechat/<file>.json
-# 真入库：去掉 --dry-run
-```
-
-不要做（硬停止）：
-
-- ❌ `openclaw channels add openclaw-weixin` / `openclaw channels login openclaw-weixin` —— 需要 QR 扫码，operator 决策
-- ❌ 读浏览器 cookie、绕过扩展禁用
-- ❌ "扫一次码就自动收文"的承诺 —— 这条链路 v0.3.62 状态是 PARTIAL（详见 troubleshooting 文档 §2）
-
-扩展链路重新打通、运营扫码登录 `openclaw-weixin` 的完整步骤见 [docs/workflows/wechat-real-inbound-troubleshooting.md](docs/workflows/wechat-real-inbound-troubleshooting.md) §6。该动作需 operator 显式确认，不在 Hermes 自动化范围内。
-
-### 详情页 / 浏览能力
-
-在线浏览页面内可：
-
-- 按类型筛选（覆盖上面 8 类，不再只是 4 类）
-- 按关键词搜索（标题 / 标签 / 主题）
-- 按日期倒序排列
-- 卡片标题 / "阅读 →" → 站内详情页 `/items/<slug>/`，卡片右侧 GitHub 按钮 → 仓库原始目录
-- 一键复制 path
-
-类型差异化默认展开 / 折叠规则见 [docs/AGENT_COMMANDS.md](docs/AGENT_COMMANDS.md) 与站内实现。
-
-## 8. 标准质量门禁（一致命令集）
-
-无论是导入流程中、还是单纯发布流程中，都跑同一组：
-
-| 顺序 | 命令 | 性质 | 期望 |
-|---|---|---|---|
-| 0 | `python3 scripts/check_task_preflight.py [--planned-tag <v0.3.N-...>] [--allow-warnings]` | task 启动前 | PASS / PASS_WITH_WARNINGS |
-| 0 | `python3 -m py_compile scripts/*.py` | 编译 | exit 0 |
-| 1 | `python3 scripts/check_kb.py` | 内容完整性 | PASS（v0.3.60 起 word-count drift 仅 WARN） |
-| 2 | `python3 scripts/update_site.py` | 一键重建并同步 | exit 0（含同步 + post-sync 检查） |
-| 3 | `python3 scripts/audit_kb_state.py` | 状态审计：drift、目录、类型、catalog 同步 | PASS_WITH_WARNINGS（HARD FAILURES 必须为 0） |
-| 4 | `python3 scripts/check_pages_sync.py` | site/ ↔ docs/ 发布镜像一致性 | PASS（v0.3.60 起是 post-sync gate） |
-
-`check_kb.py` 是硬门禁：
-
-- 失败 → `update_site.py` 不会触碰 `site/data/catalog.json` 或 `docs/`，直接退非 0
-- 失败 → 严禁 commit / push
-- 半成品条目（缺文件、字段为 0、翻译不完整）必须先修复或隔离到 `inbox/quarantine/`
-
-`scripts/update_site.py` 的真实内部顺序（与脚本注释一致）：
-1. `check_kb.py` （hard-stop）
-2. `build_index.py`
-3. `export_site_data.py`
-4. `generate_item_pages.py`
-5. `sync_pages_docs.py`
-6. `check_pages_sync.py` （post-sync integrity check；非 0 即拒绝宣称成功）
-
-### 8a. 统一 Full Gate Runner（v0.3.96+，推荐入口）
-
-不再需要手拷上面表格里的多个命令。一键全跑：
-
-```bash
-python3 scripts/run_full_gate.py                 # full mode（16 个步骤）
-python3 scripts/run_full_gate.py --quick         # quick mode（7 个核心步骤）
-python3 scripts/run_full_gate.py --list          # dry-run，仅查看计划
-python3 scripts/run_full_gate.py --json --output reports/full_gate_run_YYYYMMDD_HHMMSS.json
-python3 scripts/run_full_gate.py --fail-fast     # 遇首个 FAIL 立即停
-python3 scripts/run_full_gate.py --no-update-site # 迭代中跳过 update_site
-```
-
-Runner 额外检查 gate 之后 **tracked working tree** 是否被污染——这是 `update_site.py` 可能产生 canonical diff 时唯一可靠的检测。如果发现 tracked dirty，runner 报 `FAILED_CLEANLINESS` 并退出 1。**绝不要为了过门禁而 commit 脏生成物。**
-
-Smoke tests:
-
-```bash
-python3 tests/run_full_gate_runner_smoke.py  # 14/14 PASS
-```
-
-Tag SHA sanity（区分 annotated tag object SHA 与 dereferenced commit SHA）：
-
-```bash
-python3 scripts/check_release_tags.py
-# tag SHA sanity (annotated object vs dereferenced commit):
-#   v0.3.91-material-ingestion-stable-baseline
-#     tag_object_sha:       6b8e95b1f235
-#     dereferenced_commit:  56fe8482a8ce
-#     expected_commit:      56fe8482a8ce
-#     kind: annotated
-#     commit_match: OK
-#   v0.3.92-bingzhu-you-mv-assets
-#     tag_object_sha:       4117366a5cf5
-#     dereferenced_commit:  4117366a5cf5
-#     expected_commit:      4117366a5cf5
-#     kind: lightweight
-#     commit_match: OK
-```
-
-Protected tags（`v0.3.91-*`、`v0.3.92-*`）的 dereferenced commit 必须与上述 expected_commit 一致；不一致即 `FAIL` 退出 1，是 critical invariant violation。
-
-## 9. 仓库目录结构
-
-```
-hermes-knowledge-base/
-├── README.md                    # 本文件（项目入口页）
-├── CLAUDE.md                    # Agent 行为准则（read-first）
-├── CHANGELOG.md                 # 完整 changelog
-├── DESIGN_RATIONALE.md          # 设计原则（read-first，CSS / 组件）
-├── content/                     # 所有 KB 条目
-│   ├── articles/                #   - article / essay / video / interview
-│   ├── papers/                  #   - academic_paper
-│   ├── projects/                #   - project
-│   ├── resource_collections/    #   - resource_collection（现行）
-│   ├── collections/             #   - legacy（详见 docs/LEGACY_MIGRATION.md）
-│   ├── notes/                   #   - note
-│   ├── legacy-knowledge/        #   - 历史迁移条目（note 源）
-│   ├── books/                   #   - 预留：book 类型尚未启用
-│   └── videos/                  #   - 预留：video 资源原档（当前 KB 走 articles/）
-├── inbox/raw/                   # 原始素材 / capture JSON（不入 KB；wechat JSON 放 inbox/raw/wechat/）
-├── scripts/                     # 自动化（质量门禁 / 构建 / 同步 / 桥接 / 诊断）
-├── templates/                   # 模板（prompts / metadata / notes …）
-├── reports/                     # 每次任务的运行报告
-├── docs/                        # 手册目录 + GitHub Pages 发布目录
-│   ├── AGENT_COMMANDS.md        #   - Agent 命令总纲
-│   ├── TAXONOMY.md              #   - 字段与类型 schema
-│   ├── RELEASES.md              #   - 发布索引 + 推荐下一版
-│   ├── VERSIONING.md            #   - 标签规则与历史 duplicate 表
-│   ├── REPORTING_TEMPLATE.md    #   - 报告模板
-│   ├── TRANSLATION_RESIDUE_POLICY.md
-│   ├── LISTICLE_IMPORT_RULES.md
-│   ├── MUSIC_ARTICLE_RULES.md
-│   ├── COLLECTIONS.md / LEGACY_MIGRATION.md
-│   ├── YOUTUBE_CAPABILITIES.md / CLOUD_HERMES_INTEGRATION.md
-│   ├── commands/                #   - 每种能力的命令短档
-│   ├── import-recipes/          #   - 完整 recipe（PDF、Gutenberg …）
-│   ├── workflows/               #   - 完整工作流（含 wechat troubleshoot）
-│   ├── releases/                #   - 逐版本的 release notes
-│   ├── items/                   #   - 已生成的详情页快照（生成产物）
-│   └── data/                    #   - catalog / index 产物
-├── site/                        # 本地开发/预览面；与 docs/ 镜像
-└── 发布：site/ ↔ docs/ 必须字节级一致，由 scripts/check_pages_sync.py 校核
-```
-
-> `docs/` 同时承担两个角色：(a) 手册/工作流文档的源；(b) GitHub Pages 的发布面。`site/` 是开发、调试、本地预览（`python3 -m http.server 8000 -d site`）的镜像面。任何一边改动都要在另一边 `cp` 镜像，并由 `scripts/check_pages_sync.py` 校验一致性。
-
-## 10. Agent 操作边界
-
-| 可以做 | 不可以做 |
-|---|---|
-| 跑 §8 的全部质量门禁 | 不登录微信、不扫 QR、不读 cookie |
-| `git pull --ff-only` / `git add <file-per-file>`（严禁 `git add -A`） | 不改 KB 正文（source.md / translation.zh-CN.md / summary.md / notes.md）一旦条目创建 |
-| per-file `git add`，commit + annotated tag + push | 不动历史 `reports/*.md` |
-| 引用 `docs/workflows/*` 与 `templates/prompts/*` 实施导入 | 不绕过 `check_kb.py` hard-stop（FAIL 时严禁 commit） |
-| 用 `--dry-run` 桥接脚本预览 | 不承诺"转一次就自动入库"——公众号链路当前 PARTIAL |
-
-完整边界与白 / 黑名单见 [CLAUDE.md](CLAUDE.md)。
-
-### 并发 session / local divergence 处理入口（v0.3.68+）
-
-当多个 agent session 同时在仓库上工作时，可能出现 local HEAD 与 origin/main 偏差。**不要**立即 `git pull --rebase` / `git push --force`。任务启动前先做 4 步：
-
-1. `git fetch origin main --tags`（**只**拉 refs，**不**动工作树）
-2. `python3 scripts/check_task_preflight.py --planned-tag v0.3.N-task --classify-dirty --json` 看 `git_divergence` 字段（v0.3.68+ 新增）
-3. 按 [docs/AGENT_COMMANDS.md §"任务启动前 Divergence 检查" 的决策树](docs/AGENT_COMMANDS.md#任务启动前-divergence-检查v0368) 处理：synced 继续；behind clean pull；ahead 记录；diverged 询问用户
-4. 不得 `git push --force` / `git reset --hard origin/main` / 在 dirty 上 `git pull --rebase`
-
-### Tags / Topics 软范围 WARN 政策（v0.3.68+）
-
-`scripts/audit_kb_state.py` 的约 24 个 `tags count` / `topics count` 软范围漂移 WARN 属于**信息性提示**，**不**作为 immediate cleanup target。**不**批量裁剪；长尾条目（listicle / video / music / research cluster）允许 tags > 12、topics > 8。完整 policy 与理由见 [docs/AGENT_COMMANDS.md §"Tags / Topics 软范围 WARN 处理"](docs/AGENT_COMMANDS.md#tags--topics-软范围-warn-处理v0368-policy)。
-
-## 11. 近期里程碑
-
-完整 release notes 在 [docs/RELEASES.md](docs/RELEASES.md) 与 [CHANGELOG.md](CHANGELOG.md)。近期：
-
-| 版本 | 主题 | 备注 |
-|---|---|---|
-| v0.3.60 | KB state dashboard 与 README managed block 起点 | 当前类型统计的来源 |
-| v0.3.62 | 微信公众号状态权威说明 + capture bridge + diagnostic | 奠定 §7 当前真实能力叙述 |
-| v0.3.64 | WeChat 扩展 re-enable pilot（观测 / 回滚） | 验证 Path A 不足以激活 channel；完整回滚到 v0.3.62 状态 |
-| **v0.3.65** | **本版本：README-only entrypoint refresh** | 详细见 `reports/readme_entrypoint_refresh_v0.3.65_20260629.md` |
-| v0.3.66 | README §9 目录树去重 + preflight `--classify-dirty` flag | 详细见 `reports/readme_polish_preflight_dirty_split_v0.3.66_20260629.md` |
-| v0.3.67 | `word_count.translation` 漂移刷新（7→0 WARN） | 详细见 `reports/word_count_metadata_refresh_v0.3.67_20260629.md` |
-| **v0.3.68** | **本版本：local divergence 治理 + tags/topics soft-WARN policy 文档化** | 详细见 `reports/local_divergence_and_soft_warn_policy_v0.3.68_20260629.md` |
-| **v0.3.69** | **新增微信公众号 URL 直接入库通道**（`scripts/wechat_url_to_kb.py`，公开 URL/HTML/MD/TXT → capture → KB） | 不登录、不扫码、不读 cookie；详见 `reports/wechat_url_direct_kb_import_v0.3.69_20260701.md` |
-| v0.3.70 | Windows item page 生成修复 + topics/tags 误判修复 + word_count drift 修复 | 详见 `reports/wechat_import_hardening_windows_pages_fix_v0.3.70_20260701.md` |
-| **v0.3.70** | **YouTube 视频解读入库：Ali Abdaal "Financial Freedom is Easy"** | 第 2 条 video 类型；详见 `reports/youtube_video_brief_kb_import_v0.3.70_20260701.md` |
-| **v0.3.71** | **新增微信公众号批量入库 + 三层去重**（`scripts/wechat_batch_import.py`，URL 列表/多文件 → 去重 → manifest 报告） | 详见 `reports/wechat_batch_import_dedup_report_v0.3.71_20260701.md` |
-| **v0.3.76** | **新增统一材料入库路由器**（`scripts/material_to_kb.py`，URL/本地文件 → 已有稳定入库脚本） | WeChat URL/HTML/MD/TXT 支持；YouTube/普通网页/PDF 未接入稳定脚本时返回 `BLOCKED_UNSUPPORTED` |
-| **v0.3.77** | **新增普通网页文章入库路线**（`scripts/web_article_to_kb.py`，公开网页 URL → capture → KB） | 统一入口 `generic_web_url` 接入；YouTube/PDF 仍返回 `BLOCKED_UNSUPPORTED` |
-| **v0.3.79** | **新增 YouTube 字幕/转录稿入库路线**（`scripts/youtube_to_kb.py`，YouTube URL → metadata + transcript → KB） | 统一入口 `youtube_url` 接入；无字幕、字幕过短、需登录或不可公开获取时 hard stop；PDF 仍返回 `BLOCKED_UNSUPPORTED` |
-| **v0.3.81** | **新增 YouTube fetch quality gate**（`full` / `partial` / `metadata_only`） | 默认只入库 full transcript；partial 需要 `--allow-partial-transcript` 且满足 800 字符阈值；metadata-only 不入库 |
-| **v0.3.82** | **新增 YouTube automatic transcript providers**（direct captionTracks / subtitle-only yt-dlp / optional transcript API） | 自动字幕需 `--allow-auto-captions` 才可入库；provider_attempts 写入 capture 与 material report；metadata-only 仍不入库 |
-| **v0.3.83** | **YouTube provider 环境可选补齐**（`yt-dlp` + `youtube-transcript-api`） | 不下载视频；不使用 cookie / 登录态；full transcript 才入库；auto captions 标记 `needs_review`；不写半成品条目；详见 `reports/youtube_provider_env_real_import_v0.3.83_20260701.md` |
-| **v0.3.84** | **Fetch-result handoff + inbox overwrite 保护**（`material_to_kb.py` → `youtube_to_kb.py`） | 路由层把 in-process full / partial capture 写到 `tmp/material_fetches/youtube_<vid>_<ts>.json` 并 `--fetch-result-json` 传入，subprocess 跳过 refetch 避免 429 退化；inbox 同 video_id 上遇到低 rank 拒绝覆盖，决策记 `overwrite_decision` + stderr |
-| **v0.3.86** | **PDF / 本地文档 KB 导入路线**（`scripts/pdf_to_kb.py`） | PyMuPDF 本地提取；扫描版 `BLOCKED_NEEDS_OCR` 不写半成品；详细见 `reports/pdf_kb_import_*` |
-| **v0.3.89** | **本地测试 / dry-run / session artifact 被 .gitignore** | 仓库 untracked 从 ~626 降到 2 个正式 report |
-| **v0.3.90** | **PDF smoke 修复**（`pdf_to_kb.py --import` 不再调用 `update_site.py` 走完整 build 链路） | `run_pdf_import_smoke.py` 26/26 → 33/33（+7 regression checks）；详细见 `reports/fix_pdf_smoke_catalog_dirty_v0.3.90_20260702.md` |
-| **v0.3.91** | **Material Ingestion Stable Baseline**（本 checkpoint） | 微信公众号 / 普通网页 / YouTube / 本地 HTML·MD·TXT / 本地 PDF 均稳定；全量门禁 reproduce clean；tag `v0.3.91-material-ingestion-stable-baseline`；详细见 `reports/full_gate_clean_reproducibility_audit_v0.3.91_20260702.md` + `reports/material_ingestion_stable_baseline_release_v0.3.91_20260702.md` |
-| **v0.4.0** | **Operator-Ready Material Ingestion Baseline**（本 checkpoint） | 统一入口 `material_to_kb.py` + 全量门禁 `run_full_gate.py` + operator playbook `docs/OPERATOR_PLAYBOOK.md` + release assets policy 整合；不导入新 KB 条目；tag `v0.4.0-operator-ready-material-ingestion`；详细见 `reports/operator_ready_material_ingestion_release_v0.4.0_20260702.md` |
+完整文档导航见 [§11](#11-详细文档导航)。
 
 ---
 
-*Last refreshed for v0.4.0 on 2026-07-02.*
+## 3. 当前 KB 状态
+
+> 由 [`scripts/audit_kb_state.py`](scripts/audit_kb_state.py) 在本次 commit 时输出（real metadata.yaml count = 66）。这是当前真值；下一次任务 / commit 前如需刷新，跑一次 `python3 scripts/audit_kb_state.py` 并把数字粘回本节即可。
+
+| 类型 | 数量 | 是否需要 zh-CN 翻译 | 落地目录 |
+|---|---|---|---|
+| `article` | 36 | 是 | `content/articles/YYYY/` |
+| `note` | 10 | 否（中文原生） | `content/notes/`, `content/legacy-knowledge/` |
+| `essay` | 8 | 是 | `content/articles/YYYY/` |
+| `resource_collection` | 5 | 否 | `content/resource_collections/` |
+| `project` | 4 | 否 | `content/projects/` |
+| `video` | 1 | 是 | `content/articles/YYYY/` |
+| `academic_paper` | 1 | 是 | `content/papers/` |
+| `interview` | 1 | 是 | `content/articles/YYYY/` |
+| **总计** | **66** | — | — |
+
+类型 schema 见 [docs/TAXONOMY.md](docs/TAXONOMY.md)。
+
+---
+
+## 4. 支持的材料矩阵（v0.4.0）
+
+| 材料类型 | 状态 | 入口 |
+|---|---|---|
+| 微信公众号 URL（公开） | ✅ 公开 URL 直抓 + 本地文件兜底 | `material_to_kb.py` |
+| 普通网页 URL | ✅ robots-friendly 公开页 | `material_to_kb.py` |
+| YouTube URL（有 transcript） | ✅ **full transcript 才入库** | `material_to_kb.py` |
+| YouTube URL（无 transcript / 登录 / 私密） | 🛑 BLOCKED | — |
+| 本地 HTML / MD / TXT | ✅ | `material_to_kb.py` |
+| 本地 PDF（extractable text layer） | ✅ PyMuPDF 本地提取 | `material_to_kb.py` |
+| 本地 PDF（扫描版） | 🛑 `BLOCKED_NEEDS_OCR`（不写半成品） | OCR 走 [docs/import-recipes/PDF_OCR_LOCAL.md](docs/import-recipes/PDF_OCR_LOCAL.md) |
+| Release-backed assets（`.mp4` / `.mp3` / 大二进制） | ✅ 不入 git，走 GitHub Release | [docs/releases.md](docs/releases.md) |
+
+**Hard guarantees（任何入口都遵守）：**
+
+- ❌ 不登录微信、不扫码、不读 cookie、不绕 paywall。
+- ❌ 不下载完整 YouTube 视频；只取 transcript / 公开 caption。
+- ❌ 不写半成品 KB 条目（无 transcript / 扫描 PDF / 登录墙 / 不完整正文 → BLOCKED）。
+- ✅ `check_kb.py` / `check_pages_sync.py` 是 hard-stop；FAIL 时严禁 commit。
+
+完整规则、BLOCKED 状态码、停止条件见 [docs/OPERATOR_PLAYBOOK.md §3](docs/OPERATOR_PLAYBOOK.md#3-supported-material-matrix) 与 [§10](docs/OPERATOR_PLAYBOOK.md#10-blocked--failed-status-reference)。
+
+---
+
+## 5. 日常使用：统一材料入口
+
+**单篇：**
+
+```bash
+# Dry-run（默认安全模式，不写 KB 条目）— 推荐第一步
+python3 scripts/material_to_kb.py --input "<URL_OR_FILE>" --dry-run
+
+# 真入库（写入 KB 并 commit/push 由后续 gate 校验）
+python3 scripts/material_to_kb.py --input "<URL_OR_FILE>" --import
+```
+
+**批量：**
+
+```bash
+# tmp/materials.txt 每行一个 URL 或本地路径
+python3 scripts/material_to_kb.py --input-list tmp/materials.txt --dry-run
+python3 scripts/material_to_kb.py --input-list tmp/materials.txt --import
+```
+
+`scripts/material_to_kb.py` 是 **unified router**，按输入自动分发到 `wechat_url_to_kb.py` / `web_article_to_kb.py` / `youtube_to_kb.py` / `pdf_to_kb.py`。完整各材料 flow（robots.txt 策略 / dedup / 三层去重 / transcript 阈值 / OCR 兜底等）见 [docs/OPERATOR_PLAYBOOK.md §2–§8](docs/OPERATOR_PLAYBOOK.md)。
+
+---
+
+## 6. 维护 / 发布门禁
+
+**快速检查（sub-minute）：**
+
+```bash
+python3 scripts/run_full_gate.py --quick
+```
+
+**完整门禁（pre-commit / pre-push，必跑）：**
+
+```bash
+python3 scripts/run_full_gate.py --json --output reports/full_gate_run_$(date +%Y%m%d_%H%M%S).json
+```
+
+完整版含 17 个步骤：py_compile + 10 个 smoke suites + `check_release_assets` + `check_release_tags` + `check_kb` + `update_site` + `audit_kb_state` + `check_pages_sync`。Runner 会在 gate 后自动校验 **tracked working tree** 是否被污染；发现 `FAILED_CLEANLINESS` 即拒绝。
+
+**退出码含义：**
+
+- `PASS` — 全绿，可提交。
+- `PASS_WITH_WARNINGS` — 0 hard failures，软警告（如 audit soft range）；可提交，记录 warns。
+- `FAILED_GATE` — 有步骤 hard FAIL；**禁止** commit。
+- `FAILED_CLEANLINESS` — gate 通过但产生了 tracked dirty（多半是 `update_site` 的合法 diff，需明示 commit）。
+
+详细 status 含义见 [docs/OPERATOR_PLAYBOOK.md §9.3](docs/OPERATOR_PLAYBOOK.md#93-status-meanings)。
+
+---
+
+## 7. 仓库目录结构
+
+```
+hermes-knowledge-base/
+├── README.md                    # 本文件（项目首页）
+├── CHANGELOG.md                 # 完整 changelog
+├── content/                     # KB 条目（articles / papers / projects / notes / legacy-knowledge / resource_collections / books[预留] / videos[预留]）
+├── inbox/raw/                   # 原始 capture JSON / 素材（wechat capture 放 inbox/raw/wechat/）
+├── scripts/                     # 自动化（gate / build / sync / fetchers / OCR bridge / diagnostic）
+├── templates/                   # prompts / metadata / notes 模板
+├── reports/                     # 每次任务的运行报告 + full_gate_run_*.json
+├── docs/                        # 手册源 + GitHub Pages 发布面
+│   ├── OPERATOR_PLAYBOOK.md     #   - 日常使用手册（v0.4.0+）
+│   ├── AGENT_COMMANDS.md        #   - agent 命令总纲
+│   ├── RELEASES.md              #   - 发布索引 + 推荐下一版
+│   ├── releases.md              #   - GitHub Release assets 索引
+│   ├── TAXONOMY.md / VERSIONING.md / REPORTING_TEMPLATE.md / ...
+│   ├── commands/                #   - 每个能力的命令短档
+│   ├── workflows/               #   - 完整工作流（含 wechat troubleshoot）
+│   ├── import-recipes/          #   - 完整 recipe（PDF OCR / Gutenberg …）
+│   ├── releases/                #   - 逐版本 release notes
+│   └── items/, data/            #   - 生成产物（catalog / index / 详情页）
+├── site/                        # 本地开发 / 预览镜像（必须与 docs/ 字节级一致）
+└── tests/                       # 冒烟测试（11 个 smoke runner）
+```
+
+> `docs/` 同时承担两个角色：(a) 手册 / 工作流文档的源；(b) GitHub Pages 的发布面。`site/` 是开发、调试、本地预览的镜像面。任何一边改动都要在另一边 `cp` 镜像，并由 `scripts/check_pages_sync.py` 校验一致性。
+
+---
+
+## 8. 内容模型
+
+每个 KB 条目以 `metadata.yaml` 为单一入口（含 `type` / `title` / `source_url` / `tags` / `topics` / `status` / `created` / `imported_at` / …），正文与中文译本与笔记在同目录的 `.md` 文件中。完整字段约束与每种 type 的必填项见 [docs/TAXONOMY.md](docs/TAXONOMY.md)。
+
+---
+
+## 9. Release-Backed Assets
+
+`.mp4` / `.mp3` / 大二进制（秉烛游 MV / 字幕 / 海报 / 项目 demo 等）不进 git。流程：先把原文件上传到 GitHub Release，再在 KB 条目的 `metadata.yaml` 用 `asset_release_tag` / `asset_filename` 链接过来。完整策略与 `check_release_assets.py` 校验规则见 [docs/releases.md](docs/releases.md)。
+
+---
+
+## 10. 新电脑恢复
+
+```bash
+# 1. 克隆
+git clone https://github.com/conanxin/hermes-knowledge-base
+cd hermes-knowledge-base
+
+# 2. 同步到当前稳定版本
+git checkout v0.4.0-operator-ready-material-ingestion
+
+# 3. 安装 Python 依赖（按需）
+python3 -m pip install --user --break-system-packages pyyaml pymupdf requests beautifulsoup4
+
+# 4. 跑 quick gate 确认环境干净
+python3 scripts/run_full_gate.py --quick
+```
+
+恢复完成后所有日常命令从 [§5](#5-日常使用统一材料入口) 开始。
+
+---
+
+## 11. 详细文档导航
+
+| 文档 | 何时打开 |
+|---|---|
+| [docs/OPERATOR_PLAYBOOK.md](docs/OPERATOR_PLAYBOOK.md) | **日常使用主手册**：daily import / WeChat / web / YouTube / PDF / release assets / gates / BLOCKED 参考 / git discipline / new-machine recovery |
+| [docs/AGENT_COMMANDS.md](docs/AGENT_COMMANDS.md) | agent 任务规范：preflight / postflight / divergence 决策树 / tags-topics soft WARN policy / 各 material 完整 recipe |
+| [docs/RELEASES.md](docs/RELEASES.md) | 版本历史 + 推荐下一版 |
+| [docs/releases.md](docs/releases.md) | GitHub Release assets 索引（大文件） |
+| [docs/TAXONOMY.md](docs/TAXONOMY.md) | metadata.yaml 字段约束 + 每种 type 的 schema |
+| [docs/VERSIONING.md](docs/VERSIONING.md) | tag 规则 + 历史 duplicate 表 |
+| [docs/REPORTING_TEMPLATE.md](docs/REPORTING_TEMPLATE.md) | 报告模板 |
+| [docs/YOUTUBE_CAPABILITIES.md](docs/YOUTUBE_CAPABILITIES.md) | YouTube 能力公开文档 |
+| [docs/commands/](docs/commands/) | 每种能力的命令短档 |
+| [docs/workflows/](docs/workflows/) | 完整工作流（含 wechat troubleshoot） |
+| [docs/import-recipes/](docs/import-recipes/) | 完整 recipe（PDF OCR / Gutenberg …） |
+| [CHANGELOG.md](CHANGELOG.md) | 完整 changelog |
+
+---
+
+## 12. Releases
+
+完整 release notes：[docs/RELEASES.md](docs/RELEASES.md) 与 [CHANGELOG.md](CHANGELOG.md)。
+
+**近期里程碑：**
+
+| 版本 | 主题 | 备注 |
+|---|---|---|
+| **v0.4.0** | **Operator-Ready Material Ingestion Baseline**（当前稳定） | 统一入口 + 全量门禁 + operator playbook + release assets policy 整合；tag `v0.4.0-operator-ready-material-ingestion`；详细见 `reports/operator_ready_material_ingestion_release_v0.4.0_20260702.md` |
+| **v0.3.91** | **Material Ingestion Stable Baseline**（上一个稳定） | 微信公众号 / 普通网页 / YouTube / 本地 HTML·MD·TXT / 本地 PDF 全稳定；tag `v0.3.91-material-ingestion-stable-baseline` |
+| **v0.3.96** | **Full Gate Runner + Tag SHA Sanity** | `run_full_gate.py` 统一入口；`check_release_tags` 显式纳入；tag `v0.3.96-full-gate-runner-and-tag-sanity` |
+| v0.3.92 | 秉烛游 MV assets（GitHub Release） | `.mp4` / `.mp3` / 大二进制走 Release；tag `v0.3.92-bingzhu-you-mv-assets` |
+| v0.3.90 | PDF smoke 修复 | `pdf_to_kb.py --import` 不再调用 `update_site.py`；`run_pdf_import_smoke.py` 26 → 33 checks |
+| v0.3.86 | PDF / 本地文档 KB 导入路线 | PyMuPDF；扫描版 BLOCKED |
+| v0.3.84 | Fetch-result handoff + inbox overwrite 保护 | 避免 429 退化；inbox 低 rank 拒绝覆盖 |
+| v0.3.83 | YouTube provider 环境可选补齐 | `yt-dlp` + `youtube-transcript-api` |
+| v0.3.81–82 | YouTube fetch quality gate + automatic transcript providers | full / partial / metadata_only |
+| v0.3.79 | YouTube transcript-gated KB import | 统一入口 `youtube_url` |
+| v0.3.77 | 普通网页文章入库 | 统一入口 `generic_web_url` |
+| v0.3.76 | 统一材料入库路由器 | `material_to_kb.py` 起点 |
+| v0.3.71 | 微信公众号批量入库 + 三层去重 | `wechat_batch_import.py` |
+| v0.3.69 | 微信公众号 URL 直接入库通道 | `wechat_url_to_kb.py`（公开 URL + 本地文件兜底） |
+| v0.3.68 | local divergence 治理 + tags/topics soft-WARN policy |  |
+| v0.3.65 | README-only entrypoint refresh（首次） |  |
+
+---
+
+*Last refreshed for v0.4.1 README operator-ready rewrite on 2026-07-02.*
