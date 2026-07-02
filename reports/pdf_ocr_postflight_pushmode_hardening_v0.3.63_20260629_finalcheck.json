@@ -1,0 +1,106 @@
+{
+  "status": "PASS_WITH_WARNINGS",
+  "warnings_count": 1,
+  "checks": [
+    [
+      "git_repo",
+      "PASS"
+    ],
+    [
+      "git_status",
+      "DIRTY"
+    ],
+    [
+      "origin_main",
+      "PASS"
+    ],
+    [
+      "head_sync",
+      "PASS"
+    ],
+    [
+      "tag_local",
+      "PASS"
+    ],
+    [
+      "tag_remote",
+      "PASS"
+    ],
+    [
+      "tag_deref",
+      "PASS"
+    ],
+    [
+      "tag_commit_match",
+      "PASS"
+    ],
+    [
+      "report_exists",
+      "PASS"
+    ],
+    [
+      "report_readable",
+      "PASS"
+    ],
+    [
+      "report_field_STATUS",
+      "PASS"
+    ],
+    [
+      "report_field_commit",
+      "PASS"
+    ],
+    [
+      "report_field_tag",
+      "PASS"
+    ],
+    [
+      "report_field_check_kb.py",
+      "PASS"
+    ],
+    [
+      "report_field_check_pages_sync.py",
+      "PASS"
+    ],
+    [
+      "report_field_git status",
+      "PASS"
+    ],
+    [
+      "report_field_source URL",
+      "PASS"
+    ],
+    [
+      "report_field_content directory",
+      "PASS"
+    ],
+    [
+      "report_field_GitHub Pages URL",
+      "PASS"
+    ],
+    [
+      "report_field_modified files",
+      "PASS"
+    ],
+    [
+      "report_field_checks",
+      "PASS"
+    ],
+    [
+      "report_field_tag deref",
+      "PASS"
+    ]
+  ],
+  "warnings": [
+    "WARN: working tree not clean:\n?? reports/pdf_ocr_postflight_pushmode_hardening_v0.3.63_20260629_finalcheck.json"
+  ],
+  "errors": [],
+  "head": "8fee19742802704cbdc21475b18ce4e1d6b45665",
+  "origin_main": "8fee19742802704cbdc21475b18ce4e1d6b45665",
+  "git_clean": false,
+  "report_path": "/home/conanxin/projects/hermes-knowledge-base/reports/pdf_ocr_postflight_pushmode_hardening_v0.3.63_20260629.md",
+  "report_exists": true,
+  "tag": "v0.3.63-pdf-ocr-postflight-pushmode",
+  "tag_deref": "4645ffb4f4e330fe56fa56fb75ecb7865d0b1b7a",
+  "recommended_action": "Review warnings above and consider fixing before next task"
+}
