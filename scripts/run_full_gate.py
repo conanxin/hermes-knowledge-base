@@ -47,6 +47,7 @@ FULL_STEPS = [
     ("run_pdf_import_smoke", ["python3", "tests/run_pdf_import_smoke.py"], 300),
     ("run_release_assets_smoke", ["python3", "tests/run_release_assets_smoke.py"], 300),
     ("check_release_assets", ["python3", "scripts/check_release_assets.py"], 120),
+    ("check_release_tags", ["python3", "scripts/check_release_tags.py"], 120),
     ("check_kb", ["python3", "scripts/check_kb.py"], 120),
     ("update_site", ["python3", "scripts/update_site.py"], 300),
     ("audit_kb_state", ["python3", "scripts/audit_kb_state.py"], 120),
