@@ -202,6 +202,10 @@
 
 - Ken Liu on AI and Freedom
 
+## Bataille
+
+- What is Nick Land's philosophy of accelerationism really?
+
 ## Belle chess
 
 - An "infovore" shares his chats
@@ -222,9 +226,17 @@
 
 - Why I Write
 
+## CCRU
+
+- What is Nick Land's philosophy of accelerationism really?
+
 ## Cathedral
 
 - The People Are Never Right
+
+## Ccru
+
+- What is Nick Land's philosophy of accelerationism really?
 
 ## Charles Taylor
 
@@ -295,6 +307,10 @@
 ## Deep Learning
 
 - Transformer 解码机制解析
+
+## Deleuze
+
+- What is Nick Land's philosophy of accelerationism really?
 
 ## Demis Hassabis
 
@@ -406,9 +422,17 @@
 
 - AI 没有意识，但它正在成为我们的无意识
 
+## Guattari
+
+- What is Nick Land's philosophy of accelerationism really?
+
 ## HackerRank
 
 - The Layers of AI experience
+
+## Heidegger
+
+- What is Nick Land's philosophy of accelerationism really?
 
 ## Henri Bortoft
 
@@ -534,6 +558,10 @@
 ## Justin.TV
 
 - How to Earn a Billion Dollars
+
+## Kant
+
+- What is Nick Land's philosophy of accelerationism really?
 
 ## Karl Jaspers
 
@@ -698,6 +726,10 @@
 ## Nia Docs
 
 - Nia Docs — 把整个 Web 变成文件系统
+
+## Nick Land
+
+- What is Nick Land's philosophy of accelerationism really?
 
 ## Nielsen Norman Group
 
@@ -1044,6 +1076,10 @@
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
 
+## accelerationism
+
+- What is Nick Land's philosophy of accelerationism really?
+
 ## adaptability
 
 - The Old World Is Dying
@@ -1082,6 +1118,10 @@
 ## animation
 
 - Andrew Stanton: Storytelling Secrets from the Writer of Toy Story 5
+
+## anti-humanism
+
+- What is Nick Land's philosophy of accelerationism really?
 
 ## architecture
 
@@ -1665,6 +1705,10 @@
 
 - Session Guard Phase 1: Pre-Request Sanitizer
 
+## singularity
+
+- What is Nick Land's philosophy of accelerationism really?
+
 ## smooth exponential
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
@@ -1704,6 +1748,10 @@
 ## taylor_francis
 
 - No end in sight for global capitalism: The sinews of US structural power in the 21st century
+
+## technocapitalism
+
+- What is Nick Land's philosophy of accelerationism really?
 
 ## technology
 

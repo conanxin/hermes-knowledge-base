@@ -202,6 +202,55 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-03-25-reverse-game-theory-housing-shortage"
   },
   {
+    "title": "What is Nick Land's philosophy of accelerationism really?",
+    "title_zh": "Nick Land 的加速主义哲学究竟是什么？",
+    "type": "article",
+    "path": "content/articles/2026/2026-06-11-nick-land-accelerationism",
+    "author": "Vincent Lê",
+    "source_url": "https://aeon.co/essays/what-is-nick-lands-philosophy-of-accelerationism-really",
+    "source_site": "Aeon",
+    "language": "en",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "2026-06-11",
+    "captured_date": "2026-07-04",
+    "topics": [
+      "accelerationism",
+      "Nick Land",
+      "contemporary philosophy",
+      "anti-humanism",
+      "capitalism",
+      "Deleuze and Guattari",
+      "Kant",
+      "philosophy of technology",
+      "cyberculture"
+    ],
+    "tags": [
+      "accelerationism",
+      "Nick Land",
+      "CCRU",
+      "Deleuze",
+      "Guattari",
+      "Kant",
+      "Heidegger",
+      "Bataille",
+      "technocapitalism",
+      "singularity",
+      "anti-humanism",
+      "Ccru"
+    ],
+    "word_count": {
+      "source": 6538,
+      "translation": 10678
+    },
+    "editor": "Cameron Allan McKean",
+    "illustrator": "Martin O'Neill",
+    "updated_date": "2026-07-04",
+    "slug": "2026-06-11-nick-land-accelerationism",
+    "detail_url": "items/2026-06-11-nick-land-accelerationism/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-11-nick-land-accelerationism"
+  },
+  {
     "title": "Taylorism and Alienation in Labour Process: A Case of Amazon Warehouse in the UK",
     "title_zh": "劳动过程中的泰勒主义与异化:以英国亚马逊仓库为例",
     "type": "article",
