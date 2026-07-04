@@ -1,0 +1,35 @@
+title: "The Coming Loop（正在到来的 Loop）"
+title_zh: "The Coming Loop（正在到来的 Loop）"
+source_url: "https://lucumr.pocoo.org/2026/6/23/the-coming-loop/"
+source_site: "lucumr.pocoo.org"
+author: "Armin Ronacher"
+published_date: "2026-06-23"
+captured_date: "2026-07-04"
+language: "zh-CN"
+translation_language: "zh-CN"
+status: "translated"
+type: "article"
+content_kind: "web_article"
+source_platform: "web"
+dedupe_key: "web:2026-06-23:the-coming-loop"
+is_translation_mirror: true
+topics:
+  - "人工智能"
+  - "软件工程"
+  - "Agent Loop"
+  - "Coding Agent"
+  - "人机协作"
+  - "工程哲学"
+tags:
+  - "lucumr.pocoo.org"
+  - "Armin Ronacher"
+  - "Pi"
+  - "AI"
+  - "loop"
+  - "harness"
+  - "coding-agent"
+  - "翻译"
+word_count:
+  source: 4183
+  translation: 3905
+path: "content/articles/2026/2026-06-23-web-lucumr-the-coming-loop/"

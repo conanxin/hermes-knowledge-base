@@ -55,6 +55,7 @@
 - Ken Liu on AI and Freedom
 - Your AI Is Not a Tool
 - We May Be Entering A Second Axial Age
+- The Coming Loop（正在到来的 Loop）
 - Conan O'Brien Delivers the Commencement Address | Harvard Commencement 2026
 - 专访林小英：接受教育，最终是为了让我们把日子过得生动
 - 携手之外：国际学习科学年会（ISLS） 2026 的五条主线
@@ -184,6 +185,10 @@
 ## Archive
 
 - 灵感资源库
+
+## Armin Ronacher
+
+- The Coming Loop（正在到来的 Loop）
 
 ## Asset vs Income
 
@@ -792,6 +797,10 @@
 - The People Are Never Right
 - The Philosophy Behind Palantir: Moira Weigel and Anthony Burton w/ Alexis Papazoglou
 
+## Pi
+
+- The Coming Loop（正在到来的 Loop）
+
 ## Pink Floyd
 
 - The 100 greatest songs of the 1960s
@@ -1152,6 +1161,10 @@
 
 - ArXiv LLM Systems 论文列表
 
+## coding-agent
+
+- The Coming Loop（正在到来的 Loop）
+
 ## community
 
 - Hacker News ML 热门链接
@@ -1293,6 +1306,10 @@
 
 - Hacker News ML 热门链接
 
+## harness
+
+- The Coming Loop（正在到来的 Loop）
+
 ## hermes
 
 - YouTube Video Brief Workflow
@@ -1406,6 +1423,14 @@
 ## long-context
 
 - Awesome LLM Long Context 资源列表
+
+## loop
+
+- The Coming Loop（正在到来的 Loop）
+
+## lucumr.pocoo.org
+
+- The Coming Loop（正在到来的 Loop）
 
 ## machine-learning
 
@@ -2297,6 +2322,7 @@
 
 ## 翻译
 
+- The Coming Loop（正在到来的 Loop）
 - YouTube Video Brief Workflow
 
 ## 老子

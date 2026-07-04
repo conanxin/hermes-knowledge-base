@@ -24,6 +24,10 @@
 
 - ArXiv AI Agents 论文列表
 
+## Armin Ronacher
+
+- The Coming Loop（正在到来的 Loop）
+
 ## Arun Venkatesan
 
 - 日本铁路如何在分裂中保持统一

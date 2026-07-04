@@ -4,6 +4,7 @@
 
 - 10 Usability Heuristics for User Interface Design
 - Things You Should Never Do, Part I
+- The Coming Loop（正在到来的 Loop）
 - 专访林小英：接受教育，最终是为了让我们把日子过得生动
 - AI无法教会的三件事
 - “我生病了，要去西湖玩玩才能好起来”

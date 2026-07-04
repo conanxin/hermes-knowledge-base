@@ -665,6 +665,50 @@
     "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-23-second-axial-age-otto-scharmer"
   },
   {
+    "title": "The Coming Loop（正在到来的 Loop）",
+    "title_zh": "The Coming Loop（正在到来的 Loop）",
+    "type": "article",
+    "path": "content/articles/2026/2026-06-23-web-lucumr-the-coming-loop",
+    "author": "Armin Ronacher",
+    "source_url": "https://lucumr.pocoo.org/2026/6/23/the-coming-loop/",
+    "source_site": "lucumr.pocoo.org",
+    "language": "zh-CN",
+    "translation_language": "zh-CN",
+    "status": "translated",
+    "published_date": "2026-06-23",
+    "captured_date": "2026-07-04",
+    "topics": [
+      "人工智能",
+      "软件工程",
+      "Agent Loop",
+      "Coding Agent",
+      "人机协作",
+      "工程哲学"
+    ],
+    "tags": [
+      "lucumr.pocoo.org",
+      "Armin Ronacher",
+      "Pi",
+      "AI",
+      "loop",
+      "harness",
+      "coding-agent",
+      "翻译"
+    ],
+    "word_count": {
+      "source": 4183,
+      "translation": 3905
+    },
+    "content_kind": "web_article",
+    "dedupe_key": "web:2026-06-23:the-coming-loop",
+    "is_translation_mirror": true,
+    "source_platform": "web",
+    "updated_date": "2026-07-04",
+    "slug": "2026-06-23-web-lucumr-the-coming-loop",
+    "detail_url": "items/2026-06-23-web-lucumr-the-coming-loop/",
+    "github_url": "https://github.com/conanxin/hermes-knowledge-base/tree/main/content/articles/2026/2026-06-23-web-lucumr-the-coming-loop"
+  },
+  {
     "title": "The People Are Never Right",
     "title_zh": "人民从来不会正确",
     "type": "article",
