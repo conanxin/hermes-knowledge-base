@@ -78,6 +78,10 @@
 
 - Sign of the future: GPT-5.5
 
+## Geoffrey Litt
+
+- Understanding is the new bottleneck
+
 ## George Orwell
 
 - Why I Write

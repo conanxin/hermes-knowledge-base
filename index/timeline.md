@@ -16,6 +16,7 @@
 - Is High Quality Software Worth the Cost?
 - The Need to Read
 - David Sedaris: Lessons From Decades of Writing
+- Understanding is the new bottleneck
 - Bingzhu You (秉烛游) — A Rap Song and 2-Minute MV from Classical Chinese Poetry
 
 ## 2026-06

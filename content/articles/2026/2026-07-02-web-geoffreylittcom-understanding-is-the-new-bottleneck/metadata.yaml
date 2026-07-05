@@ -1,0 +1,46 @@
+title: "Understanding is the new bottleneck"
+title_zh: "理解成为新的瓶颈"
+source_url: "https://www.geoffreylitt.com/2026/07/02/understanding-is-the-new-bottleneck.html"
+canonical_url: "https://www.geoffreylitt.com/2026/07/02/understanding-is-the-new-bottleneck.html"
+source_site: "geoffreylitt.com"
+author: "Geoffrey Litt"
+published_date: "2026-07-02"
+captured_date: "2026-07-05"
+language: "en"
+source_language: "en"
+translation_language: "zh-CN"
+status: "summary_only_copyright_boundary"
+type: "article"
+content_kind: "web_article"
+source_platform: "web"
+dedupe_key: "web:geoffreylitt:understanding-is-the-new-bottleneck"
+is_translation_mirror: false
+topics:
+  - "人工智能"
+  - "软件工程"
+  - "人机协作"
+tags:
+  - "Geoffrey Litt"
+  - "AI agents"
+  - "code understanding"
+  - "human-in-the-loop"
+  - "software engineering"
+  - "web article"
+word_count:
+  source: 247
+  translation: 798
+rights:
+  full_text_stored: false
+  full_translation_stored: false
+  boundary_note: "External web article; no explicit redistribution or translation license was found during import. This KB entry stores attribution, paraphrased notes, and analysis only."
+web:
+  domain: "www.geoffreylitt.com"
+  extraction_method: "manual_metadata_and_paraphrase"
+  description: "A talk-derived essay on why understanding AI-generated code becomes the bottleneck, and how tools could augment that understanding."
+  image_count: 0
+  localize_images: false
+capture:
+  tool: "manual_compliant_web_article_import"
+  captured_at: "2026-07-05T00:00:00+08:00"
+  version: "1.0"
+path: "content/articles/2026/2026-07-02-web-geoffreylittcom-understanding-is-the-new-bottleneck/"

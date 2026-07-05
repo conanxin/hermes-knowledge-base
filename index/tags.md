@@ -76,6 +76,10 @@
 
 - Bingzhu You (秉烛游) — A Rap Song and 2-Minute MV from Classical Chinese Poetry
 
+## AI agents
+
+- Understanding is the new bottleneck
+
 ## AI governance
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
@@ -401,6 +405,10 @@
 ## GPT-5.5 Pro
 
 - Sign of the future: GPT-5.5
+
+## Geoffrey Litt
+
+- Understanding is the new bottleneck
 
 ## George Mason University
 
@@ -1197,6 +1205,10 @@
 
 - A Modest Proposal
 
+## code understanding
+
+- Understanding is the new bottleneck
+
 ## code-intelligence
 
 - ArXiv LLM Systems 论文列表
@@ -1368,6 +1380,10 @@
 ## high-tech authoritarian
 
 - Inside the Mind of Anthropic CEO Dario Amodei | The Circuit | Extended Interview
+
+## human-in-the-loop
+
+- Understanding is the new bottleneck
 
 ## humor
 
@@ -1717,6 +1733,10 @@
 
 - A Modest Proposal
 
+## software engineering
+
+- Understanding is the new bottleneck
+
 ## soul
 
 - The 100 greatest songs of the 1960s
@@ -1808,6 +1828,10 @@
 ## walking
 
 - Walking
+
+## web article
+
+- Understanding is the new bottleneck
 
 ## workflow
 
